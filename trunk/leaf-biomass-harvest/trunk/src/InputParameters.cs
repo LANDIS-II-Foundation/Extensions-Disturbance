@@ -3,7 +3,7 @@
 
 using BaseHarvest = Landis.Extension.BaseHarvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// The parameters for biomass harvest.

@@ -11,7 +11,7 @@ using System.Text;
 
 using BaseHarvest = Landis.Extension.BaseHarvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// A parser that reads the extension's parameters from text input.

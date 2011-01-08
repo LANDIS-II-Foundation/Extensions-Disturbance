@@ -7,7 +7,7 @@ using Landis.Core;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     // Wrapper around a species dataset so we can know what species was
     // most recently fetched from the dataset.

@@ -60,22 +60,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Succession.dll</HintPath>
     </Reference>
+    <Reference Include="Landis.SpatialModeling">
+      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.SpatialModeling.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Wisc.Flel.GeospatialModeling, Version=1.0.11.405, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Wisc.Flel.GeospatialModeling.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BiomassMaps.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="BiomassPixel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Clearcut.cs" />
@@ -110,6 +106,7 @@
     <Compile Include="SpecificAgesCohortSelector.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UShortPixel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

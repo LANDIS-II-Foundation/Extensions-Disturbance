@@ -4,14 +4,13 @@
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.Extension.BaseHarvest;
 using Landis.Core;
-using Wisc.Flel.GeospatialModeling.Landscapes;
-
+using Landis.SpatialModeling;
 using System.Collections.Generic;
 using System.IO;
 
 using BaseHarvest = Landis.Extension.BaseHarvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     public class PlugIn
         : ExtensionMain

@@ -3,13 +3,13 @@
 
 using Landis.Core;
 using Landis.Library.LeafBiomassCohorts;
-using Wisc.Flel.GeospatialModeling.Landscapes;
+using Landis.SpatialModeling;
 using System.Collections.Generic;
 using Landis.Extension.BaseHarvest;
 using BaseHarvest = Landis.Extension.BaseHarvest;
 
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// A biomass disturbance that handles partial thinning of cohorts.

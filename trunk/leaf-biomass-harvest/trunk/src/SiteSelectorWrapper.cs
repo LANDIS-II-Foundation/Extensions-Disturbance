@@ -3,10 +3,10 @@
 
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.Extension.BaseHarvest;
-using Wisc.Flel.GeospatialModeling.Landscapes;
+using Landis.SpatialModeling;
 using System.Collections.Generic;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     // Wrapper around a site selector that invokes partial harvesting for
     // selected site.

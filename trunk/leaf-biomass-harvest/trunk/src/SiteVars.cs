@@ -1,10 +1,10 @@
 // Copyright 2008-2010 Green Code LLC, Portland State University
 // Authors:  James B. Domingo, Robert M. Scheller, Srinivas S.
 
-using Wisc.Flel.GeospatialModeling.Landscapes;
+using Landis.SpatialModeling;
 using Landis.Library.LeafBiomassCohorts;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     public static class SiteVars
     {

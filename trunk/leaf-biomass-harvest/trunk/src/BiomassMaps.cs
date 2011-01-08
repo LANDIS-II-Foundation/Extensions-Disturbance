@@ -1,12 +1,11 @@
 // Copyright 2008-2010 Green Code LLC, Portland State University
 // Authors:  James B. Domingo, Robert M. Scheller, Srinivas S.
 
-using Wisc.Flel.GeospatialModeling.Landscapes;
-using Wisc.Flel.GeospatialModeling.RasterIO;
+using Landis.SpatialModeling;
 
 using BaseHarvest = Landis.Extension.BaseHarvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// Utility class for writing biomass-removed maps.
@@ -39,23 +38,17 @@ namespace Landis.Extensions.LeafBiomassHarvest
         public void WriteMap(int timestep)
         {
             string path = BaseHarvest.MapNames.ReplaceTemplateVars(nameTemplate, timestep);
-            using (IOutputRaster<BiomassPixel> map = CreateMap(path)) {
-                BiomassPixel pixel = new BiomassPixel();
-                foreach (Site site in PlugIn.ModelCore.Landscape.AllSites) {
-                    pixel.Band0 = (ushort) (SiteVars.BiomassRemoved[site] / 10.0);
-                    map.WritePixel(pixel);
+            PlugIn.ModelCore.Log.WriteLine("   Writing biomass-removed map to {0} ...", path);
+            using (IOutputRaster<UShortPixel> outputRaster = PlugIn.ModelCore.CreateRaster<UShortPixel>(path, PlugIn.ModelCore.Landscape.Dimensions))
+            {
+                UShortPixel pixel = outputRaster.BufferPixel;
+                foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                {
+                    pixel.MapCode.Value = (ushort) (SiteVars.BiomassRemoved[site] / 10.0);
+                    outputRaster.WriteBufferPixel();
                 }
             }
         }
 
-        //---------------------------------------------------------------------
-
-        private IOutputRaster<BiomassPixel> CreateMap(string path)
-        {
-            PlugIn.ModelCore.Log.WriteLine("Writing biomass-removed map to {0} ...", path);
-            return PlugIn.ModelCore.CreateRaster<BiomassPixel>(path,
-                                                         PlugIn.ModelCore.Landscape.Dimensions,
-                                                         PlugIn.ModelCore.LandscapeMapMetadata);
-        }
     }
 }

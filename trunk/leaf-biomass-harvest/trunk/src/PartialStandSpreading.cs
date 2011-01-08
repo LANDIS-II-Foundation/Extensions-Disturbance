@@ -2,14 +2,14 @@
 // Authors:  James B. Domingo, Robert M. Scheller, Srinivas S.
 
 using Landis.Extension.BaseHarvest;
-using Wisc.Flel.GeospatialModeling.Landscapes;
+using Landis.SpatialModeling;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 
 using BaseHarvest = Landis.Extension.BaseHarvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     // This class exists so that AppliedPrescription will access the base class
     // when it casts as StandSpreading.
