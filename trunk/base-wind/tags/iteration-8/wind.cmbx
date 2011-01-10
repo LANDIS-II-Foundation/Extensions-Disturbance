@@ -1,0 +1,16 @@
+<Combine fileversion="1.0" name="wind" description="">
+  <StartMode startupentry="wind" single="True">
+    <Execute entry="Landis.Wind" type="None" />
+  </StartMode>
+  <Entries>
+    <Entry filename=".\.\wind.prjx" />
+  </Entries>
+  <Configurations active="Debug">
+    <Configuration name="Release">
+      <Entry name="Landis.Wind" configurationname="Debug" build="False" />
+    </Configuration>
+    <Configuration name="Debug">
+      <Entry name="Landis.Wind" configurationname="Debug" build="False" />
+    </Configuration>
+  </Configurations>
+</Combine>
