@@ -1,4 +1,4 @@
-LandisData  Wind
+LandisData  "Base Wind"
 
 Timestep  5
 
@@ -20,5 +20,5 @@ WindSeverities
        2         70% to  85%       0.85
        1         85% to 100%       0.95
 
-MapNames  wind/severity-{timestep}.gis
-LogFile   wind/log.csv
+MapNames  wind/severity-{timestep}.img
+LogFile   wind-test-log.csv
