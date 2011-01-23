@@ -14,7 +14,7 @@ namespace Landis.Extension.BaseWind
         private static ISiteVar<int> timeOfLastEvent;
         private static ISiteVar<byte> severity;
         private static ISiteVar<bool> disturbed;
-        private static ISiteVar<SiteCohorts> cohorts;
+        private static ISiteVar<ISiteCohorts> cohorts;
 
         //---------------------------------------------------------------------
 
@@ -28,12 +28,12 @@ namespace Landis.Extension.BaseWind
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.TimeOfLastEvent, "Wind.TimeOfLastEvent");
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.Severity, "Wind.Severity");
 
-            cohorts = PlugIn.ModelCore.GetSiteVar<SiteCohorts>("Succession.Cohorts");
+            cohorts = PlugIn.ModelCore.GetSiteVar<ISiteCohorts>("Succession.AgeCohorts");
 
         }
 
         //---------------------------------------------------------------------
-        public static ISiteVar<SiteCohorts> Cohorts
+        public static ISiteVar<ISiteCohorts> Cohorts
         {
             get
             {
