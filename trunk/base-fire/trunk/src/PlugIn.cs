@@ -58,11 +58,10 @@ namespace Landis.Extension.BaseFire
 
         //---------------------------------------------------------------------
 
-        public override void Initialize(string dataFile)
+        public override void Initialize()
         {
             Timestep = parameters.Timestep;
             mapNameTemplate = parameters.MapNamesTemplate;
-            SiteVars.InitializeCohort();
             dynamicEcos = parameters.DynamicFireRegions;
 
             summaryFireRegionEventCount = new int[FireRegions.Dataset.Count];

@@ -28,38 +28,31 @@ namespace Landis.Extension.BaseFire
             severity = PlugIn.ModelCore.Landscape.NewSiteVar<byte>();
             disturbed = PlugIn.ModelCore.Landscape.NewSiteVar<bool>();
 
-            //cohorts = PlugIn.ModelCore.GetSiteVar<SiteCohorts>("Succession.BaseCohorts");
+            cohorts = PlugIn.ModelCore.GetSiteVar<SiteCohorts>("Succession.AgeCohorts");
 
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.Severity, "Fire.Severity");
 
-            /*foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
+            foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
             {
                 ushort maxAge = GetMaxAge(site);
-                PlugIn.ModelCore.Log.WriteLine("maxAge = {0}.", maxAge);
+                //PlugIn.ModelCore.Log.WriteLine("maxAge = {0}.", maxAge);
 
                 timeOfLastFire[site] = PlugIn.ModelCore.StartTime - maxAge;
-            }*/
-        }
-
-        //---------------------------------------------------------------------
-        public static void InitializeCohort()
-        {
-            cohorts = PlugIn.ModelCore.GetSiteVar<SiteCohorts>("Succession.BaseCohorts");
+            }
         }
 
         public static void InitializeDisturbances(int timestep)
         {
             timeOfLastWind = PlugIn.ModelCore.GetSiteVar<int>("Wind.TimeOfLastEvent");
-            if (PlugIn.ModelCore.CurrentTime == timestep)
-                PlugIn.ModelCore.Log.WriteLine("   INITIALIZING time since last fire.");
-                foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
-                {
+            PlugIn.ModelCore.Log.WriteLine("   Initializng time since last fire.");
+            foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
+            {
                     ushort maxAge = GetMaxAge(site);
                     if(maxAge > 0)
                         PlugIn.ModelCore.Log.WriteLine("maxAge = {0}.", maxAge);
 
                     timeOfLastFire[site] = PlugIn.ModelCore.StartTime - maxAge;
-                }
+            }
         }
 
         //---------------------------------------------------------------------
@@ -132,21 +125,15 @@ namespace Landis.Extension.BaseFire
             }
             ushort max = 0;
 
-            //foreach (ISpeciesCohorts speciesCohorts in SiteVars.Cohorts[site])
-            //{
-            foreach (ISpecies spp in PlugIn.ModelCore.Species)
+            foreach (ISpeciesCohorts speciesCohorts in SiteVars.Cohorts[site])
             {
-                ISpeciesCohorts speciesCohorts = SiteVars.Cohorts[site][spp];
-                //PlugIn.ModelCore.Log.WriteLine("Cohort = {0}.", speciesCohorts.Species.Name);
-                if (speciesCohorts != null)
+                PlugIn.ModelCore.Log.WriteLine("Cohort = {0}.", speciesCohorts.Species.Name);
+                foreach (ICohort cohort in speciesCohorts)
                 {
-                    foreach (ICohort cohort in speciesCohorts)
-                    {
                         //PlugIn.ModelCore.Log.WriteLine("Cohort = {0}.", cohort.Age);
                         //ushort maxSpeciesAge = cohort.Age;
                         if (cohort.Age > max)
                             max = cohort.Age;
-                    }
                 }
             }
             return max;
