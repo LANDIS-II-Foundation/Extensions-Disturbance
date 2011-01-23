@@ -181,8 +181,6 @@ namespace Landis.Extension.BaseWind
             this.sitesDamaged = 0;
             this.cohortsKilled = 0;
 
-            //UI.WriteLine("New wind event at {0}, size = {1} ({2} ha)",
-            //    initiationSite.Location, size, sizeHectares);
         }
 
         //---------------------------------------------------------------------
@@ -197,7 +195,6 @@ namespace Landis.Extension.BaseWind
             sitesToConsider.Enqueue(initiationSite);
             while (sitesToConsider.Count > 0 && sitesInEvent < size) {
                 Site site = sitesToConsider.Dequeue();
-                //UI.WriteLine("event spread to {0}", site.Location);
                 SiteVars.Event[site] = this;
                 sitesInEvent++;
 

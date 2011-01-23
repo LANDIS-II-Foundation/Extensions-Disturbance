@@ -61,7 +61,7 @@ namespace Landis.Extension.BaseWind
         /// Initial timestep (year): the timestep that will be passed to the
         /// first call to the component's Run method.
         /// </param>
-        public override void Initialize(string dataFile)
+        public override void Initialize()
         {
             Timestep = parameters.Timestep;
             mapNameTemplate = parameters.MapNamesTemplate;
@@ -70,7 +70,7 @@ namespace Landis.Extension.BaseWind
             Event.Initialize(parameters.EventParameters,
                              parameters.WindSeverities);
 
-            ModelCore.Log.WriteLine("Opening wind log file \"{0}\" ...", parameters.LogFileName);
+            ModelCore.Log.WriteLine("   Opening wind log file \"{0}\" ...", parameters.LogFileName);
             log = ModelCore.CreateTextFile(parameters.LogFileName);
             log.AutoFlush = true;
             log.WriteLine("Time,Initiation Site,Total Sites,Damaged Sites,Cohorts Killed,Mean Severity");

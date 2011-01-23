@@ -28,7 +28,7 @@ namespace Landis.Extension.BaseWind
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.TimeOfLastEvent, "Wind.TimeOfLastEvent");
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.Severity, "Wind.Severity");
 
-            cohorts = PlugIn.ModelCore.GetSiteVar<SiteCohorts>("Succession.BaseCohorts");
+            cohorts = PlugIn.ModelCore.GetSiteVar<SiteCohorts>("Succession.Cohorts");
 
         }
 
