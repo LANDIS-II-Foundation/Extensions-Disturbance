@@ -16,7 +16,7 @@ namespace Landis.Extension.BaseFire
         private static ISiteVar<int> timeOfLastWind;
         private static ISiteVar<byte> severity;
         private static ISiteVar<bool> disturbed;
-        private static ISiteVar<SiteCohorts> cohorts;
+        private static ISiteVar<ISiteCohorts> cohorts;
 
         //---------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ namespace Landis.Extension.BaseFire
             severity = PlugIn.ModelCore.Landscape.NewSiteVar<byte>();
             disturbed = PlugIn.ModelCore.Landscape.NewSiteVar<bool>();
 
-            cohorts = PlugIn.ModelCore.GetSiteVar<SiteCohorts>("Succession.AgeCohorts");
+            cohorts = PlugIn.ModelCore.GetSiteVar<ISiteCohorts>("Succession.AgeCohorts");
 
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.Severity, "Fire.Severity");
 
@@ -44,15 +44,6 @@ namespace Landis.Extension.BaseFire
         public static void InitializeDisturbances(int timestep)
         {
             timeOfLastWind = PlugIn.ModelCore.GetSiteVar<int>("Wind.TimeOfLastEvent");
-            PlugIn.ModelCore.Log.WriteLine("   Initializng time since last fire.");
-            foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
-            {
-                    ushort maxAge = GetMaxAge(site);
-                    if(maxAge > 0)
-                        PlugIn.ModelCore.Log.WriteLine("maxAge = {0}.", maxAge);
-
-                    timeOfLastFire[site] = PlugIn.ModelCore.StartTime - maxAge;
-            }
         }
 
         //---------------------------------------------------------------------
@@ -109,7 +100,7 @@ namespace Landis.Extension.BaseFire
             }
         }
 
-        public static ISiteVar<SiteCohorts> Cohorts
+        public static ISiteVar<ISiteCohorts> Cohorts
         {
             get
             {
@@ -127,11 +118,8 @@ namespace Landis.Extension.BaseFire
 
             foreach (ISpeciesCohorts speciesCohorts in SiteVars.Cohorts[site])
             {
-                PlugIn.ModelCore.Log.WriteLine("Cohort = {0}.", speciesCohorts.Species.Name);
                 foreach (ICohort cohort in speciesCohorts)
                 {
-                        //PlugIn.ModelCore.Log.WriteLine("Cohort = {0}.", cohort.Age);
-                        //ushort maxSpeciesAge = cohort.Age;
                         if (cohort.Age > max)
                             max = cohort.Age;
                 }
