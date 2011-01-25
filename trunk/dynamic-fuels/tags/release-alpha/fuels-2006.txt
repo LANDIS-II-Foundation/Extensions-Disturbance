@@ -1,0 +1,42 @@
+LandisData  "Fuels 2006"
+
+Timestep  10
+
+>> Conifer	Fuel 
+>> Species 	Coefficient 
+>> -------- 	----------- 
+   abiebals 	1.00 
+   piceglau 	0.95
+   pinubank	1.00
+   pinustro	1.00 
+   pinuresi	1.00
+
+ConiferSpeciesList  
+pinubank pinuresi pinustro piceglau abiebals
+
+HardwoodMaximum	15
+
+FuelTypes
+>> Fuel Type	Age Range 	Species				
+>> ---------	---------	----------	
+   C2		0 to 400	piceglau abiebals 
+   C3		0 to 40		pinubank
+   C4		41 to 100	pinubank 								
+   C5		100 to 400	pinustro pinuresi abiebals				 
+   C6		0 to 100	pinustro pinuresi								 
+   D1		0 to 300	poputrem betupapy acerrubr fraxamer
+
+>>OpenTypeTable
+>> FireEcoregion	open-type
+>>eco1			O1
+>>eco2			D1
+   
+>>SlashTable
+>> SlashType	MaxAge	Prescription (more than one allowed)
+>>S-1		3	JackPineClearCut
+>>S-2		2	WhiteSpruceHarvest
+
+>> Next, list the Prescriptions that are planted:
+>>PlantationTypes		RedPineHarvest	WhitePineHarvest 
+ 
+MapFileNames	fire/FuelType-{timestep}.gis 

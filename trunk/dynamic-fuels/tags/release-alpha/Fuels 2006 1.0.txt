@@ -1,0 +1,9 @@
+LandisData   Extension
+
+Name         "Fuels 2006"
+Version      "1.0 (a1)"
+Type         output
+Assembly     Landis.Fuels2006
+Class        Landis.Fuels.PlugIn
+Description  "Fuels calculated from the Canadian System"
+CoreVersion  5.1
