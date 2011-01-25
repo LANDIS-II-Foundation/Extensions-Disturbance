@@ -1,0 +1,9 @@
+LandisData   Extension
+
+Name         "Dynamic Fuels Leaf Biomass"
+Version      "1.0"
+Type         disturbance:fuel
+Assembly     Landis.Extension.Fuels.LeafBiomass
+Class        Landis.Fuels.PlugIn
+Description  "Dynamic fuel assignment based on Leaf Biomass cohorts"
+CoreVersion  5.1
