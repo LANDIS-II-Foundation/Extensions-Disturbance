@@ -1,0 +1,5 @@
+Biomass Harvest extension for LANDIS-II
+Copyright 2008 Green Code LLC
+
+Portions of this software were developed at the Forest Landscape Ecology Lab
+at the University of Wisconsin-Madison.

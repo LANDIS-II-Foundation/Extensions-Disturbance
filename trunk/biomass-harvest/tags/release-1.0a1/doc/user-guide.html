@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>Biomass Harvest @VER_REL_ABBR@ - LANDIS-II Extension</title>
+  </head>
+
+  <body>
+    <h1>Biomass Harvest Extension v@VERSION@ (@RELEASE_NAME@)</h1>
+
+    <p>
+    James Domingo<br>
+    Green Code LLC
+    <p>
+
+    <h2>Introduction</h2>
+
+    <p>
+    The Biomass Harvest Extension for LANDIS-II behaves pretty much
+    like Base Harvest, so consult the user guide for Base Harvest
+    for further information.  Biomass Harvest supports partial
+    thinning of cohorts.
+
+    <h2>Input Files</h2>
+
+    <p>
+    The input file for Biomass Harvest is very similiar in format
+    to the input file for Base Harvest, except for these
+    differences:
+
+    <ul>
+      <li>
+        The <tt>LandisData</tt> parameter requires a value of
+        <tt>"Biomass Harvest"</tt>.
+      </li>
+
+      <li>
+        When <tt>SpeciesList</tt> is specified for the
+        <tt>CohortsRemoved</tt> parameter in a prescription, the
+        user may specify a percentage after any individual age or
+        range of ages. For example:
+        <pre>
+        CohortsRemoved  SpeciesList
+          acersacc      1-40 (50%)  50(65%)  65-70  71-107 ( 15% )  109
+          ...
+        </pre>
+        The default percentage is 100%.
+      </li>
+    </ul>
+    </p>
+
+  </body>
+</html>

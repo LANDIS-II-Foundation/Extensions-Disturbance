@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<project name="deploy" default="all">
+
+    <include buildfile="../settings.build" />
+
+    <include buildfile="${environment::get-variable('FLEL_DEVKIT')}/release-info.build" />
+
+    <!-- ================================================================== -->
+
+    <target name="all" depends="extension-info,iss-include">
+    </target>
+
+    <!-- ================================================================== -->
+
+    <property name="extInfo.src"
+              value="extension info.txt" />
+
+    <property name="extInfo.deploy"
+              value="${buildDir}/extension info.txt" />
+
+    <target name="extension-info">
+        <uptodate property="extInfo.deploy.uptodate">
+            <targetfiles>
+                <include name="${extInfo.deploy}" />
+            </targetfiles>
+            <sourcefiles>
+                <include name="${extInfo.src}" />
+                <include name="${release.infoFile}" />
+            </sourcefiles>
+        </uptodate>
+        <copy file="${extInfo.src}"
+              tofile="${extInfo.deploy}"
+              overwrite="${not extInfo.deploy.uptodate}">
+            <filterchain>
+                <replacetokens>
+                    <token key="VER_REL_ABBR"  value="${version}${release.abbr}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+
+    <!-- ================================================================== -->
+
+    <property name="releaseInfo.InnoSetup"
+              value="${buildDir}/release-info.iss" />
+
+    <target name="iss-include">
+
+        <uptodate property="releaseInfo.InnoSetup.uptodate">
+            <targetfiles>
+                <include name="${releaseInfo.InnoSetup}" />
+            </targetfiles>
+            <sourcefiles>
+                <include name="${release.infoFile}" />
+            </sourcefiles>
+        </uptodate>
+
+        <if test="${not releaseInfo.InnoSetup.uptodate}">
+            <echo file="${releaseInfo.InnoSetup}"
+                  message='#define ReleaseType   "${release.type}"' />
+            <echo file="${releaseInfo.InnoSetup}"
+                  append="true"
+                  message='#define ReleaseNumber "${release.number}"' />
+            <echo>Updated release info in the file "${releaseInfo.InnoSetup}"</echo>
+        </if>
+    </target>
+
+    <!-- ================================================================== -->
+
+    <target name="clean">
+        <delete file="${extInfo.deploy}"
+                if="${file::exists(extInfo.deploy)}" />
+        <delete file="${releaseInfo.InnoSetup}"
+                if="${file::exists(releaseInfo.InnoSetup)}" />
+    </target>
+</project>
