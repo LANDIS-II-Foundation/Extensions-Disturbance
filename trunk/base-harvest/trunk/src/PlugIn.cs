@@ -70,7 +70,7 @@ namespace Landis.Extension.BaseHarvest
         }
         //---------------------------------------------------------------------
 
-        public override void Initialize(string dataFile)
+        public override void Initialize()
         {
             //initialize event id
             event_id = 1;
