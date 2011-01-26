@@ -73,16 +73,13 @@
   <ItemGroup>
     <Compile Include="BiomassMaps.cs" />
     <Compile Include="CompleteStandSpreading.cs" />
-    <Compile Include="EconomicRank.cs" />
     <Compile Include="IInputParameters.cs" />
-    <Compile Include="InclusionRequirement.cs" />
     <Compile Include="InputParameters.cs" />
     <Compile Include="InputParametersParser.cs" />
     <Compile Include="PartialHarvestDisturbance.cs" />
     <Compile Include="PartialStandSpreading.cs" />
     <Compile Include="PartialThinning.cs" />
     <Compile Include="PlugIn.cs" />
-    <Compile Include="Prescription.cs" />
     <Compile Include="SiteSelectorWrapper.cs" />
     <Compile Include="SiteVars.cs" />
     <Compile Include="SpeciesDataset.cs" />

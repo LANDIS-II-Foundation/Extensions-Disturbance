@@ -4,7 +4,7 @@
 
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.Library.BiomassCohorts;
-using Landis.Cohorts;
+using Landis.Library.Cohorts;
 using Landis.Extension.BaseHarvest;
 using Landis.Core;
 using System.Collections.Generic;

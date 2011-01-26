@@ -222,7 +222,7 @@ namespace Landis.Extension.BiomassHarvest
                 // Write Summary Log File:
                 foreach (AppliedPrescription aprescription in mgmtArea.Prescriptions)
                 {
-                    Prescription prescription = (BiomassHarvest.Prescription) aprescription.Prescription;
+                    Prescription prescription = aprescription.Prescription;
                     string species_string = "";
                     foreach (ISpecies species in modelCore.Species)
                          species_string += ", " + totalSpeciesCohorts[prescription.Number, species.Index];
@@ -287,7 +287,7 @@ namespace Landis.Extension.BiomassHarvest
                 foreach (Site site in modelCore.Landscape.AllSites)
                 {
                     if (site.IsActive) {
-                        Prescription prescription = (BiomassHarvest.Prescription) BaseHarvest.SiteVars.Prescription[site];
+                        Prescription prescription = BaseHarvest.SiteVars.Prescription[site];
                         if (prescription == null)
                             pixel.MapCode.Value = 1;
                         else

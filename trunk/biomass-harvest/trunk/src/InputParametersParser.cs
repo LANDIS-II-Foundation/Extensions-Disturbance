@@ -29,7 +29,7 @@ namespace Landis.Extension.BiomassHarvest
         private ISpeciesDataset speciesDataset;
         private double standSpreadMinTargetSize;
         private double standSpreadMaxTargetSize;
-        private int minTimeSinceDamage;
+        //private int minTimeSinceDamage;
 
         //---------------------------------------------------------------------
 
@@ -228,7 +228,7 @@ namespace Landis.Extension.BiomassHarvest
         /// <summary>
         /// Reads 0 or more prescriptions from text input.
         /// </summary>
-        protected void ReadPrescriptions(List<Prescription> prescriptions,
+        /*protected void ReadPrescriptions(List<Prescription> prescriptions,
                                              int                harvestTimestep)
         {
             Dictionary<string, int> lineNumbers = new Dictionary<string, int>();
@@ -329,7 +329,7 @@ namespace Landis.Extension.BiomassHarvest
                                                        preventEstablishment));
                 }
             }
-        }
+        }*/
 
         //---------------------------------------------------------------------
 

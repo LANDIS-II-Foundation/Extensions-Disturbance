@@ -14,7 +14,7 @@ namespace Landis.Extension.BiomassHarvest
         private static ISiteVar<int> cohortsPartiallyDamaged;
         private static ISiteVar<double> capacityReduction;
 
-        private static ISiteVar<SiteCohorts> cohorts;
+        private static ISiteVar<ISiteCohorts> cohorts;
 
         // copied from BaseHarvest
         /*
@@ -52,15 +52,7 @@ namespace Landis.Extension.BiomassHarvest
             */
             // **********************************************************
             
-            cohorts = PlugIn.ModelCore.GetSiteVar<SiteCohorts>("Succession.BiomassCohorts");
-            foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
-            {
-                // Test to make sure the cohort type is correct for this extension
-                if (!SiteVars.Cohorts[site].HasAge() && !SiteVars.Cohorts[site].HasBiomass())
-                    throw new System.ApplicationException("Error in the Scenario file:  Incompatible extensions; Cohort age AND biomass data required for this extension to operate.");
-
-                break;
-            }
+            cohorts = PlugIn.ModelCore.GetSiteVar<ISiteCohorts>("Succession.BiomassCohorts");
 
             biomassRemoved = PlugIn.ModelCore.Landscape.NewSiteVar<double>();
             cohortsPartiallyDamaged = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
@@ -110,7 +102,7 @@ namespace Landis.Extension.BiomassHarvest
         }
 
         //---------------------------------------------------------------------
-        public static new ISiteVar<SiteCohorts> Cohorts
+        public static new ISiteVar<ISiteCohorts> Cohorts
         {
             get
             {
