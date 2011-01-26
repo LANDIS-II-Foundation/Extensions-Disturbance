@@ -53,7 +53,7 @@ namespace Landis.Extension.Fuels.LeafBiomass
         }
         //---------------------------------------------------------------------
 
-        public override void Initialize(string dataFile)
+        public override void Initialize()
         {
             Timestep                    = parameters.Timestep;
             mapNameTemplate             = parameters.MapFileNames;
@@ -153,7 +153,7 @@ namespace Landis.Extension.Fuels.LeafBiomass
             foreach(ISpecies species in PlugIn.ModelCore.Species)
             {
 
-                ISpeciesCohorts speciesCohorts = SiteVars.Cohorts[site][species];
+                ISpeciesCohorts speciesCohorts = (Landis.Library.LeafBiomassCohorts.ISpeciesCohorts) SiteVars.Cohorts[site][species];
 
                 if(speciesCohorts == null)
                     continue;

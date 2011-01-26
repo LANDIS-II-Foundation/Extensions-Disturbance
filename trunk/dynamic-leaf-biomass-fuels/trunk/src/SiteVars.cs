@@ -27,14 +27,14 @@ namespace Landis.Extension.Fuels.LeafBiomass
         private static ISiteVar<int> timeOfLastWind;
         private static ISiteVar<byte> windSeverity; 
         private static ISiteVar<Dictionary<int,int>> numberDeadFirCohorts;
-        private static ISiteVar<SiteCohorts> cohorts;
+        private static ISiteVar<ISiteCohorts> cohorts;
 
         //---------------------------------------------------------------------
 
         public static void Initialize()
         {
 
-            cohorts = PlugIn.ModelCore.GetSiteVar<SiteCohorts>("Succession.LeafBiomassCohorts");
+            cohorts = PlugIn.ModelCore.GetSiteVar<ISiteCohorts>("Succession.LeafBiomassCohorts");
 
             fuelType = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
             decidFuelType   = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
@@ -173,7 +173,7 @@ namespace Landis.Extension.Fuels.LeafBiomass
                 return numberDeadFirCohorts;
             }
         }
-        public static ISiteVar<SiteCohorts> Cohorts
+        public static ISiteVar<ISiteCohorts> Cohorts
         {
             get
             {
