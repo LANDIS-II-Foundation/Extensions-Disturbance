@@ -58,11 +58,8 @@ namespace Landis.Extension.BiomassFuels
 
         //---------------------------------------------------------------------
 
-        public override void Initialize(string dataFile)
+        public override void Initialize()
         {
-            if(parameters == null)
-                modelCore.Log.WriteLine("Parameters are not loading.");
-
 
             Timestep                    = parameters.Timestep;
             mapNameTemplate             = parameters.MapFileNames;
