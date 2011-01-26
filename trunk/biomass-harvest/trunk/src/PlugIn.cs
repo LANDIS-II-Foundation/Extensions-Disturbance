@@ -105,7 +105,7 @@ namespace Landis.Extension.BiomassHarvest
 
         //---------------------------------------------------------------------
 
-        public override void Initialize(string dataFile)
+        public override void Initialize()
         {
             //event_id = 1;
             SiteVars.Initialize();
