@@ -56,7 +56,7 @@ namespace Landis.Extension.DynamicFuels
         
         //---------------------------------------------------------------------
 
-        public override void Initialize(string dataFile)
+        public override void Initialize()
         {
             Timestep = parameters.Timestep;
             mapNameTemplate = parameters.MapFileNames;
