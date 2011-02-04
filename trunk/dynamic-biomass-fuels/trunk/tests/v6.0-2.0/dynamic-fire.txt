@@ -76,6 +76,6 @@ FireDamageTable
     100%                1
 
 
-MapNames  fire/severity-{timestep}.gis
-LogFile   dynamic-fire-test-log.csv
-SummaryLogFile fire/summary-log.csv
+MapNames  	dynamic-fire/severity-{timestep}.img
+LogFile   	dynamic-fire-test-log.csv
+SummaryLogFile 	dynamic-fire/summary-log.csv
