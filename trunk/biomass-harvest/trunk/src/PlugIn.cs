@@ -304,15 +304,6 @@ namespace Landis.Extension.BiomassHarvest
 
         //---------------------------------------------------------------------
 
-        /*private IOutputRaster<PrescriptionPixel> CreateMap(string path)
-        {
-            modelCore.Log.WriteLine("Writing prescription map to {0} ...", path);
-            return modelCore.CreateRaster<PrescriptionPixel>(path,
-                                                              modelCore.Landscape.Dimensions,
-                                                              modelCore.LandscapeMapMetadata);
-        }*/
-        //---------------------------------------------------------------------
-
         public void WriteLogEntry(ManagementArea mgmtArea, Stand stand)
         {
             int damagedSites = 0;
@@ -397,15 +388,5 @@ namespace Landis.Extension.BiomassHarvest
                           cohortsKilled,
                           species_count);
         }
-        //---------------------------------------------------------------------
-        /*
-        void PlugIns.ICleanUp.CleanUp()
-        {
-            if (log != null) {
-                log.Close();
-                log = null;
-            }
-        }
-        */
     }
 }

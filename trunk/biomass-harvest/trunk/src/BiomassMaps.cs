@@ -49,14 +49,5 @@ namespace Landis.Extension.BiomassHarvest
             }
         }
 
-        //---------------------------------------------------------------------
-
-/*        private IOutputRaster<BiomassPixel> CreateMap(string path)
-        {
-            PlugIn.ModelCore.Log.WriteLine("Writing biomass-removed map to {0} ...", path);
-            return PlugIn.ModelCore.CreateRaster<BiomassPixel>(path,
-                                                         PlugIn.ModelCore.Landscape.Dimensions,
-                                                         PlugIn.ModelCore.LandscapeMapMetadata);
-        }*/
     }
 }
