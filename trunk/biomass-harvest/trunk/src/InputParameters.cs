@@ -40,25 +40,5 @@ namespace Landis.Extension.BiomassHarvest
         {
         }
 
-        //---------------------------------------------------------------------
-/*
-        public Parameters(int                                timestep,
-                          string                             managementAreaMap,
-                          BaseHarvest.IManagementAreaDataset managementAreas,
-                          string                             standMap,
-                          string                             prescriptionMapNamesTemplate,
-                          string                             biomassMapNamesTemplate,
-                          string                             eventLog,
-                          string                             summaryLog)
-            : base(timestep,
-                   managementAreaMap,
-                   managementAreas,
-                   standMap,
-                   prescriptionMapNamesTemplate,
-                   eventLog,
-                   summaryLog)
-        {
-            this.biomassMapNamesTemplate = biomassMapNamesTemplate;
-        }*/
     }
 }

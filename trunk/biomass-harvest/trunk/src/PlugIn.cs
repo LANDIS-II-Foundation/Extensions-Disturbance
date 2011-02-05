@@ -69,7 +69,6 @@ namespace Landis.Extension.BiomassHarvest
             try
             {
                 baseHarvest.LoadParameters(null, mCore);
-                //baseHarvest.Initialize(null);
             }
             catch (System.ArgumentNullException)
             {
@@ -237,8 +236,6 @@ namespace Landis.Extension.BiomassHarvest
                             totalCohortsDamaged[prescription.Number],
                             totalCohortsKilled[prescription.Number],
                             species_string);
-
-
                 }
             }
 
@@ -281,9 +278,9 @@ namespace Landis.Extension.BiomassHarvest
         {
             string path = MapNames.ReplaceTemplateVars(nameTemplate, timestep);
             modelCore.Log.WriteLine("   Writing prescription map to {0} ...", path);
-            using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(path, modelCore.Landscape.Dimensions))
+            using (IOutputRaster<IntPixel> outputRaster = modelCore.CreateRaster<IntPixel>(path, modelCore.Landscape.Dimensions))
             {
-                BytePixel pixel = outputRaster.BufferPixel;
+                IntPixel pixel = outputRaster.BufferPixel;
                 foreach (Site site in modelCore.Landscape.AllSites)
                 {
                     if (site.IsActive) {
@@ -291,7 +288,7 @@ namespace Landis.Extension.BiomassHarvest
                         if (prescription == null)
                             pixel.MapCode.Value = 1;
                         else
-                            pixel.MapCode.Value = (byte)(prescription.Number + 1);
+                            pixel.MapCode.Value = (prescription.Number + 1);
                     }
                     else {
                         //  Inactive site
