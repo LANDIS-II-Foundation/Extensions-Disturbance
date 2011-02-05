@@ -200,7 +200,7 @@ namespace Landis.Extension.BaseHarvest
         /// </summary>
         public void HarvestStands()
         {
-            PlugIn.ModelCore.Log.WriteLine("   Harvesting management area {0} ...", mapCode);
+            //PlugIn.ModelCore.Log.WriteLine("BaseHarvest: ManagementArea.cs: HarvestStands: Harvesting management area {0} ...", mapCode);
 
             //initialize each stand for harvesting (setting harvested = false)
             foreach (Stand stand in stands) {

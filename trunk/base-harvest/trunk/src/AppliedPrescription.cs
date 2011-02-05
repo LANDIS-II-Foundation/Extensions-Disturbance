@@ -295,7 +295,7 @@ namespace Landis.Extension.BaseHarvest
         /// </summary>
         public virtual void HarvestHighestRankedStand()
         {
-            PlugIn.ModelCore.Log.WriteLine("  Standard Harvest Highest Ranked Stand.");
+            //PlugIn.ModelCore.Log.WriteLine("  Standard Harvest Highest Ranked Stand.");
 
             //get the highest ranked unharvested stand
             Stand stand = rankings[highestUnharvestedStand].Stand;

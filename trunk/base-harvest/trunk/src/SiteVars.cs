@@ -124,9 +124,24 @@ namespace Landis.Extension.BaseHarvest
         }
 
         //---------------------------------------------------------------------
-        public static ushort GetMaxAge(ActiveSite site)
+        public static int GetMaxAge(ActiveSite site)
         {
-            return Util.GetMaxAge(SiteVars.Cohorts[site]);
+            if (SiteVars.Cohorts[site] == null)
+            {
+                PlugIn.ModelCore.Log.WriteLine("Cohort are null.  Why?");
+                return 0;
+            }
+            ushort max = 0;
+
+            foreach (ISpeciesCohorts speciesCohorts in SiteVars.Cohorts[site])
+            {
+                foreach (ICohort cohort in speciesCohorts)
+                {
+                    if (cohort.Age > max)
+                        max = cohort.Age;
+                }
+            }
+            return max;
         }
         
         //---------------------------------------------------------------------
