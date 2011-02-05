@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 using AgeCohorts = Landis.AgeCohort;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// Selects specific ages and ranges of ages among a species' cohorts

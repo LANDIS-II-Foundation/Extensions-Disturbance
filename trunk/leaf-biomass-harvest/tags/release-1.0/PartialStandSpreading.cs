@@ -22,7 +22,7 @@ using System.Reflection;
 
 using BaseHarvest = Landis.Harvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     // This class exists so that AppliedPrescription will access the base class
     // when it casts as StandSpreading.

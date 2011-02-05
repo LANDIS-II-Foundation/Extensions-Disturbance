@@ -16,7 +16,7 @@
  
 using Landis.RasterIO;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     public class BiomassPixel
         : SingleBandPixel<ushort>

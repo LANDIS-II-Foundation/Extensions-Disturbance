@@ -16,7 +16,7 @@
 
 using Landis.Landscape;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     public static class SiteVars
     {

@@ -8,7 +8,7 @@ using System.IO;
 
 using BaseHarvest = Landis.Harvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     public class PlugIn
         : Landis.PlugIns.PlugIn, Landis.PlugIns.ICleanUp

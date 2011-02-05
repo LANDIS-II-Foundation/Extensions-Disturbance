@@ -20,7 +20,7 @@ using System.Text;
 
 using BaseHarvest = Landis.Harvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// Static class for partial thinning.

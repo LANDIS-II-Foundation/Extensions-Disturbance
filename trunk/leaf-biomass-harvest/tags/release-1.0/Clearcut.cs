@@ -7,7 +7,7 @@ using Landis.Harvest;
 using AgeCohorts = Landis.AgeCohort;
 using BaseHarvest = Landis.Harvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// Removes all the cohorts at a site.

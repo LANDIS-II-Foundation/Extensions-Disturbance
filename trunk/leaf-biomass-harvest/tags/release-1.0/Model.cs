@@ -1,7 +1,7 @@
 using Landis.Biomass;
 using System;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     internal static class Model
     {

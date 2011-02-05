@@ -19,7 +19,7 @@ using Landis.RasterIO;
 
 using BaseHarvest = Landis.Harvest;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// Utility class for writing biomass-removed maps.

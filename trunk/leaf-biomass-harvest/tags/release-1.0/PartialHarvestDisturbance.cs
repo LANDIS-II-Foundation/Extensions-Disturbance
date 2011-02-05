@@ -19,7 +19,7 @@ using Landis.Landscape;
 using Landis.PlugIns;
 using System.Collections.Generic;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// A biomass disturbance that handles partial thinning of cohorts.

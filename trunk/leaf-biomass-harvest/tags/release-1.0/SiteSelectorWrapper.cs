@@ -19,7 +19,7 @@ using Landis.Harvest;
 using Landis.Landscape;
 using System.Collections.Generic;
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     // Wrapper around a site selector that invokes partial harvesting for
     // selected site.

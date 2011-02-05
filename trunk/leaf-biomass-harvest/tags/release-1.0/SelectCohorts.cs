@@ -5,7 +5,7 @@ using AgeCohorts = Landis.AgeCohort;
 using BaseHarvest = Landis.Harvest;
 
 
-namespace Landis.Extensions.LeafBiomassHarvest
+namespace Landis.Extension.LeafBiomassHarvest
 {
     /// <summary>
     /// Various methods for selecting which of a species' cohorts to harvest.
