@@ -321,7 +321,7 @@ namespace Landis.Extension.BiomassHarvest
             int standPrescriptionNumber = 0;
             double biomassRemoved = 0.0;
             double biomassRemovedPerHa = 0.0;
-            modelCore.Log.WriteLine("   mgmtArea {0}, Stand {1} ", mgmtArea.Prescriptions.Count, stand.MapCode);
+            //modelCore.Log.WriteLine("BiomassHarvest:  PlugIn.cs: WriteLogEntry: mgmtArea {0}, Stand {1} ", mgmtArea.Prescriptions.Count, stand.MapCode);
 
             foreach (ActiveSite site in stand) {
                 //set the prescription name for this site
