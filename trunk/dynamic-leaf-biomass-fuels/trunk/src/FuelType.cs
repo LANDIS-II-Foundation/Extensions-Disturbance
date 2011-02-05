@@ -3,7 +3,7 @@
 
 using Edu.Wisc.Forest.Flel.Util;
 
-namespace Landis.Extension.Fuels.LeafBiomass
+namespace Landis.Extension.LeafBiomassFuels
 {
 
     //NOTE:  M2, M4, and O1b excluded for this list.  This is because these types are

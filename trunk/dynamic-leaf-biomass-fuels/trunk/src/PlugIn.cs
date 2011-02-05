@@ -7,7 +7,7 @@ using Landis.SpatialModeling;
 using System.Collections.Generic;
 using System;
 
-namespace Landis.Extension.Fuels.LeafBiomass
+namespace Landis.Extension.LeafBiomassFuels
 {
     public class PlugIn
         : ExtensionMain

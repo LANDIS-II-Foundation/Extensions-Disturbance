@@ -7,7 +7,7 @@ using Edu.Wisc.Forest.Flel.Util;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Landis.Extension.Fuels.LeafBiomass
+namespace Landis.Extension.LeafBiomassFuels
 {
     /// <summary>
     /// A parser that reads the plug-in's parameters from text input.
@@ -15,7 +15,6 @@ namespace Landis.Extension.Fuels.LeafBiomass
     public class InputParametersParser
         : TextParser<IInputParameters>
     {
-        public static ISpeciesDataset SpeciesDataset = null;
 
         //---------------------------------------------------------------------
 
@@ -33,7 +32,7 @@ namespace Landis.Extension.Fuels.LeafBiomass
             if (landisData.Value.Actual != PlugIn.ExtensionName)
                 throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
 
-            InputParameters parameters = new InputParameters(SpeciesDataset.Count);
+            InputParameters parameters = new InputParameters(PlugIn.ModelCore.Species.Count);
 
             InputVar<int> timestep = new InputVar<int>("Timestep");
             ReadVar(timestep);
@@ -99,7 +98,7 @@ namespace Landis.Extension.Fuels.LeafBiomass
                 ReadValue(fi, currentLine);
                 CheckForRepeatedIndex(fi.Value, "fuel type", FuelTypeLineNumbers);
 
-                IFuelType currentFuelType = new FuelType(SpeciesDataset.Count, PlugIn.ModelCore.Ecoregions.Count);
+                IFuelType currentFuelType = new FuelType(PlugIn.ModelCore.Species.Count, PlugIn.ModelCore.Ecoregions.Count);
                 parameters.FuelTypes.Add(currentFuelType);
 
                 currentFuelType.Index = fi.Value;
@@ -284,7 +283,7 @@ namespace Landis.Extension.Fuels.LeafBiomass
 
         protected ISpecies GetSpecies(InputValue<string> name)
         {
-            ISpecies species = SpeciesDataset[name.Actual];
+            ISpecies species = PlugIn.ModelCore.Species[name.Actual];
             if (species == null)
                 throw new InputValueException(name.String,
                                               "{0} is not a species name.",

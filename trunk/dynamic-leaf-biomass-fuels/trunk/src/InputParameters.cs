@@ -4,7 +4,7 @@
 using Edu.Wisc.Forest.Flel.Util;
 using System.Collections.Generic;
 
-namespace Landis.Extension.Fuels.LeafBiomass
+namespace Landis.Extension.LeafBiomassFuels
 {
     /// <summary>
     /// The parameters for the plug-in.

@@ -1,7 +1,7 @@
 //  Copyright 2007-2010 Portland State University, USFS Northern Research Station
 //  Authors:  Robert M. Scheller, Brian R. Miranda
 
-namespace Landis.Extension.Fuels.LeafBiomass
+namespace Landis.Extension.LeafBiomassFuels
 {
     /// <summary>
     /// A forest type.

@@ -6,7 +6,7 @@ using Landis.Library.LeafBiomassCohorts;
 using Landis.SpatialModeling;
 using System.Collections.Generic;
 
-namespace Landis.Extension.Fuels.LeafBiomass
+namespace Landis.Extension.LeafBiomassFuels
 {
 
     ///<summary>

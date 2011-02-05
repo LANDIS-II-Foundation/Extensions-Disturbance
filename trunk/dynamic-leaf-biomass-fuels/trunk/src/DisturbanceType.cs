@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Edu.Wisc.Forest.Flel.Util;
 
 
-namespace Landis.Extension.Fuels.LeafBiomass
+namespace Landis.Extension.LeafBiomassFuels
 {
     //Disturbance fuel types
     public interface IDisturbanceType

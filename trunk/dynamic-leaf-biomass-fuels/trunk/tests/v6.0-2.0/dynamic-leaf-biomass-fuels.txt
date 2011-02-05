@@ -48,7 +48,7 @@ DisturbanceConversionTable
 	13	20		WindSeverity4 MaxAgeClearcut
 	15	20		WindSeverity5 
 
-MapFileNames	fire/FuelType-{timestep}.gis 
-PctConiferFileName	fire/PctConifer-{timestep}.gis
-PctDeadFirFileName	fire/PctDeadFir-{timestep}.gis
+MapFileNames		dynamic-fuels/FuelType-{timestep}.img
+PctConiferFileName	dynamic-fuels/PctConifer-{timestep}.img
+PctDeadFirFileName	dynamic-fuels/PctDeadFir-{timestep}.img
 

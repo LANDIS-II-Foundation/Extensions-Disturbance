@@ -21,8 +21,8 @@ CellLength  100 << meters, 100 x 100 m = 1 ha
 
 >> Disturbance Extensions   Initialization File
 >> ----------------------   -------------------
-   "Dynamic Leaf Biomass Fuels"	dynamic-biomass-fuels.txt
-   "Dynamic Fire System"	fire-DFFS.txt
+   "Dynamic Leaf Biomass Fuels"	dynamic-leaf-biomass-fuels.txt
+   "Dynamic Fire System"	dynamic-fire.txt
 
 >>   DisturbancesRandomOrder  yes  << optional parameter; default = no
 

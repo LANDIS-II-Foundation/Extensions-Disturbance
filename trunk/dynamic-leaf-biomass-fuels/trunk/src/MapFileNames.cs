@@ -5,7 +5,7 @@ using Landis.Core;
 using Edu.Wisc.Forest.Flel.Util;
 using System.Collections.Generic;
 
-namespace Landis.Extension.Fuels.LeafBiomass
+namespace Landis.Extension.LeafBiomassFuels
 {
     /// <summary>
     /// Methods for working with the template for filenames of Fuel maps.
