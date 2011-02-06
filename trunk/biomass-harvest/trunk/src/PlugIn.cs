@@ -82,11 +82,8 @@ namespace Landis.Extension.BiomassHarvest
             Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
 
             ParametersParser parser = new ParametersParser(modelCore.Species);
-                                                           //modelCore.StartTime,
-                                                           //modelCore.EndTime);
 
             BaseHarvest.IInputParameters baseParameters = modelCore.Load<BaseHarvest.IInputParameters>(dataFile, parser);
-            // IParameters parameters = baseParameters as IParameters;
             parameters = baseParameters as IParameters;
             if (parser.RoundedRepeatIntervals.Count > 0)
             {

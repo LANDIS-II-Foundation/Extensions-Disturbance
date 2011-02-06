@@ -48,10 +48,6 @@ namespace Landis.Extension.BiomassHarvest
                 //  for partial thinning.
                 PartialHarvestDisturbance.ReduceCohortBiomass(activeSite, stand);
                 
-                //if(BaseHarvest.SiteVars.CohortsDamaged[currentSite] <= 0)  // don't double count
-                //Landis.Harvest.SiteVars.Stand[activeSite].LastAreaHarvested += PlugIn.ModelCore.CellArea;
-                
-                
                 yield return activeSite;
 
             }

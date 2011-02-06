@@ -68,10 +68,7 @@ namespace Landis.Extension.BiomassHarvest
             if (reductions[cohort.Species.Index].TryGetValue(cohort.Age, out reduction))
             {
 
-                //PlugIn.ModelCore.Log.WriteLine("Removing:  {0:0.0}/{1:0.0}.", reduction, cohort.Biomass);
-
                 SiteVars.BiomassRemoved[currentSite] += reduction;
-
                 SiteVars.CohortsPartiallyDamaged[currentSite]++;
 
                 if (originalStand.LastPrescription.PreventEstablishment)

@@ -34,7 +34,7 @@ Prescription SelectiveNorthernHardwood
        betualle   100	     	50
        fraxamer    60	     	40
 
-    SiteSelection Complete << StandSpread 5 500 << PatchCutting 10%  1  << ha
+    SiteSelection PatchCutting 10%  1  << ha
     CohortsRemoved SpeciesList
 	>> Species Selection
 	>> ------- ---------
