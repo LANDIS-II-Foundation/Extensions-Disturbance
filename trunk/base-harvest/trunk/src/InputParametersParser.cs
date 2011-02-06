@@ -19,7 +19,7 @@ namespace Landis.Extension.BaseHarvest
         : TextParser<IInputParameters>
     {
         private static ParseMethod<ushort> uShortParse;
-        //private Species.IDataset speciesDataset;
+        private ISpeciesDataset speciesDataset;
         private IStandRankingMethod rankingMethod;  //made global because of re-use
         private InputVar<string> speciesName;
         private Dictionary<string, int> speciesLineNumbers;
@@ -138,8 +138,9 @@ namespace Landis.Extension.BaseHarvest
         /// <param name="scenarioEnd">
         /// The year that the model scenario ends.
         /// </param>
-        public InputParametersParser()
+        public InputParametersParser(ISpeciesDataset speciesDataset)
         {
+            this.speciesDataset = speciesDataset;
             this.speciesName = new InputVar<string>("Species");
             this.speciesLineNumbers = new Dictionary<string, int>();
             this.roundedIntervals = new List<RoundedInterval>();
@@ -485,7 +486,7 @@ namespace Landis.Extension.BaseHarvest
         protected ISpecies ReadAndValidateSpeciesName(StringReader currentLine)
         {
             ReadValue(speciesName, currentLine);
-            ISpecies species = PlugIn.ModelCore.Species[speciesName.Value.Actual];
+            ISpecies species = speciesDataset[speciesName.Value.Actual];
             if (species == null)
                 throw new InputValueException(speciesName.Value.String,
                                               "{0} is not a species name",
@@ -883,7 +884,7 @@ namespace Landis.Extension.BaseHarvest
         {
             InputVar<List<ISpecies>> plant = new InputVar<List<ISpecies>>("Plant", ReadSpeciesList);
             if (ReadOptionalVar(plant))
-                return new Planting.SpeciesList(plant.Value.Actual, PlugIn.ModelCore.Species);
+                return new Planting.SpeciesList(plant.Value.Actual, speciesDataset); //PlugIn.ModelCore.Species);
             else
                 return null;
         }
@@ -1078,7 +1079,7 @@ namespace Landis.Extension.BaseHarvest
 
         protected ISpecies GetSpecies(InputValue<string> name)
         {
-            ISpecies species = PlugIn.ModelCore.Species[name.Actual];
+            ISpecies species = speciesDataset[name.Actual]; // PlugIn.ModelCore.Species[name.Actual];
             if (species == null)
                 throw new InputValueException(name.String,
                                               "{0} is not a species name.",

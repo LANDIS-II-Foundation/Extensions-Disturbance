@@ -54,7 +54,7 @@ namespace Landis.Extension.BaseHarvest
         {
             modelCore = mCore;
             SiteVars.Initialize();
-            InputParametersParser parser = new InputParametersParser();
+            InputParametersParser parser = new InputParametersParser(mCore.Species);
             parameters = mCore.Load<IInputParameters>(dataFile, parser);
             if (parser.RoundedRepeatIntervals.Count > 0)
             {
@@ -110,7 +110,7 @@ namespace Landis.Extension.BaseHarvest
                 species_header_names += PlugIn.ModelCore.Species[i].Name + ",";
             }
 
-            log.WriteLine("Time,ManagementArea,Prescription,Stand,Event Id,Stand Age,Stand Rank,NumberOfSites,HarvestedSites,CohortsDamaged,{0}", species_header_names);
+            log.WriteLine("Time,ManagementArea,Prescription,Stand,EventId,StandAge,StandRank,NumberOfSites,HarvestedSites,CohortsKilled,{0}", species_header_names);
 
             PlugIn.ModelCore.Log.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
 
