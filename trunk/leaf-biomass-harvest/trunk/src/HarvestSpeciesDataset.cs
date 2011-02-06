@@ -11,7 +11,7 @@ namespace Landis.Extension.LeafBiomassHarvest
 {
     // Wrapper around a species dataset so we can know what species was
     // most recently fetched from the dataset.
-    public class SpeciesDataset
+    public class HarvestSpeciesDataset
         : ISpeciesDataset
     {
         private static ISpecies mostRecentlyFetched;
@@ -57,7 +57,7 @@ namespace Landis.Extension.LeafBiomassHarvest
 
         //---------------------------------------------------------------------
 
-        public SpeciesDataset(ISpeciesDataset dataset)
+        public HarvestSpeciesDataset(ISpeciesDataset dataset)
         {
             Require.ArgumentNotNull(dataset);
             this.dataset = dataset;

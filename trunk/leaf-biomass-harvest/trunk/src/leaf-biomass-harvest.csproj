@@ -52,9 +52,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Cohorts.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.Cohorts.LeafBiomass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Landis.Library.LeafBiomassCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Cohorts.LeafBiomass.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.LeafBiomassCohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Succession, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -81,6 +81,7 @@
     <Compile Include="IInputParameters.cs" />
     <Compile Include="InputParameters.cs" />
     <Compile Include="InputParametersParser.cs" />
+    <Compile Include="IntPixel.cs" />
     <Compile Include="PartialHarvestDisturbance.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -100,7 +101,7 @@
     <Compile Include="SiteVars.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SpeciesDataset.cs">
+    <Compile Include="HarvestSpeciesDataset.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SpecificAgesCohortSelector.cs">

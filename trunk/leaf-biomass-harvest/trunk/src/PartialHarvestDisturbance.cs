@@ -58,7 +58,7 @@ namespace Landis.Extension.LeafBiomassHarvest
 
         //---------------------------------------------------------------------
 
-        float[] IDisturbance.RemoveMarkedCohort(ICohort cohort)
+        float[] IDisturbance.ReduceOrKillMarkedCohort(ICohort cohort)
         {
             float reduction;
             float[] leafWoodReduction = new float[2]{0F, 0F};
@@ -67,7 +67,17 @@ namespace Landis.Extension.LeafBiomassHarvest
             
                 leafWoodReduction[0] = cohort.WoodBiomass / (cohort.LeafBiomass + cohort.WoodBiomass) * (float) reduction;
                 leafWoodReduction[1] = cohort.LeafBiomass / (cohort.LeafBiomass + cohort.WoodBiomass) * (float) reduction;
+                
                 SiteVars.BiomassRemoved[currentSite] += (int) reduction;
+                SiteVars.CohortsPartiallyDamaged[currentSite]++;
+
+                if (originalStand.LastPrescription.PreventEstablishment)
+                {
+                    numberCohortsReduced++;
+                    capacityReduction += (double)reduction / (double)cohort.Biomass;
+                }
+                // Record any cohort touched, not just killed:
+                BaseHarvest.SiteVars.Stand[currentSite].UpdateDamageTable(cohort.Species.Name);
                 
                 return leafWoodReduction;
             }
@@ -100,20 +110,6 @@ namespace Landis.Extension.LeafBiomassHarvest
         /// <summary>
         /// Reduces the biomass of cohorts that have been marked for partial
         /// reduction.
-        /// </summary>
-        /*public static void ReduceCohortBiomass(ActiveSite site)
-        {
-            currentSite = site;
-            SiteVars.Cohorts[site].RemoveMarkedCohorts((ICohortDisturbance) singleton);
-            // SiteVars.Cohorts[site].DamageBy(singleton);
-            for (int i = 0; i < reductions.Length; i++)
-                reductions[i].Clear();
-        }*/
-        //---------------------------------------------------------------------
-
-        /// <summary>
-        /// Reduces the biomass of cohorts that have been marked for partial
-        /// reduction.
         //  Original stand is the originating stand in cases where there is stand spreading.
         /// </summary>
         public static void ReduceCohortBiomass(ActiveSite site, Stand stand)
@@ -123,7 +119,7 @@ namespace Landis.Extension.LeafBiomassHarvest
             numberCohortsReduced = 0;
             capacityReduction = 0.0;
 
-            SiteVars.Cohorts[site].RemoveCohorts(singleton);
+            SiteVars.Cohorts[site].ReduceOrKillBiomassCohorts(singleton);
 
             //The function above will have gone through all the cohorts.  Now summarize
             //site level information.

@@ -31,15 +31,6 @@ namespace Landis.Extension.LeafBiomassHarvest
         private double standSpreadMaxTargetSize;
 
         //---------------------------------------------------------------------
-        /*
-        public override string LandisDataValue
-        {
-            get {
-                return "Leaf Biomass Harvest";
-            }
-        }
-        */
-        //---------------------------------------------------------------------
 
         static InputParametersParser()
         {
@@ -62,19 +53,16 @@ namespace Landis.Extension.LeafBiomassHarvest
         /// Initializes a new instance.
         /// </summary>
         /// <param name="speciesDataset">
-        /// The dataset of species to look up species' names in.
+        /// The dataset of species to look up species' names in.  Important note:  the base harvest
+        /// speciesDataset must be overwritten with the HarvestSpeciesDataset.  Methods within base harvest
+        /// will set the MostRecentlyFetchedSpecies parameter when they are reading in species names 
+        /// from a list of cohorts to be removed.  The value of MostRecentlyFetchedSpecies is not set within 
+        /// biomass harvest.
         /// </param>
-        /// <param name="scenarioStart">
-        /// The year that the model scenario starts.
-        /// </param>
-        /// <param name="scenarioEnd">
-        /// The year that the model scenario ends.
-        /// </param>
-        public InputParametersParser(ISpeciesDataset speciesDataset,
-                                int              scenarioStart,
-                                int              scenarioEnd)
-            // : base(new SpeciesDataset(speciesDataset), scenarioStart, scenarioEnd)
-            : base()
+        public InputParametersParser(ISpeciesDataset speciesDataset)
+                                //int              scenarioStart,
+                                //int              scenarioEnd)
+            : base(new HarvestSpeciesDataset(speciesDataset))
         {
             this.speciesDataset = speciesDataset;
             ageSelectors = new SpecificAgesCohortSelector[speciesDataset.Count];
@@ -90,10 +78,10 @@ namespace Landis.Extension.LeafBiomassHarvest
             //  Have we started reading ages and ranges for another species?
             //  If so, then first create a cohort selector for the previous
             //  species.
-            if (currentSpecies != SpeciesDataset.MostRecentlyFetchedSpecies) {
+            if (currentSpecies != HarvestSpeciesDataset.MostRecentlyFetchedSpecies) {
                 if (currentSpecies != null)
                     ageSelectors[currentSpecies.Index] = new SpecificAgesCohortSelector(ages, ranges, percentages);
-                currentSpecies = SpeciesDataset.MostRecentlyFetchedSpecies;
+                currentSpecies = HarvestSpeciesDataset.MostRecentlyFetchedSpecies;
                 ages.Clear();
                 ranges.Clear();
                 percentages.Clear();
@@ -222,8 +210,12 @@ namespace Landis.Extension.LeafBiomassHarvest
             ReadVar(eventLogFile);
             parameters.EventLog = eventLogFile.Value;
 
+            InputVar<string> summaryLogFile = new InputVar<string>("SummaryLog");
+            ReadVar(summaryLogFile);
+            parameters.SummaryLog = summaryLogFile.Value;
+
             CheckNoDataAfter("the " + eventLogFile.Name + " parameter");
-            return parameters; //.GetComplete();
+            return parameters; 
         }
 
         //---------------------------------------------------------------------

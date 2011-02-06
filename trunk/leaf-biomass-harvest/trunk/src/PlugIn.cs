@@ -7,6 +7,7 @@ using Landis.Core;
 using Landis.SpatialModeling;
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 using BaseHarvest = Landis.Extension.BaseHarvest;
 
@@ -16,12 +17,19 @@ namespace Landis.Extension.LeafBiomassHarvest
         : ExtensionMain
     {
         public static readonly ExtensionType Type = new ExtensionType("disturbance:harvest");
-        public static readonly string PlugInName = "Biomass Harvest";
+        public static readonly string PlugInName = "Leaf Biomass Harvest";
         private IManagementAreaDataset managementAreas;
         private PrescriptionMaps prescriptionMaps;
+        private string nameTemplate;
         private BiomassMaps biomassMaps;
         private StreamWriter log;
+        private StreamWriter summaryLog;
         private bool running;
+        int[] totalSites;
+        int[] totalDamagedSites;
+        int[,] totalSpeciesCohorts;
+        int[] totalCohortsKilled;
+        int[] totalCohortsDamaged;
 
         private static IInputParameters parameters;
         private static ICore modelCore;
@@ -51,7 +59,7 @@ namespace Landis.Extension.LeafBiomassHarvest
             ExtensionMain baseHarvest = new BaseHarvest.PlugIn();
             try
             {
-                baseHarvest.Initialize(null);
+                baseHarvest.LoadParameters(null, mCore);
             }
             catch (System.ArgumentNullException)
             {
@@ -59,16 +67,12 @@ namespace Landis.Extension.LeafBiomassHarvest
             }
 
             modelCore = mCore;
-            PartialHarvestDisturbance.Initialize();
-            SiteVars.Initialize();
 
             // Add local event handler for cohorts death due to age-only
             // disturbances.
             Landis.Library.LeafBiomassCohorts.Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
 
-            InputParametersParser parser = new InputParametersParser(modelCore.Species,
-                                                           modelCore.StartTime,
-                                                           modelCore.EndTime);
+            InputParametersParser parser = new InputParametersParser(modelCore.Species);
 
             BaseHarvest.IInputParameters baseParameters = modelCore.Load<BaseHarvest.IInputParameters>(dataFile, parser);
             parameters = baseParameters as IInputParameters;
@@ -87,77 +91,45 @@ namespace Landis.Extension.LeafBiomassHarvest
 
         //---------------------------------------------------------------------
 
-        public override void Initialize(string dataFile)
+        public override void Initialize()
         {
-            // Initialize the Base Harvest's Model.Core property.
-            // HACK: Because that property is internal, we must
-            // call the Initialize method on an instance of Base
-            // Harvest's PlugIn class.  But don't want that
-            // Initialize method parsing the data file.  So we
-            // pass in a null string to force an exception to
-            // be raised; hence aborting the initialization at
-            // a point that's acceptable.
-            /*
-            ExtensionMain baseHarvest = new BaseHarvest.PlugIn();
-            try {
-                baseHarvest.Initialize(null, modelCore);
-            }
-            catch (System.ArgumentNullException) {
-                // ignore
-            }
-
-            Model.Core = modelCore;
-            PartialHarvestDisturbance.Initialize();
             SiteVars.Initialize();
+            PartialHarvestDisturbance.Initialize();
 
-            // Add local event handler for cohorts death due to age-only
-            // disturbances.
-            Biomass.Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
-
-            InputParametersParser parser = new InputParametersParser(modelCore.Species,
-                                                           modelCore.StartTime,
-                                                           modelCore.EndTime);
-
-            BaseHarvest.IInputParameters baseParameters = Landis.Data.Load<BaseHarvest.IInputParameters>(dataFile, parser);
-            IInputParameters parameters = baseParameters as IInputParameters;
-            if (parser.RoundedRepeatIntervals.Count > 0) {
-                modelCore.Log.WriteLine("NOTE: The following repeat intervals were rounded up to");
-                modelCore.Log.WriteLine("      ensure they were multiples of the harvest timestep:");
-                modelCore.Log.WriteLine("      File: {0}", dataFile);
-                foreach (RoundedInterval interval in parser.RoundedRepeatIntervals)
-                    modelCore.Log.WriteLine("      At line {0}, the interval {1} rounded up to {2}",
-                                 interval.LineNumber,
-                                 interval.Original,
-                                 interval.Adjusted);
-            }
-            */
-
-
-            //set timestep
             Timestep = parameters.Timestep;
-            //set management areas
             managementAreas = parameters.ManagementAreas;
-            modelCore.Log.WriteLine("Reading management-area map {0} ...", parameters.ManagementAreaMap);
+            
             //read management area map
-            ManagementAreas.ReadMap(parameters.ManagementAreaMap,
-                                    managementAreas);
+            modelCore.Log.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
+            ManagementAreas.ReadMap(parameters.ManagementAreaMap, managementAreas);
 
-            modelCore.Log.WriteLine("Reading stand map {0} ...", parameters.StandMap);
-            //readMap reads the stand map and adds all the stands to a management area
+            
+            //  readMap reads the stand map and adds all the stands to a management area
+            modelCore.Log.WriteLine("   Reading stand map {0} ...", parameters.StandMap);
             Stands.ReadMap(parameters.StandMap);
+            
             //finish each managementArea's initialization
             foreach (ManagementArea mgmtArea in managementAreas)
-                //after reading the stand map, finish the initializations
                 mgmtArea.FinishInitialization();
 
             prescriptionMaps = new PrescriptionMaps(parameters.PrescriptionMapNames);
+            nameTemplate = parameters.PrescriptionMapNames;
             if (parameters.BiomassMapNames != null)
                 biomassMaps = new BiomassMaps(parameters.BiomassMapNames);
 
             //open log file and write header
-            modelCore.Log.WriteLine("Opening harvest log file \"{0}\" ...", parameters.EventLog);
-            log = modelCore.CreateTextFile(parameters.EventLog);
+            modelCore.Log.WriteLine("   Opening harvest log file \"{0}\" ...", parameters.EventLog);
+            try
+            {
+                log = modelCore.CreateTextFile(parameters.EventLog);
+            }
+            catch (Exception err)
+            {
+                string mesg = string.Format("{0}", err.Message);
+                throw new System.ApplicationException(mesg);
+            }
             log.AutoFlush = true;
+            
             //include a column for each species in the species dictionary
             string species_header_names = "";
             int i = 0;
@@ -165,7 +137,20 @@ namespace Landis.Extension.LeafBiomassHarvest
                 species_header_names += modelCore.Species[i].Name + ",";
             }
 
-            log.WriteLine("Time,Management Area,Prescription,Stand,Event Id,Stand Age,Stand Rank,Total Sites,Damaged Sites,Cohorts Killed,{0}", species_header_names);
+            modelCore.Log.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
+            log.WriteLine("Time,ManagementArea,Prescription,StandMapCode,EventId,StandAge,StandRank,StandSiteCount,DamagedSites,MgBiomassRemoved,MgBioRemovedPerDamagedHa,CohortsDamaged,CohortsKilled{0}", species_header_names);
+
+            try
+            {
+                summaryLog = ModelCore.CreateTextFile(parameters.SummaryLog);
+            }
+            catch (Exception err)
+            {
+                string mesg = string.Format("{0}", err.Message);
+                throw new System.ApplicationException(mesg);
+            }
+            summaryLog.AutoFlush = true;
+            summaryLog.WriteLine("Time,ManagementArea,Prescription,TotalDamagedSites,TotalCohortsDamaged,TotalCohortsKilled{0}", species_header_names);
 
         }
 
@@ -174,22 +159,82 @@ namespace Landis.Extension.LeafBiomassHarvest
         public override void Run()
         {
             running = true;
-
             BaseHarvest.SiteVars.Prescription.ActiveSiteValues = null;
-            //BaseHarvest.SiteVars.CohortsKilled.ActiveSiteValues = 0;
             SiteVars.BiomassRemoved.ActiveSiteValues = 0;
+            SiteVars.CohortsPartiallyDamaged.ActiveSiteValues = 0;
+            BaseHarvest.SiteVars.CohortsDamaged.ActiveSiteValues = 0;
 
             //harvest each management area in the list
-            foreach (ManagementArea mgmtArea in managementAreas) {
+            foreach (ManagementArea mgmtArea in managementAreas)
+            {
+
+                totalSites = new int[Prescription.Count];
+                totalDamagedSites = new int[Prescription.Count];
+                totalSpeciesCohorts = new int[Prescription.Count, modelCore.Species.Count];
+                totalCohortsDamaged = new int[Prescription.Count];
+                totalCohortsKilled = new int[Prescription.Count];
+
+
                 mgmtArea.HarvestStands();
                 //and record each stand that's been harvested
-                foreach (Stand stand in mgmtArea) {
-                    if (stand.Harvested) {
+
+                foreach (Stand stand in mgmtArea)
+                {
+                    //modelCore.Log.WriteLine("   List of stands {0} ...", stand.MapCode);
+                    if (stand.Harvested)
                         WriteLogEntry(mgmtArea, stand);
+
+                }
+
+                // Prevent establishment:
+                foreach (Stand stand in mgmtArea)
+                {
+
+                    if (stand.Harvested && stand.LastPrescription.PreventEstablishment)
+                    {
+
+                        List<ActiveSite> sitesToDelete = new List<ActiveSite>();
+
+                        foreach (ActiveSite site in stand)
+                        {
+                            if (SiteVars.CohortsPartiallyDamaged[site] > 0 || BaseHarvest.SiteVars.CohortsDamaged[site] > 0)
+                            {
+                                Landis.Library.Succession.Reproduction.PreventEstablishment(site);
+                                sitesToDelete.Add(site);
+                            }
+
+                        }
+
+                        foreach (ActiveSite site in sitesToDelete)
+                        {
+                            stand.DelistActiveSite(site);
+                        }
                     }
+
+                }
+
+                // Write Summary Log File:
+                foreach (AppliedPrescription aprescription in mgmtArea.Prescriptions)
+                {
+                    Prescription prescription = aprescription.Prescription;
+                    string species_string = "";
+                    foreach (ISpecies species in modelCore.Species)
+                        species_string += ", " + totalSpeciesCohorts[prescription.Number, species.Index];
+
+                    //summaryLog.WriteLine("Time,ManagementArea,Prescription,TotalDamagedSites,TotalCohortsDamaged,TotalCohortsKilled,{0}", species_header_names);
+                    if (totalSites[prescription.Number] > 0)
+                        summaryLog.WriteLine("{0},{1},{2},{3},{4},{5}{6}",
+                            modelCore.CurrentTime,
+                            mgmtArea.MapCode,
+                            prescription.Name,
+                            totalDamagedSites[prescription.Number],
+                            totalCohortsDamaged[prescription.Number],
+                            totalCohortsKilled[prescription.Number],
+                            species_string);
                 }
             }
-            prescriptionMaps.WriteMap(modelCore.CurrentTime);
+
+            WritePrescriptionMap(modelCore.CurrentTime);
             if (biomassMaps != null)
                 biomassMaps.WriteMap(modelCore.CurrentTime);
 
@@ -210,27 +255,77 @@ namespace Landis.Extension.LeafBiomassHarvest
             // If this plug-in is running, then the age-only disturbance must
             // be a cohort-selector from Base Harvest.
             SiteVars.BiomassRemoved[eventArgs.Site] += (int) (eventArgs.Cohort.LeafBiomass + eventArgs.Cohort.WoodBiomass);
-            }
+        }
 
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Writes an output map of prescriptions that harvested each active site.
+        /// </summary>
+        private void WritePrescriptionMap(int timestep)
+        {
+            string path = MapNames.ReplaceTemplateVars(nameTemplate, timestep);
+            modelCore.Log.WriteLine("   Writing prescription map to {0} ...", path);
+            using (IOutputRaster<IntPixel> outputRaster = modelCore.CreateRaster<IntPixel>(path, modelCore.Landscape.Dimensions))
+            {
+                IntPixel pixel = outputRaster.BufferPixel;
+                foreach (Site site in modelCore.Landscape.AllSites)
+                {
+                    if (site.IsActive)
+                    {
+                        Prescription prescription = BaseHarvest.SiteVars.Prescription[site];
+                        if (prescription == null)
+                            pixel.MapCode.Value = 1;
+                        else
+                            pixel.MapCode.Value = (prescription.Number + 1);
+                    }
+                    else
+                    {
+                        //  Inactive site
+                        pixel.MapCode.Value = 0;
+                    }
+                    outputRaster.WriteBufferPixel();
+                }
+            }
+        }
         //---------------------------------------------------------------------
 
         public void WriteLogEntry(ManagementArea mgmtArea, Stand stand)
         {
             int damagedSites = 0;
+            int cohortsDamaged = 0;
             int cohortsKilled = 0;
-            foreach (ActiveSite site in stand) {
+            int standPrescriptionNumber = 0;
+            double biomassRemoved = 0.0;
+            double biomassRemovedPerHa = 0.0;
+
+            foreach (ActiveSite site in stand)
+            {
                 //set the prescription name for this site
                 if (BaseHarvest.SiteVars.Prescription[site] != null)
                 {
+                    standPrescriptionNumber = BaseHarvest.SiteVars.Prescription[site].Number;
                     BaseHarvest.SiteVars.PrescriptionName[site] = BaseHarvest.SiteVars.Prescription[site].Name;
                     BaseHarvest.SiteVars.TimeOfLastEvent[site] = modelCore.CurrentTime;
                 }
-                int cohortsKilledAtSite = BaseHarvest.SiteVars.CohortsDamaged[site];
-                cohortsKilled += cohortsKilledAtSite;
-                if (cohortsKilledAtSite > 0) {
+
+                cohortsDamaged += SiteVars.CohortsPartiallyDamaged[site];
+                cohortsKilled += BaseHarvest.SiteVars.CohortsDamaged[site];
+
+
+                if (SiteVars.CohortsPartiallyDamaged[site] > 0 || BaseHarvest.SiteVars.CohortsDamaged[site] > 0)
+                {
                     damagedSites++;
+
+                    //Conversion from [g m-2] to [Mg]
+                    biomassRemoved += SiteVars.BiomassRemoved[site] / 100.0 * modelCore.CellArea;
                 }
             }
+            totalSites[standPrescriptionNumber] += stand.SiteCount;
+            totalDamagedSites[standPrescriptionNumber] += damagedSites;
+            totalCohortsDamaged[standPrescriptionNumber] += cohortsDamaged;
+            totalCohortsKilled[standPrescriptionNumber] += cohortsKilled;
+
 
             //csv string for log file, contains species kill count
             string species_count = "";
@@ -255,31 +350,26 @@ namespace Landis.Extension.LeafBiomassHarvest
             stand.ClearDamageTable();
 
             //write to log file:
-                //current time
-                //management area's map code
-                //the prescription that caused this harvest
-                //stand's map code
-                //stand's age
-                //stand's current rank
-                //total sites in the stand
-                //damaged sites from this stand
-                //cohorts killed in this stand, by this harvest
-            //and only record stands where a site has been damaged
-            //if (damagedSites > 0) {
-                log.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
-                          modelCore.CurrentTime, mgmtArea.MapCode, stand.PrescriptionName, stand.MapCode, stand.EventId,
-                          stand.Age, stand.HarvestedRank, stand.SiteCount, damagedSites, cohortsKilled, species_count);
-            //}
+            biomassRemovedPerHa = biomassRemoved / (double)damagedSites / modelCore.CellArea;
+
+            if (biomassRemoved <= 0.0)
+                return;
+
+            log.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9:0.000},{10:0.000},{11},{12}{13}",
+                          modelCore.CurrentTime,
+                          mgmtArea.MapCode,
+                          stand.PrescriptionName,
+                          stand.MapCode,
+                          stand.EventId,
+                          stand.Age,
+                          stand.HarvestedRank,
+                          stand.SiteCount,
+                          damagedSites,
+                          biomassRemoved,  // Mg
+                          biomassRemovedPerHa, // Mg/ha
+                          cohortsDamaged,
+                          cohortsKilled,
+                          species_count);
         }
-        //---------------------------------------------------------------------
-        /*
-        void PlugIns.ICleanUp.CleanUp()
-        {
-            if (log != null) {
-                log.Close();
-                log = null;
-            }
-        }
-        */
     }
 }
