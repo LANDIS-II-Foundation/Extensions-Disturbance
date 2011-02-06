@@ -38,6 +38,8 @@ namespace Landis.Extension.BiomassHarvest
 
         public IEnumerable<ActiveSite> SelectSites(Stand stand)
         {
+            //PlugIn.ModelCore.Log.WriteLine("Site Selector Wrapper");
+
             foreach (ActiveSite activeSite in originalSelector.SelectSites(stand)) {
                 
                 //  At this point, a prescription is done harvesting the

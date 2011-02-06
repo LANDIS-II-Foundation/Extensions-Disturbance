@@ -81,9 +81,9 @@ namespace Landis.Extension.BiomassHarvest
             // disturbances.
             Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
 
-            ParametersParser parser = new ParametersParser(modelCore.Species,
-                                                           modelCore.StartTime,
-                                                           modelCore.EndTime);
+            ParametersParser parser = new ParametersParser(modelCore.Species);
+                                                           //modelCore.StartTime,
+                                                           //modelCore.EndTime);
 
             BaseHarvest.IInputParameters baseParameters = modelCore.Load<BaseHarvest.IInputParameters>(dataFile, parser);
             // IParameters parameters = baseParameters as IParameters;
@@ -250,7 +250,6 @@ namespace Landis.Extension.BiomassHarvest
 
         // Event handler when a cohort is killed by an age-only disturbance.
         public static void CohortKilledByAgeOnlyDisturbance(object                 sender,
-                                                            //Landis.Library.BiomassCohorts.DeathEventArgs eventArgs)
                                                             DeathEventArgs eventArgs)
         {
 

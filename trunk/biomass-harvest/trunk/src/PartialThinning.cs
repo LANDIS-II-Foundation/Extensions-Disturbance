@@ -156,7 +156,6 @@ namespace Landis.Extension.BiomassHarvest
             if (word == "")
                 throw new InputValueException();  // Missing value
 
-            // AgeRange ageRange = BaseHarvest.ParametersParser.ParseAgeOrRange(word);
             AgeRange ageRange = BaseHarvest.InputParametersParser.ParseAgeOrRange(word);
 
             //  Does a percentage follow?

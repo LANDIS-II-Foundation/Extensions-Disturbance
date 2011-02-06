@@ -22,7 +22,7 @@ namespace Landis.Extension.BiomassHarvest
     /// The parameters for biomass harvest.
     /// </summary>
     public interface IParameters
-        : BaseHarvest.IInputParameters
+        : BaseHarvest.IParameters
     {
         /// <summary>
         /// Template for pathnames for biomass-removed maps.

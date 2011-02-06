@@ -29,7 +29,7 @@ namespace Landis.Extension.BiomassHarvest
     /// A parser that reads the extension's parameters from text input.
     /// </summary>
     public class ParametersParser
-        : BaseHarvest.InputParametersParser
+        : BaseHarvest.ParametersParser
     {
         private static bool ageOrRangeWasRead = false;
         private static IList<ushort> ages;
@@ -187,7 +187,7 @@ namespace Landis.Extension.BiomassHarvest
         // The method returns an instance of Biomass Harvest's Parameters, so
         // the caller must cast the reference to Biomass Harvest's parameters
         // interface in order to access the new BiomassMaps parameter.
-        protected override BaseHarvest.IInputParameters Parse()
+        protected override BaseHarvest.IParameters Parse()
         {
             RoundedRepeatIntervals.Clear();
             ReadLandisDataVar();

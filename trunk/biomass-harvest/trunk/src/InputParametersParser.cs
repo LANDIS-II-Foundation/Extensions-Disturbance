@@ -29,7 +29,7 @@ namespace Landis.Extension.BiomassHarvest
         private ISpeciesDataset speciesDataset;
         private double standSpreadMinTargetSize;
         private double standSpreadMaxTargetSize;
-        //private int minTimeSinceDamage;
+        private int minTimeSinceDamage;
 
         //---------------------------------------------------------------------
 
@@ -54,22 +54,17 @@ namespace Landis.Extension.BiomassHarvest
         /// Initializes a new instance.
         /// </summary>
         /// <param name="speciesDataset">
-        /// The dataset of species to look up species' names in.
+        /// The dataset of species to look up species' names in.  Important note:  the base harvest
+        /// speciesDataset must be overwritten with the HarvestSpeciesDataset.  Methods within base harvest
+        /// will set the MostRecentlyFetchedSpecies parameter when they are reading in species names 
+        /// from a list of cohorts to be removed.  The value of MostRecentlyFetchedSpecies is not set within 
+        /// biomass harvest.
         /// </param>
-        /// <param name="scenarioStart">
-        /// The year that the model scenario starts.
-        /// </param>
-        /// <param name="scenarioEnd">
-        /// The year that the model scenario ends.
-        /// </param>
-        public ParametersParser(ISpeciesDataset speciesDataset,
-                                int              scenarioStart,
-                                int              scenarioEnd)
-            // : base(new SpeciesDataset(speciesDataset), scenarioStart, scenarioEnd)
-            : base()
+        public ParametersParser(ISpeciesDataset speciesDataset)
+            : base(new HarvestSpeciesDataset(speciesDataset))
         {
             this.speciesDataset = speciesDataset;
-            ageSelectors = new SpecificAgesCohortSelector[speciesDataset.Count];
+            ageSelectors = new SpecificAgesCohortSelector[speciesDataset.Count]; 
         }
 
         //---------------------------------------------------------------------
@@ -82,10 +77,11 @@ namespace Landis.Extension.BiomassHarvest
             //  Have we started reading ages and ranges for another species?
             //  If so, then first create a cohort selector for the previous
             //  species.
-            if (currentSpecies != SpeciesDataset.MostRecentlyFetchedSpecies) {
+            if (currentSpecies != HarvestSpeciesDataset.MostRecentlyFetchedSpecies) {
                 if (currentSpecies != null)
                     ageSelectors[currentSpecies.Index] = new SpecificAgesCohortSelector(ages, ranges, percentages);
-                currentSpecies = SpeciesDataset.MostRecentlyFetchedSpecies;
+
+                currentSpecies = HarvestSpeciesDataset.MostRecentlyFetchedSpecies;
                 ages.Clear();
                 ranges.Clear();
                 percentages.Clear();
@@ -125,6 +121,7 @@ namespace Landis.Extension.BiomassHarvest
             ageOrRangeWasRead = false;
             MultiSpeciesCohortSelector multiSpeciesCohortSelector = (MultiSpeciesCohortSelector) selector;
             foreach (ISpecies species in speciesDataset) {
+                //PlugIn.ModelCore.Log.WriteLine("ReplaceSpecificAgeSelectors:  spp={0}", species.Name);
                 SpecificAgesCohortSelector ageSelector = ageSelectors[species.Index];
                 if (ageSelector != null) {
                     multiSpeciesCohortSelector[species] = ageSelector.SelectCohorts; 
@@ -171,14 +168,11 @@ namespace Landis.Extension.BiomassHarvest
         {
             RoundedRepeatIntervals.Clear();
             
-            // ReadLandisDataVar();
-
             InputVar<string> landisData = new InputVar<string>("LandisData");
             ReadVar(landisData);
             if (landisData.Value.Actual != PlugIn.ExtensionName)
                 throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
 
-            //EditableParameters parameters = new EditableParameters();
             Parameters parameters = new Parameters();
 
             InputVar<int> timestep = new InputVar<int>("Timestep");
@@ -222,6 +216,122 @@ namespace Landis.Extension.BiomassHarvest
             CheckNoDataAfter("the " + summaryLogFile.Name + " parameter");
             return parameters; 
         }
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Reads 0 or more prescriptions from text input.
+        /// </summary>
+        new protected void ReadPrescriptions(List<Prescription> prescriptions,
+                                             int harvestTimestep)
+        {
+            Dictionary<string, int> lineNumbers = new Dictionary<string, int>();
+
+            InputVar<int> singleRepeat = new InputVar<int>(Names.SingleRepeat);
+            InputVar<int> multipleRepeat = new InputVar<int>(Names.MultipleRepeat);
+
+            int nameLineNumber = LineNumber;
+            InputVar<string> prescriptionName = new InputVar<string>(Names.Prescription);
+            while (ReadOptionalVar(prescriptionName))
+            {
+                string name = prescriptionName.Value.Actual;
+                int lineNumber;
+                if (lineNumbers.TryGetValue(name, out lineNumber))
+                    throw new InputValueException(prescriptionName.Value.String,
+                                                  "The name {0} was previously used on line {1}",
+                                                  prescriptionName.Value.String, lineNumber);
+                else
+                    lineNumbers[name] = nameLineNumber;
+
+                IStandRankingMethod rankingMethod = ReadRankingMethod();
+
+                // Modify the ranking method with the forest-type table
+                ReadForestTypeTable(rankingMethod);
+
+                ISiteSelector siteSelector = ReadSiteSelector();
+                bool isSiteSelectorWrapped = false;
+
+                //get the minTimeSinceDamage
+                minTimeSinceDamage = 0;
+                InputVar<int> minTimeSinceDamageVar = new InputVar<int>("MinTimeSinceDamage");
+                if (ReadOptionalVar(minTimeSinceDamageVar))
+                {
+                    minTimeSinceDamage = minTimeSinceDamageVar.Value;
+                }
+
+                //get preventEstablishment
+                bool preventEstablishment = false;
+                if (ReadOptionalName("PreventEstablishment"))
+                {
+                    preventEstablishment = true;
+                }
+
+
+                ICohortSelector cohortSelector = ReadCohortSelector(false);
+                if (ageOrRangeWasRead)
+                {
+                    //PlugIn.ModelCore.Log.WriteLine("age or range was read");
+                    siteSelector = WrapSiteSelector(siteSelector);
+                    isSiteSelectorWrapped = true;
+                    ReplaceSpecificAgeSelectors(cohortSelector);
+                }
+
+                Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
+
+                //  Repeat harvest?
+                int repeatParamLineNumber = LineNumber;
+                if (ReadOptionalVar(singleRepeat))
+                {
+                    int interval = ValidateRepeatInterval(singleRepeat.Value,
+                                                          repeatParamLineNumber,
+                                                          harvestTimestep);
+                    ICohortSelector additionalCohortSelector = ReadCohortSelector(true);
+                    if (ageOrRangeWasRead)
+                    {
+                        ReplaceSpecificAgeSelectors(cohortSelector);
+                        if (!isSiteSelectorWrapped)
+                        {
+                            siteSelector = WrapSiteSelector(siteSelector);
+                            isSiteSelectorWrapped = true;
+                        }
+                    }
+                    Planting.SpeciesList additionalSpeciesToPlant = ReadSpeciesToPlant();
+                    prescriptions.Add(new SingleRepeatHarvest(name,
+                                                              rankingMethod,
+                                                              siteSelector,
+                                                              cohortSelector,
+                                                              speciesToPlant,
+                                                              additionalCohortSelector,
+                                                              additionalSpeciesToPlant,
+                                                              minTimeSinceDamage,
+                                                              preventEstablishment,
+                                                              interval));
+                }
+                else if (ReadOptionalVar(multipleRepeat))
+                {
+                    int interval = ValidateRepeatInterval(multipleRepeat.Value,
+                                                          repeatParamLineNumber,
+                                                          harvestTimestep);
+                    prescriptions.Add(new RepeatHarvest(name,
+                                                        rankingMethod,
+                                                        siteSelector,
+                                                        cohortSelector,
+                                                        speciesToPlant,
+                                                        minTimeSinceDamage,
+                                                        preventEstablishment,
+                                                        interval));
+                }
+                else
+                {
+                    prescriptions.Add(new Prescription(name,
+                                                       rankingMethod,
+                                                       siteSelector,
+                                                       cohortSelector,
+                                                       speciesToPlant,
+                                                       minTimeSinceDamage,
+                                                       preventEstablishment));
+                }
+            }
+        }
 
 
         //---------------------------------------------------------------------
@@ -241,10 +351,6 @@ namespace Landis.Extension.BiomassHarvest
         
         protected void ReadForestTypeTable(IStandRankingMethod rankingMethod)
         {
-            // Can't initialize a private instance member in the base class.
-            // Therefore, a parser instance is not re-usable.
-            //speciesLineNumbers.Clear();  // in case parser re-used
-            
             int optionalStatements = 0;
             
             //check if this is the ForestTypeTable
@@ -253,8 +359,6 @@ namespace Landis.Extension.BiomassHarvest
 
                 //fresh input variables for table
                 InputVar<string> inclusionRule = new InputVar<string>("Inclusion Rule");
-                //InputVar<ushort> minAge = new InputVar<ushort>("Min Age");
-                //InputVar<ushort> maxAge = new InputVar<ushort>("Max Age");
                 InputVar<AgeRange> age_range = new InputVar<AgeRange>("Age Range", ParseAgeOrRange);
                 InputVar<string> percentOfCells = new InputVar<string>("PercentOfCells");  //as a string so it can include keyword 'highest'
                 InputVar<string> speciesName = new InputVar<string>("Species");
@@ -373,8 +477,6 @@ namespace Landis.Extension.BiomassHarvest
             }
             //  Site selection -- Target size with partial or complete spread
             else if (name == SiteSelection.CompleteAndSpreading || name == SiteSelection.TargetAndSpreading) {
-                //InputVar<double> targetSize = new InputVar<double>("the target harvest size");
-                //ReadValue(targetSize, reader);
                 
                 InputVar<double> minTargetSize = new InputVar<double>("the minimum target harvest size");
                 ReadValue(minTargetSize, reader);

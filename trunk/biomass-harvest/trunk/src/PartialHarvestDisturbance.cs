@@ -62,13 +62,13 @@ namespace Landis.Extension.BiomassHarvest
 
         //---------------------------------------------------------------------
 
-        int IDisturbance.RemoveMarkedCohort(ICohort cohort)
+        int IDisturbance.ReduceOrKillMarkedCohort(ICohort cohort)
         {
             int reduction;
             if (reductions[cohort.Species.Index].TryGetValue(cohort.Age, out reduction))
             {
 
-                PlugIn.ModelCore.Log.WriteLine("Removing:  {0:0.0}/{1:0.0}.", reduction, cohort.Biomass);
+                //PlugIn.ModelCore.Log.WriteLine("Removing:  {0:0.0}/{1:0.0}.", reduction, cohort.Biomass);
 
                 SiteVars.BiomassRemoved[currentSite] += reduction;
 
@@ -106,6 +106,7 @@ namespace Landis.Extension.BiomassHarvest
         public static void RecordBiomassReduction(ICohort cohort,
                                                   int     reduction)
         {
+            //PlugIn.ModelCore.Log.WriteLine("Recording reduction:  {0:0.0}/{1:0.0}/{2}.", cohort.Species.Name, cohort.Age, reduction);
             reductions[cohort.Species.Index][cohort.Age] = reduction;
         }
 
@@ -123,7 +124,9 @@ namespace Landis.Extension.BiomassHarvest
             numberCohortsReduced = 0;
             capacityReduction = 0.0;
 
-            SiteVars.Cohorts[site].RemoveCohorts(singleton);
+            //PlugIn.ModelCore.Log.WriteLine("ReducingCohortBiomass NOW!");
+
+            SiteVars.Cohorts[site].ReduceOrKillBiomassCohorts(singleton);
 
             //The function above will have gone through all the cohorts.  Now summarize
             //site level information.

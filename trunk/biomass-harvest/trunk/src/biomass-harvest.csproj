@@ -82,7 +82,7 @@
     <Compile Include="PlugIn.cs" />
     <Compile Include="SiteSelectorWrapper.cs" />
     <Compile Include="SiteVars.cs" />
-    <Compile Include="SpeciesDataset.cs" />
+    <Compile Include="HarvestSpeciesDataset.cs" />
     <Compile Include="SpecificAgesCohortSelector.cs" />
     <Compile Include="IntPixel.cs" />
   </ItemGroup>

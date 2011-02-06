@@ -73,6 +73,7 @@ namespace Landis.Extension.BiomassHarvest
                     if (! percentages.TryGetValue(ageToLookUp, out percentage))
                         percentage = defaultPercentage;
                     int reduction = (int) System.Math.Round(cohort.Biomass * percentage);
+                    //PlugIn.ModelCore.Log.WriteLine("Potential Biomass Reduction for {0} = {1}.", cohort.Species.Name, reduction);
                     if (reduction < cohort.Biomass)
                         PartialHarvestDisturbance.RecordBiomassReduction(cohort, reduction);
                     else

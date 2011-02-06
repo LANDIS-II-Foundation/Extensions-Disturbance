@@ -73,7 +73,7 @@ namespace Landis.Extension.BiomassHarvest
                                                            Model.Core.StartTime,
                                                            Model.Core.EndTime);
 
-            BaseHarvest.IInputParameters baseParameters = Landis.Data.Load<BaseHarvest.IInputParameters>(dataFile, parser);
+            BaseHarvest.IParameters baseParameters = Landis.Data.Load<BaseHarvest.IParameters>(dataFile, parser);
             IParameters parameters = baseParameters as IParameters;
             if (parser.RoundedRepeatIntervals.Count > 0) {
                 UI.WriteLine("NOTE: The following repeat intervals were rounded up to");
