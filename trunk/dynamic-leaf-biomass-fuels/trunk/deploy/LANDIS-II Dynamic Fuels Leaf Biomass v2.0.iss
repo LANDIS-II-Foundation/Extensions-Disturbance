@@ -15,7 +15,7 @@
 [Files]
 
 ; Dynamic Fire Fuel System v1.0 plug-in and auxiliary libs (Troschuetz Random)
-Source: C:\Program Files\LANIDS-II\6.0\bin\Landis.Extension.LeafBiomassFuels.dll; DestDir: {app}\bin
+Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.LeafBiomassFuels.dll; DestDir: {app}\bin
 
 Source: docs\LANDIS-II Dynamic Fuels - Leaf Biomass v2.0 User Guide.pdf; DestDir: {app}\doc
 Source: examples\*; DestDir: {app}\examples\leaf-biomass-fuels
