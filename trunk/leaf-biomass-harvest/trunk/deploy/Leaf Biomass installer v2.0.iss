@@ -5,12 +5,10 @@
 #define ReleaseType      "official"
 #define ReleaseNumber    "2"
 
-; #include "build/release-info.iss"
-
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section).iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
 #if ReleaseType != "official"
   #define Configuration  "debug"
@@ -40,7 +38,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#ExtensionInfoFile}"" "; Worki
 ;; Run plug-in admin tool to remove the entry for the plug-in
 
 [Code]
-#include AddBackslash(LandisDeployDir) + "package (Code section) v3.iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
