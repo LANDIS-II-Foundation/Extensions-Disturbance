@@ -8,8 +8,7 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-; #include AddBackslash(LandisSDK) + "deployment\windows\package (Setup section).iss"
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section).iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
 
 [Files]
@@ -34,7 +33,6 @@ Source: examples\*; DestDir: {app}\examples\biomass-harvest
 #define ExtensionInfoFile PackageName + " " + Version + ReleaseAbbr+ ".txt"
 Source: Biomass Harvest v2.0.txt; DestDir: {#LandisPlugInDir}; DestName: {#ExtensionInfoFile}
 
-
 [Run]
 ;; Run plug-in admin tool to add an entry for the plug-in
 #define PlugInAdminTool  CoreBinDir + "\Landis.PlugIns.Admin.exe"
@@ -42,11 +40,9 @@ Filename: {#PlugInAdminTool}; Parameters: "remove ""Biomass Harvest"" "; Working
 Filename: {#PlugInAdminTool}; Parameters: "add ""{#ExtensionInfoFile}"" "; WorkingDir: {#LandisPlugInDir}
 
 [UninstallRun]
-;; Run plug-in admin tool to remove the entry for the plug-in
-; Filename: {#PlugInAdminTool}; Parameters: "remove ""Biomass Harvest"" "; WorkingDir: {#LandisPlugInDir}
 
 [Code]
-#include AddBackslash(LandisDeployDir) + "package (Code section) v3.iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
 
 
 //-----------------------------------------------------------------------------
