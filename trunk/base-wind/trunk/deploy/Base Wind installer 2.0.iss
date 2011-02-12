@@ -6,7 +6,7 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section).iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
 #if ReleaseType != "official"
   #define Configuration  "debug"
@@ -21,7 +21,7 @@ Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BaseWind.dll; DestDi
 
 ; Base Wind
 Source: docs\LANDIS-II Base Wind v2.0 User Guide.pdf; DestDir: {app}\docs
-Source: examples\*; DestDir: {app}\examples\BaseWind
+Source: examples\*; DestDir: {app}\examples\base-wind
 
 #define BaseWind "Base Wind 2.0.txt"
 Source: {#BaseWind}; DestDir: {#LandisPlugInDir}
@@ -35,7 +35,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#BaseWind}"" "; WorkingDir: {#
 
 [Code]
 { Check for other prerequisites during the setup initialization }
-#include AddBackslash(LandisDeployDir) + "package (Code section) v3.iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
