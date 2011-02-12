@@ -7,10 +7,7 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section).iss"
-
-;#include "..\package (Setup section).iss"
-
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
 [Files]
 ; Cohort and Succession Libraries
@@ -36,7 +33,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#DynFuelSys}"" "; WorkingDir: 
 ; Filename: {#PlugInAdminTool}; Parameters: "remove ""Dynamic Biomass Fuel System"" "; WorkingDir: {#LandisPlugInDir}
 
 [Code]
-#include AddBackslash(LandisDeployDir) + "package (Code section) v3.iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
