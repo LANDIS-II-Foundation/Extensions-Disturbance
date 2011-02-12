@@ -7,7 +7,7 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section).iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
 #if ReleaseType != "official"
   #define Configuration  "debug"
@@ -26,12 +26,6 @@ Source: examples\*; DestDir: {app}\examples\base-harvest; Flags: recursesubdirs
 #define Harvest "Base Harvest 2.0.txt"
 Source: {#Harvest}; DestDir: {#LandisPlugInDir}
 
-; Harvest needs the succession library with planting (2.1+).  Until the
-; the latest version of that library is released for the LANDIS-II main
-; package, the library is included in this installer.  It's marked as
-; uninstallable because if the package is uninstalled and this version
-; of the Succession library is removed, then age-only succession will
-; break
 Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Succession.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
 
 [Run]
