@@ -1,6 +1,6 @@
 LandisData   Extension
 
-Name         "Leaf Biomass Fuels"
+Name         "Dynamic Leaf Biomass Fuels"
 Version      "2.0"
 Type         disturbance:fuel
 Assembly     Landis.Extension.LeafBiomassFuels

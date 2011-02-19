@@ -7,17 +7,12 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section).iss"
-
-;#include "..\package (Setup section).iss"
-
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
 [Files]
-
-; Dynamic Fire Fuel System v1.0 plug-in and auxiliary libs (Troschuetz Random)
 Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.LeafBiomassFuels.dll; DestDir: {app}\bin
 
-Source: docs\LANDIS-II Dynamic Fuels - Leaf Biomass v2.0 User Guide.pdf; DestDir: {app}\doc
+Source: docs\LANDIS-II Dynamic Fuels - Leaf Biomass v2.0 User Guide.pdf; DestDir: {app}\docs
 Source: examples\*; DestDir: {app}\examples\leaf-biomass-fuels
 
 #define DynFuelSys "Dynamic Fuels Leaf Biomass 2.0.txt"
@@ -34,7 +29,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#DynFuelSys}"" "; WorkingDir: 
 ;; Run plug-in admin tool to remove entries for each plug-in
 
 [Code]
-#include AddBackslash(LandisDeployDir) + "package (Code section) v3.iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
