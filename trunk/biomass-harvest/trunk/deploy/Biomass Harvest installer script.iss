@@ -23,13 +23,13 @@
 
 [Files]
 ; Base Harvest
-Source: {#LandisBuildDir}\disturbanceextensions\base harvest\build\release\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: C:\Program Files\LANDIS-II\5.1\bin\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 ; Cohort and Succession Libraries
-Source: {#LandisBuildDir}\libraries\biomass-cohort\build\release\Landis.Library.Cohorts.Biomass.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
+; Source: {#LandisBuildDir}\libraries\biomass-cohort\build\release\Landis.Library.Cohorts.Biomass.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
 
 ; The extension's assembly
-Source: ..\build\release\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: C:\Program Files\LANDIS-II\5.1\bin\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 ; The extension's program database file (for debugging) - only if not official release
 ; #if ReleaseType != "official"
@@ -58,7 +58,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#ExtensionInfoFile}"" "; Worki
 ; Filename: {#PlugInAdminTool}; Parameters: "remove ""Biomass Harvest"" "; WorkingDir: {#LandisPlugInDir}
 
 [Code]
-#include AddBackslash(LandisDeployDir) + "package (Code section) v2.iss"
+#include AddBackslash(LandisDeployDir) + "package (Code section) v3.iss"
 
 
 //-----------------------------------------------------------------------------
