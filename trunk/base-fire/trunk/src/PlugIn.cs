@@ -87,15 +87,6 @@ namespace Landis.Extension.BaseFire
 
         }
 
-        //---------------------------------------------------------------------
-        
-        //new void InitializePhase2()
-        //{
-        //    SiteVars.InitializeTimeOfLastWind();
-        //}
-
-        //---------------------------------------------------------------------
-
         ///<summary>
         /// Run the plug-in at a particular timestep.
         ///</summary>
