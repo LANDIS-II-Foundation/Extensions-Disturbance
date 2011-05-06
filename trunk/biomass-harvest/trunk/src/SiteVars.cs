@@ -4,6 +4,7 @@
 
 using Landis.SpatialModeling;
 using Landis.Library.BiomassCohorts;
+using Landis.Extension.Succession.Biomass;
 using Landis.Extension.BaseHarvest;
 
 namespace Landis.Extension.BiomassHarvest
@@ -13,6 +14,8 @@ namespace Landis.Extension.BiomassHarvest
         private static ISiteVar<double> biomassRemoved;
         private static ISiteVar<int> cohortsPartiallyDamaged;
         private static ISiteVar<double> capacityReduction;
+        private static ISiteVar<Pool> woodyDebris;
+        private static ISiteVar<Pool> litter;
 
         private static ISiteVar<ISiteCohorts> cohorts;
 
@@ -21,6 +24,8 @@ namespace Landis.Extension.BiomassHarvest
         public static new void Initialize()
         {
 
+            woodyDebris = PlugIn.ModelCore.GetSiteVar<Pool>("Succession.WoodyDebris");
+            litter = PlugIn.ModelCore.GetSiteVar<Pool>("Succession.Litter");
             cohorts = PlugIn.ModelCore.GetSiteVar<ISiteCohorts>("Succession.BiomassCohorts");
 
             biomassRemoved = PlugIn.ModelCore.Landscape.NewSiteVar<double>();
@@ -76,6 +81,31 @@ namespace Landis.Extension.BiomassHarvest
             get
             {
                 return cohorts;
+            }
+        }
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// The intact dead woody pools for the landscape's sites.
+        /// </summary>
+        public static ISiteVar<Pool> WoodyDebris
+        {
+            get
+            {
+                return woodyDebris;
+            }
+        }
+
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// The dead non-woody pools for the landscape's sites.
+        /// </summary>
+        public static ISiteVar<Pool> Litter
+        {
+            get
+            {
+                return litter;
             }
         }
 

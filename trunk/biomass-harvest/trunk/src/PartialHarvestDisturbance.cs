@@ -68,7 +68,13 @@ namespace Landis.Extension.BiomassHarvest
             if (reductions[cohort.Species.Index].TryGetValue(cohort.Age, out reduction))
             {
 
+                int litter = cohort.ComputeNonWoodyBiomass(currentSite);
+                int woody = reduction - litter;
+
                 SiteVars.BiomassRemoved[currentSite] += reduction;
+                SiteVars.WoodyDebris[currentSite].Mass += woody;
+                SiteVars.Litter[currentSite].Mass += litter;
+
                 SiteVars.CohortsPartiallyDamaged[currentSite]++;
 
                 if (originalStand.LastPrescription.PreventEstablishment)
