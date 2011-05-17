@@ -9,15 +9,9 @@
 
 #include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
-#if ReleaseType != "official"
-  #define Configuration  "debug"
-#else
-  #define Configuration  "release"
-#endif
-
 [Files]
 
-; Base Harvest (v1.1)
+; Base Harvest
 Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 Source: docs\LANDIS-II Base Harvest v2.0 User Guide.pdf; DestDir: {app}\docs
@@ -43,7 +37,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#Harvest}"" "; WorkingDir: {#L
 ; Filename: {#PlugInAdminTool}; Parameters: "remove ""Base Harvest"" "; WorkingDir: {#LandisPlugInDir}
 
 [Code]
-#include AddBackslash(LandisDeployDir) + "package (Code section) v3.iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
