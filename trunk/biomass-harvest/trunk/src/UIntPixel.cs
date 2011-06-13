@@ -5,11 +5,11 @@ using Landis.SpatialModeling;
 
 namespace Landis.Extension.BiomassHarvest
 {
-    public class IntPixel : Pixel
+    public class UIntPixel : Pixel
     {
-        public Band<int> MapCode  = "The numeric code for each raster cell";
+        public Band<uint> MapCode  = "The numeric code for each raster cell";
 
-        public IntPixel()
+        public UIntPixel()
         {
             SetBands(MapCode);
         }
