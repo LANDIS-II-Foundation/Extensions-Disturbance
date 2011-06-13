@@ -11,13 +11,13 @@ namespace Landis.Extension.BaseHarvest
     public class ManagementAreaDataset
         : IManagementAreaDataset
     {
-        private Dictionary<ushort, ManagementArea> mgmtAreas;
+        private Dictionary<uint, ManagementArea> mgmtAreas;
 
         //---------------------------------------------------------------------
 
         public ManagementAreaDataset()
         {
-            mgmtAreas = new Dictionary<ushort, ManagementArea>();
+            mgmtAreas = new Dictionary<uint, ManagementArea>();
         }
 
         //---------------------------------------------------------------------
@@ -39,7 +39,7 @@ namespace Landis.Extension.BaseHarvest
         /// <returns>
         /// null if there is no management area with the specified map code.
         /// </returns>
-        public ManagementArea Find(ushort mapCode)
+        public ManagementArea Find(uint mapCode)
         {
             ManagementArea mgmtArea;
             if (mgmtAreas.TryGetValue(mapCode, out mgmtArea))

@@ -15,7 +15,7 @@ namespace Landis.Extension.BaseHarvest
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
-        private ushort mapCode;
+        private uint mapCode;
         private List<Stand> stands;
         private double area;
         private List<AppliedPrescription> prescriptions;
@@ -26,7 +26,7 @@ namespace Landis.Extension.BaseHarvest
         /// <summary>
         /// The code that represents the area in the management area input map.
         /// </summary>
-        public ushort MapCode
+        public uint MapCode
         {
             get {
                 return mapCode;

@@ -14,6 +14,6 @@ namespace Landis.Extension.BaseHarvest
         /// <returns>
         /// null if there is no management area with the specified map code.
         /// </returns>
-        ManagementArea Find(ushort mapCode);
+        ManagementArea Find(uint mapCode);
     }
 }

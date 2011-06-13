@@ -21,13 +21,13 @@ namespace Landis.Extension.BaseHarvest
 
         public static void ReadMap(string path) {
             Stand stand;
-            Dictionary<ushort, Stand> stands = new Dictionary<ushort, Stand>();
+            Dictionary<uint, Stand> stands = new Dictionary<uint, Stand>();
 
-            IInputRaster<UShortPixel> map;
+            IInputRaster<UIntPixel> map;
 
             try
             {
-                map = PlugIn.ModelCore.OpenRaster<UShortPixel>(path);
+                map = PlugIn.ModelCore.OpenRaster<UIntPixel>(path);
             }
             catch (FileNotFoundException)
             {
@@ -42,11 +42,11 @@ namespace Landis.Extension.BaseHarvest
             }
 
             using (map) {
-                UShortPixel pixel = map.BufferPixel;
+                UIntPixel pixel = map.BufferPixel;
                 foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
                 {
                     map.ReadBufferPixel();
-                    ushort mapCode = pixel.MapCode.Value;
+                    uint mapCode = pixel.MapCode.Value;
                     if (site.IsActive && SiteVars.ManagementArea[site] != null)
                     {
                         if (stands.TryGetValue(mapCode, out stand)) {
@@ -74,42 +74,6 @@ namespace Landis.Extension.BaseHarvest
                     }
                 }
 
-                /*using (map) {
-            
-                //loop through every single site in management area, assigning them to a stand.
-                foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
-                {
-                    MapCodePixel pixel = map.ReadPixel();
-                     //  Process the pixel only if the site is active and it's
-                    //  in an active management area.
-                    if (site.IsActive && SiteVars.ManagementArea[site] != null) {
-                        ushort mapCode = pixel.Band0;
-                        //check if this stand is already in the dictionary
-                        if (stands.TryGetValue(mapCode, out stand)) {
-                            //if the stand is already in the dictionary, check if it is in the same management area.
-                            //if it's not in the same MA, throw exception.
-                            if (SiteVars.ManagementArea[site] != stand.ManagementArea) {
-                                throw new PixelException(site.Location,
-                                    "Stand {0} is in management areas {1} and {2}",
-                                    stand.MapCode,
-                                    stand.ManagementArea.MapCode,
-                                    SiteVars.ManagementArea[site].MapCode);
-                            }
-                        
-                        }
-                        //valid site location which has not been keyed by the dictionary.
-                        else {
-                            //assign stand (trygetvalue set it to null when it wasn't found in the dictionary)
-                            stand = new Stand(mapCode);
-                            //add this stand to the correct management area (pointed to by the site)
-                            SiteVars.ManagementArea[site].Add(stand);
-                            stands[mapCode] = stand;
-                        }                        
-                        //add this site to this stand
-                        stand.Add((ActiveSite) site);
-                    }
-                }*/
-                
             }
         }
     }

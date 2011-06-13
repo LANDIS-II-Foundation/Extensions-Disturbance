@@ -27,10 +27,10 @@ namespace Landis.Extension.BaseHarvest
                                    IManagementAreaDataset managementAreas)
         {
 
-            IInputRaster<UShortPixel> map;
+            IInputRaster<UIntPixel> map;
 
             try {
-                map = PlugIn.ModelCore.OpenRaster<UShortPixel>(path);
+                map = PlugIn.ModelCore.OpenRaster<UIntPixel>(path);
             }
             catch (FileNotFoundException) {
                 string mesg = string.Format("Error: The file {0} does not exist", path);
@@ -43,16 +43,16 @@ namespace Landis.Extension.BaseHarvest
                 throw new System.ApplicationException(mesg);
             }
 
-            List<ushort> inactiveMgmtAreas = new List<ushort>();
+            List<uint> inactiveMgmtAreas = new List<uint>();
 
             using (map) {
-                UShortPixel pixel = map.BufferPixel;
+                UIntPixel pixel = map.BufferPixel;
                 foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
                 {
                     map.ReadBufferPixel();
                     if (site.IsActive)
                     {
-                        ushort mapCode = pixel.MapCode.Value;
+                        uint mapCode = pixel.MapCode.Value;
                         ManagementArea mgmtArea = managementAreas.Find(mapCode);
                         if (mgmtArea == null) {
                             if (! inactiveMgmtAreas.Contains(mapCode))
@@ -76,7 +76,7 @@ namespace Landis.Extension.BaseHarvest
 
         //---------------------------------------------------------------------
 
-        public static string MapCodesToString(List<ushort> mapCodes)
+        public static string MapCodesToString(List<uint> mapCodes)
         {
             if (mapCodes == null || mapCodes.Count == 0)
                 return "";
@@ -85,7 +85,7 @@ namespace Landis.Extension.BaseHarvest
             List<Range> ranges = new List<Range>();
             Range currentRange = new Range(mapCodes[0]);
             for (int i = 1; i < mapCodes.Count; i++) {
-                ushort mapCode = mapCodes[i];
+                uint mapCode = mapCodes[i];
                 if (currentRange.End + 1 == mapCode)
                     currentRange.End = mapCode;
                 else {
@@ -106,12 +106,12 @@ namespace Landis.Extension.BaseHarvest
 
         private struct Range
         {
-            public ushort Start;
-            public ushort End;
+            public uint Start;
+            public uint End;
 
             //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            public Range(ushort mapCode)
+            public Range(uint mapCode)
             {
                 Start = mapCode;
                 End = mapCode;

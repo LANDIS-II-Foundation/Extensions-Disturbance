@@ -16,7 +16,7 @@ namespace Landis.Extension.BaseHarvest
     public class Stand
         : IEnumerable<ActiveSite>
     {
-        private ushort mapCode;
+        private uint mapCode;
         private List<Location> siteLocations;
         private double activeArea;
         private ManagementArea mgmtArea;
@@ -57,7 +57,7 @@ namespace Landis.Extension.BaseHarvest
         /// The code that designates which sites are in the stand in the stand
         /// input map.
         /// </summary>
-        public ushort MapCode
+        public uint MapCode
         {
             get {
                 return mapCode;
@@ -323,7 +323,7 @@ namespace Landis.Extension.BaseHarvest
         /// <summary>
         /// A new Stand Object, given a map code
         /// </summary>
-        public Stand(ushort mapCode)
+        public Stand(uint mapCode)
         {
             this.mapCode = mapCode;
             this.siteLocations = new List<Location>();

@@ -37,9 +37,9 @@ namespace Landis.Extension.BaseHarvest
         public void WriteMap(int timestep)
         {
             string path = MapNames.ReplaceTemplateVars(nameTemplate, timestep);
-            using (IOutputRaster<BytePixel> outputRaster = PlugIn.ModelCore.CreateRaster<BytePixel>(path, PlugIn.ModelCore.Landscape.Dimensions))
+            using (IOutputRaster<UIntPixel> outputRaster = PlugIn.ModelCore.CreateRaster<UIntPixel>(path, PlugIn.ModelCore.Landscape.Dimensions))
             {
-                BytePixel pixel = outputRaster.BufferPixel;
+                UIntPixel pixel = outputRaster.BufferPixel;
             
                 foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
                 {
@@ -59,13 +59,5 @@ namespace Landis.Extension.BaseHarvest
             }
         }
 
-        //---------------------------------------------------------------------
-        /*
-        private IOutputRaster<BytePixel> CreateMap(string path)
-        {
-            PlugIn.ModelCore.Log.WriteLine("   Writing Prescription map to {0} ...", path);
-            return PlugIn.ModelCore.CreateRaster<BytePixel>(path,
-                                                          PlugIn.ModelCore.Landscape.Dimensions);
-        }*/
     }
 }

@@ -69,7 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppliedPrescription.cs" />
-    <Compile Include="BytePixel.cs" />
+    <Compile Include="UIntPixel.cs" />
     <Compile Include="cohort-selection\AgeRange.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -192,7 +192,6 @@
     </Compile>
     <Compile Include="Stand.cs" />
     <Compile Include="Stands.cs" />
-    <Compile Include="UShortPixel.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
