@@ -42,7 +42,7 @@ namespace Landis.Extension.BaseFire
         private IFuelCurve fuelCurve;
         private IWindCurve windCurve;
         private int index;
-        
+
         public int Index
         {
             get {
@@ -154,7 +154,7 @@ namespace Landis.Extension.BaseFire
         }
         //---------------------------------------------------------------------
 
-        
+
         public int FireSpreadAge
         {
             get {
@@ -204,51 +204,6 @@ namespace Landis.Extension.BaseFire
             this.index = index;
         }
         //---------------------------------------------------------------------
-/*
-        public FireRegionParameters(
-                                string name,
-                                ushort mapCode,
-                                double meanSize,
-                                double minSize,
-                                double maxSize,
-                                double ignitionProbability,
-                                int fireSpreadAge
-                                )
-        {
-            this.name = name;
-            this.mapCode = mapCode;
-            this.meanSize = meanSize;
-            this.minSize = minSize;
-            this.maxSize = maxSize;
-            this.ignitionProbability =  ignitionProbability;
-            this.fireSpreadAge =      fireSpreadAge;
-            this.fuelCurve = new FuelCurve();
-            this.windCurve = new WindCurve();
-        }
 
-        //---------------------------------------------------------------------
-
-        public FireRegionParameters(string name,
-                                   ushort mapCode)
-        {
-            this.name = name;
-            this.mapCode = mapCode;
-        }
-        //---------------------------------------------------------------------
-
-        public FireRegionParameters(IFireRegionParameters parameters)
-        {
-            name           = parameters.Name;
-            mapCode        = parameters.MapCode;
-            meanSize       = parameters.MeanSize;
-            minSize        = parameters.MinSize;
-            maxSize        = parameters.MaxSize;
-            ignitionProbability =  parameters.IgnitionProbability;
-            fireSpreadAge  = parameters.FireSpreadAge;
-            fuelCurve      = parameters.FuelCurve;
-            windCurve      = parameters.WindCurve;
-        }*/
-        //---------------------------------------------------------------------
-        
     }
 }
