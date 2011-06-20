@@ -93,10 +93,8 @@ namespace Landis.Extension.BaseFire
                 return timestep;
             }
             set {
-                //if (value != null)
-                    if (value < 0)
-                        throw new InputValueException(value.ToString(),
-                                                      "Value must be = or > 0.");
+                if (value < 0)
+                    throw new InputValueException(value.ToString(), "Value must be = or > 0.");
                 timestep = value;
             }
         }
@@ -179,21 +177,5 @@ namespace Landis.Extension.BaseFire
             dynamicFireRegions = new List<IDynamicFireRegion>(0);
             damages = new List<IDamageTable>(0);
         }
-        //---------------------------------------------------------------------
-/*
-        public Parameters(int            timestep,
-                          IDynamicFireRegion[]      dynamicFireRegions,
-                          IDamageTable[] damages,
-                          string         mapNameTemplate,
-                          string         logFileName,
-                          string         summaryLogFileName)
-        {
-            this.timestep = timestep;
-            this.dynamicFireRegions = dynamicFireRegions;
-            this.damages = damages;
-            this.mapNamesTemplate = mapNameTemplate;
-            this.logFileName = logFileName;
-            this.summaryLogFileName = summaryLogFileName;
-        }*/
     }
 }

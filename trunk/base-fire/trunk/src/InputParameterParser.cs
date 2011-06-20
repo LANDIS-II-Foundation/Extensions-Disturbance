@@ -113,7 +113,7 @@ namespace Landis.Extension.BaseFire
                 GetNextLine();
             }
             
-            FireRegions.Dataset = dataset;//.GetComplete();
+            FireRegions.Dataset = dataset;
 
 
             //----------------------------------------------------------
