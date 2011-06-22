@@ -81,7 +81,7 @@
     <Compile Include="IInputParameters.cs" />
     <Compile Include="InputParameters.cs" />
     <Compile Include="InputParametersParser.cs" />
-    <Compile Include="IntPixel.cs" />
+    <Compile Include="UIntPixel.cs" />
     <Compile Include="PartialHarvestDisturbance.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -107,7 +107,6 @@
     <Compile Include="SpecificAgesCohortSelector.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UShortPixel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
