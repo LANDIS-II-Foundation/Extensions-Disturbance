@@ -16,7 +16,7 @@ Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.BiomassCohorts.dll; De
 ; Dynamic Fire Fuel System v1.0 plug-in and auxiliary libs (Troschuetz Random)
 Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BiomassFuels.dll; DestDir: {app}\bin; Flags: replacesameversion
 
-Source: docs\LANDIS-II Dynamic Biomass Fuel System v2.0 User Guide.pdf; DestDir: {app}\doc
+Source: docs\LANDIS-II Dynamic Biomass Fuel System v2.0 User Guide.pdf; DestDir: {app}\docs
 Source: examples\*; DestDir: {app}\examples\dynamic-biomass-fuels
 
 #define DynFuelSys "Dynamic Biomass Fuels 2.0.txt"
