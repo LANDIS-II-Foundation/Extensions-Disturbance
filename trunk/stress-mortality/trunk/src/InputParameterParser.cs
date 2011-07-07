@@ -91,25 +91,28 @@ namespace Landis.Extension.StressMortality
 
             DynamicInputs.AllData = allData;
 
+            // ---------------------------------------------------------------------
+            // Partial Mortality Table
 
             ReadName("PartialMortalityTable");
-            //speciesLineNums.Clear();  //  If parser re-used (i.e., for testing purposes)
+            speciesLineNums.Clear();  //  If parser re-used (i.e., for testing purposes)
 
             InputVar<string> speciesNameVar = new InputVar<string>("Species");
             AgeClass ageClass = new AgeClass();
            
             //InputVar<double> mortTab = new InputVar<double>("Drought Sens");
 
-            while (!AtEndOfInput && CurrentName != Names.MapName)
+            while (!AtEndOfInput && CurrentName != "CompleteMortalityTable")
             {
+                List<AgeClass> ageClasses = new List<AgeClass>();
+                string word = "";
+                bool success = false;
+                //int lineNumber = 0;
+                
                 StringReader currentLine = new StringReader(CurrentLine);
                 ISpecies species = ReadSpecies(currentLine);
 
                 //AgeClass ageClass = new AgeClass();
-                List<AgeClass> ageClasses = new List<AgeClass>();
-                string word = "";
-                bool success  = false;
-                //int lineNumber = 0;
 
                 //ageClasses.Add(species.Name, new List<AgeClass>());
 
@@ -133,9 +136,12 @@ namespace Landis.Extension.StressMortality
                     success = ageClass.Parse(word);
                     if (!success)
                         throw new InputVariableException(speciesNameVar, "Entry is not a valid age class: {0}", word);
+                    
+                    //PlugIn.ModelCore.Log.WriteLine("  Adding {0} age class: {1}-{2}, fraction={3}.", species.Name, ageClass.LwrAge, ageClass.UprAge, ageClass.MortalityFraction);
                     ageClasses.Add(ageClass);
+
                 }
-                GetNextLine();
+                //GetNextLine();
                 success = false;
 
                 /*while (!AtEndOfInput)
@@ -174,28 +180,42 @@ namespace Landis.Extension.StressMortality
                     GetNextLine();*/
 
 
-                /*ReadValue(drought_Y, currentLine);
-                parameters.SetDrought_Y(species, drought_Y.Value);
-                ReadValue(drought_YSE, currentLine);
-                parameters.SetDrought_YSE(species, drought_YSE.Value);
-                ReadValue(drought_B, currentLine);
-                parameters.SetDrought_B(species, drought_B.Value);
-                ReadValue(drought_BSE, currentLine);
-                parameters.SetDrought_BSE(species, drought_BSE.Value);
-                ReadValue(drought_Sens, currentLine);
-                parameters.SetDrought_Sens(species, drought_Sens.Value);*/
 
-                parameters.SetMortalityTable(species, ageClasses);
-
-                //CheckNoDataAfter(drought_Sens.Name, currentLine);
+                parameters.SetPartialMortalityTable(species, ageClasses);
+                //foreach (AgeClass ac in parameters.PartialMortalityTable[species])
+                //    PlugIn.ModelCore.Log.WriteLine("  Added {0} age class: {1}-{2}, fraction={3}.", species.Name, ac.LwrAge, ac.UprAge, ac.MortalityFraction);
                 GetNextLine();
             }
 
+            // ---------------------------------------------------------------------
+            // Complete Mortality Table
             
+            ReadName("CompleteMortalityTable");
+            speciesLineNums.Clear();  //  If parser re-used (i.e., for testing purposes)
+
+            InputVar<int> cmp = new InputVar<int>("Complete Mortality Percentage");
+
+            while (!AtEndOfInput && CurrentName != Names.MapName)
+            {
+
+                StringReader currentLine = new StringReader(CurrentLine);
+                ISpecies species = ReadSpecies(currentLine);
+
+                ReadValue(cmp, currentLine);
+
+                parameters.SetCompleteMortalityTable(species, cmp.Value);
+
+                CheckNoDataAfter(cmp.Name, currentLine);
+                GetNextLine();
+            }
+
+            // ---------------------------------------------------------------------
 
             InputVar<string> mapNames = new InputVar<string>("MapName");
             ReadVar(mapNames);
             parameters.MapNamesTemplate = mapNames.Value;
+
+            // ---------------------------------------------------------------------
 
             InputVar<string> logFile = new InputVar<string>("LogFile");
             ReadVar(logFile);

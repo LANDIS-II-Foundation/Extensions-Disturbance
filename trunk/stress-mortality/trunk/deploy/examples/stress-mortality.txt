@@ -27,11 +27,11 @@ PartialMortalityTable
 abiebals  0.37(1-50) 0.2(>50)
 poputrem  0.37(1-40) 0.5(40-80)  0.63(>80)
 
-CompleteMortality
+CompleteMortalityTable
 >> species CummulativeBiomassReduction(%) to trigger complete mortality
 abiebals   90
 poputrem   90
 
-
-LogFile  "drought/droughtdist-log.csv"
+MapName  stress/stress-map-{timestep}.img  << Currently no maps are being produced; a placeholder
+LogFile  "stress/stress-mortality-log.csv"
 

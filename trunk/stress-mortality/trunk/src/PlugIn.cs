@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Landis.Extension.Succession.Biomass;
+using Edu.Wisc.Forest.Flel.Util;
+
 
 namespace Landis.Extension.StressMortality
 {
@@ -13,8 +15,8 @@ namespace Landis.Extension.StressMortality
         : ExtensionMain
     {
         //private static readonly bool isDebugEnabled = false;
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:drought");
-        public static readonly string ExtensionName = "Drought Disturbance NV";
+        public static readonly ExtensionType Type = new ExtensionType("disturbance:stress");
+        public static readonly string ExtensionName = "Stress Mortality";
 
         private string mapNameTemplate;
         private StreamWriter log;
@@ -53,6 +55,7 @@ namespace Landis.Extension.StressMortality
 
             SiteVars.Initialize();
             PartialDisturbance.Initialize();
+            SpeciesData.Initialize(parameters);
 
             modelCore.Log.WriteLine("   Opening and Initializing Drought Disturbance log file \"{0}\"...", parameters.LogFileName);
             try
@@ -89,66 +92,122 @@ namespace Landis.Extension.StressMortality
         ///</summary>
         public override void Run()
         {
-            modelCore.Log.WriteLine("   Processing Drought Disturbance ...");
+            modelCore.Log.WriteLine("   Processing Stress Mortality ...");
 
 
             //-------------------------------------------------------------------
             // HOW TO USE DATA STRUCTURE FOR AGE CLASSES
 
-            foreach(ISpecies species in modelCore.Species)
-                foreach(AgeClass ageclass in SpeciesData.MortalityTable[species])
+            /*foreach (ISpecies species in modelCore.Species)
+            {
+                modelCore.Log.WriteLine("   calculating age ranges for {0}", species.Name);
+                foreach (AgeClass ageclass in SpeciesData.PartialMortalityTable[species])
                 {
                     ushort lwr_age = ageclass.LwrAge;
                     ushort upr_age = ageclass.UprAge;
                     double mortality_fraction = ageclass.MortalityFraction;
                 }
-            //-------------------------------------------------------------------
 
-
-            //-------------------------------------------------------------------
-            //-------------------------------------------------------------------
+            }*/
+            
             foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
             {
                 IEcoregion ecoregion = PlugIn.ModelCore.Ecoregion[site];
 
-                //-------------------------------------------------------------------
                 foreach (ISpecies species in modelCore.Species)
                 {
                         if (SpeciesData.IsOnsetYear(modelCore.CurrentTime, species, ecoregion))
                         {   
                             string tempLine;
-                            tempLine = "Onset of drought for spp " + species.Name + " and ecoregion " + ecoregion.Name + " at year " + modelCore.CurrentTime.ToString();
-                            modelCore.Log.WriteLine(tempLine);
-                            doStuff(site);
+                            //tempLine = "Onset of drought for spp " + species.Name + " and ecoregion " + ecoregion.Name + " at year " + modelCore.CurrentTime.ToString();
+                            //modelCore.Log.WriteLine(tempLine);
+                            PartialMortality(site);
                             
                         }
                 }
+                PartialDisturbance.ReduceCohortBiomass(site);
             }
         }
 
-        private void doStuff(ActiveSite site)
+        //---------------------------------------------------------------------
+        public static void PartialMortality(ActiveSite site)
         {
-
-
-            foreach (ISpeciesCohorts speciesCohorts in SiteVars.Cohorts[site])
+            
+            foreach (ISpeciesCohorts cohorts in SiteVars.Cohorts[site])
             {
-                foreach (ICohort cohort in speciesCohorts)
+
+                foreach(AgeClass ageclass in SpeciesData.PartialMortalityTable[cohorts.Species])
                 {
 
-                    foreach (AgeClass ageclass in SpeciesData.MortalityTable[speciesCohorts.Species])
+                    ushort lwr_age = ageclass.LwrAge;
+                    ushort upr_age = ageclass.UprAge;
+                    
+                    switch (ageclass.BinType)
                     {
-                        ushort lwr_age = ageclass.LwrAge;
-                        ushort upr_age = ageclass.UprAge;
-                        double mortality_fraction = ageclass.MortalityFraction;
-                        if (cohort.Age >= lwr_age && cohort.Age < upr_age)
+                        case 1:
+                        {// <
+                            foreach (ICohort cohort in cohorts)
+                            {
+                                if (cohort.Age < upr_age)
+                                {
+                                    PartialDisturbance.RecordBiomassReduction(cohort, (int) ageclass.MortalityFraction * cohort.Biomass); 
+                                }
+                            }
+                            break;
+                        }
+
+                        case 2:
+                        {// Range - equivalent to (>= lwr_age and <upr_age)
+                            foreach (ICohort cohort in cohorts)
+                            {
+                                if (cohort.Age >= lwr_age && cohort.Age < upr_age)
+                                {
+                                    PartialDisturbance.RecordBiomassReduction(cohort, (int)ageclass.MortalityFraction * cohort.Biomass); 
+                                }
+                                else if (cohort.Age < lwr_age)
+                                    break;//we can break here, since ages sorted descending order
+                            }
+                            break;
+                        }
+
+                        case 3:
+                        {// >  (is this equivalent to >= ??)
+                            foreach (ICohort cohort in cohorts)
+                            {
+                                if (cohort.Age >= lwr_age)
+                                {
+                                    PartialDisturbance.RecordBiomassReduction(cohort, (int)ageclass.MortalityFraction * cohort.Biomass); 
+                                }
+                                else
+                                    break;//we can break here, since ages sorted descending order
+                            }
+
+                            break;
+                        }
+                        case 4:
+                        {// Single value
+                            foreach (ICohort cohort in cohorts)
+                            {
+                                if (cohort.Age == lwr_age)
+                                {
+                                    PartialDisturbance.RecordBiomassReduction(cohort, (int)ageclass.MortalityFraction * cohort.Biomass); 
+                                }
+                                else if (cohort.Age < lwr_age)
+                                    break;//we can break here, since ages sorted descending order
+                            }
+                            break;
+                        }
+
+                        default:
                         {
-                            //remove partial biomass (see below) 
-                            log.Write("Mortality fraction for {0} with age {1} is {2}.", cohort.Species.Name, cohort.Age, mortality_fraction);
+                            throw new InputValueException("", "Unhandled binning type; this should never occur");
                         }
                     }
                 }
             }
-        }
+
+            return;
+        }     
 
 
     }
