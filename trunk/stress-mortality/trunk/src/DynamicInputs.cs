@@ -5,7 +5,7 @@ using Landis.Core;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
 
     public class DynamicInputs

@@ -1,7 +1,7 @@
 ﻿using Landis.SpatialModeling;
 using Landis.Library.BiomassCohorts;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     class SiteVars
     {

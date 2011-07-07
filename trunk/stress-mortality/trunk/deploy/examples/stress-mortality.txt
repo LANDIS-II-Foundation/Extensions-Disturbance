@@ -1,4 +1,4 @@
-LandisData "Drought Disturbance NV"
+LandisData "Stress Mortality"
 
 Timestep 1
 

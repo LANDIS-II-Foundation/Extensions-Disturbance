@@ -2,7 +2,7 @@
 using Landis.Core;
 using System.Collections.Generic;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     /// <summary>
     /// Methods for working with the template for map filenames.

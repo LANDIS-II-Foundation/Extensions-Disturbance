@@ -4,5 +4,5 @@ Name        "Stress Mortality"
 Version     1.0
 Type        disturbance:stress
 Assembly    Landis.Extension.StressMortality
-Class       Landis.Extension.DroughtDisturbance.PlugIn
+Class       Landis.Extension.StressMortality.PlugIn
 Description  "Removes biomass/cohorts due to stress"

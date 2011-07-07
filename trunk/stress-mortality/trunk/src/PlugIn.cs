@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using Landis.Extension.Succession.Biomass;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     public class PlugIn
         : ExtensionMain

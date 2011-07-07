@@ -1,6 +1,6 @@
 ﻿using Landis.Core;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     /// <summary>
     /// An auxiliary parameter for species.

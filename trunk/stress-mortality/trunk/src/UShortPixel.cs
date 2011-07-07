@@ -1,6 +1,6 @@
 ﻿using Landis.SpatialModeling;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     public class UShortPixel : Pixel
     {

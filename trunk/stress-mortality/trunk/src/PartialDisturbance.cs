@@ -4,7 +4,7 @@ using Landis.Core;
 
 using System.Collections.Generic;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     /// <summary>
     /// A biomass disturbance that handles partial thinning of cohorts.

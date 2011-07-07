@@ -5,7 +5,7 @@ using Landis.Core;
 using Edu.Wisc.Forest.Flel.Util;
 
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     /// <summary>
     /// Parameters for the plug-in.

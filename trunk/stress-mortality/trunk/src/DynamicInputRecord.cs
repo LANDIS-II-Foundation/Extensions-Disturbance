@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Landis.Core;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     /// <summary>
     /// Values for each ecoregion x species combination.

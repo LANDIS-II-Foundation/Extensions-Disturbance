@@ -6,7 +6,7 @@ using Edu.Wisc.Forest.Flel.Util;
 using Landis.Library.Succession;
 using Landis.Extension.Succession.Biomass.Species;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     public class SpeciesData
     {

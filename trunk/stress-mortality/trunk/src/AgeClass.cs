@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     public class AgeClass
     {

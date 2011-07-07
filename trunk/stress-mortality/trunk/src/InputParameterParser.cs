@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Landis.Core;
 using Edu.Wisc.Forest.Flel.Util;
 
-namespace Landis.Extension.DroughtDisturbance
+namespace Landis.Extension.StressMortality
 {
     class InputParametersParser
         :TextParser<IInputParameters>
