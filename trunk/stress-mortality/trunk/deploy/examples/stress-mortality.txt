@@ -3,7 +3,7 @@ LandisData "Stress Mortality"
 Timestep 1
 
 
-DroughtOnsetTable
+StressOnsetTable
 >>year landtype  species
 >> -------- -------------
 2      eco1       abiebals

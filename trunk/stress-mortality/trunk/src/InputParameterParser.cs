@@ -39,13 +39,9 @@ namespace Landis.Extension.StressMortality
             ReadVar(timestep);
             parameters.Timestep = timestep.Value;
 
-            //InputVar<double> minDroughtYears = new InputVar<double>("MinDroughtYears");
-            //ReadVar(minDroughtYears);
-            //parameters.MinDroughtYears = minDroughtYears.Value;
-
             //-------------------------
             //  Species Mortality table
-            ReadName("DroughtOnsetTable");
+            ReadName("StressOnsetTable");
             Dictionary<int, List<IDynamicInputRecord>> allData = new Dictionary<int, List<IDynamicInputRecord>>();
 
             //---------------------------------------------------------------------
@@ -100,8 +96,6 @@ namespace Landis.Extension.StressMortality
             InputVar<string> speciesNameVar = new InputVar<string>("Species");
             AgeClass ageClass = new AgeClass();
            
-            //InputVar<double> mortTab = new InputVar<double>("Drought Sens");
-
             while (!AtEndOfInput && CurrentName != "CompleteMortalityTable")
             {
                 List<AgeClass> ageClasses = new List<AgeClass>();

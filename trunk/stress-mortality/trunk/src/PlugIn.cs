@@ -57,7 +57,7 @@ namespace Landis.Extension.StressMortality
             PartialDisturbance.Initialize();
             SpeciesData.Initialize(parameters);
 
-            modelCore.Log.WriteLine("   Opening and Initializing Drought Disturbance log file \"{0}\"...", parameters.LogFileName);
+            modelCore.Log.WriteLine("   Opening and Initializing Stress Mortality log file \"{0}\"...", parameters.LogFileName);
             try
             {
                 log = modelCore.CreateTextFile(parameters.LogFileName);
@@ -119,7 +119,7 @@ namespace Landis.Extension.StressMortality
                         if (SpeciesData.IsOnsetYear(modelCore.CurrentTime, species, ecoregion))
                         {   
                             string tempLine;
-                            //tempLine = "Onset of drought for spp " + species.Name + " and ecoregion " + ecoregion.Name + " at year " + modelCore.CurrentTime.ToString();
+                            //tempLine = "Onset of stress for spp " + species.Name + " and ecoregion " + ecoregion.Name + " at year " + modelCore.CurrentTime.ToString();
                             //modelCore.Log.WriteLine(tempLine);
                             PartialMortality(site);
                             
