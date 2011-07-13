@@ -94,6 +94,7 @@ namespace Landis.Extension.StressMortality
                 return;
 
             int currentYear = PlugIn.ModelCore.CurrentTime;
+            int successionTime = Landis.Extension.Succession.Biomass.PlugIn.SuccessionTimeStep;
 
             //PlugIn.ModelCore.Log.WriteLine("Recording reduction:  {0:0.0}/{1:0.0}/{2}.", cohort.Species.Name, cohort.Age, reduction);
             reductions[cohort.Species.Index][cohort.Age] = (int) (reductionFraction * cohort.Biomass);
@@ -106,10 +107,10 @@ namespace Landis.Extension.StressMortality
             // we would lose track of cohorts during succession time steps.
             Dictionary<int,int> newEntry = new Dictionary<int,int>();
 
-            int cohortAddYear = currentYear - cohort.Age;  
+            int cohortAddYear = currentYear - cohort.Age - currentYear%successionTime;  
             newEntry.Add(cohortAddYear,reduction);
 
-            PlugIn.ModelCore.Log.WriteLine("R/C={0}/{1}:  Trying to add key: {2} time:{3}, add year:{4}, reduction:{5}, AGB={6}.", site.Location.Row, site.Location.Column, cohort.Species.Name, PlugIn.ModelCore.CurrentTime, cohortAddYear, reduction, cohort.Biomass);
+            //PlugIn.ModelCore.Log.WriteLine("R/C={0}/{1}:  Trying to add key: {2} time:{3}, add year:{4}, reduction:{5}, AGB={6}.", site.Location.Row, site.Location.Column, cohort.Species.Name, PlugIn.ModelCore.CurrentTime, cohortAddYear, reduction, cohort.Biomass);
 
             if (SiteVars.CumulativeMortality[site][cohort.Species].ContainsKey(currentYear))
                 SiteVars.CumulativeMortality[site][cohort.Species][currentYear].Add(cohortAddYear, reduction);

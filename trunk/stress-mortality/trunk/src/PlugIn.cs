@@ -23,8 +23,6 @@ namespace Landis.Extension.StressMortality
         private static IInputParameters parameters;
         private static ICore modelCore;
 
-        //Landis.Extension.Succession.Biomass.PlugIn.
-
         //---------------------------------------------------------------------
         public PlugIn()
             : base(ExtensionName, Type)
