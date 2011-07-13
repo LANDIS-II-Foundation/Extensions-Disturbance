@@ -95,16 +95,21 @@ namespace Landis.Extension.StressMortality
         {
             modelCore.Log.WriteLine("   Processing Stress Mortality ...");
 
+            StressBioRemoved = 0;
+            StressCohortsKilled = 0;
+            foreach (ISpecies species in modelCore.Species)
+            {
+                SpeciesData.SppBiomassRemoved[species] = 0;
+                SpeciesData.CohortsKilled[species] = 0;
+            }
+            PartialDisturbance.Initialize();
+            
             foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
             {
                 IEcoregion ecoregion = PlugIn.ModelCore.Ecoregion[site];
 
                 foreach (ISpecies species in modelCore.Species)
                 {
-                    StressBioRemoved = 0;
-                    StressCohortsKilled = 0;
-                    SpeciesData.SppBiomassRemoved[species] = 0;
-                    SpeciesData.CohortsKilled[species] = 0;
                     if (SpeciesData.IsOnsetYear(modelCore.CurrentTime, species, ecoregion))
                     {   
                         StressMortality(site, species);
