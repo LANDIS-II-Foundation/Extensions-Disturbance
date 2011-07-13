@@ -88,24 +88,33 @@ namespace Landis.Extension.StressMortality
         /// <summary>
         /// Records the biomass reduction for a particular cohort.
         /// </summary>
-        public static void RecordBiomassReduction(ActiveSite site, ICohort cohort, int reduction)
+        public static void RecordBiomassReduction(ActiveSite site, ICohort cohort, double reductionFraction)
         {
-            if (reduction <= 0)
+            if (reductionFraction <= 0.0)
                 return;
 
+            int currentYear = PlugIn.ModelCore.CurrentTime;
+
             //PlugIn.ModelCore.Log.WriteLine("Recording reduction:  {0:0.0}/{1:0.0}/{2}.", cohort.Species.Name, cohort.Age, reduction);
-            reductions[cohort.Species.Index][cohort.Age] = reduction;
+            reductions[cohort.Species.Index][cohort.Age] = (int) (reductionFraction * cohort.Biomass);
 
-            // ADD TO THE DICTIONARY HERE.
+            int reduction = (int)(reductionFraction * 100.0);
+
+            // ADD TO THE DICTIONARY HERE.  
+            // Dictionary = Year of Reduction, Year Cohort Added, Amount of Reduction
+            // Year cohort added used as cohort age will change over time.  If we used cohort age,
+            // we would lose track of cohorts during succession time steps.
             Dictionary<int,int> newEntry = new Dictionary<int,int>();
-            newEntry.Add(cohort.Age,reduction);
 
-            PlugIn.ModelCore.Log.WriteLine("R/C={0}/{1}:  Trying to add key: {2} time:{3}, age:{4}, reduction:{5}, AGB={6}.", site.Location.Row, site.Location.Column, cohort.Species.Name, PlugIn.ModelCore.CurrentTime, cohort.Age, reduction, cohort.Biomass);
+            int cohortAddYear = currentYear - cohort.Age;  
+            newEntry.Add(cohortAddYear,reduction);
 
-            if (SiteVars.CumulativeMortality[site][cohort.Species].ContainsKey(PlugIn.ModelCore.CurrentTime))
-                SiteVars.CumulativeMortality[site][cohort.Species][PlugIn.ModelCore.CurrentTime].Add(cohort.Age, reduction);
+            PlugIn.ModelCore.Log.WriteLine("R/C={0}/{1}:  Trying to add key: {2} time:{3}, add year:{4}, reduction:{5}, AGB={6}.", site.Location.Row, site.Location.Column, cohort.Species.Name, PlugIn.ModelCore.CurrentTime, cohortAddYear, reduction, cohort.Biomass);
+
+            if (SiteVars.CumulativeMortality[site][cohort.Species].ContainsKey(currentYear))
+                SiteVars.CumulativeMortality[site][cohort.Species][currentYear].Add(cohortAddYear, reduction);
             else
-                SiteVars.CumulativeMortality[site][cohort.Species].Add(PlugIn.ModelCore.CurrentTime, newEntry);
+                SiteVars.CumulativeMortality[site][cohort.Species].Add(currentYear, newEntry);
 
             // Calculate cumulative mortality; begin by including this year's mortality (reduction).
             // Look at the past 3 years only.
@@ -113,21 +122,24 @@ namespace Landis.Extension.StressMortality
             Dictionary<int, int> cohortAgeReductions;
             for (int y = 1; y <= 3; y++)
             {
-                if (SiteVars.CumulativeMortality[site][cohort.Species].TryGetValue(PlugIn.ModelCore.CurrentTime - y, out cohortAgeReductions))
+                if (SiteVars.CumulativeMortality[site][cohort.Species].TryGetValue(currentYear - y, out cohortAgeReductions))
                 {
                     int annualReduction = 0;
-                    if(cohortAgeReductions.TryGetValue(cohort.Age - y, out annualReduction))
+                    if(cohortAgeReductions.TryGetValue(cohortAddYear, out annualReduction))
                         cumulativeMortality += annualReduction;
                 }
             }
 
             // If exceeds the limit, remove cohort.
             if (cumulativeMortality > SpeciesData.CompleteMortalityTable[cohort.Species])
-                PartialDisturbance.RecordBiomassReduction(site, cohort, cohort.Biomass); 
+            {
+                PlugIn.ModelCore.Log.WriteLine("R/C={0}/{1}:  Trying to add mortality: {2} time:{3}, age:{4}, cumulative mortality:{5}, trigger={6}.", site.Location.Row, site.Location.Column, cohort.Species.Name, PlugIn.ModelCore.CurrentTime, cohort.Age, cumulativeMortality, SpeciesData.CompleteMortalityTable[cohort.Species]);
+                reductions[cohort.Species.Index][cohort.Age] = cohort.Biomass;
+            }
 
             // Remove any keys more than 4 years old to keep this dictionary relatively small.
-            if (SiteVars.CumulativeMortality[site][cohort.Species].TryGetValue(PlugIn.ModelCore.CurrentTime - 4, out cohortAgeReductions))
-                SiteVars.CumulativeMortality[site][cohort.Species].Remove(PlugIn.ModelCore.CurrentTime - 4);
+            if (SiteVars.CumulativeMortality[site][cohort.Species].TryGetValue(currentYear - 4, out cohortAgeReductions))
+                SiteVars.CumulativeMortality[site][cohort.Species].Remove(currentYear - 4);
 
         }
     }
