@@ -51,10 +51,13 @@ namespace Landis.Extension.StressMortality
             int reduction;
             if (reductions[cohort.Species.Index].TryGetValue(cohort.Age, out reduction))
             {
-
-                SiteVars.StressBioRemoved[currentSite] += reduction;
-                //SiteVars.CohortsPartiallyDamaged[currentSite]++;
-
+                if (reduction == cohort.Biomass)
+                {
+                    PlugIn.StressCohortsKilled++;
+                    SpeciesData.CohortsKilled[cohort.Species]++;
+                }
+                PlugIn.StressBioRemoved += reduction;
+                SpeciesData.SppBiomassRemoved[cohort.Species] += reduction;
                 return reduction;
             }
             else
@@ -134,7 +137,7 @@ namespace Landis.Extension.StressMortality
             // If exceeds the limit, remove cohort.
             if (cumulativeMortality > SpeciesData.CompleteMortalityTable[cohort.Species])
             {
-                PlugIn.ModelCore.Log.WriteLine("R/C={0}/{1}:  Trying to add mortality: {2} time:{3}, age:{4}, cumulative mortality:{5}, trigger={6}.", site.Location.Row, site.Location.Column, cohort.Species.Name, PlugIn.ModelCore.CurrentTime, cohort.Age, cumulativeMortality, SpeciesData.CompleteMortalityTable[cohort.Species]);
+                //PlugIn.ModelCore.Log.WriteLine("R/C={0}/{1}:  Trying to add mortality: {2} time:{3}, age:{4}, cumulative mortality:{5}, trigger={6}.", site.Location.Row, site.Location.Column, cohort.Species.Name, PlugIn.ModelCore.CurrentTime, cohort.Age, cumulativeMortality, SpeciesData.CompleteMortalityTable[cohort.Species]);
                 reductions[cohort.Species.Index][cohort.Age] = cohort.Biomass;
             }
 

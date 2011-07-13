@@ -12,27 +12,18 @@ namespace Landis.Extension.StressMortality
 
         public static SpeciesAuxParm<List<AgeClass>> PartialMortalityTable;
         public static SpeciesAuxParm<int> CompleteMortalityTable;
-        //public static SpeciesAuxParm<Dictionary<int, Dictionary<int, int>>> CumulativeMortality;
+        public static SpeciesAuxParm<int> SppBiomassRemoved;
+        public static SpeciesAuxParm<int> CohortsKilled;
         
 
         //---------------------------------------------------------------------
         public static void Initialize(IInputParameters parameters)
         {
-            //foreach (ISpecies spp in PlugIn.ModelCore.Species)
-            //{
-                // Dictionary = time, age, reduction.
-
-                //Dictionary<int, int> cohortAgeReductions = new Dictionary<int, int>();
-                //CumulativeMortality[spp].Add(0, cohortAgeReductions);
-                //PlugIn.ModelCore.Log.WriteLine("  Reading age classes for {0}.", spp.Name);
-                //foreach (AgeClass ac in parameters.PartialMortalityTable[spp])
-                //{
-                //    PlugIn.ModelCore.Log.WriteLine("  Reading {0} age class: {1}-{2}, fraction={3}.", spp.Name, ac.LwrAge, ac.UprAge, ac.MortalityFraction);
-                //}
-            //}
 
             PartialMortalityTable = parameters.PartialMortalityTable;
             CompleteMortalityTable = parameters.CompleteMortalityTable;
+            SppBiomassRemoved = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
+            CohortsKilled = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
         }
 
         public static bool IsOnsetYear(int year, ISpecies species, IEcoregion ecoregion)

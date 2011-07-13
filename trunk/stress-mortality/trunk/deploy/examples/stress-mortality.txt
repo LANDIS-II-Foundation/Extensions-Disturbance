@@ -33,5 +33,5 @@ abiebals   90
 poputrem   90
 
 MapName  stress/stress-map-{timestep}.img  << Currently no maps are being produced; a placeholder
-LogFile  "stress/stress-mortality-log.csv"
+LogFile  "stress-mortality-log.csv"
 

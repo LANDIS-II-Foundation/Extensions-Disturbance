@@ -14,7 +14,6 @@ namespace Landis.Extension.StressMortality
     public class PlugIn
         : ExtensionMain
     {
-        //private static readonly bool isDebugEnabled = false;
         public static readonly ExtensionType Type = new ExtensionType("disturbance:stress");
         public static readonly string ExtensionName = "Stress Mortality";
 
@@ -22,6 +21,8 @@ namespace Landis.Extension.StressMortality
         private StreamWriter log;
         private static IInputParameters parameters;
         private static ICore modelCore;
+        public static int StressBioRemoved;
+        public static int StressCohortsKilled; 
 
         //---------------------------------------------------------------------
         public PlugIn()
@@ -38,8 +39,7 @@ namespace Landis.Extension.StressMortality
             }
         }
         //---------------------------------------------------------------------
-        public override void LoadParameters(string dataFile,
-                                            ICore mCore)
+        public override void LoadParameters(string dataFile, ICore mCore)
         {
             modelCore = mCore;
             InputParametersParser parser = new InputParametersParser();
@@ -69,6 +69,7 @@ namespace Landis.Extension.StressMortality
             }
             log.AutoFlush = true;
 
+            log.Write("Year,");
             foreach (ISpecies species in PlugIn.ModelCore.Species)
             {
                 log.Write("BioRemoved_{0},", species.Name);
@@ -94,39 +95,29 @@ namespace Landis.Extension.StressMortality
         {
             modelCore.Log.WriteLine("   Processing Stress Mortality ...");
 
-
-            //-------------------------------------------------------------------
-            // HOW TO USE DATA STRUCTURE FOR AGE CLASSES
-
-            /*foreach (ISpecies species in modelCore.Species)
-            {
-                modelCore.Log.WriteLine("   calculating age ranges for {0}", species.Name);
-                foreach (AgeClass ageclass in SpeciesData.PartialMortalityTable[species])
-                {
-                    ushort lwr_age = ageclass.LwrAge;
-                    ushort upr_age = ageclass.UprAge;
-                    double mortality_fraction = ageclass.MortalityFraction;
-                }
-
-            }*/
-            
             foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
             {
                 IEcoregion ecoregion = PlugIn.ModelCore.Ecoregion[site];
 
                 foreach (ISpecies species in modelCore.Species)
                 {
-                        if (SpeciesData.IsOnsetYear(modelCore.CurrentTime, species, ecoregion))
-                        {   
-                            PartialMortality(site, species);
-                        }
+                    StressBioRemoved = 0;
+                    StressCohortsKilled = 0;
+                    SpeciesData.SppBiomassRemoved[species] = 0;
+                    SpeciesData.CohortsKilled[species] = 0;
+                    if (SpeciesData.IsOnsetYear(modelCore.CurrentTime, species, ecoregion))
+                    {   
+                        StressMortality(site, species);
+                    }
                 }
                 PartialDisturbance.ReduceCohortBiomass(site);
             }
+
+            WriteLogFile();
         }
 
         //---------------------------------------------------------------------
-        public static void PartialMortality(ActiveSite site, ISpecies species)
+        public static void StressMortality(ActiveSite site, ISpecies species)
         {
             
             foreach (ISpeciesCohorts cohorts in SiteVars.Cohorts[site])
@@ -207,8 +198,25 @@ namespace Landis.Extension.StressMortality
             }
 
             return;
-        }     
+        }
 
+        //---------------------------------------------------------------------
+        private void WriteLogFile()
+        {
+            log.Write("{0},", PlugIn.ModelCore.CurrentTime);
+
+            foreach (ISpecies species in PlugIn.ModelCore.Species)
+            {
+                log.Write("{0},", SpeciesData.SppBiomassRemoved[species]);
+            }
+            log.Write("{0},", StressBioRemoved);
+            foreach (ISpecies species in PlugIn.ModelCore.Species)
+            {
+                log.Write("{0},", SpeciesData.CohortsKilled[species]);
+            }
+            log.Write("{0}", StressCohortsKilled);
+            log.WriteLine("");
+        }
 
     }
 }
