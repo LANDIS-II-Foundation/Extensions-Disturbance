@@ -79,10 +79,10 @@ namespace Landis.Extension.StressMortality
                 log.Write("CohortsKilled_{0},", species.Name);
             }
             log.Write("TotalCohortsKilled,");
-            foreach (ISpecies species in PlugIn.ModelCore.Species)
-            {
-                log.Write("ExtraRem_{0},", species.Name);
-            }
+            //foreach (ISpecies species in PlugIn.ModelCore.Species)
+            //{
+            //    log.Write("ExtraRem_{0},", species.Name);
+            //}
             log.WriteLine("");
         }
 
@@ -118,11 +118,11 @@ namespace Landis.Extension.StressMortality
                 {
                         if (SpeciesData.IsOnsetYear(modelCore.CurrentTime, species, ecoregion))
                         {   
-                            string tempLine;
+                            //string tempLine;
                             //tempLine = "Onset of stress for spp " + species.Name + " and ecoregion " + ecoregion.Name + " at year " + modelCore.CurrentTime.ToString();
                             //modelCore.Log.WriteLine(tempLine);
-                            PartialMortality(site);
-                            
+                            PartialMortality(site, species);
+
                         }
                 }
                 PartialDisturbance.ReduceCohortBiomass(site);
@@ -130,7 +130,7 @@ namespace Landis.Extension.StressMortality
         }
 
         //---------------------------------------------------------------------
-        public static void PartialMortality(ActiveSite site)
+        public static void PartialMortality(ActiveSite site, ISpecies species)
         {
             
             foreach (ISpeciesCohorts cohorts in SiteVars.Cohorts[site])
@@ -150,7 +150,7 @@ namespace Landis.Extension.StressMortality
                             {
                                 if (cohort.Age < upr_age)
                                 {
-                                    PartialDisturbance.RecordBiomassReduction(cohort, (int) ageclass.MortalityFraction * cohort.Biomass); 
+                                    PartialDisturbance.RecordBiomassReduction(site, cohort, (int) (ageclass.MortalityFraction * cohort.Biomass)); 
                                 }
                             }
                             break;
@@ -162,7 +162,8 @@ namespace Landis.Extension.StressMortality
                             {
                                 if (cohort.Age >= lwr_age && cohort.Age < upr_age)
                                 {
-                                    PartialDisturbance.RecordBiomassReduction(cohort, (int)ageclass.MortalityFraction * cohort.Biomass); 
+                                    //PlugIn.ModelCore.Log.WriteLine("ageclass mortality fraction = {0}.", ageclass.MortalityFraction);
+                                    PartialDisturbance.RecordBiomassReduction(site, cohort, (int)(ageclass.MortalityFraction * cohort.Biomass)); 
                                 }
                                 else if (cohort.Age < lwr_age)
                                     break;//we can break here, since ages sorted descending order
@@ -176,7 +177,7 @@ namespace Landis.Extension.StressMortality
                             {
                                 if (cohort.Age >= lwr_age)
                                 {
-                                    PartialDisturbance.RecordBiomassReduction(cohort, (int)ageclass.MortalityFraction * cohort.Biomass); 
+                                    PartialDisturbance.RecordBiomassReduction(site, cohort, (int)(ageclass.MortalityFraction * cohort.Biomass)); 
                                 }
                                 else
                                     break;//we can break here, since ages sorted descending order
@@ -190,7 +191,7 @@ namespace Landis.Extension.StressMortality
                             {
                                 if (cohort.Age == lwr_age)
                                 {
-                                    PartialDisturbance.RecordBiomassReduction(cohort, (int)ageclass.MortalityFraction * cohort.Biomass); 
+                                    PartialDisturbance.RecordBiomassReduction(site, cohort, (int)(ageclass.MortalityFraction * cohort.Biomass)); 
                                 }
                                 else if (cohort.Age < lwr_age)
                                     break;//we can break here, since ages sorted descending order

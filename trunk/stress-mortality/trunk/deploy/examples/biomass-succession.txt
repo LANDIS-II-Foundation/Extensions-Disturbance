@@ -1,6 +1,6 @@
 LandisData  "Biomass Succession"
 
-Timestep  10
+Timestep  5
 
 SeedingAlgorithm  WardSeedDispersal
 

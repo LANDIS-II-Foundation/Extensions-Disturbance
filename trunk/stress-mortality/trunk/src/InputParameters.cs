@@ -15,8 +15,8 @@ namespace Landis.Extension.StressMortality
         int Timestep { get; set; }
         string MapNamesTemplate { get; set; }
         string LogFileName { get; set; }
-        Landis.Extension.Succession.Biomass.Species.AuxParm<List<AgeClass>> PartialMortalityTable { get; }
-        Landis.Extension.Succession.Biomass.Species.AuxParm<int> CompleteMortalityTable { get; }
+        SpeciesAuxParm<List<AgeClass>> PartialMortalityTable { get; }
+        SpeciesAuxParm<int> CompleteMortalityTable { get; }
         
     }
 
@@ -26,8 +26,8 @@ namespace Landis.Extension.StressMortality
         private int timestep;
         private string mapNamesTemplate;
         private string logFileName;
-        private Landis.Extension.Succession.Biomass.Species.AuxParm<List<AgeClass>> partialMortalityTable;
-        private Landis.Extension.Succession.Biomass.Species.AuxParm<int> completeMortalityTable;
+        private SpeciesAuxParm<List<AgeClass>> partialMortalityTable;
+        private SpeciesAuxParm<int> completeMortalityTable;
         //---------------------------------------------------------------------
         /// <summary>
         /// Timestep (years)
@@ -82,7 +82,7 @@ namespace Landis.Extension.StressMortality
         }
 
         //---------------------------------------------------------------------
-        public Landis.Extension.Succession.Biomass.Species.AuxParm<List<AgeClass>> PartialMortalityTable
+        public SpeciesAuxParm<List<AgeClass>> PartialMortalityTable
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Landis.Extension.StressMortality
         }
 
         //---------------------------------------------------------------------
-        public Landis.Extension.Succession.Biomass.Species.AuxParm<int> CompleteMortalityTable
+        public SpeciesAuxParm<int> CompleteMortalityTable
         {
             get
             {
@@ -114,13 +114,13 @@ namespace Landis.Extension.StressMortality
         //---------------------------------------------------------------------
         public InputParameters()
         {
-            partialMortalityTable = new Landis.Extension.Succession.Biomass.Species.AuxParm<List<AgeClass>>(PlugIn.ModelCore.Species);
+            partialMortalityTable = new SpeciesAuxParm<List<AgeClass>>(PlugIn.ModelCore.Species);
             foreach (ISpecies spp in PlugIn.ModelCore.Species)
             {
                 partialMortalityTable[spp] = new List<AgeClass>();
             }
 
-            completeMortalityTable = new Landis.Extension.Succession.Biomass.Species.AuxParm<int>(PlugIn.ModelCore.Species);
+            completeMortalityTable = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
         }
     }
 }

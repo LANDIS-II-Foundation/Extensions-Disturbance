@@ -5,7 +5,7 @@ namespace Landis.Extension.StressMortality
     /// <summary>
     /// An auxiliary parameter for species.
     /// </summary>
-    public class AuxParm<T>
+    public class SpeciesAuxParm<T>
     {
         private T[] values;
 
@@ -26,7 +26,7 @@ namespace Landis.Extension.StressMortality
 
         //---------------------------------------------------------------------
 
-        public AuxParm(ISpeciesDataset species)
+        public SpeciesAuxParm(ISpeciesDataset species)
         {
             values = new T[species.Count];
         }
