@@ -1,8 +1,5 @@
 LandisData "Stress Mortality"
 
-Timestep 1
-
-
 StressOnsetTable
 >>year landtype  species
 >> -------- -------------

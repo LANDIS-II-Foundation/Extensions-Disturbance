@@ -12,7 +12,7 @@ namespace Landis.Extension.StressMortality
     /// </summary>
     public interface IInputParameters
     {
-        int Timestep { get; set; }
+        ///int Timestep { get; set; }
         string MapNamesTemplate { get; set; }
         string LogFileName { get; set; }
         SpeciesAuxParm<List<AgeClass>> PartialMortalityTable { get; }
@@ -23,7 +23,7 @@ namespace Landis.Extension.StressMortality
     class InputParameters
         : IInputParameters
     {
-        private int timestep;
+        //private int timestep;
         private string mapNamesTemplate;
         private string logFileName;
         private SpeciesAuxParm<List<AgeClass>> partialMortalityTable;
@@ -32,7 +32,7 @@ namespace Landis.Extension.StressMortality
         /// <summary>
         /// Timestep (years)
         /// </summary>
-        public int Timestep
+        /*public int Timestep
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Landis.Extension.StressMortality
                                                   "Value must be = or > 0.");
                 timestep = value;
             }
-        }
+        }*/
 
         //---------------------------------------------------------------------
         /// <summary>

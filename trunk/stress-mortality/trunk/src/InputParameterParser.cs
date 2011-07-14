@@ -8,11 +8,11 @@ namespace Landis.Extension.StressMortality
     class InputParametersParser
         :TextParser<IInputParameters>
     {
-        public static class Names
+        /*public static class Names
         {
-            public const string Timestep = "Timestep";
+            //public const string Timestep = "Timestep";
             public const string MapName = "MapName";
-        }
+        }*/
 
         //---------------------------------------------------------------------
         private Dictionary<string, int> speciesLineNums;
@@ -35,9 +35,9 @@ namespace Landis.Extension.StressMortality
 
             InputParameters parameters = new InputParameters();
 
-            InputVar<int> timestep = new InputVar<int>("Timestep");
-            ReadVar(timestep);
-            parameters.Timestep = timestep.Value;
+            //InputVar<int> timestep = new InputVar<int>("Timestep");
+            //ReadVar(timestep);
+            //parameters.Timestep = timestep.Value;
 
             //-------------------------
             //  Species Mortality table
@@ -135,45 +135,7 @@ namespace Landis.Extension.StressMortality
                     ageClasses.Add(ageClass);
 
                 }
-                //GetNextLine();
                 success = false;
-
-                /*while (!AtEndOfInput)
-                {
-                    currentLine = new StringReader(CurrentLine);
-                    TextReader.SkipWhitespace(currentLine);
-                    word = TextReader.ReadWord(currentLine);
-
-                    species = GetSpecies(word);
-                    if (lineNumbers.TryGetValue(species.Name, out lineNumber))
-                        throw new InputValueException(word,
-                                                      "The species {0} was previously used on line {1}",
-                                                      word, lineNumber);
-                    lineNumbers[species.Name] = LineNumber;
-
-                    selectedSpecies.Add(species);
-                    //CheckNoDataAfter("the species name", currentLine);
-                    ageClasses.Add(species.Name, new List<AgeClass>());
-                    while (currentLine.Peek() != -1)
-                    {
-                        TextReader.SkipWhitespace(currentLine);
-                        word = TextReader.ReadWord(currentLine);
-                        if (word == "")
-                        {
-                            if (!success)
-                                throw new InputVariableException(speciesNameVar, "No age classes were defined for species: {0}", species.Name);
-                            else
-                                break;
-                        }
-                        ageClass = new AgeClass();
-                        success = ageClass.Parse(word);
-                        if (!success)
-                            throw new InputVariableException(speciesNameVar, "Entry is not a valid age class: {0}", word);
-                        ageClasses[species.Name].Add(ageClass);
-                    }
-                    GetNextLine();*/
-
-
 
                 parameters.SetPartialMortalityTable(species, ageClasses);
                 //foreach (AgeClass ac in parameters.PartialMortalityTable[species])
@@ -189,7 +151,7 @@ namespace Landis.Extension.StressMortality
 
             InputVar<int> cmp = new InputVar<int>("Complete Mortality Percentage");
 
-            while (!AtEndOfInput && CurrentName != Names.MapName)
+            while (!AtEndOfInput && CurrentName != "MapName")
             {
 
                 StringReader currentLine = new StringReader(CurrentLine);

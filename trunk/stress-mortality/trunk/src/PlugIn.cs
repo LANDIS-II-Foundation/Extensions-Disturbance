@@ -50,7 +50,7 @@ namespace Landis.Extension.StressMortality
         public override void Initialize()
         {
 
-            Timestep = parameters.Timestep;
+            Timestep = 1; // parameters.Timestep;
             mapNameTemplate = parameters.MapNamesTemplate;
 
             SiteVars.Initialize();
