@@ -37,9 +37,9 @@ namespace Landis.Extension.BaseHarvest
         public void WriteMap(int timestep)
         {
             string path = MapNames.ReplaceTemplateVars(nameTemplate, timestep);
-            using (IOutputRaster<UIntPixel> outputRaster = PlugIn.ModelCore.CreateRaster<UIntPixel>(path, PlugIn.ModelCore.Landscape.Dimensions))
+            using (IOutputRaster<ShortPixel> outputRaster = PlugIn.ModelCore.CreateRaster<ShortPixel>(path, PlugIn.ModelCore.Landscape.Dimensions))
             {
-                UIntPixel pixel = outputRaster.BufferPixel;
+                ShortPixel pixel = outputRaster.BufferPixel;
             
                 foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
                 {
@@ -48,7 +48,7 @@ namespace Landis.Extension.BaseHarvest
                         if (prescription == null)
                             pixel.MapCode.Value = 1;
                         else
-                            pixel.MapCode.Value = (byte)(prescription.Number + 1);
+                            pixel.MapCode.Value = (short)(prescription.Number + 1);
                     }
                     else {
                         //  Inactive site
