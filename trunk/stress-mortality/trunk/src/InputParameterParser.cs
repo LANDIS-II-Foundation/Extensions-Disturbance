@@ -57,10 +57,11 @@ namespace Landis.Extension.StressMortality
                 ReadValue(year, currentLine);
                 int yr = year.Value.Actual;
 
+                if (yr < 1)
+                    throw new InputVariableException(year, "The stress year must be > 1 {0}", "");
                 
                 if (!allData.ContainsKey(yr))
                 {
-                    //inputTable.Add(inputTable);
                     List<IDynamicInputRecord> inputTable = new List<IDynamicInputRecord>();
                     allData.Add(yr, inputTable);
                     PlugIn.ModelCore.Log.WriteLine("  Dynamic Input Parser:  Add new year = {0}.", yr);
@@ -105,10 +106,6 @@ namespace Landis.Extension.StressMortality
                 
                 StringReader currentLine = new StringReader(CurrentLine);
                 ISpecies species = ReadSpecies(currentLine);
-
-                //AgeClass ageClass = new AgeClass();
-
-                //ageClasses.Add(species.Name, new List<AgeClass>());
 
                 Dictionary<string, int> lineNumbers = new Dictionary<string, int>();
                 lineNumbers[species.Name] = LineNumber;

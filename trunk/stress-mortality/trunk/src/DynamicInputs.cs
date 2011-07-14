@@ -38,41 +38,6 @@ namespace Landis.Extension.StressMortality
             }
         }
 
-        /*public static void Write()
-        {
-            foreach(ISpecies species in PlugIn.ModelCore.Species)
-            {
-                foreach(IEcoregion ecoregion in PlugIn.ModelCore.Ecoregions)
-                {
-                    if (!ecoregion.Active)
-                        continue;
-
-                    PlugIn.ModelCore.Log.WriteLine("Spp={0}, Eco={1}, Pest={2:0.0}, maxANPP={3}, maxB={4}.", species.Name, ecoregion.Name,
-                        timestepData[species.Index, ecoregion.Index].ProbEst,
-                        timestepData[species.Index, ecoregion.Index].ANPP_MAX_Spp,
-                        timestepData[species.Index, ecoregion.Index].B_MAX_Spp);
-
-                }
-            }
-
-        }*/
-        //---------------------------------------------------------------------
-        /*public static void Initialize(string filename, bool writeOutput)
-        {
-            PlugIn.ModelCore.Log.WriteLine("   Loading dynamic input data from file \"{0}\" ...", filename);
-            DynamicInputsParser parser = new DynamicInputsParser();
-            try
-            {
-                allData = PlugIn.ModelCore.Load<Dictionary<int, IDynamicInputRecord[]>>(filename, parser);
-            }
-            catch (FileNotFoundException)
-            {
-                string mesg = string.Format("Error: The file {0} does not exist", filename);
-                throw new System.ApplicationException(mesg);
-            }
-
-            timestepData = allData[0];
-        }*/
     }
 
 }
