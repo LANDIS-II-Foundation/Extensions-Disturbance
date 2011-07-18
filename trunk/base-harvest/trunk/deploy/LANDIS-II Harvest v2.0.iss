@@ -20,7 +20,7 @@ Source: examples\*; DestDir: {app}\examples\base-harvest; Flags: recursesubdirs
 #define Harvest "Base Harvest 2.0.txt"
 Source: {#Harvest}; DestDir: {#LandisPlugInDir}
 
-Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Succession.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
+; Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Succession.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
 
 [Run]
 ;; Run plug-in admin tool to add an entry for the plug-in
