@@ -88,7 +88,8 @@
     <Compile Include="SiteVars.cs" />
     <Compile Include="HarvestSpeciesDataset.cs" />
     <Compile Include="SpecificAgesCohortSelector.cs" />
-    <Compile Include="UShortPixel.cs" />
+    <Compile Include="ShortPixel.cs" />
+    <Compile Include="IntPixel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

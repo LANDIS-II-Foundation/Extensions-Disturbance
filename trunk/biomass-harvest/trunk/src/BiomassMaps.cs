@@ -39,11 +39,11 @@ namespace Landis.Extension.BiomassHarvest
         {
             string path = BaseHarvest.MapNames.ReplaceTemplateVars(nameTemplate, timestep);
             PlugIn.ModelCore.Log.WriteLine("   Writing biomass-removed map to {0} ...", path);
-            using (IOutputRaster<UIntPixel> outputRaster = PlugIn.ModelCore.CreateRaster<UIntPixel>(path, PlugIn.ModelCore.Landscape.Dimensions))
+            using (IOutputRaster<IntPixel> outputRaster = PlugIn.ModelCore.CreateRaster<IntPixel>(path, PlugIn.ModelCore.Landscape.Dimensions))
             {
-                UIntPixel pixel = outputRaster.BufferPixel;
+                IntPixel pixel = outputRaster.BufferPixel;
                 foreach (Site site in PlugIn.ModelCore.Landscape.AllSites) {
-                    pixel.MapCode.Value = (ushort) Math.Round(SiteVars.BiomassRemoved[site] * 10.0);  //Convert to kg/ha
+                    pixel.MapCode.Value = (int) Math.Round(SiteVars.BiomassRemoved[site]);  
                     outputRaster.WriteBufferPixel();
                 }
             }
