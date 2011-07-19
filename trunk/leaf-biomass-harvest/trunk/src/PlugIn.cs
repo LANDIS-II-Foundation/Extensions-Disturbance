@@ -266,9 +266,9 @@ namespace Landis.Extension.LeafBiomassHarvest
         {
             string path = MapNames.ReplaceTemplateVars(nameTemplate, timestep);
             modelCore.Log.WriteLine("   Writing prescription map to {0} ...", path);
-            using (IOutputRaster<UIntPixel> outputRaster = modelCore.CreateRaster<UIntPixel>(path, modelCore.Landscape.Dimensions))
+            using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path, modelCore.Landscape.Dimensions))
             {
-                UIntPixel pixel = outputRaster.BufferPixel;
+                ShortPixel pixel = outputRaster.BufferPixel;
                 foreach (Site site in modelCore.Landscape.AllSites)
                 {
                     if (site.IsActive)
@@ -277,7 +277,7 @@ namespace Landis.Extension.LeafBiomassHarvest
                         if (prescription == null)
                             pixel.MapCode.Value = 1;
                         else
-                            pixel.MapCode.Value = (uint) (prescription.Number + 1);
+                            pixel.MapCode.Value = (short) (prescription.Number + 1);
                     }
                     else
                     {

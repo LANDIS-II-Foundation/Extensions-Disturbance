@@ -81,7 +81,7 @@
     <Compile Include="IInputParameters.cs" />
     <Compile Include="InputParameters.cs" />
     <Compile Include="InputParametersParser.cs" />
-    <Compile Include="UIntPixel.cs" />
+    <Compile Include="IntPixel.cs" />
     <Compile Include="PartialHarvestDisturbance.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -95,6 +95,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SelectCohorts.cs" />
+    <Compile Include="ShortPixel.cs" />
     <Compile Include="SiteSelectorWrapper.cs">
       <SubType>Code</SubType>
     </Compile>
