@@ -122,9 +122,11 @@ namespace Landis.Extension.StressMortality
 
             // Calculate cumulative mortality; begin by including this year's mortality (reduction).
             // Look at the past 3 years only.
-            int cumulativeMortality = reduction;  
+            int cumulativeMortality = reduction;
+            int numYears = SpeciesData.CompleteMortalityTime[cohort.Species];
+
             Dictionary<int, int> cohortAgeReductions;
-            for (int y = 1; y <= 3; y++)
+            for (int y = 1; y <= numYears; y++)
             {
                 if (SiteVars.CumulativeMortality[site][cohort.Species].TryGetValue(currentYear - y, out cohortAgeReductions))
                 {
@@ -135,15 +137,15 @@ namespace Landis.Extension.StressMortality
             }
 
             // If exceeds the limit, remove cohort.
-            if (cumulativeMortality > SpeciesData.CompleteMortalityTable[cohort.Species])
+            if (cumulativeMortality > SpeciesData.CompleteMortalityThreshold[cohort.Species])
             {
                 //PlugIn.ModelCore.Log.WriteLine("R/C={0}/{1}:  Trying to add mortality: {2} time:{3}, age:{4}, cumulative mortality:{5}, trigger={6}.", site.Location.Row, site.Location.Column, cohort.Species.Name, PlugIn.ModelCore.CurrentTime, cohort.Age, cumulativeMortality, SpeciesData.CompleteMortalityTable[cohort.Species]);
                 reductions[cohort.Species.Index][cohort.Age] = cohort.Biomass;
             }
 
             // Remove any keys more than 4 years old to keep this dictionary relatively small.
-            if (SiteVars.CumulativeMortality[site][cohort.Species].TryGetValue(currentYear - 4, out cohortAgeReductions))
-                SiteVars.CumulativeMortality[site][cohort.Species].Remove(currentYear - 4);
+            if (SiteVars.CumulativeMortality[site][cohort.Species].TryGetValue(currentYear - numYears + 1, out cohortAgeReductions))
+                SiteVars.CumulativeMortality[site][cohort.Species].Remove(currentYear - numYears + 1);
 
         }
     }

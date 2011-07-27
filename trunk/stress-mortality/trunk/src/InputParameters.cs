@@ -16,7 +16,8 @@ namespace Landis.Extension.StressMortality
         string MapNamesTemplate { get; set; }
         string LogFileName { get; set; }
         SpeciesAuxParm<List<AgeClass>> PartialMortalityTable { get; }
-        SpeciesAuxParm<int> CompleteMortalityTable { get; }
+        SpeciesAuxParm<int> CompleteMortalityThreshold { get; }
+        SpeciesAuxParm<int> CompleteMortalityTime { get; }
         
     }
 
@@ -27,26 +28,8 @@ namespace Landis.Extension.StressMortality
         private string mapNamesTemplate;
         private string logFileName;
         private SpeciesAuxParm<List<AgeClass>> partialMortalityTable;
-        private SpeciesAuxParm<int> completeMortalityTable;
-        //---------------------------------------------------------------------
-        /// <summary>
-        /// Timestep (years)
-        /// </summary>
-        /*public int Timestep
-        {
-            get
-            {
-                return timestep;
-            }
-            set
-            {
-                if (value < 0)
-                    throw new InputValueException(value.ToString(),
-                                                  "Value must be = or > 0.");
-                timestep = value;
-            }
-        }*/
-
+        private SpeciesAuxParm<int> completeMortalityThreshold;
+        private SpeciesAuxParm<int> completeMortalityTime;
         //---------------------------------------------------------------------
         /// <summary>
         /// Template for the filenames for output maps.
@@ -91,14 +74,22 @@ namespace Landis.Extension.StressMortality
         }
 
         //---------------------------------------------------------------------
-        public SpeciesAuxParm<int> CompleteMortalityTable
+        public SpeciesAuxParm<int> CompleteMortalityThreshold
         {
             get
             {
-                return completeMortalityTable;
+                return completeMortalityThreshold;
             }
         }
 
+        //---------------------------------------------------------------------
+        public SpeciesAuxParm<int> CompleteMortalityTime
+        {
+            get
+            {
+                return completeMortalityTime;
+            }
+        }
         //---------------------------------------------------------------------
         public void SetPartialMortalityTable(ISpecies species, List<AgeClass> newValue)
         {
@@ -106,10 +97,19 @@ namespace Landis.Extension.StressMortality
             partialMortalityTable[species] = newValue;
         }
         //---------------------------------------------------------------------
-        public void SetCompleteMortalityTable(ISpecies species, int newValue)
+        public void SetCompleteMortalityThreshold(ISpecies species, int newValue)
         {
             Debug.Assert(species != null);
-            completeMortalityTable[species] = newValue;
+            completeMortalityThreshold[species] = newValue;
+        }
+        //---------------------------------------------------------------------
+        public void SetCompleteMortalityTime(ISpecies species, int newValue)
+        {
+            Debug.Assert(species != null);
+            if (newValue > 10)
+                throw new InputValueException(newValue.ToString(), "Value must be <= 10");
+
+            completeMortalityTime[species] = newValue;
         }
         //---------------------------------------------------------------------
         public InputParameters()
@@ -120,7 +120,8 @@ namespace Landis.Extension.StressMortality
                 partialMortalityTable[spp] = new List<AgeClass>();
             }
 
-            completeMortalityTable = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
+            completeMortalityThreshold = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
+            completeMortalityTime = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
         }
     }
 }

@@ -11,7 +11,8 @@ namespace Landis.Extension.StressMortality
     {
 
         public static SpeciesAuxParm<List<AgeClass>> PartialMortalityTable;
-        public static SpeciesAuxParm<int> CompleteMortalityTable;
+        public static SpeciesAuxParm<int> CompleteMortalityThreshold;
+        public static SpeciesAuxParm<int> CompleteMortalityTime;
         public static SpeciesAuxParm<int> SppBiomassRemoved;
         public static SpeciesAuxParm<int> CohortsKilled;
         
@@ -21,7 +22,8 @@ namespace Landis.Extension.StressMortality
         {
 
             PartialMortalityTable = parameters.PartialMortalityTable;
-            CompleteMortalityTable = parameters.CompleteMortalityTable;
+            CompleteMortalityThreshold = parameters.CompleteMortalityThreshold;
+            CompleteMortalityTime = parameters.CompleteMortalityThreshold;
             SppBiomassRemoved = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
             CohortsKilled = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
         }

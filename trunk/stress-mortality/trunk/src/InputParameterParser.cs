@@ -146,7 +146,8 @@ namespace Landis.Extension.StressMortality
             ReadName("CompleteMortalityTable");
             speciesLineNums.Clear();  //  If parser re-used (i.e., for testing purposes)
 
-            InputVar<int> cmp = new InputVar<int>("Complete Mortality Percentage");
+            InputVar<int> cmp = new InputVar<int>("Complete Mortality Threshold");
+            InputVar<int> cmt = new InputVar<int>("Complete Mortality Time Window");
 
             while (!AtEndOfInput && CurrentName != "MapName")
             {
@@ -155,10 +156,12 @@ namespace Landis.Extension.StressMortality
                 ISpecies species = ReadSpecies(currentLine);
 
                 ReadValue(cmp, currentLine);
+                parameters.SetCompleteMortalityThreshold(species, cmp.Value);
+                
+                ReadValue(cmt, currentLine);
+                parameters.SetCompleteMortalityTime(species, cmt.Value);
 
-                parameters.SetCompleteMortalityTable(species, cmp.Value);
-
-                CheckNoDataAfter(cmp.Name, currentLine);
+                CheckNoDataAfter(cmt.Name, currentLine);
                 GetNextLine();
             }
 

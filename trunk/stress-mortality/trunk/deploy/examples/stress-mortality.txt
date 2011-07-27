@@ -26,8 +26,8 @@ poputrem  0.37(1-40) 0.5(40-80)  0.63(>80)
 
 CompleteMortalityTable
 >> species CummulativeBiomassReduction(%) to trigger complete mortality
-abiebals   90
-poputrem   90
+abiebals   90  3
+poputrem   90  4
 
 MapName  stress/stress-map-{timestep}.img  << Currently no maps are being produced; a placeholder
 LogFile  "stress-mortality-log.csv"
