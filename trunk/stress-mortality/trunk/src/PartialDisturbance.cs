@@ -48,16 +48,17 @@ namespace Landis.Extension.StressMortality
         //---------------------------------------------------------------------
         int IDisturbance.ReduceOrKillMarkedCohort(ICohort cohort)
         {
+            IEcoregion ecoregion = PlugIn.ModelCore.Ecoregion[currentSite];
             int reduction;
             if (reductions[cohort.Species.Index].TryGetValue(cohort.Age, out reduction))
             {
                 if (reduction == cohort.Biomass)
                 {
-                    PlugIn.StressCohortsKilled++;
-                    SpeciesData.CohortsKilled[cohort.Species]++;
+                    PlugIn.StressCohortsKilled[ecoregion.Index]++;
+                    SpeciesData.CohortsKilled[cohort.Species][ecoregion]++;
                 }
-                PlugIn.StressBioRemoved += reduction;
-                SpeciesData.SppBiomassRemoved[cohort.Species] += reduction;
+                PlugIn.StressBioRemoved[ecoregion.Index] += reduction;
+                SpeciesData.SppBiomassRemoved[cohort.Species][ecoregion] += reduction;
                 return reduction;
             }
             else

@@ -68,13 +68,16 @@
     <Compile Include="AgeClass.cs" />
     <Compile Include="DynamicInputRecord.cs" />
     <Compile Include="DynamicInputs.cs" />
+    <Compile Include="EcoregionsAuxParm.cs" />
     <Compile Include="InputParameterParser.cs" />
     <Compile Include="InputParameters.cs" />
     <Compile Include="MapNames.cs" />
     <Compile Include="PartialDisturbance.cs" />
     <Compile Include="PlugIn.cs" />
     <Compile Include="SiteVars.cs" />
-    <Compile Include="SpeciesAuxParm.cs" />
+    <Compile Include="SpeciesAuxParm.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SpeciesData.cs" />
     <Compile Include="UShortPixel.cs" />
     <Compile Include="Util.cs" />

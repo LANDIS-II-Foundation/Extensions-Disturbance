@@ -21,8 +21,8 @@ namespace Landis.Extension.StressMortality
         private StreamWriter log;
         private static IInputParameters parameters;
         private static ICore modelCore;
-        public static int StressBioRemoved;
-        public static int StressCohortsKilled; 
+        public static int[] StressBioRemoved;
+        public static int[] StressCohortsKilled; 
 
         //---------------------------------------------------------------------
         public PlugIn()
@@ -69,7 +69,7 @@ namespace Landis.Extension.StressMortality
             }
             log.AutoFlush = true;
 
-            log.Write("Year,");
+            log.Write("Year, Ecoregion,");
             foreach (ISpecies species in PlugIn.ModelCore.Species)
             {
                 log.Write("BioRemoved_{0},", species.Name);
@@ -80,10 +80,6 @@ namespace Landis.Extension.StressMortality
                 log.Write("CohortsKilled_{0},", species.Name);
             }
             log.Write("TotalCohortsKilled,");
-            //foreach (ISpecies species in PlugIn.ModelCore.Species)
-            //{
-            //    log.Write("ExtraRem_{0},", species.Name);
-            //}
             log.WriteLine("");
         }
 
@@ -95,13 +91,15 @@ namespace Landis.Extension.StressMortality
         {
             modelCore.Log.WriteLine("   Processing Stress Mortality ...");
 
-            StressBioRemoved = 0;
-            StressCohortsKilled = 0;
-            foreach (ISpecies species in modelCore.Species)
-            {
-                SpeciesData.SppBiomassRemoved[species] = 0;
-                SpeciesData.CohortsKilled[species] = 0;
-            }
+            StressBioRemoved = new int[modelCore.Ecoregions.Count];
+            StressCohortsKilled = new int[modelCore.Ecoregions.Count]; 
+            foreach (IEcoregion ecoregion in modelCore.Ecoregions)
+                foreach (ISpecies species in modelCore.Species)
+                {
+                    SpeciesData.SppBiomassRemoved[species][ecoregion] = 0;
+                    SpeciesData.CohortsKilled[species][ecoregion] = 0;
+                }
+            
             PartialDisturbance.Initialize();
             
             foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
@@ -208,19 +206,19 @@ namespace Landis.Extension.StressMortality
         //---------------------------------------------------------------------
         private void WriteLogFile()
         {
-            log.Write("{0},", PlugIn.ModelCore.CurrentTime);
 
-            foreach (ISpecies species in PlugIn.ModelCore.Species)
+            foreach (IEcoregion ecoregion in modelCore.Ecoregions)
             {
-                log.Write("{0},", SpeciesData.SppBiomassRemoved[species]);
+                log.Write("{0},", PlugIn.ModelCore.CurrentTime);
+                log.Write("{0},", ecoregion.Name);
+                foreach (ISpecies species in PlugIn.ModelCore.Species)
+                    log.Write("{0},", SpeciesData.SppBiomassRemoved[species][ecoregion]);
+                log.Write("{0},", StressBioRemoved[ecoregion.Index]);
+                    foreach (ISpecies species in PlugIn.ModelCore.Species)
+                        log.Write("{0},", SpeciesData.CohortsKilled[species][ecoregion]);
+                log.Write("{0}", StressCohortsKilled[ecoregion.Index]);
+                log.WriteLine("");
             }
-            log.Write("{0},", StressBioRemoved);
-            foreach (ISpecies species in PlugIn.ModelCore.Species)
-            {
-                log.Write("{0},", SpeciesData.CohortsKilled[species]);
-            }
-            log.Write("{0}", StressCohortsKilled);
-            log.WriteLine("");
         }
 
     }

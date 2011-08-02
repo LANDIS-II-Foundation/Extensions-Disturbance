@@ -13,8 +13,8 @@ namespace Landis.Extension.StressMortality
         public static SpeciesAuxParm<List<AgeClass>> PartialMortalityTable;
         public static SpeciesAuxParm<int> CompleteMortalityThreshold;
         public static SpeciesAuxParm<int> CompleteMortalityTime;
-        public static SpeciesAuxParm<int> SppBiomassRemoved;
-        public static SpeciesAuxParm<int> CohortsKilled;
+        public static SpeciesAuxParm<EcoregionsAuxParm<int>> SppBiomassRemoved;
+        public static SpeciesAuxParm<EcoregionsAuxParm<int>> CohortsKilled;
         
 
         //---------------------------------------------------------------------
@@ -24,8 +24,8 @@ namespace Landis.Extension.StressMortality
             PartialMortalityTable = parameters.PartialMortalityTable;
             CompleteMortalityThreshold = parameters.CompleteMortalityThreshold;
             CompleteMortalityTime = parameters.CompleteMortalityThreshold;
-            SppBiomassRemoved = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
-            CohortsKilled = new SpeciesAuxParm<int>(PlugIn.ModelCore.Species);
+            SppBiomassRemoved = CreateSpeciesEcoregionParm<int>(PlugIn.ModelCore.Species, PlugIn.ModelCore.Ecoregions);
+            CohortsKilled = CreateSpeciesEcoregionParm<int>(PlugIn.ModelCore.Species, PlugIn.ModelCore.Ecoregions);
         }
 
         public static bool IsOnsetYear(int year, ISpecies species, IEcoregion ecoregion)
@@ -43,6 +43,18 @@ namespace Landis.Extension.StressMortality
 
             return false;
 
+        }
+        //---------------------------------------------------------------------
+
+        private static SpeciesAuxParm<EcoregionsAuxParm<int>> CreateSpeciesEcoregionParm<T>(ISpeciesDataset speciesDataset, IEcoregionDataset ecoregionDataset)
+        {
+            SpeciesAuxParm<EcoregionsAuxParm<int>> newParm;
+            newParm = new SpeciesAuxParm<EcoregionsAuxParm<int>>(speciesDataset);
+            foreach (ISpecies species in speciesDataset)
+            {
+                newParm[species] = new EcoregionsAuxParm<int>(ecoregionDataset);
+            }
+            return newParm;
         }
     
     }
