@@ -21,7 +21,6 @@ namespace Landis.Extension.StressMortality
         private StreamWriter log;
         private static IInputParameters parameters;
         private static ICore modelCore;
-        public static int[] StressBioRemoved;
         public static int[] StressCohortsKilled; 
 
         //---------------------------------------------------------------------
@@ -91,7 +90,6 @@ namespace Landis.Extension.StressMortality
         {
             modelCore.Log.WriteLine("   Processing Stress Mortality ...");
 
-            StressBioRemoved = new int[modelCore.Ecoregions.Count];
             StressCohortsKilled = new int[modelCore.Ecoregions.Count]; 
             foreach (IEcoregion ecoregion in modelCore.Ecoregions)
                 foreach (ISpecies species in modelCore.Species)
@@ -116,7 +114,7 @@ namespace Landis.Extension.StressMortality
                 PartialDisturbance.ReduceCohortBiomass(site);
             }
 
-            WriteLogFile();
+            WriteMapLogFile();
         }
 
         //---------------------------------------------------------------------
@@ -204,8 +202,36 @@ namespace Landis.Extension.StressMortality
         }
 
         //---------------------------------------------------------------------
-        private void WriteLogFile()
+        private void WriteMapLogFile()
         {
+            int[] stressBioRemoved = new int[modelCore.Ecoregions.Count];
+            foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
+            {
+                IEcoregion ecoregion = PlugIn.ModelCore.Ecoregion[site];
+                stressBioRemoved[ecoregion.Index] += SiteVars.StressBioRemoved[site];
+            }
+
+
+            //  Write biomass removed map
+            string path = MapNames.ReplaceTemplateVars(mapNameTemplate, PlugIn.modelCore.CurrentTime);
+            using (IOutputRaster<IntPixel> outputRaster = modelCore.CreateRaster<IntPixel>(path, modelCore.Landscape.Dimensions))
+            {
+                IntPixel pixel = outputRaster.BufferPixel;
+                foreach (Site site in modelCore.Landscape.AllSites)
+                {
+                    if (site.IsActive)
+                    {
+                        pixel.MapCode.Value = (byte)(SiteVars.StressBioRemoved[site]);
+                    }
+                    else
+                    {
+                        //  Inactive site
+                        pixel.MapCode.Value = 0;
+                    }
+                    outputRaster.WriteBufferPixel();
+                }
+            }
+
 
             foreach (IEcoregion ecoregion in modelCore.Ecoregions)
             {
@@ -213,7 +239,7 @@ namespace Landis.Extension.StressMortality
                 log.Write("{0},", ecoregion.Name);
                 foreach (ISpecies species in PlugIn.ModelCore.Species)
                     log.Write("{0},", SpeciesData.SppBiomassRemoved[species][ecoregion]);
-                log.Write("{0},", StressBioRemoved[ecoregion.Index]);
+                log.Write("{0},", stressBioRemoved[ecoregion.Index]);
                     foreach (ISpecies species in PlugIn.ModelCore.Species)
                         log.Write("{0},", SpeciesData.CohortsKilled[species][ecoregion]);
                 log.Write("{0}", StressCohortsKilled[ecoregion.Index]);

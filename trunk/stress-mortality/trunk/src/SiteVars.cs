@@ -7,7 +7,7 @@ namespace Landis.Extension.StressMortality
 {
     class SiteVars
     {
-        //private static ISiteVar<int> stressBioRemoved;
+        private static ISiteVar<int> stressBioRemoved;
         //private static ISiteVar<ushort> stressYears;
         private static ISiteVar<ISiteCohorts> biomassCohorts;
         public static ISiteVar<SpeciesAuxParm<Dictionary<int, Dictionary<int, int>>>> CumulativeMortality;
@@ -16,7 +16,7 @@ namespace Landis.Extension.StressMortality
         public static void Initialize()
         {
             biomassCohorts = PlugIn.ModelCore.GetSiteVar<ISiteCohorts>("Succession.BiomassCohorts");
-            //stressBioRemoved = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
+            stressBioRemoved = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
             //stressYears = PlugIn.ModelCore.GetSiteVar<ushort>( "Stress.Years");
             CumulativeMortality = PlugIn.ModelCore.Landscape.NewSiteVar<SpeciesAuxParm<Dictionary<int, Dictionary<int, int>>>>();
 
@@ -33,13 +33,13 @@ namespace Landis.Extension.StressMortality
         }
 
         //---------------------------------------------------------------------
-        /*public static ISiteVar<int> StressBioRemoved
+        public static ISiteVar<int> StressBioRemoved
         {
             get
             {
                 return stressBioRemoved;
             }
-        }*/
+        }
 
         //---------------------------------------------------------------------
         /*public static ISiteVar<ushort> StressYears

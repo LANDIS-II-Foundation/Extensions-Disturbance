@@ -57,7 +57,7 @@ namespace Landis.Extension.StressMortality
                     PlugIn.StressCohortsKilled[ecoregion.Index]++;
                     SpeciesData.CohortsKilled[cohort.Species][ecoregion]++;
                 }
-                PlugIn.StressBioRemoved[ecoregion.Index] += reduction;
+                SiteVars.StressBioRemoved[currentSite] += reduction;
                 SpeciesData.SppBiomassRemoved[cohort.Species][ecoregion] += reduction;
                 return reduction;
             }

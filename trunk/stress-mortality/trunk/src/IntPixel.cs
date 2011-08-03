@@ -2,11 +2,11 @@
 
 namespace Landis.Extension.StressMortality
 {
-    public class UShortPixel : Pixel
+    public class IntPixel : Pixel
     {
-        public Band<ushort> MapCode = "The numeric code for each raster cell";
+        public Band<int> MapCode = "The numeric code for each raster cell";
 
-        public UShortPixel()
+        public IntPixel()
         {
             SetBands(MapCode);
         }

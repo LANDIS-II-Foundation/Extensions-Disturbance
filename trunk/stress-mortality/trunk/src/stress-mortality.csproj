@@ -79,7 +79,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SpeciesData.cs" />
-    <Compile Include="UShortPixel.cs" />
+    <Compile Include="IntPixel.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
