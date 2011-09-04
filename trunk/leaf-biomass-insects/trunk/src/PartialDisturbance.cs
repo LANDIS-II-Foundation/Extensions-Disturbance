@@ -2,7 +2,7 @@
 //  Authors:  Jane Foster, Robert M. Scheller
 
 using Landis.Core;
-using Landis.Library.BiomassCohorts;
+using Landis.Library.LeafBiomassCohorts;
 using Landis.SpatialModeling;
 
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace Landis.Extension.Insects
 
         //---------------------------------------------------------------------
 
-        ActiveSite Landis.Library.BiomassCohorts.IDisturbance.CurrentSite
+        ActiveSite Landis.Library.LeafBiomassCohorts.IDisturbance.CurrentSite
         {
             get
             {
@@ -55,11 +55,13 @@ namespace Landis.Extension.Insects
 
         //---------------------------------------------------------------------
 
-        int IDisturbance.ReduceOrKillMarkedCohort(ICohort cohort)
+        float[] IDisturbance.ReduceOrKillMarkedCohort(ICohort cohort)
         {
-            int biomassMortality = 0;
+            float leafBiomassMortality = 0F;
+            float woodBiomassMortality = 0F;
             double percentMortality = 0.0;
             int sppIndex = cohort.Species.Index;
+            float[] leafWoodReduction = new float[2] { 0F, 0F };
 
             foreach (IInsect insect in PlugIn.ManyInsect)
             {
@@ -109,7 +111,6 @@ namespace Landis.Extension.Insects
                 {
                     //Most mortality studies restrospectively measure mortality for a number of years post disturbance. We need to subtract background mortality to get the yearly estimate. Subtract 7, assuming 1% mortality/year for 7 years, a typical time since disturbance in mortality papers. 
                     percentMortality = ((intercept) * (double)Math.Exp((slope * cumulativeDefoliation * 100)) - 7) / 100;
-                    //UI.WriteLine("cumulativeDefoliation={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", cumulativeDefoliation, cohort.Biomass, percentMortality);
                 }
 
                 // Second year or more of defoliation mortality discounts the first year's mortality amount.
@@ -117,7 +118,6 @@ namespace Landis.Extension.Insects
                 {
                     double lastYearPercentMortality = ((intercept) * (double)Math.Exp((slope * lastYearsCumulativeDefoliation * 100)) - 7) / 100;
                     percentMortality = ((intercept) * (double)Math.Exp((slope * cumulativeDefoliation * 100)) - 7) / 100;
-                    //UI.WriteLine("cumulativeDefoliation={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", cumulativeDefoliation, cohort.Biomass, percentMortality);
                     percentMortality -= lastYearPercentMortality;
                 }
 
@@ -129,25 +129,26 @@ namespace Landis.Extension.Insects
                 
                 if (percentMortality > 0.0)
                 {
-                    biomassMortality += (int) ((double) cohort.Biomass * percentMortality);
+                    leafBiomassMortality += (int) ((double) cohort.LeafBiomass * percentMortality);
+                    woodBiomassMortality += (int)((double)cohort.WoodBiomass * percentMortality);
                     //PlugIn.ModelCore.Log.WriteLine("biomassMortality={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", biomassMortality, cohort.Biomass, percentMortality);
 
                 }
             }  // end insect loop
 
-            if (biomassMortality > cohort.Biomass)
-                biomassMortality = cohort.Biomass;
+            if (leafBiomassMortality > cohort.LeafBiomass)
+                leafBiomassMortality = cohort.LeafBiomass;
 
-            SiteVars.BiomassRemoved[currentSite] += biomassMortality;
+            SiteVars.BiomassRemoved[currentSite] += (int) (leafBiomassMortality + woodBiomassMortality);
             //PlugIn.ModelCore.Log.WriteLine("biomassMortality={0}, BiomassRemoved={1}.", biomassMortality, SiteVars.BiomassRemoved[currentSite]);
 
-            if(biomassMortality > cohort.Biomass || biomassMortality < 0)
+            if ((int)(leafBiomassMortality + woodBiomassMortality) > cohort.Biomass || (int)(leafBiomassMortality + woodBiomassMortality) < 0)
             {
-                PlugIn.ModelCore.Log.WriteLine("Cohort Total Mortality={0}. Cohort Biomass={1}. Site R/C={2}/{3}.", biomassMortality, cohort.Biomass, currentSite.Location.Row, currentSite.Location.Column);
+                PlugIn.ModelCore.Log.WriteLine("Cohort Total Mortality={0:0.0}. Cohort Biomass={1}. Site R/C={2}/{3}.", (leafBiomassMortality + woodBiomassMortality), cohort.Biomass, currentSite.Location.Row, currentSite.Location.Column);
                 throw new System.ApplicationException("Error: Total Mortality is not between 0 and cohort biomass");
             }
 
-            return biomassMortality;
+            return leafWoodReduction;
 
         }
 

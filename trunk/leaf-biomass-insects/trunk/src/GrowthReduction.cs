@@ -4,7 +4,7 @@
 using Landis.Extension.Succession.Biomass;
 using Landis.Core;
 using Landis.SpatialModeling;
-using Landis.Library.BiomassCohorts;
+using Landis.Library.LeafBiomassCohorts;
 using System.Collections.Generic;
 using System;
 
@@ -33,7 +33,7 @@ namespace Landis.Extension.Insects
         // ACT_ANPP is calculated, for each cohort.  Therefore, this method is operating at
         // an ANNUAL time step and separate from the normal extension time step.
 
-        public static double ReduceCohortGrowth(ICohort cohort, ActiveSite site)//, int siteBiomass)
+        public static double ReduceCohortGrowth(ICohort cohort, ActiveSite site)
         {
             //PlugIn.ModelCore.Log.WriteLine("   Calculating cohort growth reduction due to insect defoliation...");
 

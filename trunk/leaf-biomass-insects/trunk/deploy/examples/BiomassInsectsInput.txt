@@ -1,4 +1,4 @@
-LandisData "Biomass Insects"
+LandisData "Leaf Biomass Insects"
 
 Timestep	10
 

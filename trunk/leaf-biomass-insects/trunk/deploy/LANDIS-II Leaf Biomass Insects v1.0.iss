@@ -1,8 +1,8 @@
-#define PackageName      "Biomass Insects"
-#define PackageNameLong  "Biomass Insects"
-#define Version          "2.0"
+#define PackageName      "Leaf Biomass Insects"
+#define PackageNameLong  "Leaf Biomass Insects"
+#define Version          "1.0"
 #define ReleaseType      "official"
-#define ReleaseNumber    "2"
+#define ReleaseNumber    "1"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
@@ -12,13 +12,13 @@
 [Files]
 
 ; Biomass Insects
-Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BiomassInsects.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.LeafBiomassInsects.dll; DestDir: {app}\bin; Flags: replacesameversion
 
-Source: docs\LANDIS-II Insect Defoliation v2.0 User Guide.pdf; DestDir: {app}\doc
+Source: docs\LANDIS-II Leaf Biomass Insect Defoliation v1.0 User Guide.pdf; DestDir: {app}\doc
 Source: examples\*; DestDir: {app}\examples\biomass-insects; Flags: recursesubdirs
 
 
-#define BioBugs "Biomass Insects 2.0.txt"
+#define BioBugs "Leaf Biomass Insects 1.0.txt"
 Source: {#BioBugs}; DestDir: {#LandisPlugInDir}
 
 [Run]

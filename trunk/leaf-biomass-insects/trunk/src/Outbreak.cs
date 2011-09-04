@@ -4,7 +4,7 @@
 using Landis.SpatialModeling;
 using Landis.Extension.Succession.Biomass;
 using Landis.Core;
-using Landis.Library.BiomassCohorts;
+using Landis.Library.LeafBiomassCohorts;
 using System.Collections.Generic;
 using System;
 

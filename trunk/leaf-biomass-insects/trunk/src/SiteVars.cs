@@ -4,7 +4,7 @@
 using Landis.Extension.Succession.Biomass;
 using Landis.Core;
 using Landis.SpatialModeling;
-using Landis.Library.BiomassCohorts;
+using Landis.Library.LeafBiomassCohorts;
 using System.Collections.Generic;
 
 namespace Landis.Extension.Insects
@@ -17,7 +17,6 @@ namespace Landis.Extension.Insects
         private static ISiteVar<Outbreak> outbreakVariables;
         private static ISiteVar<int> timeOfLastEvent;
         private static ISiteVar<int> biomassRemoved;
-        //private static ISiteVar<double> neighborhoodDefoliation;
         private static ISiteVar<double> initialOutbreakProb;
         private static ISiteVar<ISiteCohorts> cohorts;
         private static ISiteVar<int> cohortsPartiallyDamaged;
@@ -30,19 +29,17 @@ namespace Landis.Extension.Insects
             outbreakVariables       = PlugIn.ModelCore.Landscape.NewSiteVar<Outbreak>();
             timeOfLastEvent         = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
             biomassRemoved          = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
-            //neighborhoodDefoliation = PlugIn.ModelCore.Landscape.NewSiteVar<double>();
             initialOutbreakProb     = PlugIn.ModelCore.Landscape.NewSiteVar<double>();
-            cohorts                 = PlugIn.ModelCore.GetSiteVar<ISiteCohorts>("Succession.BiomassCohorts");
+            cohorts                 = PlugIn.ModelCore.GetSiteVar<ISiteCohorts>("Succession.LeafBiomassCohorts");
             cohortsPartiallyDamaged = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
             
-            //SiteVars.NeighborhoodDefoliation.ActiveSiteValues = 0.0;
             SiteVars.TimeOfLastEvent.ActiveSiteValues = -10000;
             SiteVars.InitialOutbreakProb.ActiveSiteValues = 0.0;
             
             //Initialize outbreaks:
             foreach (ActiveSite site in PlugIn.ModelCore.Landscape) 
             {
-                SiteVars.OutbreakVars = null; //new Outbreak();
+                SiteVars.OutbreakVars = null; 
             }
 
 
@@ -73,13 +70,6 @@ namespace Landis.Extension.Insects
                 biomassRemoved = value;
             }
         }
-        //---------------------------------------------------------------------
-        /*public static ISiteVar<double> NeighborhoodDefoliation
-        {
-            get {
-                return neighborhoodDefoliation;
-            }
-        }*/
         
         //---------------------------------------------------------------------
         public static ISiteVar<double> InitialOutbreakProb
