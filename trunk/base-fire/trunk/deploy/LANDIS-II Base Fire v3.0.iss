@@ -1,19 +1,12 @@
 #define PackageName      "Base Fire"
 #define PackageNameLong  "Base Fire Extension"
-#define Version          "3.0"
+#define Version          "3.0.1"
 #define ReleaseType      "official"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section).iss"
-
-#if ReleaseType != "official"
-  #define Configuration  "debug"
-#else
-  #define Configuration  "release"
-#endif
-
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
 [Files]
 
@@ -36,24 +29,13 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#BaseFire}"" "; WorkingDir: {#
 
 [Code]
 { Check for other prerequisites during the setup initialization }
-#include AddBackslash(LandisDeployDir) + "package (Code section) v3.iss"
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
 
 
 //-----------------------------------------------------------------------------
 
 function CurrentVersion_PostUninstall(currentVersion: TInstalledVersion): Integer;
 begin
-  // Alpha and beta releases of version 1.0 don't remove the plug-in name from
-  // database
-//  if StartsWith(currentVersion.Version, '1.0') or
-//     StartsWith(currentVersion.Version, '1.1') or
-//     StartsWith(currentVersion.Version, '1.2') then
-//    begin
-//      Exec('{#PlugInAdminTool}', 'remove "Base Fire"',
-//           ExtractFilePath('{#PlugInAdminTool}'),
-//		   SW_HIDE, ewWaitUntilTerminated, Result);
-//	end
-//  else
     Result := 0;
 end;
 

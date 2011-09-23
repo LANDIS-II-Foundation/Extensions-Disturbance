@@ -16,10 +16,10 @@ namespace Landis.Extension.BaseFire
 
         public static void ReadMap(string path)
         {
-            IInputRaster<BytePixel> map;
+            IInputRaster<UIntPixel> map;
 
             try {
-                map = PlugIn.ModelCore.OpenRaster<BytePixel>(path);
+                map = PlugIn.ModelCore.OpenRaster<UIntPixel>(path);
             }
             catch (FileNotFoundException) {
                 string mesg = string.Format("Error: The file {0} does not exist", path);
@@ -33,11 +33,11 @@ namespace Landis.Extension.BaseFire
             }
 
             using (map) {
-                BytePixel pixel = map.BufferPixel;
+                UIntPixel pixel = map.BufferPixel;
                 foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
                 {
                     map.ReadBufferPixel();
-                    ushort mapCode = (ushort)pixel.MapCode.Value;
+                    uint mapCode = pixel.MapCode.Value;
                     if (site.IsActive)
                     {
                         if (Dataset == null)
@@ -56,7 +56,7 @@ namespace Landis.Extension.BaseFire
             }
         }
 
-        private static IFireRegion Find(int mapCode)
+        private static IFireRegion Find(uint mapCode)
         {
             foreach(IFireRegion fireregion in Dataset)
                 if(fireregion.MapCode == mapCode)

@@ -72,6 +72,7 @@
     <Compile Include="MapNames.cs" />
     <Compile Include="PlugIn.cs" />
     <Compile Include="SiteVars.cs" />
+    <Compile Include="UIntPixel.cs" />
     <Compile Include="WindCurve.cs" />
     <Compile Include="BytePixel.cs" />
   </ItemGroup>
