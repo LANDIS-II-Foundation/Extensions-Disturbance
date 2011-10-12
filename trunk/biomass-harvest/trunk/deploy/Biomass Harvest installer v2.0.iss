@@ -1,6 +1,6 @@
 #define PackageName      "Biomass Harvest"
 #define PackageNameLong  "Biomass Harvest Extension"
-#define Version          "2.0"
+#define Version          "2.0.1"
 
 #define ReleaseType      "official"
 #define ReleaseNumber    "2"

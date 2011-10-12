@@ -143,7 +143,7 @@ namespace Landis.Extension.BiomassHarvest
             if (originalStand.LastPrescription.SpeciesToPlant != null)
                 Landis.Library.Succession.Reproduction.ScheduleForPlanting(originalStand.LastPrescription.SpeciesToPlant, site);
 
-            if (originalStand.LastPrescription.PreventEstablishment)
+            if (originalStand.LastPrescription.PreventEstablishment && numberCohortsReduced > 0)
                 SiteVars.CapacityReduction[site] = capacityReduction / (double) numberCohortsReduced;
 
             for (int i = 0; i < reductions.Length; i++)
