@@ -153,8 +153,10 @@ namespace Landis.Extension.BaseHarvest
                 }
 
                 // updating for preventing establishment
-                foreach (Stand stand in mgmtArea) {
-                    if (stand.Harvested && stand.LastPrescription.PreventEstablishment) {
+                foreach (Stand stand in mgmtArea) 
+                {
+                    if (stand.Harvested && stand.LastPrescription.PreventEstablishment) 
+                    {
 
                         List<ActiveSite> sitesToDelete = new List<ActiveSite>();
 

@@ -239,8 +239,10 @@ namespace Landis.Extension.BaseHarvest
 
                 //get preventEstablishment
                 bool preventEstablishment  = false;
-                if (ReadOptionalName(Names.PreventEstablishment)) {
-                    preventEstablishment = true;
+                InputVar<bool> preventEstVar = new InputVar<bool>("PreventEstablishment");
+                if (ReadOptionalVar(preventEstVar))
+                {
+                    preventEstablishment = preventEstVar.Value;
                 }
 
                 //get cohort selection method

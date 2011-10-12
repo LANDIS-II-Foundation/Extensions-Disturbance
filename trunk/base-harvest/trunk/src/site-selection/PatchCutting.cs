@@ -131,21 +131,17 @@ namespace Landis.Extension.BaseHarvest
                             if (sites.Contains(nbrSite))
                             {
                                 //get a neighbor site (if it's non-null and active)
-                                //if (nbrSite != null && nbrSite.IsActive) 
-                                //{
-                                    //check if it's a valid neighbor:
                                 if (!sitesToConsider.Contains(nbrSite) && 
                                 !sitesConsidered.Contains(nbrSite)) 
                                 {
                                     //then enqueue the neighbor
                                     sitesToConsider.Enqueue(nbrSite);
                                 }
-                                //}
                                 //Always remove the site if it's in the sites list.
                                 sites.Remove(nbrSite);
                             }
                         }
-                    } // foreach (RelativeLocation loc in all_neighbor_locations)
+                    } 
 
                     //check if there's anything left on the queue
                     if (sitesToConsider.Count > 1) {

@@ -1,6 +1,6 @@
 #define PackageName      "Base Harvest"
 #define PackageNameLong  "Base Harvest Extension"
-#define Version          "2.0"
+#define Version          "2.0.1"
 #define ReleaseType      "official"
 #define ReleaseNumber    "2"
 
@@ -30,11 +30,6 @@ Filename: {#PlugInAdminTool}; Parameters: "remove ""Base Harvest"" "; WorkingDir
 Filename: {#PlugInAdminTool}; Parameters: "add ""{#Harvest}"" "; WorkingDir: {#LandisPlugInDir}
 
 [UninstallRun]
-;; Run plug-in admin tool to remove the entry for the plug-in
-; Filename: {#PlugInAdminTool}; Parameters: "remove ""Base Harvest"" "; WorkingDir: {#LandisPlugInDir}
-
-;; Run plug-in admin tool to remove the entry for the plug-in
-; Filename: {#PlugInAdminTool}; Parameters: "remove ""Base Harvest"" "; WorkingDir: {#LandisPlugInDir}
 
 [Code]
 #include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
