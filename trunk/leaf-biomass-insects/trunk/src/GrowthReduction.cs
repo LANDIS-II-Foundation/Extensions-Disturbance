@@ -1,7 +1,7 @@
 //  Copyright 2006-2011 University of Wisconsin, Portland State University
 //  Authors:  Jane Foster, Robert M. Scheller
 
-using Landis.Extension.Succession.Biomass;
+//using Landis.Extension.Succession.Biomass;
 using Landis.Core;
 using Landis.SpatialModeling;
 using Landis.Library.LeafBiomassCohorts;
@@ -65,7 +65,7 @@ namespace Landis.Extension.Insects
                 }
                 double cumulativeDefoliation = annualDefoliation;
 
-                while(annualDefoliation > 0)
+                while(annualDefoliation > 0.0)
                 {
                     yearBack++;
                     annualDefoliation = 0.0;
@@ -92,11 +92,15 @@ namespace Landis.Extension.Insects
             if (summaryGrowthReduction > 1.0)  // Cannot exceed 100%
                 summaryGrowthReduction = 1.0;
 
-            if(summaryGrowthReduction > 1.0 || summaryGrowthReduction < 0)
+            if(summaryGrowthReduction > 1.0 || summaryGrowthReduction < 0.0)
             {
                 PlugIn.ModelCore.Log.WriteLine("Cohort Total Growth Reduction = {0:0.00}.  Site R/C={1}/{2}.", summaryGrowthReduction, site.Location.Row, site.Location.Column);
                 throw new ApplicationException("Error: Total Growth Reduction is not between 1.0 and 0.0");
             }
+            
+            //if(summaryGrowthReduction > 0.0)
+            //    PlugIn.ModelCore.Log.WriteLine("   Cohort growth reduction due to insect defoliation = {0:0.00}", summaryGrowthReduction);
+
 
             return summaryGrowthReduction;
         }

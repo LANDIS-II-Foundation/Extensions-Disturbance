@@ -75,9 +75,9 @@ namespace Landis.Extension.Insects
             foreach(IInsect activeInsect in insectParameterList)
             {
                 if(insectParameters == null)
-                    PlugIn.ModelCore.Log.WriteLine("   Biomass Insect:  Insect Parameters NOT loading correctly.");
+                    PlugIn.ModelCore.Log.WriteLine("   Leaf Biomass Insect:  Insect Parameters NOT loading correctly.");
                 else
-                    PlugIn.ModelCore.Log.WriteLine("Name of Insect = {0}", insectParameters.Name);
+                    PlugIn.ModelCore.Log.WriteLine("   Name of Insect = {0}", insectParameters.Name);
 
             }
             parameters.ManyInsect = insectParameterList;
