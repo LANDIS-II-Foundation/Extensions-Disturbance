@@ -36,6 +36,13 @@ namespace Landis.Extension.BiomassHarvest
 
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.CapacityReduction, "Harvest.CapacityReduction");
 
+            if (cohorts == null)
+            {
+                string mesg = string.Format("Cohorts are empty.  Are you using the correct Harvest extension?");
+                throw new System.ApplicationException(mesg);
+            }
+
+
         }
         //---------------------------------------------------------------------
         public static new ushort GetMaxAge(ActiveSite site)

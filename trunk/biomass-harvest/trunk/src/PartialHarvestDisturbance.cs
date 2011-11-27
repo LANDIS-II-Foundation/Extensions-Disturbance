@@ -122,22 +122,38 @@ namespace Landis.Extension.BiomassHarvest
         /// </summary>
         public static void ReduceCohortBiomass(ActiveSite site, Stand stand)
         {
+
+
+            if (stand == null)
+            {
+                string mesg = string.Format("Stand is NULL.  Site = {0}/{1}", site.Location.Row, site.Location.Column);
+                throw new System.ApplicationException(mesg);
+            }
+            if (site == null)
+            {
+                string mesg = string.Format("Site is NULL.  Stand = {0}", stand.MapCode);
+                throw new System.ApplicationException(mesg);
+            }
+
             currentSite = site;
             originalStand = stand;
             numberCohortsReduced = 0;
             capacityReduction = 0.0;
 
-            //PlugIn.ModelCore.Log.WriteLine("ReducingCohortBiomass NOW!");
 
+            //PlugIn.ModelCore.Log.WriteLine("ReducingCohortBiomass.  Stand/site not equal to null.");
+            //PlugIn.ModelCore.Log.WriteLine("Stand is not NULL.  Site = {0}/{1}", site.Location.Row, site.Location.Column);
+            //PlugIn.ModelCore.Log.WriteLine("Site is not NULL.  Stand = {0}", stand.MapCode);
+            
             SiteVars.Cohorts[site].ReduceOrKillBiomassCohorts(singleton);
 
             //The function above will have gone through all the cohorts.  Now summarize
             //site level information.
-
+            
             if(SiteVars.BiomassRemoved[site] > 0)
                 BaseHarvest.SiteVars.Prescription[site] = originalStand.LastPrescription;
 
-            if(SiteVars.BiomassRemoved[site] > 0 && BaseHarvest.SiteVars.CohortsDamaged[site] == 0)
+            if (SiteVars.BiomassRemoved[site] > 0 && BaseHarvest.SiteVars.CohortsDamaged[site] == 0)
                 originalStand.LastAreaHarvested += PlugIn.ModelCore.CellArea;
 
             if (originalStand.LastPrescription.SpeciesToPlant != null)
