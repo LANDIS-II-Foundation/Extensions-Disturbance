@@ -17,8 +17,13 @@
 #endif
 
 [Files]
+#define BuildDir "C:\Program Files\LANDIS-II\6.0\bin"
+
+; Base Harvest
+Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+
 ; The extension's assembly
-Source: C:\program files\LANDIS-II\6.0\bin\Landis.Extension.LeafBiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: {#BuildDir}\Landis.Extension.LeafBiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 Source: docs\LANDIS-II Leaf Biomass Harvest v2.0 User Guide.pdf; DestDir: {app}\docs
 Source: examples\*; DestDir: {app}\examples\leaf-biomass-harvest; Flags: recursesubdirs
