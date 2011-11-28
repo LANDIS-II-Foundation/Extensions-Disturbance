@@ -27,6 +27,13 @@ namespace Landis.Extension.LeafBiomassHarvest
             SiteVars.CapacityReduction.ActiveSiteValues = 0.0;
 
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.CapacityReduction, "Harvest.CapacityReduction");
+
+            if (cohorts == null)
+            {
+                string mesg = string.Format("Cohorts are empty:  The requested cohort type (LeafBiomassCohorts) are not available.  Are you using the correct Harvest extension?");
+                throw new System.ApplicationException(mesg);
+            }
+
         }
 
         //---------------------------------------------------------------------
