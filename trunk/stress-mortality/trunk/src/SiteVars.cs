@@ -1,4 +1,4 @@
-﻿using Landis.SpatialModeling;
+using Landis.SpatialModeling;
 using Landis.Library.BiomassCohorts;
 using Landis.Core;
 using System.Collections.Generic;
@@ -29,6 +29,12 @@ namespace Landis.Extension.StressMortality
                     //Dictionary<int, int> cohortAgeReductions = new Dictionary<int, int>();
                     SiteVars.CumulativeMortality[site][spp] = new Dictionary<int, Dictionary<int, int>>();
                 }
+            }
+
+            if (biomassCohorts == null)
+            {
+                string mesg = string.Format("Cohorts are empty.  Please double-check that this extension is compatible with your chosen succession extension.");
+                throw new System.ApplicationException(mesg);
             }
         }
 
