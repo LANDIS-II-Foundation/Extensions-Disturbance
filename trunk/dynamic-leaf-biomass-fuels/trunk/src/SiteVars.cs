@@ -25,7 +25,7 @@ namespace Landis.Extension.LeafBiomassFuels
         private static ISiteVar<int> timeOfLastFire;
         private static ISiteVar<byte> fireSeverity;
         private static ISiteVar<int> timeOfLastWind;
-        private static ISiteVar<byte> windSeverity; 
+        private static ISiteVar<byte> windSeverity;
         private static ISiteVar<Dictionary<int,int>> numberDeadFirCohorts;
         private static ISiteVar<ISiteCohorts> cohorts;
 
@@ -41,17 +41,17 @@ namespace Landis.Extension.LeafBiomassFuels
             percentConifer  = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
             percentHardwood = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
             percentDeadFir  = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
-            
+
             timeOfLastHarvest       = PlugIn.ModelCore.GetSiteVar<int>("Harvest.TimeOfLastEvent");
             harvestPrescriptionName = PlugIn.ModelCore.GetSiteVar<string>("Harvest.PrescriptionName");
             harvestCohortsKilled    = PlugIn.ModelCore.GetSiteVar<int>("Harvest.CohortsDamaged");
-            
+
             timeOfLastFire          = PlugIn.ModelCore.GetSiteVar<int>("Fire.TimeOfLastEvent");
             fireSeverity            = PlugIn.ModelCore.GetSiteVar<byte>("Fire.Severity");
-            
+
             timeOfLastWind          = PlugIn.ModelCore.GetSiteVar<int>("Wind.TimeOfLastEvent");
             windSeverity            = PlugIn.ModelCore.GetSiteVar<byte>("Wind.Severity");
-            
+
             numberDeadFirCohorts    = PlugIn.ModelCore.GetSiteVar<Dictionary<int,int>>("BDA.NumCFSConifers");
 
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.FuelType, "Fuels.CFSFuelType");
@@ -59,6 +59,13 @@ namespace Landis.Extension.LeafBiomassFuels
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.PercentConifer, "Fuels.PercentConifer");
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.PercentHardwood, "Fuels.PercentHardwood");
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.PercentDeadFir, "Fuels.PercentDeadFir");
+
+            if (cohorts == null)
+            {
+                string mesg = string.Format("Cohorts are empty.  Please double-check that this extension is compatible with your chosen succession extension.");
+                throw new System.ApplicationException(mesg);
+            }
+
         }
         //---------------------------------------------------------------------
 
