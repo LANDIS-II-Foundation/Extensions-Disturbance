@@ -134,7 +134,7 @@ namespace Landis.Extension.LeafBiomassHarvest
             string species_header_names = "";
             int i = 0;
             for (i = 0; i < modelCore.Species.Count; i++) {
-                species_header_names += modelCore.Species[i].Name + ",";
+                species_header_names += "," + modelCore.Species[i].Name;
             }
 
             modelCore.Log.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
@@ -337,12 +337,12 @@ namespace Landis.Extension.LeafBiomassHarvest
                 foreach (KeyValuePair<string, int> kvp in stand.DamageTable) {
                     if (species.Name == kvp.Key) {
                         assigned = true;
-                        species_count += kvp.Value + ",";
+                        species_count += ", " + kvp.Value;
                     }
                 }
                 if (!assigned) {
                     //put a 0 there if it's not assigned (because none were found in the dictionary)
-                    species_count += "0,";
+                    species_count += ",0";
                 }
             }
 
