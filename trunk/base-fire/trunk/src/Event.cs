@@ -434,10 +434,11 @@ namespace Landis.Extension.BaseFire
                 {
                     if (siteSeverity - cohort.Species.FireTolerance >= damage.SeverTolerDifference) 
                     {
-                        if (damage.MaxAge >= ageAsPercent) {
+                        if ((float)damage.MaxAge.Value >= ageAsPercent)
+                        {
                             killCohort = true;
+                            break;  // No need to search further in the table
                         }
-                        break;  // No need to search further in the table
                     }
                 }
             }
