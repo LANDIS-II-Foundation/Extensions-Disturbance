@@ -16,7 +16,7 @@ Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BaseFire.dll; DestDi
 Source: docs\LANDIS-II Base Fire v3.0 User Guide.pdf; DestDir: {app}\docs
 Source: examples\*; DestDir: {app}\examples\base-fire
 
-#define BaseFire "Base Fire 3.0.txt"
+#define BaseFire "Base Fire 3.0.2.txt"
 Source: {#BaseFire}; DestDir: {#LandisPlugInDir}
 
 [Run]
