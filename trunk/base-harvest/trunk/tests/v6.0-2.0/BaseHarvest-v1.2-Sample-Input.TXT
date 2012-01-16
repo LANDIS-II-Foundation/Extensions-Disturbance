@@ -78,6 +78,6 @@ Prescription    OakPatchCutting
 >>-----------------------------------------------------------------
 >> OUTPUTS
 
-PrescriptionMaps    harvest/prescripts-{timestep}.img
+PrescriptionMaps    harvest/prescripts-{timestep}.tif
 EventLog            harvest-event-test-log.csv
 SummaryLog	    harvest/summary-log.csv

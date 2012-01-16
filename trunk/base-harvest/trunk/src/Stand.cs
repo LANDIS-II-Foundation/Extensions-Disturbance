@@ -346,7 +346,8 @@ namespace Landis.Extension.BaseHarvest
         private static RelativeLocation[] neighborsAboveAndLeft = new RelativeLocation[]{ neighborAbove, neighborLeft };
 
         //---------------------------------------------------------------------
-         public void Add(ActiveSite site) {
+         public void Add(ActiveSite site) 
+         {
 
             siteLocations.Add(site.Location);
             this.activeArea = siteLocations.Count * PlugIn.ModelCore.CellArea;
@@ -384,6 +385,7 @@ namespace Landis.Extension.BaseHarvest
                 }
             }
         }
+        //---------------------------------------------------------------------
 
         public ActiveSite GetRandomActiveSite {
             get

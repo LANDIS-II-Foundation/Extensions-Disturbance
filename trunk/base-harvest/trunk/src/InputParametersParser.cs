@@ -151,7 +151,7 @@ namespace Landis.Extension.BaseHarvest
         protected override IInputParameters Parse()
         {
             roundedIntervals.Clear();
-            
+
             InputVar<string> landisData = new InputVar<string>("LandisData");
             ReadVar(landisData);
             if (landisData.Value.Actual != PlugIn.ExtensionName)
@@ -239,11 +239,12 @@ namespace Landis.Extension.BaseHarvest
 
                 //get preventEstablishment
                 bool preventEstablishment  = false;
-                InputVar<bool> preventEstVar = new InputVar<bool>("PreventEstablishment");
-                if (ReadOptionalVar(preventEstVar))
-                {
-                    preventEstablishment = preventEstVar.Value;
-                }
+                if (ReadOptionalName(Names.PreventEstablishment))
+                    preventEstablishment = true;
+
+                //InputVar<bool> preventEstVar = new InputVar<bool>("PreventEstablishment");
+                //if (ReadOptionalVar(preventEstVar))
+                //    preventEstablishment = preventEstVar.Value;
 
                 //get cohort selection method
                 ICohortSelector cohortSelector = ReadCohortSelector(false);
@@ -375,7 +376,7 @@ namespace Landis.Extension.BaseHarvest
                 ushort adjacency = standAdjacency.Value.Actual;
                 ReadVar(adjacencyType);
 
-                if (adjacencyType.Value.String != "StandAge" && adjacencyType.Value.String != "TimeSinceLastHarvested") {
+                if (adjacencyType.Value.String != "StandAge" && adjacencyType.Value.String != "MinimumTimeSinceLastHarvest") {
                     string[] methodList = new string[]{"AdjacencyType methods:",
                                                        "    StandAge",
                                                        "    TimeSinceLastHarvested"};

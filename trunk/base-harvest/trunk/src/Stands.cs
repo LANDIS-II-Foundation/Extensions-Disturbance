@@ -42,6 +42,7 @@ namespace Landis.Extension.BaseHarvest
             }
 
             using (map) {
+                
                 UIntPixel pixel = map.BufferPixel;
                 foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
                 {
