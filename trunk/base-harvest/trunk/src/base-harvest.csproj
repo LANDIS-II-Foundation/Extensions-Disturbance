@@ -70,6 +70,12 @@
   <ItemGroup>
     <Compile Include="AppliedPrescription.cs" />
     <Compile Include="ShortPixel.cs" />
+    <Compile Include="stand-ranking\EconomicRank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\FireRisk.cs" />
+    <Compile Include="stand-ranking\FireRiskParameters.cs" />
+    <Compile Include="stand-ranking\FireRiskTable.cs" />
     <Compile Include="UIntPixel.cs" />
     <Compile Include="cohort-selection\AgeRange.cs">
       <SubType>Code</SubType>
@@ -137,9 +143,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SiteVars.cs" />
-    <Compile Include="stand-ranking\EconomicRank.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="stand-ranking\EconomicRankParameters.cs">
       <SubType>Code</SubType>
     </Compile>

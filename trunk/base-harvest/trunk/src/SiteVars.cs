@@ -17,7 +17,7 @@ namespace Landis.Extension.BaseHarvest
         private static ISiteVar<int> timeOfLastFire;
         private static ISiteVar<int> timeOfLastWind;
         private static ISiteVar<ISiteCohorts> cohorts;
-
+        private static ISiteVar<int> cfsFuelType;
 
         //---------------------------------------------------------------------
 
@@ -31,6 +31,7 @@ namespace Landis.Extension.BaseHarvest
             cohortsDamaged          = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
             timeOfLastFire          = PlugIn.ModelCore.GetSiteVar<int>("Fire.TimeOfLastEvent");
             timeOfLastWind          = PlugIn.ModelCore.GetSiteVar<int>("Wind.TimeOfLastEvent");
+            cfsFuelType             = PlugIn.ModelCore.GetSiteVar<int>("Fuels.CFSFuelType");
 
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.PrescriptionName, "Harvest.PrescriptionName");
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.TimeOfLastEvent, "Harvest.TimeOfLastEvent");
@@ -109,6 +110,15 @@ namespace Landis.Extension.BaseHarvest
             get
             {
                 return timeOfLastWind;
+            }
+        }
+        //---------------------------------------------------------------------
+
+        public static ISiteVar<int> CFSFuelType
+        {
+            get
+            {
+                return cfsFuelType;
             }
         }
         //---------------------------------------------------------------------
