@@ -34,8 +34,7 @@ namespace Landis.Extension.BaseHarvest
 
         //---------------------------------------------------------------------
 
-        public FireRiskParameters(byte   rank,
-                                      ushort minAge)
+        public FireRiskParameters(byte   rank)
         {
             this.fireRisk = rank;
         }

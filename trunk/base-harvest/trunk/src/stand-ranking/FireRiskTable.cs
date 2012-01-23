@@ -14,14 +14,14 @@ namespace Landis.Extension.BaseHarvest
 
         //---------------------------------------------------------------------
 
-        public FireRiskParameters this[ISpecies species]
+        public FireRiskParameters this[int fuelTypeIndex]
         {
             get {
-                return parameters[species.Index];
+                return parameters[fuelTypeIndex];
             }
 
             set {
-                parameters[species.Index] = value;
+                parameters[fuelTypeIndex] = value;
             }
         }
 
@@ -29,7 +29,7 @@ namespace Landis.Extension.BaseHarvest
 
         public FireRiskTable()
         {
-            parameters = new FireRiskParameters[PlugIn.ModelCore.Species.Count];
+            parameters = new FireRiskParameters[50];  //up to 50 fuel types
         }
     }
 }

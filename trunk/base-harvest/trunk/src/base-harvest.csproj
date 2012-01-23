@@ -73,7 +73,7 @@
     <Compile Include="stand-ranking\EconomicRank.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="stand-ranking\FireRisk.cs" />
+    <Compile Include="stand-ranking\FireRiskRank.cs" />
     <Compile Include="stand-ranking\FireRiskParameters.cs" />
     <Compile Include="stand-ranking\FireRiskTable.cs" />
     <Compile Include="UIntPixel.cs" />

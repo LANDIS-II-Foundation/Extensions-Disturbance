@@ -314,19 +314,19 @@ namespace Landis.Extension.BaseHarvest
 
             else if (rankingName.Value.Actual == "MaxCohortAge")
                 rankingMethod = new MaxCohortAge();
-           //(so it has been removed from the 'not implemented yet' else-list)
             else if (rankingName.Value.Actual == "Random")
                 rankingMethod = new RandomRank();
-            //(so it has been removed from the 'not implemented yet' else-list)
             else if (rankingName.Value.Actual == "RegulateAges")
                 rankingMethod = new RegulateAgesRank();
+            else if (rankingName.Value.Actual == "FireRisk")
+                rankingMethod = new FireRiskRank(ReadFireRiskTable());
 
-            //list of ranking methods which have not been implemented yet
-            else if ((rankingName.Value.Actual == "SpeciesBiomass") ||
-                    (rankingName.Value.Actual == "TotalBiomass")) {
-                throw new InputValueException(rankingName.Value.String,
-                                              rankingName.Value.String + " is not implemented yet");
-            }
+            ////list of ranking methods which have not been implemented yet
+            //else if ((rankingName.Value.Actual == "SpeciesBiomass") ||
+            //        (rankingName.Value.Actual == "TotalBiomass")) {
+            //    throw new InputValueException(rankingName.Value.String,
+            //                                  rankingName.Value.String + " is not implemented yet");
+            //}
 
             else {
                 string[] methodList = new string[]{"Stand ranking methods:",
@@ -334,8 +334,7 @@ namespace Landis.Extension.BaseHarvest
                                                    "  MaxCohortAge",
                                                    "  Random",
                                                    "  RegulateAges",
-                                                   "  SpeciesBiomass",
-                                                   "  TotalBiomass"};
+                                                   "  FireRisk"};
                 throw new InputValueException(rankingName.Value.String,
                                               rankingName.Value.String + " is not a valid stand ranking",
                                               new MultiLineText(methodList));
@@ -464,6 +463,55 @@ namespace Landis.Extension.BaseHarvest
 
             if (speciesLineNumbers.Count == 0)
                 throw NewParseException("Expected a line starting with a species name");
+
+            return table;
+        }
+
+        //---------------------------------------------------------------------
+
+        protected FireRiskTable ReadFireRiskTable()
+        {
+            Dictionary<int, int> indexLineNumbers = new Dictionary<int, int>(); ;
+            //speciesLineNumbers.Clear();  // in case parser re-used
+
+            InputVar<int> ftindex = new InputVar<int>("Fuel Type Index");
+            InputVar<byte> rank = new InputVar<byte>("Fuel Type Rank");
+            //InputVar<ushort> minAge = new InputVar<ushort>("Minimum Age");
+            string lastColumn = "the " + rank.Name + " column";
+
+            FireRiskTable table = new FireRiskTable();
+            while (!AtEndOfInput && !namesThatFollowRankingMethod.Contains(CurrentName))
+            {
+                StringReader currentLine = new StringReader(CurrentLine);
+
+                //  Fuel type index
+                ReadValue(ftindex, currentLine);
+                int lineNumber;
+                if (indexLineNumbers.TryGetValue(ftindex.Value, out lineNumber))
+                    throw new InputValueException(ftindex.Value.String,
+                                                  "The fuel type {0} was previously used on line {1}",
+                                                  ftindex.Value.String, lineNumber);
+                else
+                    indexLineNumbers[ftindex.Value] = lineNumber;
+
+                //  Economic rank
+                ReadValue(rank, currentLine);
+                const byte maxRank = 100;
+                if (rank.Value.Actual > maxRank)
+                    throw new InputValueException(rank.Value.String,
+                                                  "Economic rank must be between 0 and {0}",
+                                                  maxRank);
+
+                //  Minimum age
+                //ReadValue(minAge, currentLine);
+                CheckNoDataAfter(lastColumn, currentLine);
+
+                table[ftindex.Value] = new FireRiskParameters(rank.Value.Actual);
+                GetNextLine();
+            }
+
+            if (indexLineNumbers.Count == 0)
+                throw NewParseException("Expected a line starting with a fuel type index");
 
             return table;
         }
