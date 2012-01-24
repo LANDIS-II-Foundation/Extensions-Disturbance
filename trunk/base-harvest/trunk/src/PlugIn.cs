@@ -74,7 +74,6 @@ namespace Landis.Extension.BaseHarvest
         {
             //initialize event id
             event_id = 1;
-            //SiteVars.Initialize();
             Timestep = parameters.Timestep;
             managementAreas = parameters.ManagementAreas;
             PlugIn.ModelCore.Log.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
@@ -132,6 +131,7 @@ namespace Landis.Extension.BaseHarvest
 
         public override void Run()
         {
+            SiteVars.ReInitialize();
             SiteVars.Prescription.ActiveSiteValues = null;
             SiteVars.CohortsDamaged.ActiveSiteValues = 0;
 

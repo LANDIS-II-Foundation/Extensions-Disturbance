@@ -43,6 +43,16 @@ namespace Landis.Extension.BaseHarvest
             cohorts = PlugIn.ModelCore.GetSiteVar<ISiteCohorts>("Succession.AgeCohorts");
         
         }
+
+        public static void ReInitialize()
+        {
+            timeOfLastFire = PlugIn.ModelCore.GetSiteVar<int>("Fire.TimeOfLastEvent");
+            timeOfLastWind = PlugIn.ModelCore.GetSiteVar<int>("Wind.TimeOfLastEvent");
+            cfsFuelType = PlugIn.ModelCore.GetSiteVar<int>("Fuels.CFSFuelType");
+            
+            if (SiteVars.CFSFuelType == null)
+                throw new System.ApplicationException("Error: CFS Fuel Type NOT Initialized.  Louise is making me crazy.  Fuel extension MUST be active.");
+        }
         //---------------------------------------------------------------------
         public static ISiteVar<ISiteCohorts> Cohorts
         {
@@ -72,7 +82,6 @@ namespace Landis.Extension.BaseHarvest
         //---------------------------------------------------------------------
 
         public static ISiteVar<Prescription> Prescription
-
         {
             get {
                 return prescription;
@@ -81,7 +90,8 @@ namespace Landis.Extension.BaseHarvest
 
         //---------------------------------------------------------------------
 
-        public static ISiteVar<string> PrescriptionName {
+        public static ISiteVar<string> PrescriptionName 
+        {
             get {
                 return prescription_name;
             }
@@ -89,7 +99,8 @@ namespace Landis.Extension.BaseHarvest
 
         //---------------------------------------------------------------------
 
-        public static ISiteVar<int> TimeOfLastEvent {
+        public static ISiteVar<int> TimeOfLastEvent 
+        {
             get {
                 return timeOfLastEvent;
             }

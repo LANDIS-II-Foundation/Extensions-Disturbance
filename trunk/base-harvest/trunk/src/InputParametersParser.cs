@@ -311,7 +311,6 @@ namespace Landis.Extension.BaseHarvest
 
             if (rankingName.Value.Actual == "Economic")
                 rankingMethod = new EconomicRank(ReadEconomicRankTable());
-
             else if (rankingName.Value.Actual == "MaxCohortAge")
                 rankingMethod = new MaxCohortAge();
             else if (rankingName.Value.Actual == "Random")
@@ -423,7 +422,12 @@ namespace Landis.Extension.BaseHarvest
                 Names.SiteSelection,
                 //  Optional ranking requirements
                 Names.MaximumAge,
-                Names.MinimumAge
+                Names.MinimumAge,
+                Names.ForestTypeTable,
+                Names.minimumTimeSinceLastHarvest,
+                Names.MinTimeSinceDamage,
+                Names.StandAdjacency
+
             }
         );
 

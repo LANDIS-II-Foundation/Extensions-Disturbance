@@ -29,8 +29,9 @@ namespace Landis.Extension.BaseHarvest
         protected override double ComputeRank(Stand stand, int i)
         {
 
-            if (SiteVars.CFSFuelType == null)
-                throw new System.ApplicationException("Error: CFS Fuel Type NOT Initialized.  Fuel extension MUST be active.");
+            SiteVars.ReInitialize();
+            //if (SiteVars.CFSFuelType == null)
+            //    throw new System.ApplicationException("Error: CFS Fuel Type NOT Initialized.  Fuel extension MUST be active.");
 
             double standFireRisk = 0.0;
             //PlugIn.ModelCore.Log.WriteLine("Base Harvest: EconomicRank.cs: ComputeRank:  there are {0} sites in this stand.", stand.SiteCount);
@@ -38,6 +39,7 @@ namespace Landis.Extension.BaseHarvest
 
                 //double siteFireRisk = 0.0;
                 int fuelType = SiteVars.CFSFuelType[site];
+                //PlugIn.ModelCore.Log.WriteLine("Base Harvest: ComputeRank:  FuelType = {0}.", fuelType);
                 FireRiskParameters rankingParameters = rankTable[fuelType];
                 standFireRisk = (double)rankingParameters.Rank;
 

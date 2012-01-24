@@ -29,7 +29,11 @@ namespace Landis.Extension.BaseHarvest
 
         public FireRiskTable()
         {
-            parameters = new FireRiskParameters[50];  //up to 50 fuel types
+            parameters = new FireRiskParameters[150];  //up to 150 fuel types
+            //foreach (FireRiskParameters fireRiskParm in parameters)
+            //{
+            //    fireRiskParm 
+            //}
         }
     }
 }
