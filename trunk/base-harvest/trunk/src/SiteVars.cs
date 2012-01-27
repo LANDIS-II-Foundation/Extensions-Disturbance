@@ -6,7 +6,7 @@ using Landis.Library.AgeOnlyCohorts;
 
 namespace Landis.Extension.BaseHarvest
 {
-    public class SiteVars
+    public static class SiteVars
     {
         private static ISiteVar<int> timeOfLastEvent;
         private static ISiteVar<ManagementArea> mgmtAreas;
