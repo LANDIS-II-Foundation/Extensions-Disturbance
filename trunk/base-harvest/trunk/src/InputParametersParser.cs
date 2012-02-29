@@ -317,7 +317,7 @@ namespace Landis.Extension.BaseHarvest
                 rankingMethod = new RandomRank();
             else if (rankingName.Value.Actual == "RegulateAges")
                 rankingMethod = new RegulateAgesRank();
-            else if (rankingName.Value.Actual == "FireRisk")
+            else if (rankingName.Value.Actual == "FireHazard")
                 rankingMethod = new FireRiskRank(ReadFireRiskTable());
 
             ////list of ranking methods which have not been implemented yet
