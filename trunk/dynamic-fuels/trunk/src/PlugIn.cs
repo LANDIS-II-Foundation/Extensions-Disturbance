@@ -137,38 +137,6 @@ namespace Landis.Extension.DynamicFuels
             }
         }
 
-        //---------------------------------------------------------------------
-        /*
-
-        private IOutputRaster<ClassPixel> CreateMap()
-        {
-            string path = MapNames.ReplaceTemplateVars(mapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("Writing Fuel map to {0} ...", path);
-            return modelCore.CreateRaster<ClassPixel>(path,
-                                                    modelCore.Landscape.Dimensions,
-                                                    modelCore.LandscapeMapMetadata);
-        }
-
-        //---------------------------------------------------------------------
-        private IOutputRaster<ClassPixel> CreateConMap()
-        {
-            string conpath = MapNames.ReplaceTemplateVars(pctConiferMapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("Writing % Conifer map to {0} ...", conpath);
-            return modelCore.CreateRaster<ClassPixel>(conpath,
-                                                    modelCore.Landscape.Dimensions,
-                                                    modelCore.LandscapeMapMetadata);
-        }
-
-        //---------------------------------------------------------------------
-
-        private IOutputRaster<ClassPixel> CreateFirMap()
-        {
-            string firpath = MapNames.ReplaceTemplateVars(pctDeadFirMapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("Writing % Dead Fir map to {0} ...", firpath);
-            return modelCore.CreateRaster<ClassPixel>(firpath,
-                                                    modelCore.Landscape.Dimensions,
-                                                    modelCore.LandscapeMapMetadata);
-        }*/
 
         //---------------------------------------------------------------------
 
@@ -181,43 +149,9 @@ namespace Landis.Extension.DynamicFuels
             double sumConifer = 0.0;
             double sumDecid = 0.0;
 
-            //modelCore.WriteLine("      Calculating species values...");
             ISpeciesDataset SpeciesDataset = modelCore.Species;
             foreach(ISpecies species in SpeciesDataset)
             {
-                /*ushort maxSpeciesAge = 0;
-                double sppValue = 0.0;
-                maxSpeciesAge = AgeCohort.Util.GetMaxAge(cohorts[site][species]);
-
-                if(maxSpeciesAge > 0)
-                {
-                    sppValue = (double) maxSpeciesAge /
-                        (double) species.Longevity *
-                        (double) fuelCoefs[species.Index];
-
-                    //if(coniferIndex[species.Index])
-                    //    sumConifer += sppValue;
-
-                    //if(decidIndex[species.Index])
-                    //    sumDecid += sppValue;
-
-                    //modelCore.WriteLine("      accumulating species values...");
-                    foreach(IFuelType ftype in FuelTypes)
-                    {
-                        if(maxSpeciesAge >= ftype.MinAge && maxSpeciesAge <= ftype.MaxAge && sppValue > 0)
-                        {
-                            if(ftype[species.Index] != 0)
-                            {
-                                if(ftype[species.Index] == -1)
-                                    forTypValue[ftype.FuelIndex] -= sppValue;
-                                if(ftype[species.Index] == 1)
-                                    forTypValue[ftype.FuelIndex] += sppValue;
-                             }
-
-
-                        }
-                    }
-                } */
 
                 // This is the new algorithm, based on where a cohort is within it's age range.
                 // This algorithm is less biased towards older cohorts.
@@ -268,15 +202,8 @@ namespace Landis.Extension.DynamicFuels
 
             int finalFuelType = 0;
             int decidFuelType = 0;
-            //int coniferFuelType = 0;
-            //int openFuelType = 0;
-            //int slashFuelType = 0;
             double maxValue = 0.0;
             double maxDecidValue = 0.0;
-            //double maxConiferValue = 0.0;
-            //double maxConPlantValue = 0.0;
-            //double maxOpenValue = 0.0;
-            //double maxSlashValue = 0.0;
 
             //Set the PERCENT CONIFER DOMINANCE:
             int coniferDominance = 0;
