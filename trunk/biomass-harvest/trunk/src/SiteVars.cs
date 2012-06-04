@@ -38,7 +38,7 @@ namespace Landis.Extension.BiomassHarvest
 
             if (cohorts == null)
             {
-                string mesg = string.Format("Cohorts are empty.  Are you using the correct Harvest extension?");
+                string mesg = string.Format("Cohorts are empty.  Please double-check that this extension is compatible with your chosen succession extension.");
                 throw new System.ApplicationException(mesg);
             }
 

@@ -27,7 +27,7 @@ namespace Landis.Extension.BiomassHarvest
         private string nameTemplate;
         private StreamWriter log;
         private StreamWriter summaryLog;
-        private static bool running;
+        //private static bool running;
         //private static int event_id;
 
         int[] totalSites;
@@ -79,7 +79,7 @@ namespace Landis.Extension.BiomassHarvest
 
             // Add local event handler for cohorts death due to age-only
             // disturbances.
-            Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
+            //Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
 
             ParametersParser parser = new ParametersParser(modelCore.Species);
 
@@ -164,7 +164,7 @@ namespace Landis.Extension.BiomassHarvest
 
         public override void Run()
         {
-            running = true;
+            //running = true;
 
             BaseHarvest.SiteVars.Prescription.ActiveSiteValues = null;
             SiteVars.BiomassRemoved.ActiveSiteValues = 0;
@@ -240,30 +240,30 @@ namespace Landis.Extension.BiomassHarvest
             if (biomassMaps != null)
                 biomassMaps.WriteMap(modelCore.CurrentTime);
 
-            running = false;
+            //running = false;
         }
 
         //---------------------------------------------------------------------
 
         // Event handler when a cohort is killed by an age-only disturbance.
-        public static void CohortKilledByAgeOnlyDisturbance(object                 sender,
-                                                            DeathEventArgs eventArgs)
-        {
+        //public static void CohortKilledByAgeOnlyDisturbance(object sender,
+        //                                                    DeathEventArgs eventArgs)
+        //{
 
-            // If this plug-in is not running, then some base disturbance
-            // plug-in killed the cohort.
-            if (! running)
-                return;
+        //    // If this plug-in is not running, then some base disturbance
+        //    // plug-in killed the cohort.
+        //    if (!running)
+        //        return;
 
-            // If this plug-in is running, then the age-only disturbance must
-            // be a cohort-selector from Base Harvest.
+        //    // If this plug-in is running, then the age-only disturbance must
+        //    // be a cohort-selector from Base Harvest.
 
-            int reduction = eventArgs.Cohort.Biomass;
-            SiteVars.BiomassRemoved[eventArgs.Site] += reduction;
+        //    //int reduction = eventArgs.Cohort.Biomass;  // Is this double-counting??
+        //    //SiteVars.BiomassRemoved[eventArgs.Site] += reduction;
 
-            //modelCore.Log.WriteLine("Cohort Biomass removed={0:0.0}; Total Killed={1:0.0}.", reduction, SiteVars.BiomassRemoved[eventArgs.Site]);
-            //SiteVars.CohortsPartiallyDamaged[eventArgs.Site]++;
-        }
+        //    //modelCore.Log.WriteLine("Cohort Biomass removed={0:0.0}; Total Killed={1:0.0}.", reduction, SiteVars.BiomassRemoved[eventArgs.Site]);
+        //    //SiteVars.CohortsPartiallyDamaged[eventArgs.Site]++;
+        //}
 
         //---------------------------------------------------------------------
 
@@ -324,8 +324,8 @@ namespace Landis.Extension.BiomassHarvest
                 {
                     damagedSites++;
 
-                    //Conversion from [g m-2] to [Mg]
-                    biomassRemoved += SiteVars.BiomassRemoved[site] / 100.0 * modelCore.CellArea;
+                    //Conversion from [g m-2] to [Mg ha-1] to [Mg]
+                    biomassRemoved += SiteVars.BiomassRemoved[site] * 10.0 * modelCore.CellArea;
                 }
             }
 
