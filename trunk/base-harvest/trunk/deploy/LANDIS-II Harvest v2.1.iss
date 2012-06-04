@@ -14,7 +14,7 @@
 ; Base Harvest
 Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
-Source: docs\LANDIS-II Base Harvest v2.1 User Guide.pdf; DestDir: {app}\docs
+Source: docs\LANDIS-II Base Harvest v2.1.1 User Guide.pdf; DestDir: {app}\docs
 Source: examples\*; DestDir: {app}\examples\base-harvest; Flags: recursesubdirs
 
 #define Harvest "Base Harvest 2.1.txt"
