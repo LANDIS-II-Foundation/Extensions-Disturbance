@@ -113,10 +113,10 @@ namespace Landis.Extension.BiomassHarvest
 
         // Replaces all the instances of BaseHarvest.SpecificAgesCohortSelector
         // with biomass counterparts.
-        protected void ReplaceSpecificAgeSelectors(ICohortSelector selector)
+        protected MultiSpeciesCohortSelector ReplaceSpecificAgeSelectors(ICohortSelector selector)
         {
             if (! ageOrRangeWasRead)
-                return;
+                return null;
 
             ageOrRangeWasRead = false;
             MultiSpeciesCohortSelector multiSpeciesCohortSelector = (MultiSpeciesCohortSelector) selector;
@@ -128,6 +128,7 @@ namespace Landis.Extension.BiomassHarvest
                     ageSelectors[species.Index] = null;
                 }
             }
+            return multiSpeciesCohortSelector;
         }
 
         //---------------------------------------------------------------------
@@ -267,12 +268,14 @@ namespace Landis.Extension.BiomassHarvest
 
 
                 ICohortSelector cohortSelector = ReadCohortSelector(false);
+                MultiSpeciesCohortSelector newCohortSelector = new MultiSpeciesCohortSelector();
+
                 if (ageOrRangeWasRead)
                 {
                     //PlugIn.ModelCore.Log.WriteLine("age or range was read");
                     siteSelector = WrapSiteSelector(siteSelector);
                     isSiteSelectorWrapped = true;
-                    ReplaceSpecificAgeSelectors(cohortSelector);
+                    newCohortSelector = ReplaceSpecificAgeSelectors(cohortSelector);
                 }
 
                 Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
@@ -281,13 +284,14 @@ namespace Landis.Extension.BiomassHarvest
                 int repeatParamLineNumber = LineNumber;
                 if (ReadOptionalVar(singleRepeat))
                 {
+                    MultiSpeciesCohortSelector newAddCohortSelector = new MultiSpeciesCohortSelector();
                     int interval = ValidateRepeatInterval(singleRepeat.Value,
                                                           repeatParamLineNumber,
                                                           harvestTimestep);
                     ICohortSelector additionalCohortSelector = ReadCohortSelector(true);
                     if (ageOrRangeWasRead)
                     {
-                        ReplaceSpecificAgeSelectors(cohortSelector);
+                        newAddCohortSelector = ReplaceSpecificAgeSelectors(additionalCohortSelector);
                         if (!isSiteSelectorWrapped)
                         {
                             siteSelector = WrapSiteSelector(siteSelector);

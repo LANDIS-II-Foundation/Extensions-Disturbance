@@ -271,7 +271,7 @@ namespace Landis.Extension.BaseHarvest
             
                 if (prescription is AppliedRepeatHarvest) 
                 {
-                    prescription.Prescription.SiteSelectionMethod = new CompleteStand();
+                    //prescription.Prescription.SiteSelectionMethod = new CompleteStand();
                     //PlugIn.ModelCore.Log.WriteLine("      Attempting to Re-Harvest {0}.", prescription.Prescription.Name);
                     ((AppliedRepeatHarvest) prescription).HarvestReservedStands();
                 }
