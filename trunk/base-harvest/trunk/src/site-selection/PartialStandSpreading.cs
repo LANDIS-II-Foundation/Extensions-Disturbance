@@ -110,7 +110,7 @@ namespace Landis.Extension.BaseHarvest
                     standToHarvest.LastPrescription = lastPrescription;
                     standToHarvest.MinTimeSinceDamage = minTimeSinceDamage;
                     standToHarvest.HarvestedRank = standsToHarvestRankings.Dequeue();
-                } // foreach(Stand standToHarvest in standsToHarvest)
+                } 
 
             } else {
 

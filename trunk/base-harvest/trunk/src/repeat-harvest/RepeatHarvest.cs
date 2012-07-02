@@ -16,7 +16,7 @@ namespace Landis.Extension.BaseHarvest
     {
         private int interval;
         private StandSpreading spreadingSiteSelector;
-        private List<Stand> harvestedStands;
+        //private List<Stand> harvestedStands;
 
         //---------------------------------------------------------------------
 
@@ -40,12 +40,12 @@ namespace Landis.Extension.BaseHarvest
         /// The list of stands that were harvested during the most recent call
         /// to the Harvest method.
         /// </summary>
-        public List<Stand> HarvestedStands
-        {
-            get {
-                return harvestedStands;
-            }
-        }
+        //public List<Stand> HarvestedStands
+        //{
+        //    get {
+        //        return harvestedStands;
+        //    }
+        //}
 
         //---------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ namespace Landis.Extension.BaseHarvest
         {
             this.interval = interval;
             this.spreadingSiteSelector = siteSelector as StandSpreading;
-            this.harvestedStands = new List<Stand>();
+            //this.harvestedStands = new List<Stand>();
         }
 
         //---------------------------------------------------------------------
@@ -75,16 +75,15 @@ namespace Landis.Extension.BaseHarvest
         /// </returns>
         public override void Harvest(Stand stand)
         {
-            //double areaHarvested = 
             base.Harvest(stand);
             
-            harvestedStands.Clear();
-            harvestedStands.Add(stand);
+            //harvestedStands.Clear();
+            //harvestedStands.Add(stand);
             
-            if (spreadingSiteSelector != null)
-                harvestedStands.AddRange(spreadingSiteSelector.HarvestedNeighbors);
+            //if (spreadingSiteSelector != null)
+                //harvestedStands.AddRange(spreadingSiteSelector.HarvestedNeighbors);
                 
-            return; // areaHarvested;
+            return; 
         }
     }
 }

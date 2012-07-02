@@ -19,7 +19,7 @@ namespace Landis.Extension.BaseHarvest
 
         private ICohortSelector additionalCohortSelector;
         private Planting.SpeciesList additionalSpeciesToPlant;
-        private ISiteSelector additionalSiteSelector;
+        //private ISiteSelector additionalSiteSelector;
 
         //---------------------------------------------------------------------
 
@@ -64,9 +64,9 @@ namespace Landis.Extension.BaseHarvest
                 SpeciesToPlant = initialSpeciesToPlant;
             }
             base.Harvest(stand);
-            return; //base.Harvest(stand);
 
-            //                 ISiteSelector siteSelector = ReadSiteSelector();
+            return; 
+
 
         }
     }
