@@ -110,6 +110,13 @@ namespace Landis.Extension.BaseHarvest
             }
         }
 
+        protected ISiteSelector SiteSelector
+        {
+            set
+            {
+                siteSelector = value;
+            }
+        }
         //---------------------------------------------------------------------
 
         /// <summary>
