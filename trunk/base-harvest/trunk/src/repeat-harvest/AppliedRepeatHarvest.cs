@@ -84,6 +84,7 @@ namespace Landis.Extension.BaseHarvest
             }
         }
 
+ 
 
         //---------------------------------------------------------------------
 
@@ -149,9 +150,12 @@ namespace Landis.Extension.BaseHarvest
         {
             while (reservedStands.Count > 0 &&
                    reservedStands.Peek().NextTimeToHarvest <= PlugIn.ModelCore.CurrentTime) {
-                Stand stand = reservedStands.Dequeue().Stand;
+                //Stand stand = reservedStands.Dequeue().Stand;
+                Stand stand = reservedStands.Peek().Stand;
                 
                 repeatHarvest.Harvest(stand);
+
+                stand = reservedStands.Dequeue().Stand;
                 
                 if (isMultipleRepeatHarvest)
                     ScheduleNextHarvest(stand);

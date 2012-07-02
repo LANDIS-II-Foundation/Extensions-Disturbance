@@ -150,6 +150,16 @@ namespace Landis.Extension.BaseHarvest {
                 standsToConsiderAll.Add(startingStand);
             }
 
+            // Miranda and Scheller testing methods to make repeat harvest work with stand spreading.
+            if (startingStand != null && startingStand.IsSetAside)
+                if (startingStand.LastPrescription.SiteSelectionMethod.ToString() == "Landis.Harvest.CompleteStandSpreading")
+                {
+                    standsToConsiderRankings.Insert(0, GetRanking(startingStand));
+                    standsToConsiderAll.Add(startingStand);
+                    return true;
+                }
+
+
             while (standsToConsiderRankings.Count > 0 &&
                 standsToConsiderRankings[0].Rank > 0 &&
                 areaSelected < maxTargetSize) {
