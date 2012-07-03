@@ -57,6 +57,9 @@ namespace Landis.Extension.BaseHarvest
                 CohortSelector = additionalCohortSelector;
                 SpeciesToPlant = additionalSpeciesToPlant;
                 SiteSelector = new CompleteStand();
+                //
+                //if(this.SiteSelectionMethod.GetType() == Landis.Extension.BiomassHarvest.PartialStandSpreading)
+                //  SiteSelector = BiomassHarvest.WrapSiteSelector(SiteSelector);
                 
             }
             else {

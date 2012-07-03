@@ -229,7 +229,7 @@ namespace Landis.Extension.BaseHarvest
             // SelectSites(stand) is where either complete, complete stand spreading, or partial stand
             // spreading are activated.
             // tjs - This is what gets the sites that will be harvested
-            
+           
 
             foreach (ActiveSite site in siteSelector.SelectSites(stand)) {
                 currentSite = site;

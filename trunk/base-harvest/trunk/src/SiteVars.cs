@@ -50,8 +50,8 @@ namespace Landis.Extension.BaseHarvest
             timeOfLastWind = PlugIn.ModelCore.GetSiteVar<int>("Wind.TimeOfLastEvent");
             cfsFuelType = PlugIn.ModelCore.GetSiteVar<int>("Fuels.CFSFuelType");
             
-            if (SiteVars.CFSFuelType == null)
-                throw new System.ApplicationException("Error: CFS Fuel Type NOT Initialized.  Louise is making me crazy.  Fuel extension MUST be active.");
+            //if (SiteVars.CFSFuelType == null)
+            //    throw new System.ApplicationException("Error: CFS Fuel Type NOT Initialized.  Louise is making me crazy.  Fuel extension MUST be active.");
         }
         //---------------------------------------------------------------------
         public static ISiteVar<ISiteCohorts> Cohorts

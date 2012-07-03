@@ -21,7 +21,7 @@ namespace Landis.Extension.BaseHarvest
         // tjs 2009.01.09
         private bool hasBeenHarvested;
         //  The queue is in the chronological order.
-        private Queue<ReservedStand> reservedStands;
+        public Queue<ReservedStand> reservedStands;
 
         //---------------------------------------------------------------------
 
@@ -117,14 +117,16 @@ namespace Landis.Extension.BaseHarvest
         {
         
             base.HarvestHighestRankedStand();
-            
-            //foreach (Stand stand in repeatHarvest.HarvestedStands) {
-                if (! this.HighestRankedStand.IsSetAside) {
-                    setAside(this.HighestRankedStand);
-                    ScheduleNextHarvest(this.HighestRankedStand);
+
+
+            foreach (Stand stand in repeatHarvest.HarvestedStands)
+            {
+                if (!stand.IsSetAside)
+                {
+                    setAside(stand);
+                    ScheduleNextHarvest(stand);
                 }
-                
-            //}
+            }
         }
 
         //---------------------------------------------------------------------

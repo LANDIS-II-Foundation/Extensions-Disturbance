@@ -95,6 +95,7 @@ namespace Landis.Extension.BaseHarvest
             string prescriptionName = initialStand.PrescriptionName;
             Prescription lastPrescription = initialStand.LastPrescription;
             minTimeSinceDamage = initialStand.MinTimeSinceDamage;
+            this.HarvestedNeighbors.Clear();
 
             // Attempt to do the harvest
             if (SpreadFromStand(initialStand)) {
@@ -110,7 +111,9 @@ namespace Landis.Extension.BaseHarvest
                     standToHarvest.LastPrescription = lastPrescription;
                     standToHarvest.MinTimeSinceDamage = minTimeSinceDamage;
                     standToHarvest.HarvestedRank = standsToHarvestRankings.Dequeue();
-                } 
+                    if(!(standToHarvest==initialStand))
+                        this.HarvestedNeighbors.Add(standToHarvest);
+                } // foreach(Stand standToHarvest in standsToHarvest)
 
             } else {
 
