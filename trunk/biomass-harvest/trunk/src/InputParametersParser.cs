@@ -250,8 +250,6 @@ namespace Landis.Extension.BiomassHarvest
 
                 ISiteSelector siteSelector = ReadSiteSelector();
 
-                // Brian:  Does this belong here?
-                ISiteSelector additionalSiteSelector = WrapSiteSelector(new CompleteStand());
                 bool isSiteSelectorWrapped = false;
 
                 //get the minTimeSinceDamage
@@ -302,6 +300,7 @@ namespace Landis.Extension.BiomassHarvest
                         }
                     }
                     Planting.SpeciesList additionalSpeciesToPlant = ReadSpeciesToPlant();
+                    ISiteSelector additionalSiteSelector = WrapSiteSelector(new CompleteStand());
                     prescriptions.Add(new SingleRepeatHarvest(name,
                                                               rankingMethod,
                                                               siteSelector,
