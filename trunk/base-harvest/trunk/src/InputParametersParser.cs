@@ -260,6 +260,7 @@ namespace Landis.Extension.BaseHarvest
                                                           harvestTimestep);
                     ICohortSelector additionalCohortSelector = ReadCohortSelector(true);
                     Planting.SpeciesList additionalSpeciesToPlant = ReadSpeciesToPlant();
+                    ISiteSelector additionalSiteSelector = new CompleteStand();
                     prescriptions.Add(new SingleRepeatHarvest(name,
                                                               rankingMethod,
                                                               siteSelector,
@@ -267,6 +268,7 @@ namespace Landis.Extension.BaseHarvest
                                                               speciesToPlant,
                                                               additionalCohortSelector,
                                                               additionalSpeciesToPlant,
+                                                              additionalSiteSelector,
                                                               minTimeSinceDamage,
                                                               preventEstablishment,
                                                               interval));

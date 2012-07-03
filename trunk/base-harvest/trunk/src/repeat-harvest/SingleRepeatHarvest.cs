@@ -19,7 +19,7 @@ namespace Landis.Extension.BaseHarvest
 
         private ICohortSelector additionalCohortSelector;
         private Planting.SpeciesList additionalSpeciesToPlant;
-        //private ISiteSelector additionalSiteSelector;
+        private ISiteSelector additionalSiteSelector;
 
         //---------------------------------------------------------------------
 
@@ -30,6 +30,7 @@ namespace Landis.Extension.BaseHarvest
                                    Planting.SpeciesList speciesToPlant,
                                    ICohortSelector      additionalCohortSelector,
                                    Planting.SpeciesList additionalSpeciesToPlant,
+                                   ISiteSelector        additionalSiteSelector,
                                    int                  minTimeSinceDamage,
                                    bool                 preventEstablishment,
                                    int                  interval)
@@ -40,6 +41,7 @@ namespace Landis.Extension.BaseHarvest
 
             this.additionalCohortSelector = additionalCohortSelector;
             this.additionalSpeciesToPlant = additionalSpeciesToPlant;
+            this.additionalSiteSelector = additionalSiteSelector;
         }
 
         //---------------------------------------------------------------------
@@ -56,7 +58,7 @@ namespace Landis.Extension.BaseHarvest
             if (stand.IsSetAside) {
                 CohortSelector = additionalCohortSelector;
                 SpeciesToPlant = additionalSpeciesToPlant;
-                SiteSelector = new CompleteStand();
+                SiteSelector = additionalSiteSelector; // new CompleteStand();
                 //
                 //if(this.SiteSelectionMethod.GetType() == Landis.Extension.BiomassHarvest.PartialStandSpreading)
                 //  SiteSelector = BiomassHarvest.WrapSiteSelector(SiteSelector);
