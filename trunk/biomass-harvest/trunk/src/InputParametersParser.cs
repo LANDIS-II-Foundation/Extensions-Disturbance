@@ -249,6 +249,9 @@ namespace Landis.Extension.BiomassHarvest
                 ReadForestTypeTable(rankingMethod);
 
                 ISiteSelector siteSelector = ReadSiteSelector();
+
+                // Brian:  Does this belong here?
+                ISiteSelector additionalSiteSelector = WrapSiteSelector(new CompleteStand());
                 bool isSiteSelectorWrapped = false;
 
                 //get the minTimeSinceDamage
@@ -306,6 +309,7 @@ namespace Landis.Extension.BiomassHarvest
                                                               speciesToPlant,
                                                               additionalCohortSelector,
                                                               additionalSpeciesToPlant,
+                                                              additionalSiteSelector,
                                                               minTimeSinceDamage,
                                                               preventEstablishment,
                                                               interval));
