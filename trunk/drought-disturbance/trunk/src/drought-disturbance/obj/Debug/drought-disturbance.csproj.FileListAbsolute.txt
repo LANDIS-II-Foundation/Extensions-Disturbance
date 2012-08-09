@@ -1,0 +1,34 @@
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\obj\Debug\ResolveAssemblyReference.cache
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Extension.DroughtDisturbance.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Extension.DroughtDisturbance.pdb
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Edu.Wisc.Forest.Flel.Util.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Core.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.SpatialModeling.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Troschuetz.Random.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\obj\Debug\Landis.Extension.DroughtDisturbance.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\obj\Debug\Landis.Extension.DroughtDisturbance.pdb
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Extension.Succession.Biomass.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.AgeOnlyCohorts.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.BiomassCohorts.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.Succession.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.Cohorts.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\log4net.dll
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Extension.Succession.Biomass.pdb
+C:\Brian\Visual Studio\Projects\Landis-ii\Version6\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.Succession.pdb
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Extension.DroughtDisturbance.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Extension.DroughtDisturbance.pdb
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Edu.Wisc.Forest.Flel.Util.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Core.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Extension.Succession.Biomass.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.AgeOnlyCohorts.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.BiomassCohorts.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.Cohorts.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.Succession.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.SpatialModeling.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Troschuetz.Random.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\log4net.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Extension.Succession.Biomass.pdb
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\bin\Debug\Landis.Library.Succession.pdb
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\obj\Debug\ResolveAssemblyReference.cache
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\obj\Debug\Landis.Extension.DroughtDisturbance.dll
+C:\BRM\LANDIS_II\Code\landis-extensions\trunk\drought-disturbance\trunk\src\drought-disturbance\obj\Debug\Landis.Extension.DroughtDisturbance.pdb
