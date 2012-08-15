@@ -114,8 +114,8 @@ namespace Landis.Extension.Insects
 
                 ISppParameters sppParms = new SppParameters();
 
-                //parameters.SppTable[species.Index] = sppParms;
-                parameters.SppTable.Add(sppParms);
+                parameters.SppTable[species.Index] = sppParms;
+                //parameters.SppTable.Add(sppParms);
 
                 ReadValue(susc, currentLine);
                 sppParms.Susceptibility = susc.Value;

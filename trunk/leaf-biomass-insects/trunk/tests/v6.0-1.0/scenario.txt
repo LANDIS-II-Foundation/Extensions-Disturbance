@@ -1,30 +1,36 @@
 LandisData  Scenario
-	  
-Duration  50
 
-Species   species_GRSF_new.txt  << GRSF = Green Ridge State Forest
+Duration  15
 
-Ecoregions      ./ecoregions10.txt
-EcoregionsMap   ./soils10classsub.gis  << A sub-set of the total Green Ridge landscape
+Species   species.txt
 
-CellLength  30 << meters, so cell area = 900 m2
+Ecoregions      ./ecoregions.txt
+EcoregionsMap   ./ecoregions.gis
 
+CellLength  100 << meters, 100 x 100 m = 1 ha
+
+
+>> NOTE:  This example assumes that you have downloaded and installed 
+>> the correpsonding extensions.  These extensions are currently packaged
+>> together as a package.
 
 >> Succession Extension     Initialization File
 >> --------------------     -------------------
-   "Biomass Succession"     biomass-succession.txt
+   "Century Succession"     century-succession.txt
 
 
 >> Disturbance Extensions   Initialization File
 >> ----------------------   -------------------
-     "Biomass Insects"	    BiomassInsectsInput.txt
->>     "Base Harvest"	    harvest_prescriptions_sub.txt 
-   
+"Leaf Biomass Insects"	    BiomassInsectsInput.txt
+
 >>   DisturbancesRandomOrder  yes  << optional parameter; default = no
 
 
->> Output Extensions        Initialization File
->> -----------------        -------------------
-    "Output Biomass"		biomass.output.txt
+>> Other Extensions         Initialization File
+>> ----------------         -------------------
+>>   "Output Cohort Stats"    cohort-stats.output.txt
+>>   "Output Reclass"	    reclass.output.txt
 
-  RandomNumberSeed  3,359                       << randomly generated using the current time
+
+RandomNumberSeed  3,397,480,526  << optional parameter; default = the seed is
+                         << randomly generated using the current time

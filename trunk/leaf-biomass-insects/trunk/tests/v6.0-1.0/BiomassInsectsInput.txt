@@ -1,10 +1,10 @@
-LandisData "Biomass Insects"
+LandisData "Leaf Biomass Insects"
 
 Timestep	1
 
-MapNames	Insects/{insectName}-{timestep}.img
+MapNames	InsectMaps/{insectName}-{timestep}.tif
 
-LogFile		Insects/Insect-log.csv
+LogFile		Insect-log.csv
 
-InsectInputFiles	gypsy-moth.txt
+InsectInputFiles    gypsy-moth.txt 
 

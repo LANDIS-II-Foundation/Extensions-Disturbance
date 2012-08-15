@@ -33,6 +33,8 @@ namespace Landis.Extension.Insects
         // ACT_ANPP is calculated, for each cohort.  Therefore, this method is operating at
         // an ANNUAL time step and separate from the normal extension time step.
 
+        // The method calculates a fraction of leaf biomass lost to defoliation.
+
         public static double DefoliateCohort(ICohort cohort, ActiveSite site, int siteBiomass)
         {
 
@@ -49,7 +51,6 @@ namespace Landis.Extension.Insects
                 double defoliation = 0.0;
                 int suscIndex = insect.SppTable[sppIndex].Susceptibility - 1;
 
-                if (suscIndex < 0) suscIndex = 0;
 
                 // Get the Neighborhood GrowthReduction Density
                 double meanNeighborhoodDefoliation = 0.0;
@@ -77,10 +78,6 @@ namespace Landis.Extension.Insects
                         if (neighbor != null && neighbor.IsActive)
                         {
                             neighborCnt++;
-
-                            // The previous year...
-                            //if(SiteVars.DefoliationByYear[neighbor].ContainsKey(PlugIn.ModelCore.CurrentTime - 1))
-                            //    sumNeighborhoodDefoliation += SiteVars.DefoliationByYear[neighbor][PlugIn.ModelCore.CurrentTime - 1];
                             sumNeighborhoodDefoliation += insect.LastYearDefoliation[neighbor];
                         }
                     }
@@ -149,8 +146,6 @@ namespace Landis.Extension.Insects
                 {
                     insect.HostDefoliationByYear[site].Add(PlugIn.ModelCore.CurrentTime, new Double[3]{0.0, 0.0, 0.0});
                     defoliation = Distribution.GenerateRandomNum(dist, value1, value2);
-                    //if (meanNeighborhoodDefoliation <= 0.0 && defoliation > 0.0)
-                    //    PlugIn.ModelCore.Log.WriteLine("THAT'S WEIRD!!  meanNeighborhoodDefoliation = {0}, defoliation={1}.", meanNeighborhoodDefoliation, defoliation);
 
                     insect.HostDefoliationByYear[site][PlugIn.ModelCore.CurrentTime][suscIndex] = defoliation;
                 }
@@ -166,12 +161,20 @@ namespace Landis.Extension.Insects
 
                 //PlugIn.ModelCore.Log.WriteLine("Cohort age={0}, species={1}, suscIndex={2}, defoliation={3}.", cohort.Age, cohort.Species.Name, (suscIndex -1), defoliation);
 
-                double weightedDefoliation = (defoliation * ((double) cohort.Biomass / (double) siteBiomass));
-                //PlugIn.ModelCore.Log.WriteLine("Cohort age={0}, species={1}, suscIndex={2}, cohortDefoliation={3}, weightedDefolation={4}.", cohort.Age, cohort.Species.Name, (suscIndex+1), defoliation, weightedDefoliation);
+                double weightedDefoliation = (defoliation * ((double) (cohort.LeafBiomass + cohort.WoodBiomass) / (double) siteBiomass));
+                
+                if (PlugIn.ModelCore.CurrentTime > 8)
+                    PlugIn.ModelCore.Log.WriteLine("Cohort age={0}, species={1}, suscIndex={2}, cohortDefoliation={3}, weightedDefolation={4}.", cohort.Age, cohort.Species.Name, (suscIndex+1), defoliation, weightedDefoliation);
 
                 insect.ThisYearDefoliation[site] += weightedDefoliation;
                 totalDefoliation += defoliation;
-            }
+
+                //if (weightedDefoliation > 0.0 && PlugIn.ModelCore.CurrentTime > 8)
+                //    PlugIn.ModelCore.Log.WriteLine("   Weighted defoliation due to insect defoliation = {0:0.00}", weightedDefoliation);
+
+            
+
+            }  //end insect loop
 
             if(totalDefoliation > 1.0)  // Cannot exceed 100% defoliation
                 totalDefoliation = 1.0;

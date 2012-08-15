@@ -110,6 +110,11 @@ namespace Landis.Extension.Insects
         //---------------------------------------------------------------------
         public SppParameters()
         {
+            this.susceptibility = 3;
+            this.growthReduceSlope = 0.0;
+            this.growthReduceIntercept = 0.0;
+            this.mortalitySlope = 0.0;
+            this.mortalityIntercept = 0.0;
         }
         //---------------------------------------------------------------------
 /*        public SppParameters(int susceptibility,

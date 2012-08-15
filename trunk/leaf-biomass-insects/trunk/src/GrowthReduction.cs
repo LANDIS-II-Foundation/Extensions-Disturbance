@@ -53,7 +53,9 @@ namespace Landis.Extension.Insects
                     continue;
 
                 int suscIndex = insect.SppTable[sppIndex].Susceptibility - 1;
-                //if (suscIndex < 0) suscIndex = 0;
+                
+                //if (suscIndex < 0) 
+                //    return 0.0;
 
                 int yearBack = 0;
                 double annualDefoliation = 0.0;
@@ -98,7 +100,7 @@ namespace Landis.Extension.Insects
                 throw new ApplicationException("Error: Total Growth Reduction is not between 1.0 and 0.0");
             }
             
-            //if(summaryGrowthReduction > 0.0)
+            //if(summaryGrowthReduction > 0.0 && PlugIn.ModelCore.CurrentTime > 8)
             //    PlugIn.ModelCore.Log.WriteLine("   Cohort growth reduction due to insect defoliation = {0:0.00}", summaryGrowthReduction);
 
 
