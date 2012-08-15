@@ -1,6 +1,6 @@
 LandisData  "Century Succession"
 
-Timestep  5
+Timestep  1
 
 SeedingAlgorithm  WardSeedDispersal
 

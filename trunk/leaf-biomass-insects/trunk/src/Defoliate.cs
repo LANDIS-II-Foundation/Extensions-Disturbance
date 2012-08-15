@@ -45,8 +45,16 @@ namespace Landis.Extension.Insects
 
             foreach(IInsect insect in manyInsect)
             {
-                if(!insect.ActiveOutbreak)
+                if (!insect.ActiveOutbreak)
+                {
+                    //if (PlugIn.ModelCore.CurrentTime >= 8)
+                    //    PlugIn.ModelCore.Log.WriteLine("   {0} is NOT active.  ", insect.Name);
                     continue;
+                }
+
+                //if (PlugIn.ModelCore.CurrentTime >= 8)
+                //    PlugIn.ModelCore.Log.WriteLine("   Begin defoliation within Succession... ");
+
 
                 double defoliation = 0.0;
                 int suscIndex = insect.SppTable[sppIndex].Susceptibility - 1;
@@ -163,8 +171,8 @@ namespace Landis.Extension.Insects
 
                 double weightedDefoliation = (defoliation * ((double) (cohort.LeafBiomass + cohort.WoodBiomass) / (double) siteBiomass));
                 
-                if (PlugIn.ModelCore.CurrentTime > 8)
-                    PlugIn.ModelCore.Log.WriteLine("Cohort age={0}, species={1}, suscIndex={2}, cohortDefoliation={3}, weightedDefolation={4}.", cohort.Age, cohort.Species.Name, (suscIndex+1), defoliation, weightedDefoliation);
+                //if (PlugIn.ModelCore.CurrentTime > 8)
+                //PlugIn.ModelCore.Log.WriteLine("Cohort age={0}, species={1}, suscIndex={2}, cohortDefoliation={3}, weightedDefolation={4}.", cohort.Age, cohort.Species.Name, (suscIndex+1), defoliation, weightedDefoliation);
 
                 insect.ThisYearDefoliation[site] += weightedDefoliation;
                 totalDefoliation += defoliation;
