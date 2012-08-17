@@ -1,6 +1,6 @@
 #define PackageName      "Base Harvest"
 #define PackageNameLong  "Base Harvest Extension"
-#define Version          "2.1.1"
+#define Version          "2.1.2"
 #define ReleaseType      "official"
 #define ReleaseNumber    "2"
 
