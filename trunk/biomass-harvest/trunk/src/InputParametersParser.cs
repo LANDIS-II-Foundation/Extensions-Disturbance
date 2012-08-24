@@ -318,11 +318,14 @@ namespace Landis.Extension.BiomassHarvest
                     int interval = ValidateRepeatInterval(multipleRepeat.Value,
                                                           repeatParamLineNumber,
                                                           harvestTimestep);
+                    // After initial site selection repeats must be complete stand
+                    ISiteSelector additionalSiteSelector = WrapSiteSelector(new CompleteStand());
                     prescriptions.Add(new RepeatHarvest(name,
                                                         rankingMethod,
                                                         siteSelector,
                                                         cohortSelector,
                                                         speciesToPlant,
+                                                        additionalSiteSelector,
                                                         minTimeSinceDamage,
                                                         preventEstablishment,
                                                         interval));
