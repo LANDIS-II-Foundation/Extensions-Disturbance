@@ -17,6 +17,7 @@ namespace Landis.Extension.BaseHarvest
         private int interval;
         private StandSpreading spreadingSiteSelector;
         private List<Stand> harvestedStands;
+        private ISiteSelector additionalSiteSelector;
 
         //---------------------------------------------------------------------
 
@@ -54,6 +55,7 @@ namespace Landis.Extension.BaseHarvest
                              ISiteSelector        siteSelector,
                              ICohortSelector      cohortSelector,
                              Planting.SpeciesList speciesToPlant,
+                             ISiteSelector        additionalSiteSelector,
                              int                  minTimeSinceDamage,
                              bool                 preventEstablishment,
                              int                  interval)
@@ -61,6 +63,7 @@ namespace Landis.Extension.BaseHarvest
         {
             this.interval = interval;
             this.spreadingSiteSelector = siteSelector as StandSpreading;
+            this.additionalSiteSelector = additionalSiteSelector;
             this.harvestedStands = new List<Stand>();
         }
 
@@ -75,11 +78,18 @@ namespace Landis.Extension.BaseHarvest
         /// </returns>
         public override void Harvest(Stand stand)
         {
+            if (stand.IsSetAside)
+            {
+                SiteSelector = additionalSiteSelector;
+            }
             
             base.Harvest(stand);
             
             harvestedStands.Clear();
-            harvestedStands.Add(stand);
+
+            //  Add stand to list only if actually harvested
+            if(stand.LastAreaHarvested > 0)
+                harvestedStands.Add(stand); 
             
             if (spreadingSiteSelector != null)
                 harvestedStands.AddRange(spreadingSiteSelector.HarvestedNeighbors);

@@ -34,7 +34,7 @@ namespace Landis.Extension.BaseHarvest
                                    int                  minTimeSinceDamage,
                                    bool                 preventEstablishment,
                                    int                  interval)
-            : base(name, rankingMethod, siteSelector, cohortSelector, speciesToPlant, minTimeSinceDamage, preventEstablishment, interval)
+            : base(name, rankingMethod, siteSelector, cohortSelector, speciesToPlant,additionalSiteSelector, minTimeSinceDamage, preventEstablishment, interval)
         {
             this.initialCohortSelector = cohortSelector;
             this.initialSpeciesToPlant = speciesToPlant;

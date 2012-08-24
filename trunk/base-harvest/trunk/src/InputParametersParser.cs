@@ -277,11 +277,13 @@ namespace Landis.Extension.BaseHarvest
                     int interval = ValidateRepeatInterval(multipleRepeat.Value,
                                                           repeatParamLineNumber,
                                                           harvestTimestep);
+                    ISiteSelector additionalSiteSelector = new CompleteStand();
                     prescriptions.Add(new RepeatHarvest(name,
                                                         rankingMethod,
                                                         siteSelector,
                                                         cohortSelector,
                                                         speciesToPlant,
+                                                        additionalSiteSelector,
                                                         minTimeSinceDamage,
                                                         preventEstablishment,
                                                         interval));

@@ -27,7 +27,7 @@ namespace Landis.Extension.BaseHarvest
             
             int i = 0;
             for (i = 0; i < standCount; i++) {
-                stand_rankings.Add(i);
+                stand_rankings.Add(i+1);
             }
 			
             //PlugIn.ModelCore.Shuffle(stand_rankings);

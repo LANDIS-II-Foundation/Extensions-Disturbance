@@ -110,6 +110,7 @@ namespace Landis.Extension.BaseHarvest {
                     //PlugIn.ModelCore.Log.WriteLine("Rejecting stand {0} for prescription {1}",standToReject.MapCode, prescriptionName);
                     standToReject.RejectPrescriptionName(prescriptionName);
                     standToReject.HarvestedRank = standsToHarvestRankings.Dequeue();
+
                 } // foreach(Stand standToReject in standsToHarvest)
 
             } // if(SpreadFromStand(initialStand)) ... else
