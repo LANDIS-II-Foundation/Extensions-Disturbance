@@ -132,7 +132,7 @@ namespace Landis.Extension.Insects
         {
 
             running = true;
-            PlugIn.ModelCore.Log.WriteLine("   Processing landscape for Biomass Insect events ...");
+            PlugIn.ModelCore.Log.WriteLine("   Simulating Leaf Biomass Insects ...");
 
             foreach(IInsect insect in manyInsect)
             {
