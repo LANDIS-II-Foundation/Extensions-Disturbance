@@ -167,6 +167,7 @@ namespace Landis.Extension.BiomassHarvest
             running = true;
 
             BaseHarvest.SiteVars.Prescription.ActiveSiteValues = null;
+            BaseHarvest.SiteVars.ReInitialize();
             SiteVars.BiomassRemoved.ActiveSiteValues = 0;
             SiteVars.CohortsPartiallyDamaged.ActiveSiteValues = 0;
             BaseHarvest.SiteVars.CohortsDamaged.ActiveSiteValues = 0;
