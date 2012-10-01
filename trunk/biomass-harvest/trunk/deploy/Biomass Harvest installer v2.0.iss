@@ -1,6 +1,6 @@
 #define PackageName      "Biomass Harvest"
 #define PackageNameLong  "Biomass Harvest Extension"
-#define Version          "2.0.3"
+#define Version          "2.0.4"
 
 #define ReleaseType      "official"
 #define ReleaseNumber    "2"
@@ -24,7 +24,7 @@ Source: {#BuildDir}\Landis.Library.BiomassCohorts.dll; DestDir: {app}\bin; Flags
 Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 ; The user guide
-Source: docs\LANDIS-II Biomass Harvest v2.0.3 User Guide.pdf; DestDir: {app}\docs; DestName: {#PackageName} {#Version}{#ReleaseAbbr} User Guide.html
+Source: docs\LANDIS-II Biomass Harvest v2.0.4 User Guide.pdf; DestDir: {app}\docs; DestName: {#PackageName} {#Version}{#ReleaseAbbr} User Guide.html
 
 ; Sample input file
 Source: examples\*; DestDir: {app}\examples\biomass-harvest

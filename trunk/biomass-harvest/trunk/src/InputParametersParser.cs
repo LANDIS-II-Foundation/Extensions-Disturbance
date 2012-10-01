@@ -69,30 +69,31 @@ namespace Landis.Extension.BiomassHarvest
 
         //---------------------------------------------------------------------
 
-        public static void AgeOrRangeWasRead(AgeRange   ageRange,
+        public static void AgeOrRangeWasRead(AgeRange ageRange,
                                              Percentage percentage)
         {
             ageOrRangeWasRead = true;
-
             //  Have we started reading ages and ranges for another species?
-            //  If so, then first create a cohort selector for the previous
+            //  If so, then first clear the old values from the previous
             //  species.
-            if (currentSpecies != HarvestSpeciesDataset.MostRecentlyFetchedSpecies) {
-                if (currentSpecies != null)
-                    ageSelectors[currentSpecies.Index] = new SpecificAgesCohortSelector(ages, ranges, percentages);
-
-                currentSpecies = HarvestSpeciesDataset.MostRecentlyFetchedSpecies;
+            if (ageSelectors[HarvestSpeciesDataset.MostRecentlyFetchedSpecies.Index] == null)
+            {
                 ages.Clear();
                 ranges.Clear();
                 percentages.Clear();
             }
-
             if (ageRange.Start == ageRange.End)
                 ages.Add(ageRange.Start);
             else
                 ranges.Add(ageRange);
             if (percentage != null)
                 percentages[ageRange.Start] = percentage;
+
+            if (HarvestSpeciesDataset.MostRecentlyFetchedSpecies != null)
+                ageSelectors[HarvestSpeciesDataset.MostRecentlyFetchedSpecies.Index] = new SpecificAgesCohortSelector(ages, ranges, percentages);
+
+            currentSpecies = HarvestSpeciesDataset.MostRecentlyFetchedSpecies;
+
         }
 
         //---------------------------------------------------------------------
