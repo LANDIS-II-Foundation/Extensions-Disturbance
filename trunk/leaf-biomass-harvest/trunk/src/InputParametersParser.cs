@@ -290,6 +290,7 @@ namespace Landis.Extension.LeafBiomassHarvest
                         }
                     }
                     Planting.SpeciesList additionalSpeciesToPlant = ReadSpeciesToPlant();
+                    ISiteSelector additionalSiteSelector = WrapSiteSelector(new CompleteStand());
                     prescriptions.Add(new SingleRepeatHarvest(name,
                                                               rankingMethod,
                                                               siteSelector,
@@ -297,6 +298,7 @@ namespace Landis.Extension.LeafBiomassHarvest
                                                               speciesToPlant,
                                                               additionalCohortSelector,
                                                               additionalSpeciesToPlant,
+                                                              additionalSiteSelector,
                                                               minTimeSinceDamage,
                                                               preventEstablishment,
                                                               interval));
@@ -305,11 +307,14 @@ namespace Landis.Extension.LeafBiomassHarvest
                     int interval = ValidateRepeatInterval(multipleRepeat.Value,
                                                           repeatParamLineNumber,
                                                           harvestTimestep);
+                    // After initial site selection repeats must be complete stand
+                    ISiteSelector additionalSiteSelector = WrapSiteSelector(new CompleteStand());
                     prescriptions.Add(new RepeatHarvest(name,
                                                         rankingMethod,
                                                         siteSelector,
                                                         cohortSelector,
                                                         speciesToPlant,
+                                                        additionalSiteSelector,
                                                         minTimeSinceDamage,
                                                         preventEstablishment,
                                                         interval));
