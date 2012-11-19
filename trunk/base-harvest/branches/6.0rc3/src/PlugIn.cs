@@ -14,7 +14,7 @@ namespace Landis.Extension.BaseHarvest
     public class PlugIn
         : ExtensionMain
     {
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:harvest");
+        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:harvest");
         public static readonly string ExtensionName = "Base Harvest";
 
         private IManagementAreaDataset managementAreas;
@@ -35,7 +35,7 @@ namespace Landis.Extension.BaseHarvest
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, Type)
+            : base(ExtensionName, ExtType)
         {
         }
 

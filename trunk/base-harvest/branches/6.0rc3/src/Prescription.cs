@@ -144,7 +144,7 @@ namespace Landis.Extension.BaseHarvest
         ExtensionType IDisturbance.Type
         {
             get {
-                return PlugIn.Type;
+                return PlugIn.ExtType;
             }
         }
 
