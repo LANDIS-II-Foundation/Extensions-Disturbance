@@ -124,7 +124,7 @@ namespace Landis.Extension.BaseHarvest
 
             summaryLog.WriteLine("Time,ManagementArea,Prescription,HarvestedSites,{0}", species_header_names);
 
-
+            Landis.Library.LandUses.LandUse.Initialize(modelCore);
         }
 
         //---------------------------------------------------------------------

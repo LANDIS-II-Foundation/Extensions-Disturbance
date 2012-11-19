@@ -1,4 +1,6 @@
 using Edu.Wisc.Forest.Flel.Util;
+using Landis.SpatialModeling;
+using Landis.Library.LandUses;
 using System.Collections.Generic;
 
 namespace Landis.Extension.BaseHarvest
@@ -83,6 +85,18 @@ namespace Landis.Extension.BaseHarvest
 				else {
 					rankings[i].Rank = 0;
 				}
+
+                // Hack for land-use: set a stand's rank to 0 if it has at least one site whose land use doesn't allow harvesting
+                // Really intended for case where each stand has one site.
+                foreach (ActiveSite site in stand)
+                {
+                    bool siteAllowsHarvest = LandUse.SiteVar[site].AllowsHarvest;
+                    if (!siteAllowsHarvest)
+                    {
+                        rank = 0;
+                        break;
+                    }
+                }
                 rankings[i].Stand = stand;
                 rankings[i].Rank = rank;
                 //assign rank to stand

@@ -52,6 +52,10 @@
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Landis.Library.LandUses.dll">
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.LandUses.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Landis.Library.Succession, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession.dll</HintPath>
