@@ -107,7 +107,7 @@ namespace Landis.Extension.BaseHarvest {
                 // mark them all as such using the prescriptionName.
 
                 foreach (Stand standToReject in standsToHarvest) {
-                    //PlugIn.ModelCore.Log.WriteLine("Rejecting stand {0} for prescription {1}",standToReject.MapCode, prescriptionName);
+                    //PlugIn.ModelCore.UI.WriteLine("Rejecting stand {0} for prescription {1}",standToReject.MapCode, prescriptionName);
                     standToReject.RejectPrescriptionName(prescriptionName);
                     standToReject.HarvestedRank = standsToHarvestRankings.Dequeue();
 
@@ -119,7 +119,7 @@ namespace Landis.Extension.BaseHarvest {
             // prescription name
 
             foreach (Stand standToReject in standsToReject) {
-                //PlugIn.ModelCore.Log.WriteLine("Rejecting stand {0} for prescription {1}",standToReject.MapCode, prescriptionName);
+                //PlugIn.ModelCore.UI.WriteLine("Rejecting stand {0} for prescription {1}",standToReject.MapCode, prescriptionName);
                 standToReject.RejectPrescriptionName(prescriptionName);
             }
 

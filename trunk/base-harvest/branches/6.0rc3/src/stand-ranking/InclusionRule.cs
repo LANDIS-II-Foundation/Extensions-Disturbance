@@ -49,7 +49,7 @@ namespace Landis.Extension.BaseHarvest {
                     this.species_index_list.Add(PlugIn.ModelCore.Species[species].Index);
 				}				
 			}
-			//PlugIn.ModelCore.Log.WriteLine("species index = {0}", this.species_index);
+			//PlugIn.ModelCore.UI.WriteLine("species index = {0}", this.species_index);
 		}
 		
 		//---------------------------------------------------------------------

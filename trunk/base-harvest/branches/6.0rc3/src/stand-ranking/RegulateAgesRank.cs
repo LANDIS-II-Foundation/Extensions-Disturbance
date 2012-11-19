@@ -70,7 +70,7 @@ namespace Landis.Extension.BaseHarvest
                     //set frequency of this age = 1 (because this is the only
                     //appearance of that age in the age_array)
                     freq_array[j] = 1;
-                    //PlugIn.ModelCore.Log.WriteLine("not assigned.  element {0} gets {1}", j, stand.Age);
+                    //PlugIn.ModelCore.UI.WriteLine("not assigned.  element {0} gets {1}", j, stand.Age);
                 }
             }
             
@@ -103,7 +103,7 @@ namespace Landis.Extension.BaseHarvest
             for (k = 0; k < age_count; k++) {
                 if (stand.Age == age_array[k]) {
                     freq = freq_array[k];
-                    //PlugIn.ModelCore.Log.WriteLine("stand {0}.\nreturning age = {1} and freq = {2}", stand.MapCode, age_array[k], freq);
+                    //PlugIn.ModelCore.UI.WriteLine("stand {0}.\nreturning age = {1} and freq = {2}", stand.MapCode, age_array[k], freq);
                     //break loop when freq for this stand has been found
                     break;
                 }

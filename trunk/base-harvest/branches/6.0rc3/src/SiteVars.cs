@@ -149,7 +149,7 @@ namespace Landis.Extension.BaseHarvest
         {
             if (SiteVars.Cohorts[site] == null)
             {
-                PlugIn.ModelCore.Log.WriteLine("Cohort are null.  Why?");
+                PlugIn.ModelCore.UI.WriteLine("Cohort are null.  Why?");
                 return 0;
             }
             ushort max = 0;
