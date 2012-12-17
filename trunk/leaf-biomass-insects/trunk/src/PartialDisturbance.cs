@@ -134,7 +134,6 @@ namespace Landis.Extension.Insects
                     leafBiomassMortality += (int) ((double) cohort.LeafBiomass * percentMortality);
                     woodBiomassMortality += (int)((double)cohort.WoodBiomass * percentMortality);
                     //PlugIn.ModelCore.Log.WriteLine("biomassMortality={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", biomassMortality, cohort.Biomass, percentMortality);
-
                 }
 
             }  // end insect loop
@@ -147,7 +146,7 @@ namespace Landis.Extension.Insects
 
             if ((int)(leafBiomassMortality + woodBiomassMortality) > cohort.Biomass || (int)(leafBiomassMortality + woodBiomassMortality) < 0)
             {
-                PlugIn.ModelCore.Log.WriteLine("Cohort Total Mortality={0:0.0}. Cohort Biomass={1}. Site R/C={2}/{3}.", (leafBiomassMortality + woodBiomassMortality), cohort.Biomass, currentSite.Location.Row, currentSite.Location.Column);
+                PlugIn.ModelCore.UI.WriteLine("Cohort Total Mortality={0:0.0}. Cohort Biomass={1}. Site R/C={2}/{3}.", (leafBiomassMortality + woodBiomassMortality), cohort.Biomass, currentSite.Location.Row, currentSite.Location.Column);
                 throw new System.ApplicationException("Error: Total Mortality is not between 0 and cohort biomass");
             }
 

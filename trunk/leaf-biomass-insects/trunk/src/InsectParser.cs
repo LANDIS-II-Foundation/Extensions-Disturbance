@@ -12,16 +12,27 @@ namespace Landis.Extension.Insects
     /// A parser that reads the extension parameters from text input.
     /// </summary>
     public class InsectParser
-        : TextParser<IInsect>
+        : Landis.TextParser<IInsect>
     {
         //public static Species.IDataset SpeciesDataset = PlugIn.ModelCore.Species;
 
-        //---------------------------------------------------------------------
-        public InsectParser()
-        {
-            RegisterForInputValues();
-        }
+        public static ISpeciesDataset SpeciesDataset = PlugIn.ModelCore.Species;
+        ////---------------------------------------------------------------------
+        //public InsectParser()
+        //{
+        //    RegisterForInputValues();
+        //}
 
+
+        public override string LandisDataValue
+        //public InputParameterParser()
+        {
+            get
+            {
+                return "InsectDefoliator";
+            }
+
+        }
         //---------------------------------------------------------------------
 
         protected override IInsect Parse()
@@ -79,7 +90,7 @@ namespace Landis.Extension.Insects
             parameters.InitialPatchValue2 = ipv2.Value;
 
             //--------- Read In Species Table ---------------------------------------
-            PlugIn.ModelCore.Log.WriteLine("   Begin parsing SPECIES table.");
+            PlugIn.ModelCore.UI.WriteLine("   Begin parsing SPECIES table.");
 
             ReadName("SpeciesParameters");
 

@@ -97,7 +97,7 @@ namespace Landis.Extension.Insects
 
                 if(meanNeighborhoodDefoliation > 1.0 || meanNeighborhoodDefoliation < 0)
                 {
-                    PlugIn.ModelCore.Log.WriteLine("MeanNeighborhoodDefoliation={0}; NeighborCnt={1}.", meanNeighborhoodDefoliation, neighborCnt);
+                    PlugIn.ModelCore.UI.WriteLine("MeanNeighborhoodDefoliation={0}; NeighborCnt={1}.", meanNeighborhoodDefoliation, neighborCnt);
                     throw new ApplicationException("Error: Mean Neighborhood GrowthReduction is not between 1.0 and 0.0");
                 }
 
@@ -163,7 +163,7 @@ namespace Landis.Extension.Insects
                 // the same susceptibility.
                 if(defoliation > 1.0 || defoliation < 0)
                 {
-                    PlugIn.ModelCore.Log.WriteLine("DEFOLIATION TOO BIG or SMALL:  {0}, {1}, {2}, {3}.", dist, value1, value2, defoliation);
+                    PlugIn.ModelCore.UI.WriteLine("DEFOLIATION TOO BIG or SMALL:  {0}, {1}, {2}, {3}.", dist, value1, value2, defoliation);
                     throw new ApplicationException("Error: New defoliation is not between 1.0 and 0.0");
                 }
 
@@ -189,7 +189,7 @@ namespace Landis.Extension.Insects
 
             if(totalDefoliation > 1.0 || totalDefoliation < 0)
             {
-                PlugIn.ModelCore.Log.WriteLine("Cohort Total Defoliation = {0:0.00}.  Site R/C={1}/{2}.", totalDefoliation, site.Location.Row, site.Location.Column);
+                PlugIn.ModelCore.UI.WriteLine("Cohort Total Defoliation = {0:0.00}.  Site R/C={1}/{2}.", totalDefoliation, site.Location.Row, site.Location.Column);
                 throw new ApplicationException("Error: Total Defoliation is not between 1.0 and 0.0");
             }
 

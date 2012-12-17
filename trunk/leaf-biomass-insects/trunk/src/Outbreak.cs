@@ -64,7 +64,7 @@ namespace Landis.Extension.Insects
         public static void InitializeDefoliationPatches(IInsect insect)
         {
 
-            PlugIn.ModelCore.Log.WriteLine("   Initializing Defoliation Patches... ");   
+            PlugIn.ModelCore.UI.WriteLine("   Initializing Defoliation Patches... ");   
             SiteVars.InitialOutbreakProb.ActiveSiteValues = 0.0;
 
             insect.Disturbed.ActiveSiteValues = false;
@@ -97,7 +97,7 @@ namespace Landis.Extension.Insects
                 
                 if (suscIndex > 2.0 || suscIndex < 0)
                 {
-                    PlugIn.ModelCore.Log.WriteLine("SuscIndex < 0 || > 2.  Site R/C={0}/{1},suscIndex={2},suscIndexSum={3},sumBio={4}.", site.Location.Row, site.Location.Column, suscIndex,suscIndexSum,sumBio);
+                    PlugIn.ModelCore.UI.WriteLine("SuscIndex < 0 || > 2.  Site R/C={0}/{1},suscIndex={2},suscIndexSum={3},sumBio={4}.", site.Location.Row, site.Location.Column, suscIndex,suscIndexSum,sumBio);
                     throw new ApplicationException("Error: SuscIndex is not between 2.0 and 0.0");
                 }
                 // Assume that there are no neighbors whatsoever:
@@ -111,7 +111,7 @@ namespace Landis.Extension.Insects
                 double probability = Distribution.GenerateRandomNum(dist, value1, value2);
                 if(probability > 1.0 || probability < 0)
                 {
-                    PlugIn.ModelCore.Log.WriteLine("Initial Defoliation Probility < 0 || > 1.  Site R/C={0}/{1}.", site.Location.Row, site.Location.Column);
+                    PlugIn.ModelCore.UI.WriteLine("Initial Defoliation Probility < 0 || > 1.  Site R/C={0}/{1}.", site.Location.Row, site.Location.Column);
                     throw new ApplicationException("Error: Probability is not between 1.0 and 0.0");
                 }
                 

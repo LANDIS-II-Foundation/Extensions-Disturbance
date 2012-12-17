@@ -96,7 +96,7 @@ namespace Landis.Extension.Insects
 
             if(summaryGrowthReduction > 1.0 || summaryGrowthReduction < 0.0)
             {
-                PlugIn.ModelCore.Log.WriteLine("Cohort Total Growth Reduction = {0:0.00}.  Site R/C={1}/{2}.", summaryGrowthReduction, site.Location.Row, site.Location.Column);
+                PlugIn.ModelCore.UI.WriteLine("Cohort Total Growth Reduction = {0:0.00}.  Site R/C={1}/{2}.", summaryGrowthReduction, site.Location.Row, site.Location.Column);
                 throw new ApplicationException("Error: Total Growth Reduction is not between 1.0 and 0.0");
             }
             
