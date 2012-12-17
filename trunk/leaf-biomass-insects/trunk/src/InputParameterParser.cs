@@ -21,7 +21,7 @@ namespace Landis.Extension.Insects
         //}
 
         //---------------------------------------------------------------------
-        protected override string LandisDataValue
+        public override string LandisDataValue
         {
             get
             {
