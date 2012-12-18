@@ -14,8 +14,8 @@ namespace Landis.Extension.BaseHarvest
     public class PlugIn
         : ExtensionMain
     {
-        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:harvest");
-        public static readonly string ExtensionName = "Base Harvest";
+        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:development");
+        public static readonly string ExtensionName = "Base Development";
 
         private IManagementAreaDataset managementAreas;
         private PrescriptionMaps prescriptionMaps;
@@ -54,6 +54,11 @@ namespace Landis.Extension.BaseHarvest
         {
             modelCore = mCore;
             SiteVars.Initialize();
+
+            // Prescription names are parsed for LU names when prescriptions are parsed and created.
+            // So need to read land-uses first.
+            Landis.Library.LandUses.LandUse.Initialize(modelCore);
+
             InputParametersParser parser = new InputParametersParser(mCore.Species);
             parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
             if (parser.RoundedRepeatIntervals.Count > 0)
@@ -123,8 +128,6 @@ namespace Landis.Extension.BaseHarvest
             summaryLog.AutoFlush = true;
 
             summaryLog.WriteLine("Time,ManagementArea,Prescription,HarvestedSites,{0}", species_header_names);
-
-
         }
 
         //---------------------------------------------------------------------

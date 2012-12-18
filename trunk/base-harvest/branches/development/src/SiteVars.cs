@@ -33,9 +33,9 @@ namespace Landis.Extension.BaseHarvest
             timeOfLastWind          = PlugIn.ModelCore.GetSiteVar<int>("Wind.TimeOfLastEvent");
             cfsFuelType             = PlugIn.ModelCore.GetSiteVar<int>("Fuels.CFSFuelType");
 
-            PlugIn.ModelCore.RegisterSiteVar(SiteVars.PrescriptionName, "Harvest.PrescriptionName");
-            PlugIn.ModelCore.RegisterSiteVar(SiteVars.TimeOfLastEvent, "Harvest.TimeOfLastEvent");
-            PlugIn.ModelCore.RegisterSiteVar(SiteVars.CohortsDamaged, "Harvest.CohortsDamaged");
+            PlugIn.ModelCore.RegisterSiteVar(SiteVars.PrescriptionName, "Development.PrescriptionName");
+            PlugIn.ModelCore.RegisterSiteVar(SiteVars.TimeOfLastEvent, "Development.TimeOfLastEvent");
+            PlugIn.ModelCore.RegisterSiteVar(SiteVars.CohortsDamaged, "Development.CohortsDamaged");
 
             SiteVars.TimeOfLastEvent.ActiveSiteValues = -100;
             SiteVars.Prescription.SiteValues = null;

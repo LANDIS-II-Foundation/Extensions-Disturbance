@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "base-harvest", "base-harvest.csproj", "{744C34C9-C233-4EAA-96A7-AA4E12149086}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "base-development", "base-development.csproj", "{744C34C9-C233-4EAA-96A7-AA4E12149086}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

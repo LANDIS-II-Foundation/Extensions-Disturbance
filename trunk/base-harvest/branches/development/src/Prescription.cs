@@ -4,6 +4,7 @@
 using Landis.Library.AgeOnlyCohorts;
 using Landis.SpatialModeling;
 using Landis.Core;
+using Landis.Library.LandUses;
 using Landis.Library.Succession;
 
 namespace Landis.Extension.BaseHarvest
@@ -26,7 +27,8 @@ namespace Landis.Extension.BaseHarvest
         private Stand currentStand;
         private int minTimeSinceDamage;
         private bool preventEstablishment;
-        
+        private LandUse landUseAfterHarvest;
+
         //---------------------------------------------------------------------
 
         /// <summary>
@@ -200,7 +202,13 @@ namespace Landis.Extension.BaseHarvest
             this.speciesToPlant = speciesToPlant;
             this.minTimeSinceDamage = minTimeSinceDamage;
             this.preventEstablishment = preventEstablishment;
-            
+
+            // scan the name for LU-->{LU-name}
+            const string LUmarker = "LU-->";
+            int positionOfLUmarker = name.IndexOf(LUmarker);
+            int positionOfLUname = positionOfLUmarker + LUmarker.Length;
+            string LUname = name.Substring(positionOfLUname);
+            this.landUseAfterHarvest = LandUse.LookupName(LUname);
         }
 
         //---------------------------------------------------------------------
@@ -244,7 +252,9 @@ namespace Landis.Extension.BaseHarvest
 
                 if (speciesToPlant != null)
                     Reproduction.ScheduleForPlanting(speciesToPlant, site);
-            
+
+                if (landUseAfterHarvest != null)
+                    LandUse.SiteVar[site] = landUseAfterHarvest;
             } 
             return; 
         } 

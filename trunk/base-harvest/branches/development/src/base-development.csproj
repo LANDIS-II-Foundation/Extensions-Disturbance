@@ -8,8 +8,8 @@
     <ProjectGuid>{744C34C9-C233-4EAA-96A7-AA4E12149086}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>base_harvest</RootNamespace>
-    <AssemblyName>Landis.Extension.BaseHarvest</AssemblyName>
+    <RootNamespace>Landis.Extension.BaseDevelopment</RootNamespace>
+    <AssemblyName>Landis.Extension.BaseDevelopment</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -50,6 +50,10 @@
     <Reference Include="Landis.Library.Cohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Library.LandUses.dll">
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.LandUses.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Landis.Library.Succession, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
