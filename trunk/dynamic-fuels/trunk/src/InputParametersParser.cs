@@ -12,15 +12,22 @@ namespace Landis.Extension.DynamicFuels
     /// A parser that reads the plug-in's parameters from text input.
     /// </summary>
     public class InputParameterParser
-        : TextParser<IInputParameters>
+        : Landis.TextParser<IInputParameters>
     {
 
+        public override string LandisDataValue
+        {
+            get
+            {
+                return "Dynamic Fuel System";
+            }
+        }
         //---------------------------------------------------------------------
 
-        public InputParameterParser()
-        {
-            RegisterForInputValues();
-        }
+        //public InputParameterParser()
+        //{
+        //    RegisterForInputValues();
+        //}
 
         //---------------------------------------------------------------------
 
@@ -76,7 +83,7 @@ namespace Landis.Extension.DynamicFuels
             //------------------------------------------------------------
             //  Read definitions of Fuel maps
 
-            PlugIn.ModelCore.Log.WriteLine("   Reading in the Fuel Assignment table...");
+            PlugIn.ModelCore.UI.WriteLine("   Reading in the Fuel Assignment table...");
             ReadName(FuelTypeNames);
 
             List<string> speciesNames = new List<string>();
@@ -157,7 +164,7 @@ namespace Landis.Extension.DynamicFuels
 
             //------------------------------------------------------------
             //  Read definitions of Slash Types
-            PlugIn.ModelCore.Log.WriteLine("   Reading in the Harvest Conversion table...");
+            PlugIn.ModelCore.UI.WriteLine("   Reading in the Harvest Conversion table...");
             ReadName(DisturbanceConversionTable);
 
             InputVar<int> fti = new InputVar<int>("Fuel Index");
@@ -203,7 +210,7 @@ namespace Landis.Extension.DynamicFuels
             //------------------------------------------------------------
             // Template for filenames of Fuel maps
 
-            PlugIn.ModelCore.Log.WriteLine("   Reading in map names...");
+            PlugIn.ModelCore.UI.WriteLine("   Reading in map names...");
 
             InputVar<string> mapFileNames = new InputVar<string>(MapFileNames);
             ReadVar(mapFileNames);

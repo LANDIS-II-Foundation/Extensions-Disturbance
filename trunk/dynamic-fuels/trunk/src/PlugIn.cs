@@ -12,7 +12,7 @@ namespace Landis.Extension.DynamicFuels
     public class PlugIn
         : ExtensionMain
     {
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:fuels");
+        public static readonly ExtensionType type = new ExtensionType("disturbance:fuels");
         public static readonly string ExtensionName = "Dynamic Fuel System";
         private string mapNameTemplate;
         private string pctConiferMapNameTemplate;
@@ -30,7 +30,7 @@ namespace Landis.Extension.DynamicFuels
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, Type)
+            : base(ExtensionName, type)
         {
         }
         
@@ -51,7 +51,7 @@ namespace Landis.Extension.DynamicFuels
             modelCore = mCore;
             SiteVars.Initialize();
             InputParameterParser parser = new InputParameterParser();
-            parameters = mCore.Load<IInputParameters>(dataFile, parser);
+            parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
         }
         
         //---------------------------------------------------------------------
@@ -85,7 +85,7 @@ namespace Landis.Extension.DynamicFuels
             SiteVars.FuelType.ActiveSiteValues = 0;
             SiteVars.DecidFuelType.ActiveSiteValues = 0;
 
-            modelCore.Log.WriteLine("  Calculating the Dynamic Fuel Type for all active cells...");
+            modelCore.UI.WriteLine("  Calculating the Dynamic Fuel Type for all active cells...");
             foreach (ActiveSite site in modelCore.Landscape)
             {
                 CalcFuelType(site, fuelTypes, disturbanceTypes);
@@ -93,7 +93,7 @@ namespace Landis.Extension.DynamicFuels
             }
 
             string path = MapNames.ReplaceTemplateVars(mapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("   Writing Fuel map to {0} ...", path);
+            modelCore.UI.WriteLine("   Writing Fuel map to {0} ...", path);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(path, modelCore.Landscape.Dimensions))
             {
                 BytePixel pixel = outputRaster.BufferPixel;
@@ -108,7 +108,7 @@ namespace Landis.Extension.DynamicFuels
             }
 
             string conpath = MapNames.ReplaceTemplateVars(pctConiferMapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("   Writing % Conifer map to {0} ...", conpath);
+            modelCore.UI.WriteLine("   Writing % Conifer map to {0} ...", conpath);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(conpath, modelCore.Landscape.Dimensions))
             {
                 BytePixel pixel = outputRaster.BufferPixel;
@@ -122,7 +122,7 @@ namespace Landis.Extension.DynamicFuels
                 }
             }
             string firpath = MapNames.ReplaceTemplateVars(pctDeadFirMapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("   Writing % Dead Fir map to {0} ...", firpath);
+            modelCore.UI.WriteLine("   Writing % Dead Fir map to {0} ...", firpath);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(firpath, modelCore.Landscape.Dimensions))
             {
                 BytePixel pixel = outputRaster.BufferPixel;
