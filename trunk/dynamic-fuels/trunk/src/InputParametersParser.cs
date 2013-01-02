@@ -24,10 +24,10 @@ namespace Landis.Extension.DynamicFuels
         }
         //---------------------------------------------------------------------
 
-        //public InputParameterParser()
-        //{
-        //    RegisterForInputValues();
-        //}
+        static InputParameterParser()
+        {
+            RegisterForInputValues();
+        }
 
         //---------------------------------------------------------------------
 
