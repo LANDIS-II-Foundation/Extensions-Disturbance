@@ -17,9 +17,6 @@
 ; Base Harvest
 Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
-; Cohort and Succession Libraries
-Source: {#BuildDir}\Landis.Library.BiomassCohorts.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
-
 ; The extension's assembly
 Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
