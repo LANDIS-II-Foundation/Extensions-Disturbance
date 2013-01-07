@@ -33,6 +33,16 @@ namespace Landis.Extension.BiomassHarvest
 
         //---------------------------------------------------------------------
 
+        public override string LandisDataValue
+        {
+            get
+            {
+                return PlugIn.ExtensionName;
+            }
+        }
+
+        //---------------------------------------------------------------------
+
         static ParametersParser()
         {
             // The base class's static ctor registers a read method for age
@@ -169,11 +179,8 @@ namespace Landis.Extension.BiomassHarvest
         protected override BaseHarvest.IInputParameters Parse()
         {
             RoundedRepeatIntervals.Clear();
-            
-            InputVar<string> landisData = new InputVar<string>("LandisData");
-            ReadVar(landisData);
-            if (landisData.Value.Actual != PlugIn.ExtensionName)
-                throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
+
+            ReadLandisDataVar();
 
             Parameters parameters = new Parameters();
 
