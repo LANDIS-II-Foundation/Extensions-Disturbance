@@ -132,7 +132,7 @@ namespace Landis.Extension.BiomassHarvest
             ageOrRangeWasRead = false;
             MultiSpeciesCohortSelector multiSpeciesCohortSelector = (MultiSpeciesCohortSelector) selector;
             foreach (ISpecies species in speciesDataset) {
-                //PlugIn.ModelCore.Log.WriteLine("ReplaceSpecificAgeSelectors:  spp={0}", species.Name);
+                //PlugIn.ModelCore.UI.WriteLine("ReplaceSpecificAgeSelectors:  spp={0}", species.Name);
                 SpecificAgesCohortSelector ageSelector = ageSelectors[species.Index];
                 if (ageSelector != null) {
                     multiSpeciesCohortSelector[species] = ageSelector.SelectCohorts; 
@@ -281,7 +281,7 @@ namespace Landis.Extension.BiomassHarvest
 
                 if (ageOrRangeWasRead)
                 {
-                    //PlugIn.ModelCore.Log.WriteLine("age or range was read");
+                    //PlugIn.ModelCore.UI.WriteLine("age or range was read");
                     siteSelector = WrapSiteSelector(siteSelector);
                     isSiteSelectorWrapped = true;
                     newCohortSelector = ReplaceSpecificAgeSelectors(cohortSelector);
@@ -412,7 +412,7 @@ namespace Landis.Extension.BiomassHarvest
                     //percentage column
                     TextReader.SkipWhitespace(currentLine);
                     ReadValue(percentOfCells, currentLine);
-                    //PlugIn.ModelCore.Log.WriteLine("percentOfCells = {0}", percentOfCells.Value.String);
+                    //PlugIn.ModelCore.UI.WriteLine("percentOfCells = {0}", percentOfCells.Value.String);
                     //cannot validate until parsing is done.  will do this in the inclusionRule constructor
 
                     //a list in case there are multiple species on this line

@@ -109,7 +109,7 @@ namespace Landis.Extension.BiomassHarvest
         public static void RecordBiomassReduction(ICohort cohort,
                                                   int     reduction)
         {
-            //PlugIn.ModelCore.Log.WriteLine("Recording reduction:  {0:0.0}/{1:0.0}/{2}.", cohort.Species.Name, cohort.Age, reduction);
+            //PlugIn.ModelCore.UI.WriteLine("Recording reduction:  {0:0.0}/{1:0.0}/{2}.", cohort.Species.Name, cohort.Age, reduction);
             reductions[cohort.Species.Index][cohort.Age] = reduction;
         }
 
@@ -141,9 +141,9 @@ namespace Landis.Extension.BiomassHarvest
             capacityReduction = 0.0;
 
 
-            //PlugIn.ModelCore.Log.WriteLine("ReducingCohortBiomass.  Stand/site not equal to null.");
-            //PlugIn.ModelCore.Log.WriteLine("Stand is not NULL.  Site = {0}/{1}", site.Location.Row, site.Location.Column);
-            //PlugIn.ModelCore.Log.WriteLine("Site is not NULL.  Stand = {0}", stand.MapCode);
+            //PlugIn.ModelCore.UI.WriteLine("ReducingCohortBiomass.  Stand/site not equal to null.");
+            //PlugIn.ModelCore.UI.WriteLine("Stand is not NULL.  Site = {0}/{1}", site.Location.Row, site.Location.Column);
+            //PlugIn.ModelCore.UI.WriteLine("Site is not NULL.  Stand = {0}", stand.MapCode);
             
             SiteVars.Cohorts[site].ReduceOrKillBiomassCohorts(singleton);
 
