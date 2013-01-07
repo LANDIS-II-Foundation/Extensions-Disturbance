@@ -1,4 +1,4 @@
-#define PackageName      "Base Harvest"
+#define PackageName      "Base Harvest (LUA-r3)"
 #define PackageNameLong  "Base Harvest Extension"
 #define Version          "2.1.3"
 #define ReleaseType      "official"

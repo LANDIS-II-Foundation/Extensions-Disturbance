@@ -92,7 +92,7 @@ namespace Landis.Extension.BaseHarvest
                 {
                     // TO DO: Land-use library should initialize the site variable to have a default land-use
                     //        that allows harvesting (e.g., "forest").
-                    bool siteAllowsHarvest = (LandUse.SiteVar != null) && LandUse.SiteVar[site].AllowsHarvest;
+                    bool siteAllowsHarvest = (LandUse.SiteVar == null) || LandUse.SiteVar[site].AllowsHarvest;
                     if (!siteAllowsHarvest)
                     {
                         rank = 0;
