@@ -12,7 +12,7 @@
 
 
 [Files]
-#define BuildDir "C:\Program Files\LANDIS-II\6.0\bin"
+#define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
 
 ; Base Harvest
 Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
