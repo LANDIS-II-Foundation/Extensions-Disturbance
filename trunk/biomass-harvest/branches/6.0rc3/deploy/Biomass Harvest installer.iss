@@ -31,7 +31,7 @@ Source: examples\*; DestDir: {app}\examples\biomass-harvest
 
 ; The extension's info file
 #define ExtensionInfoFile PackageName + " " + Version + ReleaseAbbr+ ".txt"
-Source: Biomass Harvest v2.0.txt; DestDir: {#LandisPlugInDir}; DestName: {#ExtensionInfoFile}
+Source: Biomass Harvest.txt; DestDir: {#LandisPlugInDir}; DestName: {#ExtensionInfoFile}
 
 [Run]
 ;; Run plug-in admin tool to add an entry for the plug-in
