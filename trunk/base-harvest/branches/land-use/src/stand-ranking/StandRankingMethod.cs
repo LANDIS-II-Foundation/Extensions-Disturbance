@@ -90,7 +90,9 @@ namespace Landis.Extension.BaseHarvest
                 // Really intended for case where each stand has one site.
                 foreach (ActiveSite site in stand)
                 {
-                    bool siteAllowsHarvest = LandUse.SiteVar[site].AllowsHarvest;
+                    // TO DO: Land-use library should initialize the site variable to have a default land-use
+                    //        that allows harvesting (e.g., "forest").
+                    bool siteAllowsHarvest = (LandUse.SiteVar != null) && LandUse.SiteVar[site].AllowsHarvest;
                     if (!siteAllowsHarvest)
                     {
                         rank = 0;
