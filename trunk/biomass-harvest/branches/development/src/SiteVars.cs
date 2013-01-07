@@ -34,7 +34,7 @@ namespace Landis.Extension.BiomassHarvest
 
             SiteVars.CapacityReduction.ActiveSiteValues = 0.0;
 
-            PlugIn.ModelCore.RegisterSiteVar(SiteVars.CapacityReduction, "Harvest.CapacityReduction");
+            PlugIn.ModelCore.RegisterSiteVar(SiteVars.CapacityReduction, "Development.CapacityReduction");
 
             if (cohorts == null)
             {

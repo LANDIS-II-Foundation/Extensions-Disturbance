@@ -18,8 +18,8 @@ namespace Landis.Extension.BiomassHarvest
     public class PlugIn
         : ExtensionMain 
     {
-        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:harvest");
-        public static readonly string ExtensionName = "Biomass Harvest";
+        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:development");
+        public static readonly string ExtensionName = "Biomass Development";
         
         private IManagementAreaDataset managementAreas;
         private PrescriptionMaps prescriptionMaps;
