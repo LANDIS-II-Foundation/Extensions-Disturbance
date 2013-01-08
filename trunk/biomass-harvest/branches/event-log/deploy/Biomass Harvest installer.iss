@@ -1,9 +1,9 @@
 #define PackageName      "Biomass Harvest"
 #define PackageNameLong  "Biomass Harvest Extension"
-#define Version          "2.0.4"
+#define Version          "2.1"
 
-#define ReleaseType      "official"
-#define ReleaseNumber    "2"
+#define ReleaseType      "alpha"
+#define ReleaseNumber    "1"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
@@ -14,8 +14,8 @@
 [Files]
 #define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
 
-; Base Harvest
-Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+; Base Harvest (LUA) is distributed separately
+;XXX;Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 ; The extension's assembly
 Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
