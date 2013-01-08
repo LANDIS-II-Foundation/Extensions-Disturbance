@@ -1,8 +1,8 @@
-#define PackageName      "Biomass Harvest"
-#define PackageNameLong  "Biomass Harvest Extension"
-#define Version          "2.0.4"
+#define PackageName      "Biomass Development"
+#define PackageNameLong  "Biomass Development Extension"
+#define Version          "0.1"
 
-#define ReleaseType      "official"
+#define ReleaseType      "beta"
 #define ReleaseNumber    "2"
 
 #define CoreVersion      "6.0"
@@ -14,26 +14,26 @@
 [Files]
 #define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
 
-; Base Harvest
-Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+; Base Development is distributed separately
+;XXX; Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 ; The extension's assembly
-Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: {#BuildDir}\Landis.Extension.BiomassDevelopment.dll; DestDir: {app}\bin; Flags: replacesameversion
 
-; The user guide
-Source: docs\LANDIS-II Biomass Harvest v2.0.4 User Guide.pdf; DestDir: {app}\docs; DestName: {#PackageName} {#Version}{#ReleaseAbbr} User Guide.html
+;TO DO: update -- ; The user guide
+;TO DO:        -- Source: docs\LANDIS-II Biomass Harvest v2.0.4 User Guide.pdf; DestDir: {app}\docs; DestName: {#PackageName} {#Version}{#ReleaseAbbr} User Guide.html
 
-; Sample input file
-Source: examples\*; DestDir: {app}\examples\biomass-harvest
+;TO DO: create -- ; Sample input file
+;TO DO:        -- Source: examples\*; DestDir: {app}\examples\biomass-harvest
 
 ; The extension's info file
 #define ExtensionInfoFile PackageName + " " + Version + ReleaseAbbr+ ".txt"
-Source: Biomass Harvest.txt; DestDir: {#LandisPlugInDir}; DestName: {#ExtensionInfoFile}
+Source: Biomass Development.txt; DestDir: {#LandisPlugInDir}; DestName: {#ExtensionInfoFile}
 
 [Run]
 ;; Run plug-in admin tool to add an entry for the plug-in
 #define PlugInAdminTool  CoreBinDir + "\Landis.PlugIns.Admin.exe"
-Filename: {#PlugInAdminTool}; Parameters: "remove ""Biomass Harvest"" "; WorkingDir: {#LandisPlugInDir}
+Filename: {#PlugInAdminTool}; Parameters: "remove ""Biomass Development"" "; WorkingDir: {#LandisPlugInDir}
 Filename: {#PlugInAdminTool}; Parameters: "add ""{#ExtensionInfoFile}"" "; WorkingDir: {#LandisPlugInDir}
 
 [UninstallRun]
