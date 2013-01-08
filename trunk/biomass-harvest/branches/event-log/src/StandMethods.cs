@@ -7,13 +7,22 @@ namespace Landis.Extension.BiomassHarvest
     public static class StandMethods
     {
         // Keys are stand map codes; values are mapping of species' names and biomass totals
-        private static IDictionary<uint, IList<int>> biomassRemovedBySpecies;
+        private static IDictionary<uint, int[]> biomassRemovedBySpecies;
 
         //--------------------------------------------------------------------
 
-        static void Initialize()
+        static int[] BiomassRemovedBySpecies(this Stand stand)
         {
-            biomassRemovedBySpecies = new Dictionary<uint, IList<int>>();
+            if (biomassRemovedBySpecies == null)
+                biomassRemovedBySpecies = new Dictionary<uint, int[]>();
+
+            int[] biomassRemovedPerSpecies;
+            if (biomassRemovedBySpecies.TryGetValue(stand.MapCode, out biomassRemovedPerSpecies))
+                return biomassRemovedPerSpecies;
+
+            biomassRemovedPerSpecies = new int[Model.Core.Species.Count];
+            biomassRemovedBySpecies[stand.MapCode] = biomassRemovedPerSpecies;
+            return biomassRemovedPerSpecies;
         }
 
         //--------------------------------------------------------------------
@@ -22,12 +31,7 @@ namespace Landis.Extension.BiomassHarvest
                                                 ISpecies species,
                                                 int reduction)
         {
-            if (biomassRemovedBySpecies == null)
-                Initialize();
-            if (biomassRemovedBySpecies[stand.MapCode] == null)
-                biomassRemovedBySpecies[stand.MapCode] = new List<int>(Model.Core.Species.Count);
-
-            biomassRemovedBySpecies[stand.MapCode][species.Index] += reduction;
+            stand.BiomassRemovedBySpecies()[species.Index] += reduction;
         }
 
         //--------------------------------------------------------------------
@@ -35,22 +39,16 @@ namespace Landis.Extension.BiomassHarvest
         public static int GetBiomassRemoved(this Stand stand,
                                             ISpecies species)
         {
-            if (biomassRemovedBySpecies == null)
-                Initialize();
-            return biomassRemovedBySpecies[stand.MapCode][species.Index];
+            return stand.BiomassRemovedBySpecies()[species.Index];
         }
 
         //--------------------------------------------------------------------
 
         public static void ResetBiomassRemoved(this Stand stand)
         {
-            if (biomassRemovedBySpecies == null)
-                Initialize();
-            foreach (IList<int> speciesTotals in biomassRemovedBySpecies.Values)
-            {
-                for (int i = 0; i < speciesTotals.Count; i++)
-                    speciesTotals[i] = 0;
-            }
+            int[] biomassRemovedPerSpecies = stand.BiomassRemovedBySpecies();
+            for (int i = 0; i < biomassRemovedPerSpecies.Length; i++)
+                biomassRemovedPerSpecies[i] = 0;
         }
     }
 }
