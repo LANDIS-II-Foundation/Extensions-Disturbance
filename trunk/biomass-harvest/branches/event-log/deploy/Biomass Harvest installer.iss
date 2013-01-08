@@ -3,7 +3,7 @@
 #define Version          "2.1"
 
 #define ReleaseType      "alpha"
-#define ReleaseNumber    "2"
+#define ReleaseNumber    "3"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
