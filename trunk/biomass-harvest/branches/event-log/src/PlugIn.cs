@@ -367,7 +367,9 @@ namespace Landis.Extension.BiomassHarvest
             //if this is the right species match, add it's count to the csv string
             foreach (ISpecies species in modelCore.Species)
             {
-                species_count += "," + stand.GetBiomassRemoved(species);
+                int biomassRemovedGramsPerMeterSquared = stand.GetBiomassRemoved(species);
+                double biomassRemovedMgrams = biomassRemovedGramsPerMeterSquared / 100.0 * Model.Core.CellArea;
+                species_count += "," + biomassRemovedMgrams;
             }
             stand.ResetBiomassRemoved();
 
