@@ -76,6 +76,7 @@ namespace Landis.Extension.BiomassHarvest
             }
 
             modelCore = mCore;
+            Model.Core = mCore;
 
             // Add local event handler for cohorts death due to age-only
             // disturbances.
@@ -262,6 +263,8 @@ namespace Landis.Extension.BiomassHarvest
             int reduction = eventArgs.Cohort.Biomass;  // Is this double-counting??
             SiteVars.BiomassRemoved[eventArgs.Site] += reduction;
 
+            BaseHarvest.SiteVars.Stand[eventArgs.Site].RecordBiomassRemoved(eventArgs.Cohort.Species, reduction);
+
             //ModelCore.UI.WriteLine("Cohort Biomass removed={0:0.0}; Total Killed={1:0.0}.", reduction, SiteVars.BiomassRemoved[eventArgs.Site]);
         //    //SiteVars.CohortsPartiallyDamaged[eventArgs.Site]++;
         }
@@ -338,6 +341,7 @@ namespace Landis.Extension.BiomassHarvest
 
             //csv string for log file, contains species kill count
             string species_count = "";
+/*
             //if this is the right species match, add it's count to the csv string
             foreach (ISpecies species in modelCore.Species) {
                 bool assigned = false;
@@ -356,9 +360,18 @@ namespace Landis.Extension.BiomassHarvest
                     totalSpeciesCohorts[standPrescriptionNumber, species.Index] += 0;
                 }
             }
-
+*/
             //now that the damage table for this stand has been recorded, clear it!!
             stand.ClearDamageTable();
+
+            //if this is the right species match, add it's count to the csv string
+            foreach (ISpecies species in modelCore.Species)
+            {
+                int biomassRemovedGramsPerMeterSquared = stand.GetBiomassRemoved(species);
+                double biomassRemovedMgrams = biomassRemovedGramsPerMeterSquared / 100.0 * Model.Core.CellArea;
+                species_count += "," + biomassRemovedMgrams;
+            }
+            stand.ResetBiomassRemoved();
 
             //write to log file:
             biomassRemovedPerHa = biomassRemoved / (double) damagedSites / modelCore.CellArea;

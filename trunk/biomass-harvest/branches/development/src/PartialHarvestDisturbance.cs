@@ -86,6 +86,8 @@ namespace Landis.Extension.BiomassHarvest
                 // Record any cohort touched, not just killed:
                 BaseHarvest.SiteVars.Stand[currentSite].UpdateDamageTable(cohort.Species.Name);
 
+                BaseHarvest.SiteVars.Stand[currentSite].RecordBiomassRemoved(cohort.Species, reduction);
+
                 return reduction;
             }
             else
