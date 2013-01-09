@@ -22,6 +22,9 @@ namespace Landis.Extension.BaseHarvest
         private ISpeciesDataset speciesDataset;
         private IStandRankingMethod rankingMethod;  //made global because of re-use
         private InputVar<string> speciesName;
+        private const string AllSpecies = "AllSpecies";
+        private bool allowAllSpecies;
+        public static bool AllSpeciesNameWasRead { get; protected set;  }
         private Dictionary<string, int> speciesLineNumbers;
         private List<RoundedInterval> roundedIntervals;
         private static int scenarioStart = 0;
@@ -79,6 +82,8 @@ namespace Landis.Extension.BaseHarvest
             InputValues.Register<AgeRange>(ParseAgeOrRange);
             Type.SetDescription<AgeRange>("cohort age or age range");
             uShortParse = InputValues.GetParseMethod<ushort>();
+
+            AllSpeciesNameWasRead = false;
         }
 
         //---------------------------------------------------------------------
@@ -159,6 +164,7 @@ namespace Landis.Extension.BaseHarvest
         protected override IInputParameters Parse()
         {
             roundedIntervals.Clear();
+            allowAllSpecies = false;
 
             ReadLandisDataVar();
 
@@ -533,6 +539,8 @@ namespace Landis.Extension.BaseHarvest
         protected ISpecies ReadSpecies(StringReader currentLine)
         {
             ISpecies species = ReadAndValidateSpeciesName(currentLine);
+            if (species == null) // then name = AllSpecies
+                return species;
             int lineNumber;
             if (speciesLineNumbers.TryGetValue(species.Name, out lineNumber))
                 throw new InputValueException(speciesName.Value.String,
@@ -549,6 +557,8 @@ namespace Landis.Extension.BaseHarvest
         protected ISpecies ReadAndValidateSpeciesName(StringReader currentLine)
         {
             ReadValue(speciesName, currentLine);
+            if (allowAllSpecies && speciesName.Value.Actual == AllSpecies)
+                return null;
             ISpecies species = speciesDataset[speciesName.Value.Actual];
             if (species == null)
                 throw new InputValueException(speciesName.Value.String,
@@ -808,7 +818,9 @@ namespace Landis.Extension.BaseHarvest
                 StringReader currentLine = new StringReader(CurrentLine);
 
                 // Species name
+                allowAllSpecies = (speciesLineNumbers.Count == 0);  // allowed only for first (and only) name
                 ISpecies species = ReadSpecies(currentLine);
+                AllSpeciesNameWasRead = (species == null);
 
                 //  Cohort keyword, cohort age or cohort age range
                 //  keyword = (All, Youngest, AllExceptYoungest, Oldest,
@@ -861,6 +873,12 @@ namespace Landis.Extension.BaseHarvest
                         ReadValue(ageOrRange, currentLine);
                         ValidateAgeOrRange(ageOrRange.Value, ages, ranges);
                         TextReader.SkipWhitespace(currentLine);
+                    }
+                    if (AllSpeciesNameWasRead) {
+                        AllSpeciesCohortSelector allSpeciesCohortSelector = new AllSpeciesCohortSelector();
+                        allSpeciesCohortSelector.SelectionMethod = new SpecificAgesCohortSelector(ages, ranges).SelectCohorts;
+                        GetNextLine();
+                        return allSpeciesCohortSelector;
                     }
                     cohortSelector[species] = new SpecificAgesCohortSelector(ages, ranges).SelectCohorts;
                 }
