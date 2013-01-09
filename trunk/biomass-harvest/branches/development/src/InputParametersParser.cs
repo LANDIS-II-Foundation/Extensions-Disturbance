@@ -25,6 +25,7 @@ namespace Landis.Extension.BiomassHarvest
         private static IDictionary<ushort, Percentage> percentages;
         private static ISpecies currentSpecies;
         private static SpecificAgesCohortSelector[] ageSelectors;
+        private static SpecificAgesCohortSelector ageSelectorForAllSpecies;
 
         private ISpeciesDataset speciesDataset;
         private double standSpreadMinTargetSize;
@@ -86,7 +87,9 @@ namespace Landis.Extension.BiomassHarvest
             //  Have we started reading ages and ranges for another species?
             //  If so, then first clear the old values from the previous
             //  species.
-            if (ageSelectors[HarvestSpeciesDataset.MostRecentlyFetchedSpecies.Index] == null)
+            bool clearOldValues = (HarvestSpeciesDataset.MostRecentlyFetchedSpecies != null) &&
+                                  (ageSelectors[HarvestSpeciesDataset.MostRecentlyFetchedSpecies.Index] == null);
+            if (clearOldValues)
             {
                 ages.Clear();
                 ranges.Clear();
@@ -99,6 +102,8 @@ namespace Landis.Extension.BiomassHarvest
             if (percentage != null)
                 percentages[ageRange.Start] = percentage;
 
+            if (Landis.Extension.BaseHarvest.InputParametersParser.AllSpeciesNameWasRead)
+                ageSelectorForAllSpecies = new SpecificAgesCohortSelector(ages, ranges, percentages);
             if (HarvestSpeciesDataset.MostRecentlyFetchedSpecies != null)
                 ageSelectors[HarvestSpeciesDataset.MostRecentlyFetchedSpecies.Index] = new SpecificAgesCohortSelector(ages, ranges, percentages);
 
@@ -124,12 +129,24 @@ namespace Landis.Extension.BiomassHarvest
 
         // Replaces all the instances of BaseHarvest.SpecificAgesCohortSelector
         // with biomass counterparts.
+
+        // <rant>Really people?!  This used to be a void method.  It modified its argument, so
+        // there was no need to return it.  Now, you return it, just to have it ignored.  Way to
+        // make the code more confusing (i.e., lower the signal-to-noise ratio)!!</rant>
         protected MultiSpeciesCohortSelector ReplaceSpecificAgeSelectors(ICohortSelector selector)
         {
             if (! ageOrRangeWasRead)
                 return null;
 
             ageOrRangeWasRead = false;
+
+            if (selector is AllSpeciesCohortSelector)
+            {
+                AllSpeciesCohortSelector allSpeciesCohortSelector = (AllSpeciesCohortSelector) selector;
+                allSpeciesCohortSelector.SelectionMethod = ageSelectorForAllSpecies.SelectCohorts;
+                return null;  // NOT USED!  SEE NOTE ABOVE.
+            }
+
             MultiSpeciesCohortSelector multiSpeciesCohortSelector = (MultiSpeciesCohortSelector) selector;
             foreach (ISpecies species in speciesDataset) {
                 //PlugIn.ModelCore.UI.WriteLine("ReplaceSpecificAgeSelectors:  spp={0}", species.Name);
