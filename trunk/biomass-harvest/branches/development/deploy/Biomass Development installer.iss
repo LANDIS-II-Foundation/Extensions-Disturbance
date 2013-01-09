@@ -3,7 +3,7 @@
 #define Version          "0.1"
 
 #define ReleaseType      "beta"
-#define ReleaseNumber    "3"
+#define ReleaseNumber    "4"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
