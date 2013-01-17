@@ -103,7 +103,7 @@ namespace Landis.Extension.BaseHarvest
         /// </summary>
         public bool IsApplied(string prescriptionName, int beginTime, int endTime)
         {
-            //PlugIn.ModelCore.Log.WriteLine("prescriptionName = {0} beginTime = {1} endTime = {2}");
+            //PlugIn.ModelCore.UI.WriteLine("prescriptionName = {0} beginTime = {1} endTime = {2}");
             //loop through prescriptions already applied to this management area
             //looking for one that matches this exactly.
             foreach (AppliedPrescription appliedPrescription in prescriptions) {
@@ -163,7 +163,7 @@ namespace Landis.Extension.BaseHarvest
         {
             stands.Add(stand);
             area += stand.ActiveArea;
-            //PlugIn.ModelCore.Log.WriteLine("ma {0} now has area {1}", mapCode, area);
+            //PlugIn.ModelCore.UI.WriteLine("ma {0} now has area {1}", mapCode, area);
             stand.ManagementArea = this;
         }
 
@@ -200,7 +200,7 @@ namespace Landis.Extension.BaseHarvest
         /// </summary>
         public void HarvestStands()
         {
-            //PlugIn.ModelCore.Log.WriteLine("BaseHarvest: ManagementArea.cs: HarvestStands: Harvesting management area {0} ...", mapCode);
+            //PlugIn.ModelCore.UI.WriteLine("BaseHarvest: ManagementArea.cs: HarvestStands: Harvesting management area {0} ...", mapCode);
 
             //initialize each stand for harvesting (setting harvested = false)
             foreach (Stand stand in stands) {
@@ -240,20 +240,20 @@ namespace Landis.Extension.BaseHarvest
 
                 if(applyPrescription)
                 {
-                    //PlugIn.ModelCore.Log.WriteLine("   Applying Prescription: {0}  PlugIn.ModelCore.CurrentTime: {1}", prescription.Prescription.Name, PlugIn.ModelCore.CurrentTime);
+                    //PlugIn.ModelCore.UI.WriteLine("   Applying Prescription: {0}  PlugIn.ModelCore.CurrentTime: {1}", prescription.Prescription.Name, PlugIn.ModelCore.CurrentTime);
                     
                     if (isDebugEnabled)
                         log.DebugFormat("  Initializing prescription {0} ...", prescription.Prescription.Name);
                         
-                    //PlugIn.ModelCore.Log.WriteLine("   Initializing prescription {0} ...", prescription.Prescription.Name);
+                    //PlugIn.ModelCore.UI.WriteLine("   Initializing prescription {0} ...", prescription.Prescription.Name);
                     
                     //set harvesting areas, rank stands (by user choice method)
                     prescription.InitializeForHarvest(stands);
                     
                     if (prescription.AnyUnharvestedStandsRankedAbove0) {
-                        //PlugIn.ModelCore.Log.WriteLine("   Adding {0}", prescription.Prescription.Name);
+                        //PlugIn.ModelCore.UI.WriteLine("   Adding {0}", prescription.Prescription.Name);
                         foreach (StandRanking sr in prescription.Rankings) {
-                            //PlugIn.ModelCore.Log.WriteLine("   Stand {0} ranked {1}", sr.Stand.MapCode, sr.Rank);
+                            //PlugIn.ModelCore.UI.WriteLine("   Stand {0} ranked {1}", sr.Stand.MapCode, sr.Rank);
                         } 
                         activePrescriptions.Add(prescription);
                     }
@@ -261,18 +261,18 @@ namespace Landis.Extension.BaseHarvest
             } 
 
             if (isDebugEnabled) {
-                PlugIn.ModelCore.Log.WriteLine("   Number of active prescriptions: {0}", activePrescriptions.Count);
+                PlugIn.ModelCore.UI.WriteLine("   Number of active prescriptions: {0}", activePrescriptions.Count);
                 for (int i = 0; i < activePrescriptions.Count; i++)
-                    PlugIn.ModelCore.Log.WriteLine("    {0})  {1}", i + 1, activePrescriptions[i].Prescription.Name);
+                    PlugIn.ModelCore.UI.WriteLine("    {0})  {1}", i + 1, activePrescriptions[i].Prescription.Name);
             }
 
             foreach (AppliedPrescription prescription in prescriptions) {
-                //PlugIn.ModelCore.Log.WriteLine("      Looping through prescriptions... {0}.", prescription.Prescription.Name);
+                //PlugIn.ModelCore.UI.WriteLine("      Looping through prescriptions... {0}.", prescription.Prescription.Name);
             
                 if (prescription is AppliedRepeatHarvest) 
                 {
                     //prescription.Prescription.SiteSelectionMethod = new CompleteStand();
-                    //PlugIn.ModelCore.Log.WriteLine("      Attempting to Re-Harvest {0}.", prescription.Prescription.Name);
+                    //PlugIn.ModelCore.UI.WriteLine("      Attempting to Re-Harvest {0}.", prescription.Prescription.Name);
                     ((AppliedRepeatHarvest) prescription).HarvestReservedStands();
                 }
             } 
@@ -323,7 +323,7 @@ namespace Landis.Extension.BaseHarvest
                     for (int i = 0; i < activePrescriptions.Count; ++i) {
                         if (randomNum < endProbability[i]) {
                             selectedPrescription = activePrescriptions[i];
-                            //PlugIn.ModelCore.Log.WriteLine("\nSELECTED PRESCRIPTION = {0}\n", selectedPrescription.Prescription.Name);
+                            //PlugIn.ModelCore.UI.WriteLine("\nSELECTED PRESCRIPTION = {0}\n", selectedPrescription.Prescription.Name);
                             break;
                         }
                     }
@@ -332,7 +332,7 @@ namespace Landis.Extension.BaseHarvest
 
                     selectedPrescription.HarvestHighestRankedStand();
                     
-                    //PlugIn.ModelCore.Log.WriteLine("\nSELECTED PRESCRIPTION = {0}\n", selectedPrescription.Prescription.Name);
+                    //PlugIn.ModelCore.UI.WriteLine("\nSELECTED PRESCRIPTION = {0}\n", selectedPrescription.Prescription.Name);
                     
                     Stand stand = selectedPrescription.HighestRankedStand;
 
@@ -353,14 +353,14 @@ namespace Landis.Extension.BaseHarvest
                                     
                                     //if it's spreading, go through the UnharvestedNeighbors list that was built during the site-selection spread
                                     foreach (Stand n_stand in ss.UnharvestedNeighbors) {
-                                            //PlugIn.ModelCore.Log.WriteLine("SPREAD setting aside {0}", n_stand.MapCode);
+                                            //PlugIn.ModelCore.UI.WriteLine("SPREAD setting aside {0}", n_stand.MapCode);
                                         n_stand.SetAsideUntil(PlugIn.ModelCore.CurrentTime + sa.SetAside);
                                     }
                                 }
                                 else {
                                     //if it's not a spreading, just take all of the stand's neighbors
                                     foreach (Stand n_stand in stand.Neighbors) {
-                                            //PlugIn.ModelCore.Log.WriteLine("NON-SPREAD setting aside {0}", n_stand.MapCode);
+                                            //PlugIn.ModelCore.UI.WriteLine("NON-SPREAD setting aside {0}", n_stand.MapCode);
                                         n_stand.SetAsideUntil(PlugIn.ModelCore.CurrentTime + sa.SetAside);
                                     }
                                 }
@@ -370,14 +370,14 @@ namespace Landis.Extension.BaseHarvest
                         }
                     }
                     else {
-                        //PlugIn.ModelCore.Log.WriteLine("returned a null stand");
+                        //PlugIn.ModelCore.UI.WriteLine("returned a null stand");
                     }
                     
                     //  Check each prescription to see if there's at least one  unharvested stand that the prescription ranks higher than  0.  
                     // The list is traversed in reverse order, so that the removal of items doesn't mess up the traversal.
                     for (int i = activePrescriptions.Count - 1; i >= 0; --i) {
                         if (! activePrescriptions[i].AnyUnharvestedStandsRankedAbove0) {
-                            //PlugIn.ModelCore.Log.WriteLine("removing1 {0}", activePrescriptions[i].Prescription.Name);
+                            //PlugIn.ModelCore.UI.WriteLine("removing1 {0}", activePrescriptions[i].Prescription.Name);
                             activePrescriptions.RemoveAt(i);
                         }
                     }
@@ -385,7 +385,7 @@ namespace Landis.Extension.BaseHarvest
                 }
                 else {
                     for (int i = activePrescriptions.Count - 1; i >= 0; --i) {
-                        //PlugIn.ModelCore.Log.WriteLine("removing2 {0}", activePrescriptions[i].Prescription.Name);
+                        //PlugIn.ModelCore.UI.WriteLine("removing2 {0}", activePrescriptions[i].Prescription.Name);
                         activePrescriptions.RemoveAt(i);
                     }
                 }

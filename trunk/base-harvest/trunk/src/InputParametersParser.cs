@@ -46,6 +46,14 @@ namespace Landis.Extension.BaseHarvest
             public const string StandAdjacency = "StandAdjacency";
         }
 
+        //---------------------------------------------------------------------
+
+        public override string LandisDataValue
+        {
+            get {
+                return PlugIn.ExtensionName;
+            }
+        }
 
         //---------------------------------------------------------------------
 
@@ -152,11 +160,7 @@ namespace Landis.Extension.BaseHarvest
         {
             roundedIntervals.Clear();
 
-            InputVar<string> landisData = new InputVar<string>("LandisData");
-            ReadVar(landisData);
-            if (landisData.Value.Actual != PlugIn.ExtensionName)
-                throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
-
+            ReadLandisDataVar();
 
             InputParameters parameters = new InputParameters();
 
@@ -391,7 +395,7 @@ namespace Landis.Extension.BaseHarvest
                 //get set-aside var if defined
                 ushort set_aside = 0;
                 if (ReadOptionalVar(adjacencyNeighborSetAside)) {
-                    //PlugIn.ModelCore.Log.WriteLine("adjacencyNeighborSetAside = {0}", adjacencyNeighborSetAside.Value.Actual);
+                    //PlugIn.ModelCore.UI.WriteLine("adjacencyNeighborSetAside = {0}", adjacencyNeighborSetAside.Value.Actual);
                     set_aside = adjacencyNeighborSetAside.Value.Actual;
                 }
                 //add stand-adjacency to list of ranking requirements
@@ -614,7 +618,7 @@ namespace Landis.Extension.BaseHarvest
                     //percentage column
                     TextReader.SkipWhitespace(currentLine);
                     ReadValue(percentOfCells, currentLine);
-                    //PlugIn.ModelCore.Log.WriteLine("percentOfCells = {0}", percentOfCells.Value.String);
+                    //PlugIn.ModelCore.UI.WriteLine("percentOfCells = {0}", percentOfCells.Value.String);
                     //cannot validate until parsing is done.  will do this in the inclusionRule constructor
 
                     //a list in case there are multiple species on this line

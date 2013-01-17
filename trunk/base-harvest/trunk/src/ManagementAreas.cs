@@ -69,7 +69,7 @@ namespace Landis.Extension.BaseHarvest
             // Inform user about non-active areas: those that don't have any
             // applied prescriptions.
             if (inactiveMgmtAreas.Count > 0) {
-                PlugIn.ModelCore.Log.WriteLine("   Inactive management areas: {0}",
+                PlugIn.ModelCore.UI.WriteLine("   Inactive management areas: {0}",
                              MapCodesToString(inactiveMgmtAreas));
             }
         }

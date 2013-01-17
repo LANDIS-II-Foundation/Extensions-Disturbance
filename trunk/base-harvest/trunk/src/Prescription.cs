@@ -144,7 +144,7 @@ namespace Landis.Extension.BaseHarvest
         ExtensionType IDisturbance.Type
         {
             get {
-                return PlugIn.Type;
+                return PlugIn.ExtType;
             }
         }
 
@@ -261,7 +261,7 @@ namespace Landis.Extension.BaseHarvest
                     
                     //if this cohort is killed, update the damage table (for the stand of this site) with this species name
                     SiteVars.Stand[currentSite].UpdateDamageTable(cohorts.Species.Name);
-                    //PlugIn.ModelCore.Log.WriteLine("Damaged:  {0}.", cohorts.Species.Name);
+                    //PlugIn.ModelCore.UI.WriteLine("Damaged:  {0}.", cohorts.Species.Name);
                     
                     //and increment the cohortsDamaged
                     cohortsDamaged++;

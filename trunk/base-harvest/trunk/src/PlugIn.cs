@@ -14,7 +14,7 @@ namespace Landis.Extension.BaseHarvest
     public class PlugIn
         : ExtensionMain
     {
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:harvest");
+        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:harvest");
         public static readonly string ExtensionName = "Base Harvest";
 
         private IManagementAreaDataset managementAreas;
@@ -35,7 +35,7 @@ namespace Landis.Extension.BaseHarvest
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, Type)
+            : base(ExtensionName, ExtType)
         {
         }
 
@@ -55,14 +55,14 @@ namespace Landis.Extension.BaseHarvest
             modelCore = mCore;
             SiteVars.Initialize();
             InputParametersParser parser = new InputParametersParser(mCore.Species);
-            parameters = mCore.Load<IInputParameters>(dataFile, parser);
+            parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
             if (parser.RoundedRepeatIntervals.Count > 0)
             {
-                PlugIn.ModelCore.Log.WriteLine("NOTE: The following repeat intervals were rounded up to");
-                PlugIn.ModelCore.Log.WriteLine("      ensure they were multiples of the harvest timestep:");
-                PlugIn.ModelCore.Log.WriteLine("      File: {0}", dataFile);
+                PlugIn.ModelCore.UI.WriteLine("NOTE: The following repeat intervals were rounded up to");
+                PlugIn.ModelCore.UI.WriteLine("      ensure they were multiples of the harvest timestep:");
+                PlugIn.ModelCore.UI.WriteLine("      File: {0}", dataFile);
                 foreach (RoundedInterval interval in parser.RoundedRepeatIntervals)
-                    PlugIn.ModelCore.Log.WriteLine("      At line {0}, the interval {1} rounded up to {2}",
+                    PlugIn.ModelCore.UI.WriteLine("      At line {0}, the interval {1} rounded up to {2}",
                                  interval.LineNumber,
                                  interval.Original,
                                  interval.Adjusted);
@@ -76,11 +76,11 @@ namespace Landis.Extension.BaseHarvest
             event_id = 1;
             Timestep = parameters.Timestep;
             managementAreas = parameters.ManagementAreas;
-            PlugIn.ModelCore.Log.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
+            PlugIn.ModelCore.UI.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
             ManagementAreas.ReadMap(parameters.ManagementAreaMap, managementAreas);
 
             //readMap reads the stand map and adds all the stands to a management area
-            PlugIn.ModelCore.Log.WriteLine("   Reading stand map {0} ...", parameters.StandMap);
+            PlugIn.ModelCore.UI.WriteLine("   Reading stand map {0} ...", parameters.StandMap);
             Stands.ReadMap(parameters.StandMap);
 
             //finish each managementArea's initialization
@@ -91,10 +91,10 @@ namespace Landis.Extension.BaseHarvest
             prescriptionMaps = new PrescriptionMaps(parameters.PrescriptionMapNames);
 
             //open log file and write header
-            PlugIn.ModelCore.Log.WriteLine("   Opening harvest log file \"{0}\" ...", parameters.EventLog);
+            PlugIn.ModelCore.UI.WriteLine("   Opening harvest log file \"{0}\" ...", parameters.EventLog);
 
             try {
-                log = PlugIn.ModelCore.CreateTextFile(parameters.EventLog);
+                log = Landis.Data.CreateTextFile(parameters.EventLog);
             }
             catch (Exception err) {
                 string mesg = string.Format("{0}", err.Message);
@@ -111,10 +111,10 @@ namespace Landis.Extension.BaseHarvest
 
             log.WriteLine("Time,ManagementArea,Prescription,Stand,EventId,StandAge,StandRank,NumberOfSites,HarvestedSites,CohortsKilled,{0}", species_header_names);
 
-            PlugIn.ModelCore.Log.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
+            PlugIn.ModelCore.UI.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
 
             try {
-                summaryLog = ModelCore.CreateTextFile(parameters.SummaryLog);
+                summaryLog = Landis.Data.CreateTextFile(parameters.SummaryLog);
             }
             catch (Exception err) {
                 string mesg = string.Format("{0}", err.Message);

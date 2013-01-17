@@ -260,10 +260,10 @@ namespace Landis.Extension.BaseHarvest
             highestUnharvestedStand = 0;
 
             //if (isDebugEnabled) {
-            //PlugIn.ModelCore.Log.WriteLine("prescription {0}:", prescription.Name);
-            //PlugIn.ModelCore.Log.WriteLine("  _Ranking_  Stand");
+            //PlugIn.ModelCore.UI.WriteLine("prescription {0}:", prescription.Name);
+            //PlugIn.ModelCore.UI.WriteLine("  _Ranking_  Stand");
                 //foreach (StandRanking ranking in rankings)
-                    //PlugIn.ModelCore.Log.WriteLine("  {0,9}  {1,5}", ranking.Rank, ranking.Stand.MapCode);
+                    //PlugIn.ModelCore.UI.WriteLine("  {0,9}  {1,5}", ranking.Rank, ranking.Stand.MapCode);
             //}
 
             if (standSpreadSiteSelector != null)
@@ -295,7 +295,7 @@ namespace Landis.Extension.BaseHarvest
         /// </summary>
         public virtual void HarvestHighestRankedStand()
         {
-            //PlugIn.ModelCore.Log.WriteLine("  Standard Harvest Highest Ranked Stand.");
+            //PlugIn.ModelCore.UI.WriteLine("  Standard Harvest Highest Ranked Stand.");
 
             //get the highest ranked unharvested stand
             Stand stand = rankings[highestUnharvestedStand].Stand;

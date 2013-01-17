@@ -77,7 +77,7 @@ namespace Landis.Extension.BaseHarvest
                     //otherwise, rank it 0 (so it will not be harvested.)
                     else {
                         rank = 0;
-                        //PlugIn.ModelCore.Log.WriteLine("   Stand {0} did not meet its requirements.", stand.MapCode);
+                        //PlugIn.ModelCore.UI.WriteLine("   Stand {0} did not meet its requirements.", stand.MapCode);
                     }
                 }
 				else {
@@ -86,7 +86,7 @@ namespace Landis.Extension.BaseHarvest
                 rankings[i].Stand = stand;
                 rankings[i].Rank = rank;
                 //assign rank to stand
-				//PlugIn.ModelCore.Log.WriteLine("   Stand {0} rank = {1}.", rankings[i].Stand.MapCode, rankings[i].Rank);
+				//PlugIn.ModelCore.UI.WriteLine("   Stand {0} rank = {1}.", rankings[i].Stand.MapCode, rankings[i].Rank);
             }
         }
     }

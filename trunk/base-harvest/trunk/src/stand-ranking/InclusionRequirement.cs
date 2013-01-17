@@ -54,7 +54,7 @@ namespace Landis.Extension.BaseHarvest
                     if (rule.InclusionType == "Forbidden") {
                         if (meets) {
                             //this stand meets a 'forbidden' rule so it is disqualified (can return false right away)
-//                          PlugIn.ModelCore.Log.WriteLine("returning false1");
+//                          PlugIn.ModelCore.UI.WriteLine("returning false1");
                             return false;
                         }
                     }
@@ -62,13 +62,13 @@ namespace Landis.Extension.BaseHarvest
                     else if (rule.InclusionType == "Required") {
                         if (!meets) {
                             //this stand violates a 'required' rule so it is disqualified (can return false right away)
-                            //PlugIn.ModelCore.Log.WriteLine("returning false2");
+                            //PlugIn.ModelCore.UI.WriteLine("returning false2");
                             return false;
                         }
                         else {
                             //this stand does not violate this 'required' rule.  in case of no optionals, 
                             //it must know that it has fulfilled a required rule to return true.
-//                          PlugIn.ModelCore.Log.WriteLine("returning true1");
+//                          PlugIn.ModelCore.UI.WriteLine("returning true1");
                             //required_flag = true;
                         }
                     }
@@ -87,7 +87,7 @@ namespace Landis.Extension.BaseHarvest
                 
                 //do nothing if key is not found.
                 //catch (KeyNotFoundException) {
-                //    PlugIn.ModelCore.Log.WriteLine("Key Not Found Exception");
+                //    PlugIn.ModelCore.UI.WriteLine("Key Not Found Exception");
                 //}
             }
 
@@ -95,7 +95,7 @@ namespace Landis.Extension.BaseHarvest
             if (optionalStatements > 1 && optionalStatementsMet < 1) 
                 return false;
             
-//          PlugIn.ModelCore.Log.WriteLine("returning default truth!!");
+//          PlugIn.ModelCore.UI.WriteLine("returning default truth!!");
             return true;
         }
         
@@ -169,7 +169,7 @@ namespace Landis.Extension.BaseHarvest
                 }
                 if(numCellsValid >= targetNumCells)
                 {
-                    //PlugIn.ModelCore.Log.WriteLine("       numGoodSites={0}, targetNumCells={1}", numCellsValid, targetNumCells);
+                    //PlugIn.ModelCore.UI.WriteLine("       numGoodSites={0}, targetNumCells={1}", numCellsValid, targetNumCells);
                     return true;
                 }
             }
@@ -182,7 +182,7 @@ namespace Landis.Extension.BaseHarvest
                 {
                     if(numCellsValid < numCellsOtherSpecies[i])
                         highest = false;
-                    //PlugIn.ModelCore.Log.WriteLine("       numGoodSites={0}, otherSppCnt={1}, true? {2}", numCellsValid, otherSpeciesCount[i], highest);
+                    //PlugIn.ModelCore.UI.WriteLine("       numGoodSites={0}, otherSppCnt={1}, true? {2}", numCellsValid, otherSpeciesCount[i], highest);
                 }
             }
             
