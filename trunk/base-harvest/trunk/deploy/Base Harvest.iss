@@ -12,7 +12,7 @@
 [Files]
 
 ; Base Harvest
-Source: C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin;
 
 #define UserGuideSrc PackageName + " vX.Y User Guide.pdf"
 #define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
