@@ -12,13 +12,10 @@
 
 
 [Files]
-#define BuildDir "C:\Program Files\LANDIS-II\6.0\bin"
+#define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
 
 ; Base Harvest
 Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
-
-; Cohort and Succession Libraries
-Source: {#BuildDir}\Landis.Library.BiomassCohorts.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
 
 ; The extension's assembly
 Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
@@ -31,7 +28,7 @@ Source: examples\*; DestDir: {app}\examples\biomass-harvest
 
 ; The extension's info file
 #define ExtensionInfoFile PackageName + " " + Version + ReleaseAbbr+ ".txt"
-Source: Biomass Harvest v2.0.txt; DestDir: {#LandisPlugInDir}; DestName: {#ExtensionInfoFile}
+Source: Biomass Harvest.txt; DestDir: {#LandisPlugInDir}; DestName: {#ExtensionInfoFile}
 
 [Run]
 ;; Run plug-in admin tool to add an entry for the plug-in
