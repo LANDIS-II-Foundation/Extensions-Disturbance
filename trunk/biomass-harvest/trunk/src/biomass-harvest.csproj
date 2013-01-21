@@ -89,6 +89,7 @@
     <Compile Include="PartialStandSpreading.cs" />
     <Compile Include="PartialThinning.cs" />
     <Compile Include="PlugIn.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteSelectorWrapper.cs" />
     <Compile Include="SiteVars.cs" />
     <Compile Include="HarvestSpeciesDataset.cs" />
