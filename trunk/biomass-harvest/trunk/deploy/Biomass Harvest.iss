@@ -21,7 +21,9 @@ Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags:
 Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 ; The user guide
-Source: docs\LANDIS-II Biomass Harvest v2.0.4 User Guide.pdf; DestDir: {app}\docs; DestName: {#PackageName} {#Version}{#ReleaseAbbr} User Guide.html
+#define UserGuideSrc PackageName + " vX.Y User Guide.pdf"
+#define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
+Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
 
 ; Sample input file
 Source: examples\*; DestDir: {app}\examples\biomass-harvest
