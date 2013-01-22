@@ -48,13 +48,13 @@ namespace Landis.Extension.BiomassHarvest
             IEnumerable<ActiveSite> selectedSites = (IEnumerable<ActiveSite>)baseClassSelectSites.Invoke(this, new object[] { stand });
             foreach (ActiveSite activeSite in selectedSites)
             {
+                yield return activeSite;
 
                 //  At this point, a prescription is done harvesting the
                 //  site with age-only cohort selectors.  See if any
                 //  specific-age cohort selectors have flagged some cohorts
                 //  for partial thinning.
                 PartialHarvestDisturbance.ReduceCohortBiomass(activeSite, stand);
-                yield return activeSite;
             }
         }
     }
