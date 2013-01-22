@@ -2,8 +2,8 @@
 #define PackageNameLong  "Biomass Development Extension"
 #define Version          "0.1"
 
-#define ReleaseType      "beta"
-#define ReleaseNumber    "4"
+#define ReleaseType      "candidate"
+#define ReleaseNumber    "1"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
