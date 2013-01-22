@@ -15,10 +15,10 @@
 #define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
 
 ; Base Harvest
-Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin;
 
 ; The extension's assembly
-Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin;
 
 ; The user guide
 #define UserGuideSrc PackageName + " vX.Y User Guide.pdf"
