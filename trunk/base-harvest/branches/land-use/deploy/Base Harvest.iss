@@ -9,6 +9,12 @@
 
 #include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
+#define LuaRevision "1"
+
+#define OutputBaseFileName    SetupSetting("OutputBaseFileName")
+#define OutputBaseFileNameLua StringChange(OutputBaseFileName, "-setup", " (LUA-r"+LuaRevision+")-setup")
+#expr SetSetupSetting("OutputBaseFileName", OutputBaseFileNameLua)
+
 [Files]
 
 ; Base Harvest
