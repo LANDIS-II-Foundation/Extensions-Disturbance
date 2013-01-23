@@ -1,8 +1,8 @@
-#define PackageName      "Base Harvest (LUA-r3)"
+#define PackageName      "Base Harvest"
 #define PackageNameLong  "Base Harvest Extension"
-#define Version          "2.1.3"
-#define ReleaseType      "official"
-#define ReleaseNumber    "2"
+#define Version          "2.2"
+#define ReleaseType      "candidate"
+#define ReleaseNumber    "1"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
@@ -11,16 +11,19 @@
 
 [Files]
 
-; Base Harvest (land-use aware)
-Source: C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+; Base Harvest
+Source: C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin;
 
-Source: C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.LandUses.dll; DestDir: {app}\bin; Flags: replacesameversion
+#define UserGuideSrc PackageName + " vX.Y User Guide.pdf"
+#define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
+Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
 
-Source: docs\LANDIS-II Base Harvest v2.1.1 User Guide.pdf; DestDir: {app}\docs
 Source: examples\*; DestDir: {app}\examples\base-harvest; Flags: recursesubdirs
 
-#define Harvest "Base Harvest 2.1.txt"
-Source: {#Harvest}; DestDir: {#LandisPlugInDir}
+; Extension info
+#define ExtInfoSrc PackageName + ".txt"
+#define ExtInfo    PackageName + " " + MajorMinor + ".txt"
+Source: {#ExtInfoSrc}; DestDir: {#LandisPlugInDir}; DestName: {#ExtInfo}
 
 ; Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Succession.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
 
@@ -28,8 +31,8 @@ Source: {#Harvest}; DestDir: {#LandisPlugInDir}
 ;; Run plug-in admin tool to add an entry for the plug-in
 #define PlugInAdminTool  CoreBinDir + "\Landis.PlugIns.Admin.exe"
 
-Filename: {#PlugInAdminTool}; Parameters: "remove ""Base Harvest"" "; WorkingDir: {#LandisPlugInDir}
-Filename: {#PlugInAdminTool}; Parameters: "add ""{#Harvest}"" "; WorkingDir: {#LandisPlugInDir}
+Filename: {#PlugInAdminTool}; Parameters: "remove ""{#PackageName}"" "; WorkingDir: {#LandisPlugInDir}
+Filename: {#PlugInAdminTool}; Parameters: "add ""{#ExtInfo}"" "; WorkingDir: {#LandisPlugInDir}
 
 [UninstallRun]
 
