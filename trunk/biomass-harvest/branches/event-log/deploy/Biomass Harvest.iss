@@ -10,6 +10,12 @@
 
 #include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
+#define CustomRevision "1"
+
+#define OutputBaseFileName       SetupSetting("OutputBaseFileName")
+#define OutputBaseFileNameCustom StringChange(OutputBaseFileName, "-setup", " (EventLog-r"+CustomRevision+")-setup")
+#expr SetSetupSetting("OutputBaseFileName", OutputBaseFileNameCustom)
+
 
 [Files]
 #define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
