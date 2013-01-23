@@ -2,8 +2,8 @@
 #define PackageNameLong  "Biomass Harvest Extension"
 #define Version          "2.1"
 
-#define ReleaseType      "alpha"
-#define ReleaseNumber    "3"
+#define ReleaseType      "beta"
+#define ReleaseNumber    "1"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
@@ -14,14 +14,16 @@
 [Files]
 #define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
 
-; Base Harvest (LUA) is distributed separately
-;XXX;Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+; Base Harvest
+Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin;
 
 ; The extension's assembly
-Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: {#BuildDir}\Landis.Extension.BiomassHarvest.dll; DestDir: {app}\bin;
 
 ; The user guide
-Source: docs\LANDIS-II Biomass Harvest v2.0.4 User Guide.pdf; DestDir: {app}\docs; DestName: {#PackageName} {#Version}{#ReleaseAbbr} User Guide.html
+#define UserGuideSrc PackageName + " vX.Y User Guide.pdf"
+#define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
+Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
 
 ; Sample input file
 Source: examples\*; DestDir: {app}\examples\biomass-harvest
