@@ -9,7 +9,7 @@
 
 #include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
-#define LuaRevision "1"
+#define LuaRevision "2"
 
 #define OutputBaseFileName    SetupSetting("OutputBaseFileName")
 #define OutputBaseFileNameLua StringChange(OutputBaseFileName, "-setup", " (LUA-r"+LuaRevision+")-setup")
@@ -19,6 +19,9 @@
 
 ; Base Harvest
 Source: C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin;
+
+; Land-use library
+Source: C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.LandUses.dll; DestDir: {app}\bin;
 
 #define UserGuideSrc PackageName + " vX.Y User Guide.pdf"
 #define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
