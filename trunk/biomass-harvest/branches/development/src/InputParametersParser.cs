@@ -267,6 +267,7 @@ namespace Landis.Extension.BiomassHarvest
                                                   prescriptionName.Value.String, lineNumber);
                 else
                     lineNumbers[name] = nameLineNumber;
+                Prescription.CheckLandUseName(name);
 
                 IStandRankingMethod rankingMethod = ReadRankingMethod();
 
