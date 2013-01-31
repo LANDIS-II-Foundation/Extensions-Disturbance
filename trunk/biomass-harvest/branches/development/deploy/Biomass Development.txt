@@ -1,7 +1,7 @@
 LandisData   Extension
 
 Name         "Biomass Development"
-Version      "0.1 (release candidate 2)"
+Version      "0.1 (release candidate 3)"
 Type         disturbance:development
 Assembly     Landis.Extension.BiomassDevelopment
 Class        Landis.Extension.BiomassHarvest.PlugIn
