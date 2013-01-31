@@ -376,8 +376,12 @@ namespace Landis.Extension.BiomassHarvest
             //write to log file:
             biomassRemovedPerHa = biomassRemoved / (double) damagedSites / modelCore.CellArea;
 
-            if(biomassRemoved <= 0.0)
-                return;
+            // Biomass Harvest is only interested in events that remove biomass, but
+            // Biomass Development may have prescriptions that don't remove biomass
+            // (e.g., easement prescriptions).  So, we log the event regardless if
+            // any biomass was removed or not.
+            //if(biomassRemoved <= 0.0)
+            //    return;
 
             log.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9:0.000},{10:0.000},{11},{12}{13}",
                           modelCore.CurrentTime,
