@@ -247,8 +247,13 @@ namespace Landis.Extension.BaseHarvest
                 if (SiteVars.CohortsDamaged[site] > 0)
                 {
                     stand.LastAreaHarvested += PlugIn.ModelCore.CellArea;
-                    SiteVars.Prescription[site] = this;
                 }    
+
+                //  With land-use, a prescription doesn't necessarily damage a site's cohorts
+                //  (for example, an easement prescription).  So, always assign the current
+                //  prescription to the site, regardless if any cohorts were damaged.  This
+                //  will cause the prescription to appear on the timestep's prescription map.
+                SiteVars.Prescription[site] = this;
 
                 if (speciesToPlant != null)
                     Reproduction.ScheduleForPlanting(speciesToPlant, site);
