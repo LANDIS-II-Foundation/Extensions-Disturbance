@@ -151,8 +151,12 @@ namespace Landis.Extension.BiomassHarvest
 
             //The function above will have gone through all the cohorts.  Now summarize
             //site level information.
-            
-            if(SiteVars.BiomassRemoved[site] > 0)
+
+            // Harvest extension only records a prescription for a site if it removes some biomass,
+            // but development extension may have prescriptions that don't remove any biomass at a
+            // site (for example, easement prescriptions).  So record the prescription regardless
+            // of the amount of biomass removed.
+            //if(SiteVars.BiomassRemoved[site] > 0)
                 BaseHarvest.SiteVars.Prescription[site] = originalStand.LastPrescription;
 
             if (SiteVars.BiomassRemoved[site] > 0 && BaseHarvest.SiteVars.CohortsDamaged[site] == 0)
