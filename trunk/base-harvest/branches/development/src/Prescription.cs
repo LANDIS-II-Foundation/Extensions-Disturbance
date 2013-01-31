@@ -1,6 +1,7 @@
 //  Copyright 2005-2010 Portland State University, University of Wisconsin
 //  Authors:  Robert M. Scheller, James B. Domingo
 
+using Edu.Wisc.Forest.Flel.Util;
 using Landis.Library.AgeOnlyCohorts;
 using Landis.SpatialModeling;
 using Landis.Core;
@@ -28,6 +29,7 @@ namespace Landis.Extension.BaseHarvest
         private int minTimeSinceDamage;
         private bool preventEstablishment;
         private LandUse landUseAfterHarvest;
+        private static LandUse landUseMostRecentlyChecked = null;
 
         //---------------------------------------------------------------------
 
@@ -203,12 +205,21 @@ namespace Landis.Extension.BaseHarvest
             this.minTimeSinceDamage = minTimeSinceDamage;
             this.preventEstablishment = preventEstablishment;
 
+            this.landUseAfterHarvest = landUseMostRecentlyChecked;
+        }
+
+        //---------------------------------------------------------------------
+
+        public static void CheckLandUseName(string name)
+        {
             // scan the name for LU-->{LU-name}
             const string LUmarker = "LU-->";
             int positionOfLUmarker = name.IndexOf(LUmarker);
             int positionOfLUname = positionOfLUmarker + LUmarker.Length;
             string LUname = name.Substring(positionOfLUname);
-            this.landUseAfterHarvest = LandUse.LookupName(LUname);
+            landUseMostRecentlyChecked = LandUse.LookupName(LUname);
+            if (landUseMostRecentlyChecked == null)
+                throw new InputValueException(LUname, "Unknown land-use name \"{0}\"", LUname);
         }
 
         //---------------------------------------------------------------------

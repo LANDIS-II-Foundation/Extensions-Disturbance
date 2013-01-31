@@ -229,6 +229,7 @@ namespace Landis.Extension.BaseHarvest
                                                   prescriptionName.Value.String, lineNumber);
                 else
                     lineNumbers[name] = nameLineNumber;
+                Prescription.CheckLandUseName(name);
 
                 //get ranking method
                 rankingMethod = ReadRankingMethod();
