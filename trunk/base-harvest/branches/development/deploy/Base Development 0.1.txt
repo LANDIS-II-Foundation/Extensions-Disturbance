@@ -1,7 +1,7 @@
 LandisData   Extension
 
 Name         "Base Development"
-Version      "0.1 (beta 3)"
+Version      "0.1 (beta 4)"
 Type         disturbance:development
 Assembly     Landis.Extension.BaseDevelopment
 Class        Landis.Extension.BaseHarvest.PlugIn
