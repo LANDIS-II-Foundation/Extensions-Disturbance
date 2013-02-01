@@ -254,8 +254,10 @@ namespace Landis.Extension.BaseHarvest
                 currentSite = site;
 
                 SiteVars.Cohorts[site].RemoveMarkedCohorts(this);         
-                
-                if (SiteVars.CohortsDamaged[site] > 0)
+
+                //  In order for easement prescriptions to properly "spread", we need to count
+                //  each site in its area harvested even if no cohorts are damaged.
+                //if (SiteVars.CohortsDamaged[site] > 0)
                 {
                     stand.LastAreaHarvested += PlugIn.ModelCore.CellArea;
                 }    
