@@ -2,7 +2,7 @@
 #define PackageNameLong  "Base Development Extension"
 #define Version          "0.1"
 #define ReleaseType      "beta"
-#define ReleaseNumber    "4"
+#define ReleaseNumber    "5"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
