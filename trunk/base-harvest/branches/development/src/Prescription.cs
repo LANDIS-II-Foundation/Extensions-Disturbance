@@ -7,6 +7,8 @@ using Landis.SpatialModeling;
 using Landis.Core;
 using Landis.Library.LandUses;
 using Landis.Library.Succession;
+using log4net;
+using System.Reflection;
 
 namespace Landis.Extension.BaseHarvest
 {
@@ -17,6 +19,9 @@ namespace Landis.Extension.BaseHarvest
     public class Prescription
         : ISpeciesCohortsDisturbance
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly bool isDebugEnabled = log.IsDebugEnabled;
+
         private static int nextNumber = 1;
         private int number;
         private string name;
@@ -234,6 +239,9 @@ namespace Landis.Extension.BaseHarvest
         // This is called by AppliedPrescription
         public virtual void Harvest(Stand stand)
         {
+            if (isDebugEnabled)
+                log.DebugFormat("  Prescription {0} is harvesting stand {1}", this.Name, stand.MapCode);
+
             //set prescription name for stand
             stand.PrescriptionName = this.Name;
             stand.HarvestedRank = PlugIn.CurrentRank;
@@ -272,7 +280,16 @@ namespace Landis.Extension.BaseHarvest
                     Reproduction.ScheduleForPlanting(speciesToPlant, site);
 
                 if (landUseAfterHarvest != null)
+                {
+                    if (isDebugEnabled)
+                    {
+                        string landUseBefore = (LandUse.SiteVar[site] == null) ? "(null)" : LandUse.SiteVar[site].Name;
+                        log.DebugFormat("    site {0}, land use: {1} --> {2}", site, landUseBefore, landUseAfterHarvest.Name);
+                        if (landUseAfterHarvest.Name == "development")
+                            log.DebugFormat("         CohortsDamaged = {0}", SiteVars.CohortsDamaged[site]);
+                    }
                     LandUse.SiteVar[site] = landUseAfterHarvest;
+                }
             } 
             return; 
         } 
