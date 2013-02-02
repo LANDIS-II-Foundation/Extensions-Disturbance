@@ -285,8 +285,6 @@ namespace Landis.Extension.BaseHarvest
                     {
                         string landUseBefore = (LandUse.SiteVar[site] == null) ? "(null)" : LandUse.SiteVar[site].Name;
                         log.DebugFormat("    site {0}, land use: {1} --> {2}", site, landUseBefore, landUseAfterHarvest.Name);
-                        if (landUseAfterHarvest.Name == "development")
-                            log.DebugFormat("         CohortsDamaged = {0}", SiteVars.CohortsDamaged[site]);
                     }
                     LandUse.SiteVar[site] = landUseAfterHarvest;
                 }
