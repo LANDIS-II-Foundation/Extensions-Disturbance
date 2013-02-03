@@ -159,8 +159,11 @@ namespace Landis.Extension.BiomassHarvest
             //if(SiteVars.BiomassRemoved[site] > 0)
                 BaseHarvest.SiteVars.Prescription[site] = originalStand.LastPrescription;
 
-            if (SiteVars.BiomassRemoved[site] > 0 && BaseHarvest.SiteVars.CohortsDamaged[site] == 0)
-                originalStand.LastAreaHarvested += PlugIn.ModelCore.CellArea;
+            // Base Development is now ALWAYS updating the stand's LastAreaHarvested for each
+            // selected site regardless of the # of cohorts damaged at the site.  Therefore,
+            // we no longer need to LastAreaHarvested under any condition.
+            //if (SiteVars.BiomassRemoved[site] > 0 && BaseHarvest.SiteVars.CohortsDamaged[site] == 0)
+            //    originalStand.LastAreaHarvested += PlugIn.ModelCore.CellArea;
 
             if (originalStand.LastPrescription.SpeciesToPlant != null)
                 Landis.Library.Succession.Reproduction.ScheduleForPlanting(originalStand.LastPrescription.SpeciesToPlant, site);
