@@ -285,8 +285,15 @@ namespace Landis.Extension.BaseHarvest
                     {
                         string landUseBefore = (LandUse.SiteVar[site] == null) ? "(null)" : LandUse.SiteVar[site].Name;
                         log.DebugFormat("    site {0}, land use: {1} --> {2}", site, landUseBefore, landUseAfterHarvest.Name);
+                        if (landUseBefore != "forest")
+                            log.DebugFormat("     stand rank = {0}", stand.Rank);
                     }
                     LandUse.SiteVar[site] = landUseAfterHarvest;
+
+                    // Now that the site's land-use has changed, set its stand aside for the rest
+                    // of the scenario.  Note: because of stand-spreading algorithm, the site may
+                    // not belong to the stand that this method was called with.
+                    SiteVars.Stand[site].SetAsideUntil(PlugIn.ModelCore.EndTime + 1);
                 }
             } 
             return; 
