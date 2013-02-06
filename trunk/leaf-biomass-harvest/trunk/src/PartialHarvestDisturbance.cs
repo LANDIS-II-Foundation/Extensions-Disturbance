@@ -39,7 +39,7 @@ namespace Landis.Extension.LeafBiomassHarvest
         ExtensionType IDisturbance.Type
         {
             get {
-                return PlugIn.Type;
+                return PlugIn.type;
             }
         }
 

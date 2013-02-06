@@ -1,6 +1,6 @@
 #define PackageName      "Leaf Biomass Harvest"
 #define PackageNameLong  "Leaf Biomass Harvest Extension"
-#define Version          "2.0.2"
+#define Version          "2.0.3"
 
 #define ReleaseType      "official"
 #define ReleaseNumber    "2"
@@ -8,7 +8,8 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
+; #include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
+#include "j:\scheller\landis-ii\deploy\package (Setup section) v6.0.iss"
 
 #if ReleaseType != "official"
   #define Configuration  "debug"
@@ -17,7 +18,8 @@
 #endif
 
 [Files]
-#define BuildDir "C:\Program Files\LANDIS-II\6.0\bin"
+#define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
+#define AppDir "C:\Program Files\LANDIS-II\v6"
 
 ; Base Harvest
 Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
@@ -25,8 +27,8 @@ Source: {#BuildDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin; Flags:
 ; The extension's assembly
 Source: {#BuildDir}\Landis.Extension.LeafBiomassHarvest.dll; DestDir: {app}\bin; Flags: replacesameversion
 
-Source: docs\LANDIS-II Leaf Biomass Harvest v2.0 User Guide.pdf; DestDir: {app}\docs
-Source: examples\*; DestDir: {app}\examples\leaf-biomass-harvest; Flags: recursesubdirs
+Source: docs\LANDIS-II Leaf Biomass Harvest v2.0 User Guide.pdf; DestDir: {#AppDir}\docs
+Source: examples\*; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
 
 ; The extension's info file
 #define ExtensionInfoFile "Leaf Biomass Harvest v2.0.txt"

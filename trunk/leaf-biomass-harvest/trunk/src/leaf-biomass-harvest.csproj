@@ -34,34 +34,34 @@
   <ItemGroup>
     <Reference Include="Edu.Wisc.Forest.Flel.Util, Version=1.1.400.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Edu.Wisc.Forest.Flel.Util.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Edu.Wisc.Forest.Flel.Util.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Core.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Landis.Core.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Extension.BaseHarvest, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BaseHarvest.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.AgeOnlyCohorts.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Cohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Cohorts.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.LeafBiomassCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.LeafBiomassCohorts.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.LeafBiomassCohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Succession, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Succession.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession.dll</HintPath>
     </Reference>
     <Reference Include="Landis.SpatialModeling">
-      <HintPath>C:\Program Files\LANDIS-II\6.0\bin\Landis.SpatialModeling.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Landis.SpatialModeling.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -110,6 +110,9 @@
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y /C Landis.Extension.LeafBiomassHarvest.dll "C:\Program Files\LANDIS-II\v6\bin\extensions\"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

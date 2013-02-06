@@ -38,7 +38,7 @@ namespace Landis.Extension.LeafBiomassHarvest
         public void WriteMap(int timestep)
         {
             string path = BaseHarvest.MapNames.ReplaceTemplateVars(nameTemplate, timestep);
-            PlugIn.ModelCore.Log.WriteLine("   Writing biomass-removed map to {0} ...", path);
+            PlugIn.ModelCore.UI.WriteLine("   Writing biomass-removed map to {0} ...", path);
             using (IOutputRaster<IntPixel> outputRaster = PlugIn.ModelCore.CreateRaster<IntPixel>(path, PlugIn.ModelCore.Landscape.Dimensions))
             {
                 IntPixel pixel = outputRaster.BufferPixel;
