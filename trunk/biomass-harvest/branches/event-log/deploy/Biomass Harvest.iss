@@ -10,7 +10,7 @@
 
 #include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
-#define CustomRevision "1"
+#define CustomRevision "2"
 
 #define OutputBaseFileName       SetupSetting("OutputBaseFileName")
 #define OutputBaseFileNameCustom StringChange(OutputBaseFileName, "-setup", " (EventLog-r"+CustomRevision+")-setup")
