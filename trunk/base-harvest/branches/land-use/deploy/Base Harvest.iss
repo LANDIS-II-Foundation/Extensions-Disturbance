@@ -9,7 +9,7 @@
 
 #include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
 
-#define LuaRevision "2"
+#define LuaRevision "3"
 
 #define OutputBaseFileName    SetupSetting("OutputBaseFileName")
 #define OutputBaseFileNameLua StringChange(OutputBaseFileName, "-setup", " (LUA-r"+LuaRevision+")-setup")
