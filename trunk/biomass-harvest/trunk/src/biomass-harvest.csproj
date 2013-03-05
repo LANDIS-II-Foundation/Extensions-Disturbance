@@ -94,7 +94,6 @@
     <Compile Include="SiteVars.cs" />
     <Compile Include="HarvestSpeciesDataset.cs" />
     <Compile Include="SpecificAgesCohortSelector.cs" />
-    <Compile Include="ShortPixel.cs" />
     <Compile Include="IntPixel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
