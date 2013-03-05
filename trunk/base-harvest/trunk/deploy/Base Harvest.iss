@@ -1,54 +1,40 @@
-#define PackageName      "Base Harvest"
-#define PackageNameLong  "Base Harvest Extension"
-#define Version          "2.2"
-#define ReleaseType      "candidate"
-#define ReleaseNumber    "1"
+#include GetEnv("LANDIS_SDK") + '\packaging\initialize.iss'
 
-#define CoreVersion      "6.0"
-#define CoreReleaseAbbr  ""
+#define ExtInfoFile "Base Harvest.txt"
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
+#include LandisSDK + '\packaging\read-ext-info.iss'
+#include LandisSDK + '\packaging\Landis-vars.iss'
+
+[Setup]
+#include LandisSDK + '\packaging\Setup-directives.iss'
+LicenseFile={#LandisSDK}\licenses\LANDIS-II_Binary_license.rtf
 
 [Files]
+Source: {#LandisExtDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
 
-; Base Harvest
-Source: C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin;
-
-#define UserGuideSrc PackageName + " vX.Y User Guide.pdf"
+#define UserGuideSrc ExtensionName + " vX.Y User Guide.pdf"
 #define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
 Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
 
-Source: examples\*; DestDir: {app}\examples\base-harvest; Flags: recursesubdirs
+Source: examples\*; DestDir: {app}\examples\{#ExtensionName}; Flags: recursesubdirs
 
-; Extension info
-#define ExtInfoSrc PackageName + ".txt"
-#define ExtInfo    PackageName + " " + MajorMinor + ".txt"
-Source: {#ExtInfoSrc}; DestDir: {#LandisPlugInDir}; DestName: {#ExtInfo}
+#define ExtensionInfo  ExtensionName + " " + MajorMinor + ".txt"
+Source: {#ExtInfoFile}; DestDir: {#LandisExtInfoDir}; DestName: {#ExtensionInfo}
 
-; Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.Succession.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
 
 [Run]
-;; Run plug-in admin tool to add an entry for the plug-in
-#define PlugInAdminTool  CoreBinDir + "\Landis.PlugIns.Admin.exe"
-
-Filename: {#PlugInAdminTool}; Parameters: "remove ""{#PackageName}"" "; WorkingDir: {#LandisPlugInDir}
-Filename: {#PlugInAdminTool}; Parameters: "add ""{#ExtInfo}"" "; WorkingDir: {#LandisPlugInDir}
+Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName}"" "; WorkingDir: {#LandisExtInfoDir}
+Filename: {#ExtAdminTool}; Parameters: "add ""{#ExtensionInfo}"" "; WorkingDir: {#LandisExtInfoDir}
 
 [UninstallRun]
+Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName}"" "; WorkingDir: {#LandisExtInfoDir}
 
 [Code]
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
-
-//-----------------------------------------------------------------------------
-
-function CurrentVersion_PostUninstall(currentVersion: TInstalledVersion): Integer;
-begin
-end;
+#include LandisSDK + '\packaging\Pascal-code.iss'
 
 //-----------------------------------------------------------------------------
 
 function InitializeSetup_FirstPhase(): Boolean;
 begin
-  CurrVers_PostUninstall := @CurrentVersion_PostUninstall
   Result := True
 end;
