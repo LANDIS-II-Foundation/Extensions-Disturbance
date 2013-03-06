@@ -1,5 +1,9 @@
-// Copyright 2008-2010 Green Code LLC, Portland State University
-// Authors:  James B. Domingo, Robert M. Scheller,  
+// Copyright 2008 Green Code LLC
+// Copyright 2010 Portland State University
+//
+// Contributors:
+//   James Domingo, Green Code LLC
+//   Robert M. Scheller, Portland State University
 
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.Extension.BaseHarvest;
