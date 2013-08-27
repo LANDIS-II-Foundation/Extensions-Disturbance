@@ -1,6 +1,6 @@
 #define PackageName      "Stress Mortality"
 #define PackageNameLong  "Stress Mortality Extension"
-#define Version          "1.0"
+#define Version          "1.1"
 
 #define ReleaseType      "official"
 #define ReleaseNumber    "1"
@@ -8,20 +8,22 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
+#define ExtDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
+#define AppDir "C:\Program Files\LANDIS-II\v6\"
 
 
 [Files]
 #define BuildDir "C:\Program Files\LANDIS-II\6.0\bin"
 
 ; The extension's assembly
-Source: {#BuildDir}\Landis.Extension.StressMortality.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: ..\src\bin\debug\\Landis.Extension.StressMortality.dll; DestDir: {#ExtDir}\bin; Flags: replacesameversion
 
 ; The user guide
 ; Source: docs\LANDIS-II Drought Disturbance v1.0 User Guide.pdf; DestDir: {app}\docs; DestName: LANDIS-II {#PackageName} v{#Version}{#ReleaseAbbr} User Guide.pdf
 
 ; Sample input file
-Source: examples\*; DestDir: {app}\examples\stress-mortality
+Source: examples\*; DestDir: {#AppDir}\examples\stress-mortality
 
 ; The extension's info file
 #define ExtensionInfoFile PackageName + " " + Version + ReleaseAbbr+ ".txt"

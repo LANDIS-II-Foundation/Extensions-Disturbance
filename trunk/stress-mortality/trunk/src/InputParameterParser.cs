@@ -8,11 +8,17 @@ namespace Landis.Extension.StressMortality
     class InputParametersParser
         :TextParser<IInputParameters>
     {
-        /*public static class Names
+
+        //---------------------------------------------------------------------
+
+        public override string LandisDataValue
         {
-            //public const string Timestep = "Timestep";
-            public const string MapName = "MapName";
-        }*/
+            get
+            {
+                return PlugIn.ExtensionName;
+            }
+        }
+
 
         //---------------------------------------------------------------------
         private Dictionary<string, int> speciesLineNums;
@@ -28,10 +34,13 @@ namespace Landis.Extension.StressMortality
         //---------------------------------------------------------------------
         protected override IInputParameters Parse()
         {
-            InputVar<string> landisData = new InputVar<string>("LandisData");
-            ReadVar(landisData);
-            if (landisData.Value.Actual != PlugIn.ExtensionName)
-                throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
+
+            ReadLandisDataVar();
+            
+            //InputVar<string> landisData = new InputVar<string>("LandisData");
+            //ReadVar(landisData);
+            //if (landisData.Value.Actual != PlugIn.ExtensionName)
+            //    throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
 
             InputParameters parameters = new InputParameters();
 
@@ -64,7 +73,7 @@ namespace Landis.Extension.StressMortality
                 {
                     List<IDynamicInputRecord> inputTable = new List<IDynamicInputRecord>();
                     allData.Add(yr, inputTable);
-                    PlugIn.ModelCore.Log.WriteLine("  Dynamic Input Parser:  Add new year = {0}.", yr);
+                    PlugIn.ModelCore.UI.WriteLine("  Dynamic Input Parser:  Add new year = {0}.", yr);
                 }
 
                 IDynamicInputRecord dynamicInputRecord = new DynamicInputRecord();

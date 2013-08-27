@@ -14,7 +14,7 @@ namespace Landis.Extension.StressMortality
     public class PlugIn
         : ExtensionMain
     {
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:stress");
+        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:stress");
         public static readonly string ExtensionName = "Stress Mortality";
 
         private string mapNameTemplate;
@@ -25,7 +25,7 @@ namespace Landis.Extension.StressMortality
 
         //---------------------------------------------------------------------
         public PlugIn()
-            : base(ExtensionName, Type)
+            : base(ExtensionName, ExtType)
         {
         }
 
@@ -42,7 +42,7 @@ namespace Landis.Extension.StressMortality
         {
             modelCore = mCore;
             InputParametersParser parser = new InputParametersParser();
-            parameters = modelCore.Load<IInputParameters>(dataFile, parser);
+            parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
         }
 
         //---------------------------------------------------------------------
@@ -56,10 +56,10 @@ namespace Landis.Extension.StressMortality
             PartialDisturbance.Initialize();
             SpeciesData.Initialize(parameters);
 
-            modelCore.Log.WriteLine("   Opening and Initializing Stress Mortality log file \"{0}\"...", parameters.LogFileName);
+            modelCore.UI.WriteLine("   Opening and Initializing Stress Mortality log file \"{0}\"...", parameters.LogFileName);
             try
             {
-                log = modelCore.CreateTextFile(parameters.LogFileName);
+                log = Landis.Data.CreateTextFile(parameters.LogFileName);
             }
             catch (Exception err)
             {
@@ -88,7 +88,9 @@ namespace Landis.Extension.StressMortality
         ///</summary>
         public override void Run()
         {
-            modelCore.Log.WriteLine("   Processing Stress Mortality ...");
+            modelCore.UI.WriteLine("   Processing Stress Mortality ...");
+            
+            SiteVars.StressBioRemoved.ActiveSiteValues = 0;
 
             StressCohortsKilled = new int[modelCore.Ecoregions.Count]; 
             foreach (IEcoregion ecoregion in modelCore.Ecoregions)
@@ -221,7 +223,7 @@ namespace Landis.Extension.StressMortality
                 {
                     if (site.IsActive)
                     {
-                        pixel.MapCode.Value = (byte)(SiteVars.StressBioRemoved[site]);
+                        pixel.MapCode.Value = (int)(SiteVars.StressBioRemoved[site]);
                     }
                     else
                     {

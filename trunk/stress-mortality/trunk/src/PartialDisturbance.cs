@@ -30,7 +30,7 @@ namespace Landis.Extension.StressMortality
         {
             get
             {
-                return PlugIn.Type;
+                return PlugIn.ExtType;
             }
         }
 
