@@ -36,8 +36,9 @@ namespace Landis.Extension.StressMortality
 
                DynamicInputs.TimestepData = DynamicInputs.AllData[year];
                foreach (IDynamicInputRecord dynrec in DynamicInputs.TimestepData)
-                   if (dynrec.OnsetEcoregion == ecoregion && dynrec.OnsetSpecies == species)
+                   if (dynrec.OnsetEcoregion.Index == ecoregion.Index && dynrec.OnsetSpecies.Index == species.Index)
                        return true;
+                
 
             }
 

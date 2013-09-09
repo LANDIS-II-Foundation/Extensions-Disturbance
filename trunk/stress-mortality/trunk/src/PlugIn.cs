@@ -92,13 +92,15 @@ namespace Landis.Extension.StressMortality
             
             SiteVars.StressBioRemoved.ActiveSiteValues = 0;
 
-            StressCohortsKilled = new int[modelCore.Ecoregions.Count]; 
+            StressCohortsKilled = new int[modelCore.Ecoregions.Count];
             foreach (IEcoregion ecoregion in modelCore.Ecoregions)
+            {
                 foreach (ISpecies species in modelCore.Species)
                 {
                     SpeciesData.SppBiomassRemoved[species][ecoregion] = 0;
                     SpeciesData.CohortsKilled[species][ecoregion] = 0;
                 }
+            }
             
             PartialDisturbance.Initialize();
             

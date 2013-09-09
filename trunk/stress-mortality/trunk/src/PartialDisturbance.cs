@@ -86,6 +86,10 @@ namespace Landis.Extension.StressMortality
 
             SiteVars.Cohorts[site].ReduceOrKillBiomassCohorts(singleton);
 
+            for (int i = 0; i < reductions.Length; i++)
+                reductions[i].Clear();
+
+
         }
 
         //---------------------------------------------------------------------
