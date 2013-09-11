@@ -1,27 +1,22 @@
 #define PackageName      "Base Wind"
 #define PackageNameLong  "Base Wind Extension"
-#define Version          "2.0"
+#define Version          "2.1"
 #define ReleaseType      "official"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
-
-#if ReleaseType != "official"
-  #define Configuration  "debug"
-#else
-  #define Configuration  "release"
-#endif
+#include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
+#define ExtDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
+#define AppDir "C:\Program Files\LANDIS-II\v6\"
 
 
 [Files]
 
-Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BaseWind.dll; DestDir: {app}\bin; Flags: replacesameversion
-
 ; Base Wind
-Source: docs\LANDIS-II Base Wind v2.0 User Guide.pdf; DestDir: {app}\docs
-Source: examples\*; DestDir: {app}\examples\base-wind
+Source: ..\src\bin\Debug\Landis.Extension.BaseWind.dll; DestDir: {#ExtDir}; Flags: replacesameversion
+Source: docs\LANDIS-II Base Wind v2.0 User Guide.pdf; DestDir: {#AppDir}\docs
+Source: examples\*; DestDir: {#AppDir}\examples\base-wind
 
 #define BaseWind "Base Wind 2.0.txt"
 Source: {#BaseWind}; DestDir: {#LandisPlugInDir}

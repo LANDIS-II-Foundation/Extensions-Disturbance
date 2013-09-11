@@ -14,6 +14,13 @@ namespace Landis.Extension.BaseWind
     public class InputParameterParser
         : TextParser<IInputParameters>
     {
+        public override string LandisDataValue
+        {
+            get
+            {
+                return "Base Wind";
+            }
+        }
 
         //---------------------------------------------------------------------
 
@@ -27,10 +34,8 @@ namespace Landis.Extension.BaseWind
 
         protected override IInputParameters Parse()
         {
-            InputVar<string> landisData = new InputVar<string>("LandisData");
-            ReadVar(landisData);
-            if (landisData.Value.Actual != PlugIn.ExtensionName)
-                throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
+
+            ReadLandisDataVar();
 
             InputParameters parameters = new InputParameters(PlugIn.ModelCore.Ecoregions.Count);
 

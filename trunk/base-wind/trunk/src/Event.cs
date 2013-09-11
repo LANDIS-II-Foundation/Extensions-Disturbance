@@ -112,7 +112,7 @@ namespace Landis.Extension.BaseWind
         ExtensionType IDisturbance.Type
         {
             get {
-                return PlugIn.Type;
+                return PlugIn.ExtType;
             }
         }
         //---------------------------------------------------------------------

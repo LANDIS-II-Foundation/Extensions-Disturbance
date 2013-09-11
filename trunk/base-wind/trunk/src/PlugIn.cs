@@ -3,6 +3,7 @@
 
 using Landis.SpatialModeling;
 using Landis.Core;
+using Landis.Library.Metadata;
 using System.Collections.Generic;
 using System.IO;
 using System;
@@ -16,11 +17,13 @@ namespace Landis.Extension.BaseWind
     public class PlugIn
         : ExtensionMain
     {
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:wind");
-        public static readonly string ExtensionName = "Base Wind";
+        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:wind");
+        public static MetadataTable<EventsLog> eventLog = new MetadataTable<EventsLog>("wind-events-log.csv");
+
+        //public static readonly string ExtensionName = "Base Wind";
         
         private string mapNameTemplate;
-        private StreamWriter log;
+        //private StreamWriter log;
         private IInputParameters parameters;
         private static ICore modelCore;
 
@@ -28,7 +31,7 @@ namespace Landis.Extension.BaseWind
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, Type)
+            : base("Base Wind", ExtType)
         {
         }
 
@@ -47,7 +50,7 @@ namespace Landis.Extension.BaseWind
         {
             modelCore = mCore;
             InputParameterParser parser = new InputParameterParser();
-            parameters = mCore.Load<IInputParameters>(dataFile, parser);
+            parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
         }
         //---------------------------------------------------------------------
 
@@ -63,6 +66,9 @@ namespace Landis.Extension.BaseWind
         /// </param>
         public override void Initialize()
         {
+
+            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.MapNamesTemplate);//, parameters.LogFileName);
+
             Timestep = parameters.Timestep;
             mapNameTemplate = parameters.MapNamesTemplate;
 
@@ -70,10 +76,10 @@ namespace Landis.Extension.BaseWind
             Event.Initialize(parameters.EventParameters,
                              parameters.WindSeverities);
 
-            ModelCore.Log.WriteLine("   Opening wind log file \"{0}\" ...", parameters.LogFileName);
-            log = ModelCore.CreateTextFile(parameters.LogFileName);
-            log.AutoFlush = true;
-            log.WriteLine("Time,Initiation Site,Total Sites,Damaged Sites,Cohorts Killed,Mean Severity");
+            //ModelCore.UI.WriteLine("   Opening wind log file \"{0}\" ...", parameters.LogFileName);
+            //log = Landis.Data.CreateTextFile(parameters.LogFileName);
+            //log.AutoFlush = true;
+            //log.WriteLine("Time,Initiation Site,Total Sites,Damaged Sites,Cohorts Killed,Mean Severity");
         }
 
         //---------------------------------------------------------------------
@@ -83,7 +89,7 @@ namespace Landis.Extension.BaseWind
         ///</summary>
         public override void Run()
         {
-            ModelCore.Log.WriteLine("Processing landscape for wind events ...");
+            ModelCore.UI.WriteLine("Processing landscape for wind events ...");
 
             SiteVars.Event.SiteValues = null;
             SiteVars.Severity.ActiveSiteValues = 0;
@@ -96,11 +102,9 @@ namespace Landis.Extension.BaseWind
                     eventCount++;
                 }
             }
-            ModelCore.Log.WriteLine("  Wind events: {0}", eventCount);
+            ModelCore.UI.WriteLine("  Wind events: {0}", eventCount);
 
             //  Write wind severity map
-            //IOutputRaster<BytePixel> map = CreateMap(PlugIn.ModelCore.CurrentTime);
-            //using (map) {
             string path = MapNames.ReplaceTemplateVars(mapNameTemplate, PlugIn.modelCore.CurrentTime);
             Dimensions dimensions = new Dimensions(modelCore.Landscape.Rows, modelCore.Landscape.Columns);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(path, dimensions))
@@ -127,13 +131,32 @@ namespace Landis.Extension.BaseWind
         private void LogEvent(int   currentTime,
                               Event windEvent)
         {
-            log.WriteLine("{0},\"{1}\",{2},{3},{4},{5:0.0}",
-                          currentTime,
-                          windEvent.StartLocation,
-                          windEvent.Size,
-                          windEvent.SitesDamaged,
-                          windEvent.CohortsKilled,
-                          windEvent.Severity);
+            //log.WriteLine("{0},\"{1}\",{2},{3},{4},{5:0.0}",
+            //              currentTime,
+            //              windEvent.StartLocation,
+            //              windEvent.Size,
+            //              windEvent.SitesDamaged,
+            //              windEvent.CohortsKilled,
+            //              windEvent.Severity);
+
+            eventLog.Clear();
+            EventsLog el = new EventsLog();
+            el.Time = currentTime;
+            el.InitRow = windEvent.StartLocation.Row;
+            el.InitColumn = windEvent.StartLocation.Column;
+            el.TotalSites = windEvent.Size;
+            el.DamagedSites = windEvent.SitesDamaged;
+            el.CohortsKilled = windEvent.CohortsKilled;
+            el.MeanSeverity = windEvent.Severity;
+
+
+            eventLog.AddObject(el);
+            eventLog.WriteToFile();
+
+
+            //EventsLog el = eventLog.GetObjectAt(0);
+            //eventLog.
+
         }
 
 
