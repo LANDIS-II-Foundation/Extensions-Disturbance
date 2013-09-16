@@ -28,7 +28,7 @@ namespace Landis.Extension.BaseWind
         [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Number of Cohorts Killed")]
         public int CohortsKilled { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Mean Severity (1-5)")]
+        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Mean Severity (1-5)", Format="0.00")]
         public double MeanSeverity { set; get; }
 
     }
