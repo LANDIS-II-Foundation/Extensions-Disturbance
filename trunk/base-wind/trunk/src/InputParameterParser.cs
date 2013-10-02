@@ -18,7 +18,7 @@ namespace Landis.Extension.BaseWind
         {
             get
             {
-                return "Base Wind";
+                return PlugIn.ExtensionName;
             }
         }
 
@@ -27,7 +27,7 @@ namespace Landis.Extension.BaseWind
         public InputParameterParser()
         {
             // FIXME: Hack to ensure that Percentage is registered with InputValues
-            Edu.Wisc.Forest.Flel.Util.Percentage p = new Edu.Wisc.Forest.Flel.Util.Percentage();
+            //Edu.Wisc.Forest.Flel.Util.Percentage p = new Edu.Wisc.Forest.Flel.Util.Percentage();
         }
 
         //---------------------------------------------------------------------

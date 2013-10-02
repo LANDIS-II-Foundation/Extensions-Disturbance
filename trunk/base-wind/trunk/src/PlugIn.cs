@@ -20,7 +20,7 @@ namespace Landis.Extension.BaseWind
         public static readonly ExtensionType ExtType = new ExtensionType("disturbance:wind");
         public static MetadataTable<EventsLog> eventLog = new MetadataTable<EventsLog>("wind-events-log.csv");
 
-        //public static readonly string ExtensionName = "Base Wind";
+        public static readonly string ExtensionName = "Base Wind";
         
         private string mapNameTemplate;
         //private StreamWriter log;
@@ -67,14 +67,13 @@ namespace Landis.Extension.BaseWind
         public override void Initialize()
         {
 
-            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.MapNamesTemplate);//, parameters.LogFileName);
+            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.MapNamesTemplate);
 
             Timestep = parameters.Timestep;
             mapNameTemplate = parameters.MapNamesTemplate;
 
             SiteVars.Initialize();
-            Event.Initialize(parameters.EventParameters,
-                             parameters.WindSeverities);
+            Event.Initialize(parameters.EventParameters, parameters.WindSeverities);
 
             //ModelCore.UI.WriteLine("   Opening wind log file \"{0}\" ...", parameters.LogFileName);
             //log = Landis.Data.CreateTextFile(parameters.LogFileName);

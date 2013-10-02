@@ -25,7 +25,7 @@ namespace Landis.Extension.BaseWind
             };
 
             Extension = new ExtensionMetadata(){
-                Name = "Base Wind",
+                Name = PlugIn.ExtensionName,
                 TimeInterval = Timestep, //change this to PlugIn.TimeStep for other extensions
                 ScenarioReplicationMetadata = scenRep
             };
