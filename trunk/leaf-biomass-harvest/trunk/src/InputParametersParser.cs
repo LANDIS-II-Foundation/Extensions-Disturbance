@@ -30,6 +30,13 @@ namespace Landis.Extension.LeafBiomassHarvest
         private double standSpreadMinTargetSize;
         private double standSpreadMaxTargetSize;
 
+        public override string LandisDataValue
+        {
+            get
+            {
+                return PlugIn.ExtensionName;
+            }
+        }
         //---------------------------------------------------------------------
 
         static InputParametersParser()
@@ -167,12 +174,12 @@ namespace Landis.Extension.LeafBiomassHarvest
         protected override BaseHarvest.IInputParameters Parse()
         {
             RoundedRepeatIntervals.Clear();
-            // ReadLandisDataVar();
+            ReadLandisDataVar();
 
-            InputVar<string> landisData = new InputVar<string>("LandisData");
-            ReadVar(landisData);
-            if (landisData.Value.Actual != PlugIn.PlugInName)
-                throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.PlugInName);
+            //InputVar<string> landisData = new InputVar<string>("LandisData");
+            //ReadVar(landisData);
+            //if (landisData.Value.Actual != PlugIn.PlugInName)
+            //    throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.PlugInName);
 
             InputParameters parameters = new InputParameters();
 

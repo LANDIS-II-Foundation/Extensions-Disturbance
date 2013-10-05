@@ -56,6 +56,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.LeafBiomassCohorts.dll</HintPath>
     </Reference>
+    <Reference Include="Landis.Library.Metadata">
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Metadata.dll</HintPath>
+    </Reference>
     <Reference Include="Landis.Library.Succession, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession.dll</HintPath>
@@ -78,10 +81,13 @@
     <Compile Include="CompleteStandSpreading.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SummaryLog.cs" />
+    <Compile Include="EventsLog.cs" />
     <Compile Include="IInputParameters.cs" />
     <Compile Include="InputParameters.cs" />
     <Compile Include="InputParametersParser.cs" />
     <Compile Include="IntPixel.cs" />
+    <Compile Include="MetadataHandler.cs" />
     <Compile Include="PartialHarvestDisturbance.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -111,7 +117,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y /C Landis.Extension.LeafBiomassHarvest.dll "C:\Program Files\LANDIS-II\v6\bin\extensions\"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
