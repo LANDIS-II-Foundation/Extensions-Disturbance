@@ -28,6 +28,9 @@ namespace Landis.Extension.LeafBiomassHarvest
         [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Total Cohorts Damaged")]
         public int TotalCohortsDamaged { set; get; }
 
+        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Species Cohorts Killed", SppList = true)]
+        public double[] CohortsKilledBy { set; get; }
+
         //[DataFieldAttribute(Unit = FiledUnits.None, Desc = "Initiation Row")]
         //public int InitRow { set; get; }
 

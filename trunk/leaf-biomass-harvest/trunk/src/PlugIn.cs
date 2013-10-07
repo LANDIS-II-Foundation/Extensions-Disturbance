@@ -19,8 +19,8 @@ namespace Landis.Extension.LeafBiomassHarvest
     {
         public static readonly ExtensionType type = new ExtensionType("disturbance:harvest");
         public static readonly string ExtensionName = "Leaf Biomass Harvest";
-        public static MetadataTable<EventsLog> eventLog = new MetadataTable<EventsLog>("harvest-events-log.csv");
-        public static MetadataTable<SummaryLog> summaryLog = new MetadataTable<SummaryLog>("harvest-summary-log.csv");
+        public static MetadataTable<EventsLog> eventLog;// = new MetadataTable<EventsLog>("harvest-events-log.csv");
+        public static MetadataTable<SummaryLog> summaryLog;// = new MetadataTable<SummaryLog>("harvest-summary-log.csv");
 
         private IManagementAreaDataset managementAreas;
         private PrescriptionMaps prescriptionMaps;
@@ -31,7 +31,7 @@ namespace Landis.Extension.LeafBiomassHarvest
         private bool running;
         int[] totalSites;
         int[] totalDamagedSites;
-        int[,] totalSpeciesCohorts;
+        double[,] totalSpeciesCohorts;
         int[] totalCohortsKilled;
         int[] totalCohortsDamaged;
 
@@ -67,7 +67,7 @@ namespace Landis.Extension.LeafBiomassHarvest
             }
             catch (System.ArgumentNullException)
             {
-                // ignore
+                //modelCore.UI.WriteLine("NOTE: exception thrown");
             }
 
             modelCore = mCore;
@@ -97,7 +97,8 @@ namespace Landis.Extension.LeafBiomassHarvest
 
         public override void Initialize()
         {
-            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.PrescriptionMapNames);
+            modelCore.UI.WriteLine("   Creating metadata ...");
+            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.PrescriptionMapNames, modelCore);
             SiteVars.Initialize();
             PartialHarvestDisturbance.Initialize();
 
@@ -175,7 +176,7 @@ namespace Landis.Extension.LeafBiomassHarvest
 
                 totalSites = new int[Prescription.Count];
                 totalDamagedSites = new int[Prescription.Count];
-                totalSpeciesCohorts = new int[Prescription.Count, modelCore.Species.Count];
+                totalSpeciesCohorts = new double[Prescription.Count, modelCore.Species.Count];
                 totalCohortsDamaged = new int[Prescription.Count];
                 totalCohortsKilled = new int[Prescription.Count];
 
@@ -222,9 +223,11 @@ namespace Landis.Extension.LeafBiomassHarvest
                 foreach (AppliedPrescription aprescription in mgmtArea.Prescriptions)
                 {
                     Prescription prescription = aprescription.Prescription;
-                    string species_string = "";
+                    //string species_string = "";
+                    double[] species_string = new double[PlugIn.modelCore.Species.Count];
                     foreach (ISpecies species in modelCore.Species)
-                        species_string += ", " + totalSpeciesCohorts[prescription.Number, species.Index];
+                        //species_string += ", " + totalSpeciesCohorts[prescription.Number, species.Index];
+                        species_string[species.Index] = totalSpeciesCohorts[prescription.Number, species.Index];
 
                     //summaryUI.WriteLine("Time,ManagementArea,Prescription,TotalDamagedSites,TotalCohortsDamaged,TotalCohortsKilled,{0}", species_header_names);
                     if (totalSites[prescription.Number] > 0)
@@ -238,7 +241,10 @@ namespace Landis.Extension.LeafBiomassHarvest
                         sl.TotalDamagedSites = totalDamagedSites[prescription.Number];
                         sl.TotalCohortsDamaged = totalCohortsDamaged[prescription.Number];
                         sl.TotalCohortsKilled = totalCohortsKilled[prescription.Number];
-                            //species_string);
+                        sl.CohortsKilledBy = species_string;
+                        summaryLog.AddObject(sl);
+                        summaryLog.WriteToFile();
+                        //species_string);
                     }
                 }
             }
@@ -337,7 +343,8 @@ namespace Landis.Extension.LeafBiomassHarvest
 
 
             //csv string for log file, contains species kill count
-            string species_count = "";
+            //string species_count = "";
+            double[] species_count = new double[modelCore.Species.Count];
             //if this is the right species match, add it's count to the csv string
             foreach (ISpecies species in modelCore.Species) {
                 bool assigned = false;
@@ -346,14 +353,18 @@ namespace Landis.Extension.LeafBiomassHarvest
                 foreach (KeyValuePair<string, int> kvp in stand.DamageTable) {
                     if (species.Name == kvp.Key) {
                         assigned = true;
-                        species_count += ", " + kvp.Value;
+                        //species_count += ", " + kvp.Value;
+                        species_count[species.Index] += kvp.Value;
                     }
                 }
                 if (!assigned) {
                     //put a 0 there if it's not assigned (because none were found in the dictionary)
-                    species_count += ",0";
+                    //species_count += ",0";
+                    species_count[species.Index] = 0.0;
                 }
+                totalSpeciesCohorts[standPrescriptionNumber, species.Index] += (double) species_count[species.Index];
             }
+
 
             //now that the damage table for this stand has been recorded, clear it!!
             stand.ClearDamageTable();
@@ -380,6 +391,15 @@ namespace Landis.Extension.LeafBiomassHarvest
             el.MgBioRemovedPerDamagedHa = biomassRemovedPerHa; // Mg/ha
             el.CohortsDamaged = cohortsDamaged;
             el.CohortsKilled = cohortsKilled;
+
+            //csv string for log file, contains species kill count
+            //string species_count = "";
+            //if this is the right species match, add it's count to the csv string
+            el.CohortsKilledBy = species_count;
+
+            eventLog.AddObject(el);
+            eventLog.WriteToFile();
+
                           //species_count);
         }
     }
