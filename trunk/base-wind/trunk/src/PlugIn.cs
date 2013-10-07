@@ -18,7 +18,7 @@ namespace Landis.Extension.BaseWind
         : ExtensionMain
     {
         public static readonly ExtensionType ExtType = new ExtensionType("disturbance:wind");
-        public static MetadataTable<EventsLog> eventLog = new MetadataTable<EventsLog>("wind-events-log.csv");
+        public static MetadataTable<EventsLog> eventLog;
 
         public static readonly string ExtensionName = "Base Wind";
         
@@ -67,7 +67,7 @@ namespace Landis.Extension.BaseWind
         public override void Initialize()
         {
 
-            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.MapNamesTemplate);
+            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.MapNamesTemplate, ModelCore);
 
             Timestep = parameters.Timestep;
             mapNameTemplate = parameters.MapNamesTemplate;

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-//using System.Data;
 using System.Text;
 using Landis.Library.Metadata;
 using Edu.Wisc.Forest.Flel.Util;
+using Landis.Core;
 
 namespace Landis.Extension.BaseWind
 {
@@ -13,7 +13,7 @@ namespace Landis.Extension.BaseWind
         
         public static ExtensionMetadata Extension {get; set;}
 
-        public static void InitializeMetadata(int Timestep, string MapFileName)
+        public static void InitializeMetadata(int Timestep, string MapFileName, ICore mCore)
         {
             ScenarioReplicationMetadata scenRep = new ScenarioReplicationMetadata() {
                 //String outputFolder = OutputPath.ReplaceTemplateVars("", FINISH ME LATER);
@@ -24,7 +24,7 @@ namespace Landis.Extension.BaseWind
                 ProjectionFilePath = "Projection.?" //How do we get projections???
             };
 
-            Extension = new ExtensionMetadata(){
+            Extension = new ExtensionMetadata(mCore){
                 Name = PlugIn.ExtensionName,
                 TimeInterval = Timestep, //change this to PlugIn.TimeStep for other extensions
                 ScenarioReplicationMetadata = scenRep
@@ -33,6 +33,8 @@ namespace Landis.Extension.BaseWind
             //---------------------------------------
             //          table outputs:   
             //---------------------------------------
+
+             PlugIn.eventLog = new MetadataTable<EventsLog>("wind-events-log.csv");
 
             OutputMetadata tblOut_events = new OutputMetadata()
             {
