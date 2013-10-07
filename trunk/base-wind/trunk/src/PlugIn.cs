@@ -152,10 +152,6 @@ namespace Landis.Extension.BaseWind
             eventLog.AddObject(el);
             eventLog.WriteToFile();
 
-
-            //EventsLog el = eventLog.GetObjectAt(0);
-            //eventLog.
-
         }
 
 
