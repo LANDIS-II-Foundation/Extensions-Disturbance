@@ -4,6 +4,7 @@
 using Landis.Core;
 using Landis.SpatialModeling;
 using Landis.Library.LeafBiomassCohorts;
+using Landis.Library.Metadata;
 using System.Collections.Generic;
 using Edu.Wisc.Forest.Flel.Util;
 using System.IO;
@@ -19,11 +20,12 @@ namespace Landis.Extension.Insects
     public class PlugIn
         : ExtensionMain
     {
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:insects");
+        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:insects");
         public static readonly string ExtensionName = "Leaf Biomass Insects";
+        public static MetadataTable<EventsLog> eventLog;
 
         private string mapNameTemplate;
-        private StreamWriter log;
+        //private StreamWriter log;
         private static List<IInsect> manyInsect;
         private IInputParameters parameters;
         private static ICore modelCore;
@@ -32,7 +34,7 @@ namespace Landis.Extension.Insects
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, Type)
+            : base(ExtensionName, ExtType)
         {
         }
 
@@ -80,6 +82,7 @@ namespace Landis.Extension.Insects
             mapNameTemplate = parameters.MapNamesTemplate;
             manyInsect = parameters.ManyInsect;
 
+            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.MapNamesTemplate, parameters.LogFileName, manyInsect, ModelCore);
             SiteVars.Initialize();
             Defoliate.Initialize(parameters);
             GrowthReduction.Initialize(parameters);
@@ -107,20 +110,20 @@ namespace Landis.Extension.Insects
             }
 
 
-            PlugIn.ModelCore.UI.WriteLine("   Opening BiomassInsect log file \"{0}\" ...", parameters.LogFileName);
-            try {
-                log = Landis.Data.CreateTextFile(parameters.LogFileName);
-            }
-            catch (Exception err) {
-                string mesg = string.Format("{0}", err.Message);
-                throw new System.ApplicationException(mesg);
-            }
+            //PlugIn.ModelCore.UI.WriteLine("   Opening BiomassInsect log file \"{0}\" ...", parameters.LogFileName);
+            //try {
+            //    log = Landis.Data.CreateTextFile(parameters.LogFileName);
+            //}
+            //catch (Exception err) {
+            //    string mesg = string.Format("{0}", err.Message);
+            //    throw new System.ApplicationException(mesg);
+            //}
 
-            log.AutoFlush = true;
-            log.Write("Time,InsectName,StartYear,StopYear,MeanDefoliation,NumSitesDefoliated0_33,NumSitesDefoliated33_66,NumSitesDefoliated66_100,NumOutbreakInitialSites,MortalityBiomass");
-            //foreach (IEcoregion ecoregion in Ecoregions.Dataset)
-            //      log.Write(",{0}", ecoregion.MapCode);
-            log.WriteLine("");
+            //log.AutoFlush = true;
+            //log.Write("Time,InsectName,StartYear,StopYear,MeanDefoliation,NumSitesDefoliated0_33,NumSitesDefoliated33_66,NumSitesDefoliated66_100,NumOutbreakInitialSites,MortalityBiomass");
+            ////foreach (IEcoregion ecoregion in Ecoregions.Dataset)
+            ////      log.Write(",{0}", ecoregion.MapCode);
+            //log.WriteLine("");
 
         }
 
@@ -243,38 +246,41 @@ namespace Landis.Extension.Insects
                 if ((insect.ActiveOutbreak && insect.OutbreakStartYear < PlugIn.ModelCore.CurrentTime) || (meanDefoliation > 0) || (insect.LastBioRemoved > 0))
                 {
                     //PlugIn.ModelCore.Log.WriteLine("   insect.OutbreakStartYear={0}, CurrentTime={1}, meanDefoliation={2:0.00}, insect.LastBioRemoved={3}", insect.OutbreakStartYear, PlugIn.ModelCore.CurrentTime, meanDefoliation, insect.LastBioRemoved);
+                    eventLog.Clear();
+                    EventsLog el = new EventsLog();
                     
                     if (insect.ActiveOutbreak)
                     {
-                        log.Write("{0},{1},{2},{3},{4:0.0000},{5},{6},{7},{8},{9}",
-                                PlugIn.ModelCore.CurrentTime - 1,  //0
-                                insect.Name,  //1
-                                insect.OutbreakStartYear,  //2
-                                insect.OutbreakStopYear,  //3
-                                meanDefoliation, //4
-                                numSites0_33, //5
-                                numSites33_66,  //6
-                                numSites66_100, //7
-                                insect.InitialSites, //8
-                                insect.LastBioRemoved //9
-                                );
+                        //log.Write("{0},{1},{2},{3},{4:0.0000},{5},{6},{7},{8},{9}",
+                        el.Time =PlugIn.ModelCore.CurrentTime - 1;  //0
+                        el.InsectName = insect.Name;
+                        el.StartYear = insect.OutbreakStartYear;
+                        el.StopYear = insect.OutbreakStopYear;
+                        el.MeanDefoliation = meanDefoliation; 
+                        el.NumSitesDefoliated0_33 = numSites0_33;
+                        el.NumSitesDefoliated33_66 = numSites33_66;
+                        el.NumSitesDefoliated66_100 = numSites66_100;
+                        el.NumOutbreakInitialSites = insect.InitialSites;
+                        el.MortalityBiomass = insect.LastBioRemoved;
                     }
                     else
                     {
-                        log.Write("{0},{1},{2},{3},{4:0.0000},{5},{6},{7},{8},{9}",
-                                PlugIn.ModelCore.CurrentTime - 1,  //0
-                                insect.Name,  //1
-                                insect.LastStartYear,  //2
-                                insect.LastStopYear,  //3
-                                meanDefoliation, //4
-                                numSites0_33, //5
-                                numSites33_66,  //6
-                                numSites66_100, //7
-                                insect.InitialSites, //8
-                                insect.LastBioRemoved //9
-                                );
+                        //log.Write("{0},{1},{2},{3},{4:0.0000},{5},{6},{7},{8},{9}",
+                        el.Time =PlugIn.ModelCore.CurrentTime - 1;  //0
+                        el.InsectName = insect.Name;
+                        el.StartYear = insect.LastStartYear;
+                        el.StopYear = insect.LastStopYear;
+                        el.MeanDefoliation = meanDefoliation; 
+                        el.NumSitesDefoliated0_33 = numSites0_33;
+                        el.NumSitesDefoliated33_66 = numSites33_66;
+                        el.NumSitesDefoliated66_100 = numSites66_100;
+                        el.NumOutbreakInitialSites = insect.InitialSites;
+                        el.MortalityBiomass = insect.LastBioRemoved;
                     }
-                    log.WriteLine("");
+                    //log.WriteLine("");
+                    eventLog.AddObject(el);
+                    eventLog.WriteToFile();
+
 
                     //----- Write Insect GrowthReduction maps --------
                     string path = MapNames.ReplaceTemplateVars(mapNameTemplate, insect.Name, PlugIn.ModelCore.CurrentTime - 1);
@@ -368,12 +374,12 @@ namespace Landis.Extension.Insects
 
             SiteVars.BiomassRemoved[eventArgs.Site] += (int) (eventArgs.Cohort.LeafBiomass + eventArgs.Cohort.WoodBiomass);
         }
-        //---------------------------------------------------------------------
-        private void LogEvent(int   currentTime)
-        {
-            log.Write("{0}", currentTime);
-            log.WriteLine("");
-        }
+        ////---------------------------------------------------------------------
+        //private void LogEvent(int   currentTime)
+        //{
+        //    log.Write("{0}", currentTime);
+        //    log.WriteLine("");
+        //}
 
         //---------------------------------------------------------------------
         // Generate a Relative RelativeLocation array of neighbors.

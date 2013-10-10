@@ -25,15 +25,16 @@ namespace Landis.Extension.Insects
         {
             get
             {
-                return "Leaf Biomass Insects";
+                return PlugIn.ExtensionName;
             }
         }
+        
         protected override IInputParameters Parse()
         {
-            InputVar<string> landisData = new InputVar<string>("LandisData");
-            ReadVar(landisData);
-            if (landisData.Value.Actual != PlugIn.ExtensionName)
-                throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
+            //InputVar<string> landisData = new InputVar<string>("LandisData");
+            //ReadVar(landisData);
+            //if (landisData.Value.Actual != PlugIn.ExtensionName)
+            //    throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
             ReadLandisDataVar();
             
             InputParameters parameters = new InputParameters();

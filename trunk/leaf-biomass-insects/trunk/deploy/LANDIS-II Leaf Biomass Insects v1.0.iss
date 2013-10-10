@@ -1,24 +1,29 @@
 #define PackageName      "Leaf Biomass Insects"
 #define PackageNameLong  "Leaf Biomass Insects"
-#define Version          "1.0"
+#define Version          "1.1"
 #define ReleaseType      "official"
 #define ReleaseNumber    "1"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
+#define ExtDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
+#define AppDir "C:\Program Files\LANDIS-II\v6\"
 
 [Files]
 
-; Biomass Insects
-Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.LeafBiomassInsects.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: ..\src\bin\debug\Landis.Extension.LeafBiomassInsects.dll; DestDir: {#ExtDir}; Flags: replacesameversion
+Source: ..\src\bin\debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags: replacesameversion
 
-Source: docs\LANDIS-II Leaf Biomass Insect Defoliation v1.0 User Guide.pdf; DestDir: {app}\doc
-Source: examples\*; DestDir: {app}\examples\biomass-insects; Flags: recursesubdirs
+[Files]
 
+Source: docs\LANDIS-II Leaf Biomass Insect Defoliation v1.1 User Guide.pdf; DestDir: {#AppDir}\doc
+Source: examples\*.txt; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
+Source: examples\*.gis; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
+Source: examples\*.bat; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
 
-#define BioBugs "Leaf Biomass Insects 1.0.txt"
+#define BioBugs "Leaf Biomass Insects 1.1.txt"
 Source: {#BioBugs}; DestDir: {#LandisPlugInDir}
 
 [Run]

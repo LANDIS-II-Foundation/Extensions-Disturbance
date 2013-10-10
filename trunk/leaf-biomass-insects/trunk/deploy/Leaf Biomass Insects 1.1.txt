@@ -1,0 +1,10 @@
+LandisData   Extension
+
+Name         "Leaf Biomass Insects"
+Version      "1.1"
+Type         disturbance:insects
+Assembly     Landis.Extension.LeafBiomassInsects
+Class        Landis.Extension.Insects.PlugIn
+Description  "Insect defoliation, growth reduction, and mortality for leaf biomass succession"
+UserGuide    "LANDIS-II Leaf Biomass Insect Defoliation v1.1 User Guide.pdf"
+CoreVersion  6.0

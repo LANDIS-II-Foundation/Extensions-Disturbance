@@ -36,7 +36,7 @@ namespace Landis.Extension.Insects
         {
             get
             {
-                return PlugIn.Type;
+                return PlugIn.ExtType;
             }
         }
 
