@@ -18,10 +18,10 @@ namespace Landis.Extension.Insects
 
         public static ISpeciesDataset SpeciesDataset = PlugIn.ModelCore.Species;
         ////---------------------------------------------------------------------
-        //public InsectParser()
-        //{
-        //    RegisterForInputValues();
-        //}
+        public InsectParser()
+        {
+            RegisterForInputValues();
+        }
 
 
         public override string LandisDataValue
@@ -38,10 +38,11 @@ namespace Landis.Extension.Insects
         protected override IInsect Parse()
         {
 
-            InputVar<string> landisData = new InputVar<string>("LandisData");
-            ReadVar(landisData);
-            if (landisData.Value.Actual != "InsectDefoliator")
-                throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", "InsectDefoliator");
+            //InputVar<string> landisData = new InputVar<string>("LandisData");
+            //ReadVar(landisData);
+            //if (landisData.Value.Actual != "InsectDefoliator")
+            //    throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", "InsectDefoliator");
+            ReadLandisDataVar();
 
             InsectParameters parameters = new InsectParameters(PlugIn.ModelCore.Species.Count);
 

@@ -38,14 +38,13 @@ namespace Landis.Extension.Insects
             //          table outputs:   
             //---------------------------------------
 
-             PlugIn.eventLog = new MetadataTable<EventsLog>("wind-events-log.csv");
+             PlugIn.eventLog = new MetadataTable<EventsLog>(logFileName);
 
             OutputMetadata tblOut_events = new OutputMetadata()
             {
                 Type = OutputType.Table,
-                Name = "WindLog",
+                Name = "EventsLog",
                 FilePath = PlugIn.eventLog.FilePath//,
-                //MetadataFilePath = @"Base-Wind\EventLog.xml"
             };
             tblOut_events.RetriveFields(typeof(EventsLog));
             Extension.OutputMetadatas.Add(tblOut_events);
