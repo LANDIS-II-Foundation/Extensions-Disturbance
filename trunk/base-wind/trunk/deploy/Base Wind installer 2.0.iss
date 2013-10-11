@@ -18,7 +18,9 @@ Source: ..\src\bin\Debug\Landis.Extension.BaseWind.dll; DestDir: {#ExtDir}; Flag
 Source: ..\src\bin\Debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags: replacesameversion 
 
 Source: docs\LANDIS-II Base Wind v2.1 User Guide.pdf; DestDir: {#AppDir}\docs
-Source: examples\*; DestDir: {#AppDir}\examples\base-wind
+Source: examples\*.txt; DestDir: {#AppDir}\examples\base-wind
+Source: examples\*.gis; DestDir: {#AppDir}\examples\base-wind
+Source: examples\*.bat; DestDir: {#AppDir}\examples\base-wind
 
 #define BaseWind "Base Wind 2.0.txt"
 Source: {#BaseWind}; DestDir: {#LandisPlugInDir}
