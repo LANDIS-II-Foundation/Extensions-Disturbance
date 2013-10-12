@@ -14,7 +14,7 @@
 [Files]
 
 Source: ..\src\bin\debug\Landis.Extension.LeafBiomassInsects.dll; DestDir: {#ExtDir}; Flags: replacesameversion
-Source: ..\src\bin\debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags: replacesameversion
+Source: ..\src\bin\debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags: replacesameversion uninsneveruninstall
 
 [Files]
 
