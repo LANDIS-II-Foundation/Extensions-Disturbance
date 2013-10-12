@@ -14,8 +14,8 @@
 [Files]
 
 ; Base Wind
-Source: ..\src\bin\Debug\Landis.Extension.BaseWind.dll; DestDir: {#ExtDir}; Flags: replacesameversion
-Source: ..\src\bin\Debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags: replacesameversion 
+Source: ..\src\bin\Debug\Landis.Extension.BaseWind.dll; DestDir: {#ExtDir}; Flags: replacesameversion 
+Source: ..\src\bin\Debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags: replacesameversion uninsneveruninstall
 
 Source: docs\LANDIS-II Base Wind v2.1 User Guide.pdf; DestDir: {#AppDir}\docs
 Source: examples\*.txt; DestDir: {#AppDir}\examples\base-wind
