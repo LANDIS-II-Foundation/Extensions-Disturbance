@@ -19,10 +19,12 @@ Source: ..\src\bin\debug\Landis.Extension.BaseHarvest.dll; DestDir: {#ExtDir}; F
 
 ; The extension's assembly
 Source: ..\src\bin\debug\Landis.Extension.LeafBiomassHarvest.dll; DestDir: {#ExtDir}; Flags: replacesameversion
-Source: ..\src\bin\debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags: replacesameversion
+Source: ..\src\bin\debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags: replacesameversion uninsneveruninstall
 
 Source: docs\LANDIS-II Leaf Biomass Harvest v2.0 User Guide.pdf; DestDir: {#AppDir}\docs
-Source: examples\*; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
+Source: examples\*.txt; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
+Source: examples\*.gis; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
+Source: examples\*.bat; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
 
 ; The extension's info file
 #define ExtensionInfoFile "Leaf Biomass Harvest v2.1.txt"
