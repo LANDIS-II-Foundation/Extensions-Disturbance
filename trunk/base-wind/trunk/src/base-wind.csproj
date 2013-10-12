@@ -76,6 +76,7 @@
     <Compile Include="MetadataHandler.cs" />
     <Compile Include="EventsLog.cs" />
     <Compile Include="PlugIn.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Severity.cs" />
     <Compile Include="SiteVars.cs" />
   </ItemGroup>
