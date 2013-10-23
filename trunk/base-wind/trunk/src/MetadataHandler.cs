@@ -16,7 +16,6 @@ namespace Landis.Extension.BaseWind
         public static void InitializeMetadata(int Timestep, string MapFileName, ICore mCore)
         {
             ScenarioReplicationMetadata scenRep = new ScenarioReplicationMetadata() {
-                //String outputFolder = OutputPath.ReplaceTemplateVars("", FINISH ME LATER);
                 //FolderName = System.IO.Directory.GetCurrentDirectory().Split("\\".ToCharArray()).Last(),
                 RasterOutCellArea = PlugIn.ModelCore.CellArea,
                 TimeMin = PlugIn.ModelCore.StartTime,
