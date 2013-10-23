@@ -15,22 +15,22 @@ namespace Landis.Extension.LeafBiomassHarvest
         [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "Harvest Year")]
         public int Time {set; get;}
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Management Area")]
+        [DataFieldAttribute(Desc = "Management Area")]
         public uint ManagementArea { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Prescription Name")]
+        [DataFieldAttribute(Desc = "Prescription Name")]
         public string Prescription { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Stand Map Code")]
+        [DataFieldAttribute(Desc = "Stand Map Code")]
         public uint StandMapCode { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Event ID")]
+        [DataFieldAttribute(Desc = "Event ID")]
         public int EventID { set; get; }
 
         [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "Stand Age")]
         public int StandAge { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Stand Rank", Format = "0.0")]
+        [DataFieldAttribute(Desc = "Stand Rank", Format = "0.0")]
         public double StandRank { set; get; }
 
         [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Stand Site Count")]
@@ -39,10 +39,10 @@ namespace Landis.Extension.LeafBiomassHarvest
         [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Number of Damaged Sites")]
         public int DamagedSites { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Biomass Removed (Mg)", Format = "0.00")]
+        [DataFieldAttribute(Unit = FiledUnits.Mg_ha, Desc = "Biomass Removed (Mg)", Format = "0.00")]
         public double MgBiomassRemoved { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Biomass Removed (Mg) per damaged hectare", Format = "0.00")]
+        [DataFieldAttribute(Unit = FiledUnits.Mg_ha, Desc = "Biomass Removed (Mg) per damaged hectare", Format = "0.00")]
         public double MgBioRemovedPerDamagedHa { set; get; }
 
         [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Number of Cohorts Damaged")]

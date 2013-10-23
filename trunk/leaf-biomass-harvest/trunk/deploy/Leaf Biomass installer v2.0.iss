@@ -15,7 +15,7 @@
 
 [Files]
 ; Base Harvest
-Source: ..\src\bin\debug\Landis.Extension.BaseHarvest.dll; DestDir: {#ExtDir}; Flags: replacesameversion
+Source: ..\src\bin\debug\Landis.Extension.BaseHarvest.dll; DestDir: {#ExtDir}; Flags: replacesameversion uninsneveruninstall
 
 ; The extension's assembly
 Source: ..\src\bin\debug\Landis.Extension.LeafBiomassHarvest.dll; DestDir: {#ExtDir}; Flags: replacesameversion
