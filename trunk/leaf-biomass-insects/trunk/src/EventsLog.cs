@@ -13,7 +13,7 @@ namespace Landis.Extension.Insects
         [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "...")]
         public int Time {set; get;}
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Insect Name")]
+        [DataFieldAttribute(Desc = "Insect Name")]
         public string InsectName { set; get; }
 
         [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "Start Year")]
@@ -37,7 +37,7 @@ namespace Landis.Extension.Insects
         [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Number of Outbreak Initiation Sites")]
         public int NumOutbreakInitialSites { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.g_B_m_2, Desc = "Biomass lost due to insect mortality", Format="0.00")]
+        [DataFieldAttribute(Unit = FiledUnits.g_B_m2, Desc = "Biomass lost due to insect mortality", Format="0.00")]
         public double MortalityBiomass { set; get; }
 
     }
