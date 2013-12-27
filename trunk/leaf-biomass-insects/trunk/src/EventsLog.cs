@@ -10,7 +10,7 @@ namespace Landis.Extension.Insects
     {
         //log.Write("Time,InsectName,StartYear,StopYear,MeanDefoliation,NumSitesDefoliated0_33,NumSitesDefoliated33_66,NumSitesDefoliated66_100,NumOutbreakInitialSites,MortalityBiomass");
 
-        [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "...")]
+        [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "Simulation Year")]
         public int Time {set; get;}
 
         [DataFieldAttribute(Desc = "Insect Name")]

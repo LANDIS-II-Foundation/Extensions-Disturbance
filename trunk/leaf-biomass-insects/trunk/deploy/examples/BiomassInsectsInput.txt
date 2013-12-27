@@ -4,7 +4,7 @@ Timestep	10
 
 MapNames	Insects/{insectName}-{timestep}.gis
 
-LogFile		Insects/Insect-log.csv
+LogFile		Insect-log.csv
 
 InsectInputFiles insect-defoliator.txt
 

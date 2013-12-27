@@ -30,7 +30,7 @@ namespace Landis.Extension.Insects
 
             Extension = new ExtensionMetadata(mCore){
                 Name = PlugIn.ExtensionName,
-                TimeInterval = Timestep, //change this to PlugIn.TimeStep for other extensions
+                TimeInterval = 1, //Timestep, //change this to PlugIn.TimeStep for other extensions
                 ScenarioReplicationMetadata = scenRep
             };
 
@@ -38,13 +38,13 @@ namespace Landis.Extension.Insects
             //          table outputs:   
             //---------------------------------------
 
-             PlugIn.eventLog = new MetadataTable<EventsLog>(logFileName);
+             PlugIn.eventLog = new MetadataTable<EventsLog>("insects-log.csv");
 
             OutputMetadata tblOut_events = new OutputMetadata()
             {
                 Type = OutputType.Table,
                 Name = "EventsLog",
-                FilePath = PlugIn.eventLog.FilePath//,
+                FilePath = PlugIn.eventLog.FilePath
             };
             tblOut_events.RetriveFields(typeof(EventsLog));
             Extension.OutputMetadatas.Add(tblOut_events);

@@ -6,9 +6,9 @@ MeanDuration	15
 
 StdDevDuration	3
 
-MeanTimeBetweenOutbreaks	10
+MeanTimeBetweenOutbreaks	3
 
-StdDevTimeBetweenOutbreaks	5
+StdDevTimeBetweenOutbreaks	0
 
 NeighborhoodSize	20	<< meters
 
@@ -24,14 +24,14 @@ SpeciesParameters
 >> Species	Susceptibility	 Growth Reduction Parameters  Mortality Parameters
 >>		Class		 Slope	Intercept	      Slope	Intercept
 >>--------------------------------------------------------------------------------
-acerrubr       2	-0.8	1	0.009	7
-acersacc       2	-0.8	1	0.009	7
-pinuresi       3	-1	1	0.016	4
-pinustro       2	-1	1	0.016	4
+acerrubr       1	-0.8	1	0.009	7
+acersacc       1	-0.8	1	0.009	7
+pinuresi       1	-1	1	0.016	4
+pinustro       1	-1	1	0.016	4
 poputrem       1	-.5	1	0.009	7
 querrubr       1	-0.16	1	0.006	5.5
 tiliamer       1	-0.16	1	0.009	7
-tsugcana       2	-1	1	0.016	4
+tsugcana       1	-1	1	0.016	4
 
 Susceptibilities
 >> Host	Dist80	S1_80	S2_80	Dist60	S1_60	S2_60	Dist40	S1_40	S2_40	Dist20	S1_20	S2_20	Dist0	S1_0	S2_0
