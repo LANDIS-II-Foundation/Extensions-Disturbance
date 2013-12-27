@@ -20,7 +20,8 @@ Source: ..\src\bin\debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags:
 
 Source: docs\LANDIS-II Leaf Biomass Insect Defoliation v1.1 User Guide.pdf; DestDir: {#AppDir}\doc
 Source: examples\*.txt; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
-Source: examples\*.gis; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
+Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
+Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
 Source: examples\*.bat; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
 
 #define BioBugs "Leaf Biomass Insects 1.1.txt"
