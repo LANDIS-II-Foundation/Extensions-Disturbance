@@ -19,7 +19,8 @@ Source: ..\src\bin\Debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags:
 
 Source: docs\LANDIS-II Base Wind v2.1 User Guide.pdf; DestDir: {#AppDir}\docs
 Source: examples\*.txt; DestDir: {#AppDir}\examples\base-wind
-Source: examples\*.gis; DestDir: {#AppDir}\examples\base-wind
+Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\base-wind
+Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\base-wind
 Source: examples\*.bat; DestDir: {#AppDir}\examples\base-wind
 
 #define BaseWind "Base Wind 2.0.txt"
