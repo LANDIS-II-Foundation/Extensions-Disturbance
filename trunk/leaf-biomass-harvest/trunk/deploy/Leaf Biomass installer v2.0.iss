@@ -23,7 +23,10 @@ Source: ..\src\bin\debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags:
 
 Source: docs\LANDIS-II Leaf Biomass Harvest v2.0 User Guide.pdf; DestDir: {#AppDir}\docs
 Source: examples\*.txt; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
-Source: examples\*.gis; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
+Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
+Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
+Source: examples\management.gis; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
+Source: examples\stand.gis; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
 Source: examples\*.bat; DestDir: {#AppDir}\examples\leaf-biomass-harvest; Flags: recursesubdirs
 
 ; The extension's info file
