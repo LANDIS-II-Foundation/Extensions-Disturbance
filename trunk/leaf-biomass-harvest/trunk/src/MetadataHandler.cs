@@ -66,6 +66,17 @@ namespace Landis.Extension.LeafBiomassHarvest
             //          map outputs:         
             //---------------------------------------
 
+            OutputMetadata mapOut_BiomassRemoved = new OutputMetadata()
+            {
+                Type = OutputType.Map,
+                Name = "biomass removed",
+                FilePath = @MapFileName,
+                Map_DataType = MapDataType.Continuous,
+                Map_Unit = FiledUnits.Mg_ha,
+            };
+            Extension.OutputMetadatas.Add(mapOut_BiomassRemoved);
+
+
             OutputMetadata mapOut_Prescription = new OutputMetadata()
             {
                 Type = OutputType.Map,

@@ -10,13 +10,13 @@ namespace Landis.Extension.LeafBiomassHarvest
     {
         //summaryLog.WriteLine("Time,ManagementArea,Prescription,TotalDamagedSites,TotalCohortsDamaged,TotalCohortsKilled{0}", species_header_names);
 
-        [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "...")]
+        [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "Simulation Year")]
         public int Time {set; get;}
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Management Area")]
+        [DataFieldAttribute(Desc = "Management Area")]
         public uint ManagementArea { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.None, Desc = "Prescription Name")]
+        [DataFieldAttribute(Desc = "Prescription Name")]
         public string Prescription { set; get; }
 
         [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Total Damaged Sites")]
