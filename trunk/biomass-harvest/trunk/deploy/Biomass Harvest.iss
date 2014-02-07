@@ -1,43 +1,44 @@
-#include GetEnv("LANDIS_SDK") + '\packaging\initialize.iss'
+#define PackageName      "Biomass Harvest"
+#define PackageNameLong  "Biomass Harvest Extension"
+#define Version          "2.2"
+#define ReleaseType      "official"
 
-#define ExtInfoFile "Biomass Harvest.txt"
+#define CoreVersion      "6.0"
+#define CoreReleaseAbbr  ""
 
-#include LandisSDK + '\packaging\read-ext-info.iss'
-#include LandisSDK + '\packaging\Landis-vars.iss'
+#include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
+#define ExtDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
+#define AppDir "C:\Program Files\LANDIS-II\v6\"
 
-[Setup]
-#include LandisSDK + '\packaging\Setup-directives.iss'
-LicenseFile=..\Apache-License-2.0.txt
+
 
 [Files]
 ; Base Harvest
-Source: {#LandisExtDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin\extensions
+Source: {#ExtDir}\Landis.Extension.BaseHarvest.dll; DestDir: {#ExtDir}; Flags: replacesameversion
 
 ; The extension's assembly
-Source: {#LandisExtDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
+Source: ..\src\bin\Debug\Landis.Extension.BiomassHarvest.dll; DestDir: {#ExtDir}; Flags: replacesameversion
 
 ; The user guide
-#define UserGuideSrc ExtensionName + " vX.Y User Guide.pdf"
-#define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
-Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
-
-; Sample input files
-Source: examples\*; DestDir: {app}\examples\{#ExtensionName}; Flags: recursesubdirs
+; Source: docs\LANDIS-II Base Wind v2.1 User Guide.pdf; DestDir: {#AppDir}\docs
+Source: examples\*; DestDir: {#AppDir}\examples\biomass-harvest
 
 ; The extension's info file
-#define ExtensionInfo  ExtensionName + " " + MajorMinor + ".txt"
-Source: {#ExtInfoFile}; DestDir: {#LandisExtInfoDir}; DestName: {#ExtensionInfo}
+; #define ExtensionInfo  ExtensionName + " " + MajorMinor + ".txt"
+; Source: {#ExtInfoFile}; DestDir: {#LandisExtInfoDir}; DestName: {#ExtensionInfo}
 
+#define BiomassHarvest "Biomass Harvest.txt"
+Source: {#BiomassHarvest}; DestDir: {#LandisPlugInDir}
 
 [Run]
-Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName}"" "; WorkingDir: {#LandisExtInfoDir}
-Filename: {#ExtAdminTool}; Parameters: "add ""{#ExtensionInfo}"" "; WorkingDir: {#LandisExtInfoDir}
+#define PlugInAdminTool  CoreBinDir + "\Landis.PlugIns.Admin.exe"
 
-[UninstallRun]
-Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName}"" "; WorkingDir: {#LandisExtInfoDir}
+Filename: {#PlugInAdminTool}; Parameters: "remove ""Biomass Harvest"" "; WorkingDir: {#LandisPlugInDir}
+Filename: {#PlugInAdminTool}; Parameters: "add ""{#BiomassHarvest}"" "; WorkingDir: {#LandisPlugInDir}
 
 [Code]
-#include LandisSDK + '\packaging\Pascal-code.iss'
+{ Check for other prerequisites during the setup initialization }
+#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
