@@ -17,7 +17,7 @@
 #define BuildDir "C:\Program Files\LANDIS-II\6.0\bin"
 
 ; The extension's assembly
-Source: ..\src\bin\debug\\Landis.Extension.StressMortality.dll; DestDir: {#ExtDir}\bin; Flags: replacesameversion
+Source: ..\src\bin\debug\\Landis.Extension.StressMortality.dll; DestDir: {#ExtDir}; Flags: replacesameversion
 
 ; The user guide
 ; Source: docs\LANDIS-II Drought Disturbance v1.0 User Guide.pdf; DestDir: {app}\docs; DestName: LANDIS-II {#PackageName} v{#Version}{#ReleaseAbbr} User Guide.pdf
