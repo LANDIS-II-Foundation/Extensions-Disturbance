@@ -10,7 +10,7 @@ namespace Landis.Extension.BaseWind
     {
         //log.WriteLine("Time,Initiation Site,Total Sites,Damaged Sites,Cohorts Killed,Mean Severity");
 
-        [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "...")]
+        [DataFieldAttribute(Unit = FieldUnits.Year, Desc = "...")]
         public int Time {set; get;}
 
         [DataFieldAttribute(Desc = "Initiation Row")]
@@ -19,16 +19,16 @@ namespace Landis.Extension.BaseWind
         [DataFieldAttribute(Desc = "Initiation Column")]
         public int InitColumn { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Total Number of Sites in Event")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Total Number of Sites in Event")]
         public int TotalSites { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Number of Damaged Sites in Event")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Damaged Sites in Event")]
         public int DamagedSites { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Number of Cohorts Killed")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Cohorts Killed")]
         public int CohortsKilled { set; get; }
 
-        [DataFieldAttribute(Desc = "Mean Severity (1-5)", Format="0.00")]
+        [DataFieldAttribute(Unit = FieldUnits.Severity_Rank, Desc = "Mean Severity (1-5)", Format="0.00")]
         public double MeanSeverity { set; get; }
 
     }

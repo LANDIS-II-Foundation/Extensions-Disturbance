@@ -16,16 +16,15 @@ namespace Landis.Extension.BaseWind
         public static void InitializeMetadata(int Timestep, string MapFileName, ICore mCore)
         {
             ScenarioReplicationMetadata scenRep = new ScenarioReplicationMetadata() {
-                //FolderName = System.IO.Directory.GetCurrentDirectory().Split("\\".ToCharArray()).Last(),
                 RasterOutCellArea = PlugIn.ModelCore.CellArea,
                 TimeMin = PlugIn.ModelCore.StartTime,
                 TimeMax = PlugIn.ModelCore.EndTime//,
-                //ProjectionFilePath = "Projection.?" //How do we get projections???
+                //ProjectionFilePath = "Projection.?" 
             };
 
             Extension = new ExtensionMetadata(mCore){
                 Name = PlugIn.ExtensionName,
-                TimeInterval = Timestep, //change this to PlugIn.TimeStep for other extensions
+                TimeInterval = Timestep, 
                 ScenarioReplicationMetadata = scenRep
             };
 
@@ -39,8 +38,8 @@ namespace Landis.Extension.BaseWind
             {
                 Type = OutputType.Table,
                 Name = "WindLog",
-                FilePath = PlugIn.eventLog.FilePath//,
-                //MetadataFilePath = @"Base-Wind\EventLog.xml"
+                FilePath = PlugIn.eventLog.FilePath,
+                Visualize = false,
             };
             tblOut_events.RetriveFields(typeof(EventsLog));
             Extension.OutputMetadatas.Add(tblOut_events);
@@ -55,8 +54,9 @@ namespace Landis.Extension.BaseWind
                 Type = OutputType.Map,
                 Name = "severity",
                 FilePath = @MapFileName,
-                Map_DataType = MapDataType.Ordinal//,
-                //Map_Unit = "categorical",
+                Map_DataType = MapDataType.Ordinal,
+                Map_Unit = FieldUnits.Severity_Rank,
+                Visualize = true,
             };
             Extension.OutputMetadatas.Add(mapOut_Severity);
 
