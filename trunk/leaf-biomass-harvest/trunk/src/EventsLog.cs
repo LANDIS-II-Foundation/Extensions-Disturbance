@@ -12,7 +12,7 @@ namespace Landis.Extension.LeafBiomassHarvest
     {
         //log.WriteLine("Time,ManagementArea,Prescription,StandMapCode,EventId,StandAge,StandRank,StandSiteCount,DamagedSites,MgBiomassRemoved,MgBioRemovedPerDamagedHa,CohortsDamaged,CohortsKilled{0}", species_header_names);
 
-        [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "Harvest Year")]
+        [DataFieldAttribute(Unit = FieldUnits.Year, Desc = "Harvest Year")]
         public int Time {set; get;}
 
         [DataFieldAttribute(Desc = "Management Area")]
@@ -27,31 +27,31 @@ namespace Landis.Extension.LeafBiomassHarvest
         [DataFieldAttribute(Desc = "Event ID")]
         public int EventID { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "Stand Age")]
+        [DataFieldAttribute(Unit = FieldUnits.Year, Desc = "Stand Age")]
         public int StandAge { set; get; }
 
         [DataFieldAttribute(Desc = "Stand Rank", Format = "0.0")]
         public double StandRank { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Stand Site Count")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Stand Site Count")]
         public int StandSiteCount { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Number of Damaged Sites")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Damaged Sites")]
         public int DamagedSites { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Mg_ha, Desc = "Biomass Removed (Mg)", Format = "0.00")]
+        [DataFieldAttribute(Unit = FieldUnits.Mg_ha, Desc = "Biomass Removed (Mg)", Format = "0.00")]
         public double MgBiomassRemoved { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Mg_ha, Desc = "Biomass Removed (Mg) per damaged hectare", Format = "0.00")]
+        [DataFieldAttribute(Unit = FieldUnits.Mg_ha, Desc = "Biomass Removed (Mg) per damaged hectare", Format = "0.00")]
         public double MgBioRemovedPerDamagedHa { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Number of Cohorts Damaged")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Cohorts Damaged")]
         public int CohortsDamaged { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Number of Cohorts Killed")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Cohorts Killed")]
         public int CohortsKilled { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Species Cohorts Killed", SppList = true)]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Species Cohorts Killed", SppList = true)]
         public double[] CohortsKilledBy { set; get; }
 
         

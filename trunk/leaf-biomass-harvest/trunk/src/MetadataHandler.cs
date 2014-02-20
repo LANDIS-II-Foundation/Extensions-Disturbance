@@ -14,15 +14,13 @@ namespace Landis.Extension.LeafBiomassHarvest
         
         public static ExtensionMetadata Extension {get; set;}
 
-        public static void InitializeMetadata(int Timestep, string MapFileName, ICore mCore)
+        public static void InitializeMetadata(int Timestep, string MapFileName, string BiomassMapName, ICore mCore)
         {
 
             ScenarioReplicationMetadata scenRep = new ScenarioReplicationMetadata() {
-                //FolderName = System.IO.Directory.GetCurrentDirectory().Split("\\".ToCharArray()).Last(),//"Scen_?-rep_?", //we should probably add this to the extension/scenario input file or we might be leaving this out because the extensions do not need to know anything about the replication (the hirarchy of the scenario-replications and their extensions are defined by the convention of folder structures)
                 RasterOutCellArea = PlugIn.ModelCore.CellArea,
                 TimeMin = PlugIn.ModelCore.StartTime,
                 TimeMax = PlugIn.ModelCore.EndTime,
-                //ProjectionFilePath = "Projection.?" //How do we get projections???
             };
 
             Extension = new ExtensionMetadata(PlugIn.ModelCore)
@@ -45,8 +43,8 @@ namespace Landis.Extension.LeafBiomassHarvest
             {
                 Type = OutputType.Table,
                 Name = "EventLog",
-                FilePath = PlugIn.eventLog.FilePath//,
-                //MetadataFilePath = @"Base-Wind\EventLog.xml"
+                FilePath = PlugIn.eventLog.FilePath,
+                Visualize = false,
             };
             tblOut_events.RetriveFields(typeof(EventsLog));
             Extension.OutputMetadatas.Add(tblOut_events);
@@ -56,8 +54,8 @@ namespace Landis.Extension.LeafBiomassHarvest
             {
                 Type = OutputType.Table,
                 Name = "SummaryLog",
-                FilePath = PlugIn.summaryLog.FilePath//,
-                //MetadataFilePath = @"Base-Wind\EventLog.xml"
+                FilePath = PlugIn.summaryLog.FilePath,
+                Visualize = true,
             };
             tblOut_summary.RetriveFields(typeof(SummaryLog));
             Extension.OutputMetadatas.Add(tblOut_summary);
@@ -70,9 +68,10 @@ namespace Landis.Extension.LeafBiomassHarvest
             {
                 Type = OutputType.Map,
                 Name = "biomass removed",
-                FilePath = @MapFileName,
+                FilePath = @BiomassMapName,
                 Map_DataType = MapDataType.Continuous,
-                Map_Unit = FiledUnits.Mg_ha,
+                Map_Unit = FieldUnits.Mg_ha,
+                Visualize = true,
             };
             Extension.OutputMetadatas.Add(mapOut_BiomassRemoved);
 
@@ -82,7 +81,8 @@ namespace Landis.Extension.LeafBiomassHarvest
                 Type = OutputType.Map,
                 Name = "prescription",
                 FilePath = @MapFileName,
-                Map_DataType = MapDataType.Nominal
+                Map_DataType = MapDataType.Nominal,
+                Visualize = true,
                 //Map_Unit = "categorical",
             };
             Extension.OutputMetadatas.Add(mapOut_Prescription);

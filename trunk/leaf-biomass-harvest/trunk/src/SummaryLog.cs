@@ -10,7 +10,7 @@ namespace Landis.Extension.LeafBiomassHarvest
     {
         //summaryLog.WriteLine("Time,ManagementArea,Prescription,TotalDamagedSites,TotalCohortsDamaged,TotalCohortsKilled{0}", species_header_names);
 
-        [DataFieldAttribute(Unit = FiledUnits.Year, Desc = "Simulation Year")]
+        [DataFieldAttribute(Unit = FieldUnits.Year, Desc = "Simulation Year")]
         public int Time {set; get;}
 
         [DataFieldAttribute(Desc = "Management Area")]
@@ -19,16 +19,16 @@ namespace Landis.Extension.LeafBiomassHarvest
         [DataFieldAttribute(Desc = "Prescription Name")]
         public string Prescription { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Total Damaged Sites")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Total Damaged Sites")]
         public int TotalDamagedSites { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Total Cohorts Killed")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Total Cohorts Killed")]
         public int TotalCohortsKilled { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Total Cohorts Damaged")]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Total Cohorts Damaged")]
         public int TotalCohortsDamaged { set; get; }
 
-        [DataFieldAttribute(Unit = FiledUnits.Count, Desc = "Species Cohorts Killed", SppList = true)]
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Species Cohorts Killed", SppList = true)]
         public double[] CohortsKilledBy { set; get; }
 
         //[DataFieldAttribute(Unit = FiledUnits.None, Desc = "Initiation Row")]

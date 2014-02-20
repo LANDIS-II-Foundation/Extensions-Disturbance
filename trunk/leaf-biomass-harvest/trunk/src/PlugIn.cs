@@ -98,7 +98,7 @@ namespace Landis.Extension.LeafBiomassHarvest
         public override void Initialize()
         {
             modelCore.UI.WriteLine("   Creating metadata ...");
-            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.PrescriptionMapNames, modelCore);
+            MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.PrescriptionMapNames, parameters.BiomassMapNames, modelCore);
             SiteVars.Initialize();
             PartialHarvestDisturbance.Initialize();
 
