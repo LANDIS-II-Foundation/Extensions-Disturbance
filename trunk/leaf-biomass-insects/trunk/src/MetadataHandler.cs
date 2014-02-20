@@ -20,12 +20,9 @@ namespace Landis.Extension.Insects
             ICore mCore)
         {
             ScenarioReplicationMetadata scenRep = new ScenarioReplicationMetadata() {
-                //String outputFolder = OutputPath.ReplaceTemplateVars("", FINISH ME LATER);
-                //FolderName = System.IO.Directory.GetCurrentDirectory().Split("\\".ToCharArray()).Last(),//"Scen_?-rep_?", //we should probably add this to the extension/scenario input file or we might be leaving this out because the extensions do not need to know anything about the replication (the hirarchy of the scenario-replications and their extensions are defined by the convention of folder structures)
                 RasterOutCellArea = PlugIn.ModelCore.CellArea,
                 TimeMin = PlugIn.ModelCore.StartTime,
                 TimeMax = PlugIn.ModelCore.EndTime,
-                //ProjectionFilePath = "Projection.?" //How do we get projections???
             };
 
             Extension = new ExtensionMetadata(mCore){
@@ -44,7 +41,8 @@ namespace Landis.Extension.Insects
             {
                 Type = OutputType.Table,
                 Name = "EventsLog",
-                FilePath = PlugIn.eventLog.FilePath
+                FilePath = PlugIn.eventLog.FilePath,
+                Visualize = false,
             };
             tblOut_events.RetriveFields(typeof(EventsLog));
             Extension.OutputMetadatas.Add(tblOut_events);
@@ -65,6 +63,7 @@ namespace Landis.Extension.Insects
                     FilePath = @mapPath,
                     Map_DataType = MapDataType.Continuous,
                     Map_Unit = "percentile",
+                    Visualize = false,
                 };
                 Extension.OutputMetadatas.Add(mapOut_GrowthReduction);
 
@@ -76,6 +75,7 @@ namespace Landis.Extension.Insects
                     FilePath = @mapPath,
                     Map_DataType = MapDataType.Continuous,
                     Map_Unit = "percentile",
+                    Visualize = false,
                 };
                 Extension.OutputMetadatas.Add(mapOut_InitialPatchProb);
 
@@ -83,10 +83,11 @@ namespace Landis.Extension.Insects
                 OutputMetadata mapOut_BiomassRemoved = new OutputMetadata()
                 {
                     Type = OutputType.Map,
-                    Name = "Biomass Mortality",
+                    Name = System.String.Format(insect.Name + " Biomass Mortality"),
                     FilePath = @mapPath,
                     Map_DataType = MapDataType.Continuous,
-                    Map_Unit = FiledUnits.Mg_ha,
+                    Map_Unit = FieldUnits.Mg_ha,
+                    Visualize = true,
                 };
                 Extension.OutputMetadatas.Add(mapOut_BiomassRemoved);
             }

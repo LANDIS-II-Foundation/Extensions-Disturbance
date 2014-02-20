@@ -267,76 +267,13 @@ namespace Landis.Extension.Insects
 
                     eventLog.AddObject(el);
                     eventLog.WriteToFile();
+                
 
-                    //----- Write Insect GrowthReduction maps --------
-                    string path = MapNames.ReplaceTemplateVars(mapNameTemplate, insect.Name, PlugIn.ModelCore.CurrentTime - 1);
-                    using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path, modelCore.Landscape.Dimensions))
-                    {
-                        ShortPixel pixel = outputRaster.BufferPixel;
-
-                        foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
-                        {
-                            if (site.IsActive)
-                                pixel.MapCode.Value = (short)(insect.LastYearDefoliation[site] * 100.0);
-                            else
-                                //  Inactive site
-                                pixel.MapCode.Value = 0;
-
-                            outputRaster.WriteBufferPixel();
-                        }
-                    }
-
-                    //----- Write Initial Patch maps --------
-                    string path2 = MapNames.ReplaceTemplateVars(mapNameTemplate, ("InitialPatchMap-" + insect.Name), PlugIn.ModelCore.CurrentTime - 1);
-                    using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path2, modelCore.Landscape.Dimensions))
-                    {
-                        ShortPixel pixel = outputRaster.BufferPixel;
-                        foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
-                        {
-                            if (site.IsActive)
-                            {
-                                if (insect.Disturbed[site])
-                                    pixel.MapCode.Value = (short)(SiteVars.InitialOutbreakProb[site] * 100);
-                                else
-                                    pixel.MapCode.Value = 0;
-                            }
-                            else
-                            {
-                                //  Inactive site
-                                pixel.MapCode.Value = 0;
-                            }
-                            outputRaster.WriteBufferPixel();
-                        }
-                    }
-
-                    //----- Write Biomass Reduction maps --------
-                    string path3 = MapNames.ReplaceTemplateVars(mapNameTemplate, ("BiomassRemoved-" + insect.Name), PlugIn.ModelCore.CurrentTime - 1);
-                    using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path3, modelCore.Landscape.Dimensions))
-                    {
-                        ShortPixel pixel = outputRaster.BufferPixel;
-                        foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
-                        {
-                            if (site.IsActive)
-                            {
-                                pixel.MapCode.Value = (short)(SiteVars.BiomassRemoved[site] / 100);  // convert to Mg/ha
-                            }
-                            else
-                            {
-                                //  Inactive site
-                                pixel.MapCode.Value = 0;
-                            }
-                            outputRaster.WriteBufferPixel();
-                        }
-                        //}
-
-                        //// Final bookkeeping
-                        //if ((insect.ActiveOutbreak && insect.OutbreakStartYear < PlugIn.ModelCore.CurrentTime) || (meanDefoliation > 0) || (insect.LastBioRemoved > 0))
-                        //{
-                        insect.ThisYearDefoliation.ActiveSiteValues = 0.0;  //reset this year to 0 for all sites
-                        insect.LastBioRemoved = totalBioRemoved;
-                        if (insect.OutbreakStopYear <= PlugIn.ModelCore.CurrentTime
+                    insect.ThisYearDefoliation.ActiveSiteValues = 0.0;  //reset this year to 0 for all sites
+                    insect.LastBioRemoved = totalBioRemoved;
+                    if (insect.OutbreakStopYear <= PlugIn.ModelCore.CurrentTime
                                 && timeAfterDuration > PlugIn.ModelCore.CurrentTime - insect.OutbreakStopYear)
-                        {
+                    {
                             insect.LastStartYear = insect.OutbreakStartYear;
                             insect.LastStopYear = insect.OutbreakStopYear;
                             insect.OutbreakStartYear = PlugIn.ModelCore.CurrentTime + (int)timeBetweenOutbreaks;
@@ -344,8 +281,67 @@ namespace Landis.Extension.Insects
                             //insect.NeighborhoodDefoliation.ActiveSiteValues = 0;
                             PlugIn.ModelCore.UI.WriteLine("   NEXT Insect Start Year = {0}, Stop Year = {1}.", insect.OutbreakStartYear, insect.OutbreakStopYear);
 
-                        }
+                    }
 
+                }
+                //----- Write Insect GrowthReduction maps --------
+                string path = MapNames.ReplaceTemplateVars(mapNameTemplate, insect.Name, PlugIn.ModelCore.CurrentTime - 1);
+                using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path, modelCore.Landscape.Dimensions))
+                {
+                    ShortPixel pixel = outputRaster.BufferPixel;
+
+                    foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                    {
+                        if (site.IsActive)
+                            pixel.MapCode.Value = (short)(insect.LastYearDefoliation[site] * 100.0);
+                        else
+                            //  Inactive site
+                            pixel.MapCode.Value = 0;
+
+                        outputRaster.WriteBufferPixel();
+                    }
+                }
+
+                //----- Write Initial Patch maps --------
+                string path2 = MapNames.ReplaceTemplateVars(mapNameTemplate, ("InitialPatchMap-" + insect.Name), PlugIn.ModelCore.CurrentTime - 1);
+                using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path2, modelCore.Landscape.Dimensions))
+                {
+                    ShortPixel pixel = outputRaster.BufferPixel;
+                    foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                    {
+                        if (site.IsActive)
+                        {
+                            if (insect.Disturbed[site])
+                                pixel.MapCode.Value = (short)(SiteVars.InitialOutbreakProb[site] * 100);
+                            else
+                                pixel.MapCode.Value = 0;
+                        }
+                        else
+                        {
+                            //  Inactive site
+                            pixel.MapCode.Value = 0;
+                        }
+                        outputRaster.WriteBufferPixel();
+                    }
+                }
+
+                //----- Write Biomass Reduction maps --------
+                string path3 = MapNames.ReplaceTemplateVars(mapNameTemplate, ("BiomassRemoved-" + insect.Name), PlugIn.ModelCore.CurrentTime - 1);
+                using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path3, modelCore.Landscape.Dimensions))
+                {
+                    ShortPixel pixel = outputRaster.BufferPixel;
+                    foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                    {
+                        if (site.IsActive)
+                        {
+                            pixel.MapCode.Value = (short)(SiteVars.BiomassRemoved[site] / 100);  // convert to Mg/ha
+                        }
+                        else
+                        {
+                            //  Inactive site
+                            pixel.MapCode.Value = 0;
+                        }
+                        outputRaster.WriteBufferPixel();
                     }
                 }
             }
