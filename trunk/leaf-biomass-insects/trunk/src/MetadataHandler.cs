@@ -62,7 +62,7 @@ namespace Landis.Extension.Insects
                     Name = "Growth Reduction",
                     FilePath = @mapPath,
                     Map_DataType = MapDataType.Continuous,
-                    Map_Unit = "percentile",
+                    Map_Unit = FieldUnits.Percentage,
                     Visualize = false,
                 };
                 Extension.OutputMetadatas.Add(mapOut_GrowthReduction);
@@ -74,7 +74,7 @@ namespace Landis.Extension.Insects
                     Name = "Initial Outbreak Probabilities",
                     FilePath = @mapPath,
                     Map_DataType = MapDataType.Continuous,
-                    Map_Unit = "percentile",
+                    Map_Unit = FieldUnits.Percentage,
                     Visualize = false,
                 };
                 Extension.OutputMetadatas.Add(mapOut_InitialPatchProb);
