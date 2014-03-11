@@ -41,7 +41,7 @@ namespace Landis.Extension.BaseFire
                     if (site.IsActive)
                     {
                         if (Dataset == null)
-                            PlugIn.ModelCore.Log.WriteLine("FireRegion.Dataset not set correctly.");
+                            PlugIn.ModelCore.UI.WriteLine("FireRegion.Dataset not set correctly.");
                         IFireRegion ecoregion = Find(mapCode);
 
                         if (ecoregion == null)

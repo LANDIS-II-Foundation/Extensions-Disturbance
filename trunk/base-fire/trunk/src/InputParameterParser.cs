@@ -15,7 +15,13 @@ namespace Landis.Extension.BaseFire
     {
 
         //---------------------------------------------------------------------
-
+        public override string LandisDataValue
+        {
+            get
+            {
+                return PlugIn.ExtensionName;
+            }
+        }
         public InputParameterParser()
         {
             // FIXME: Hack to ensure that Percentage is registered with InputValues
@@ -39,7 +45,7 @@ namespace Landis.Extension.BaseFire
 
             //----------------------------------------------------------
             // First, read table of additional parameters for ecoregions
-            PlugIn.ModelCore.Log.WriteLine("   Loading FireRegion data...");
+            PlugIn.ModelCore.UI.WriteLine("   Loading FireRegion data...");
             
             //IEditableFireRegionDataset dataset = new EditableFireRegionDataset();
             List<IFireRegion> dataset = new List<IFireRegion>(0);

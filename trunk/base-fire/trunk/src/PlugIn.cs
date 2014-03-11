@@ -53,7 +53,7 @@ namespace Landis.Extension.BaseFire
             modelCore = mCore;
             SiteVars.Initialize();
             InputParameterParser parser = new InputParameterParser();
-            parameters = mCore.Load<IInputParameters>(dataFile, parser);
+            parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
         }
 
         //---------------------------------------------------------------------
@@ -68,8 +68,8 @@ namespace Landis.Extension.BaseFire
 
             Event.Initialize(parameters.FireDamages);
 
-            modelCore.Log.WriteLine("   Opening Fire log file \"{0}\" ...", parameters.LogFileName);
-            log = modelCore.CreateTextFile(parameters.LogFileName);
+            PlugIn.ModelCore.UI.WriteLine("   Opening Fire log file \"{0}\" ...", parameters.LogFileName);
+            log = Landis.Data.CreateTextFile(parameters.LogFileName);
             log.AutoFlush = true;
             log.Write("Time,InitialSiteRow,InitialSiteColumn,SitesChecked,CohortsKilled,MeanSeverity,");
             foreach (IFireRegion ecoregion in FireRegions.Dataset)
@@ -77,7 +77,7 @@ namespace Landis.Extension.BaseFire
             log.Write("TotalBurnedSites");
             log.WriteLine("");
 
-            summaryLog = modelCore.CreateTextFile(parameters.SummaryLogFileName);
+            summaryLog = Landis.Data.CreateTextFile(parameters.SummaryLogFileName);
             summaryLog.AutoFlush = true;
             summaryLog.Write("Time,TotalSitesBurned,TotalNumberEvents");
             foreach (IFireRegion ecoregion in FireRegions.Dataset)
@@ -92,7 +92,7 @@ namespace Landis.Extension.BaseFire
         ///</summary>
         public override void Run()
         {
-            modelCore.Log.WriteLine("   Processing landscape for Fire events ...");
+            PlugIn.ModelCore.UI.WriteLine("   Processing landscape for Fire events ...");
 
             SiteVars.InitializeDisturbances(Timestep);
             SiteVars.Event.SiteValues = null;
@@ -104,7 +104,7 @@ namespace Landis.Extension.BaseFire
             {
                  if(dyneco.Year == PlugIn.modelCore.CurrentTime)
                  {
-                    PlugIn.modelCore.Log.WriteLine("   Reading in new Fire Regions Map {0}.", dyneco.MapName);
+                     PlugIn.ModelCore.UI.WriteLine("   Reading in new Fire Regions Map {0}.", dyneco.MapName);
                     FireRegions.ReadMap(dyneco.MapName);
                  }
             }
