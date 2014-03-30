@@ -1,6 +1,6 @@
 #define PackageName      "Biomass Harvest"
 #define PackageNameLong  "Biomass Harvest Extension"
-#define Version          "2.2"
+#define Version          "2.1"
 #define ReleaseType      "official"
 
 #define CoreVersion      "6.0"
@@ -20,8 +20,12 @@ Source: {#ExtDir}\Landis.Extension.BaseHarvest.dll; DestDir: {#ExtDir}; Flags: r
 Source: ..\src\bin\Debug\Landis.Extension.BiomassHarvest.dll; DestDir: {#ExtDir}; Flags: replacesameversion
 
 ; The user guide
-; Source: docs\LANDIS-II Base Wind v2.1 User Guide.pdf; DestDir: {#AppDir}\docs
-Source: examples\*; DestDir: {#AppDir}\examples\biomass-harvest
+Source: docs\LANDIS-II Biomass Harvest v2.1 User Guide.pdf; DestDir: {#AppDir}\docs
+Source: examples\*.txt; DestDir: {#AppDir}\examples\biomass-harvest
+Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\biomass-harvest
+Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\biomass-harvest
+Source: examples\*.bat; DestDir: {#AppDir}\examples\biomass-harvest
+
 
 ; The extension's info file
 ; #define ExtensionInfo  ExtensionName + " " + MajorMinor + ".txt"
