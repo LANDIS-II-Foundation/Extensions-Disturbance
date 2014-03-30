@@ -223,28 +223,23 @@ namespace Landis.Extension.LeafBiomassHarvest
                 foreach (AppliedPrescription aprescription in mgmtArea.Prescriptions)
                 {
                     Prescription prescription = aprescription.Prescription;
-                    //string species_string = "";
                     double[] species_string = new double[PlugIn.modelCore.Species.Count];
                     foreach (ISpecies species in modelCore.Species)
-                        //species_string += ", " + totalSpeciesCohorts[prescription.Number, species.Index];
                         species_string[species.Index] = totalSpeciesCohorts[prescription.Number, species.Index];
 
-                    //summaryUI.WriteLine("Time,ManagementArea,Prescription,TotalDamagedSites,TotalCohortsDamaged,TotalCohortsKilled,{0}", species_header_names);
                     if (totalSites[prescription.Number] > 0)
                     {
                         summaryLog.Clear();
                         SummaryLog sl = new SummaryLog();
-                        //summaryLog.WriteLine("{0},{1},{2},{3},{4},{5}{6}",
                         sl.Time =  modelCore.CurrentTime;
                         sl.ManagementArea = mgmtArea.MapCode;
                         sl.Prescription = prescription.Name;
-                        sl.TotalDamagedSites = totalDamagedSites[prescription.Number];
-                        sl.TotalCohortsDamaged = totalCohortsDamaged[prescription.Number];
-                        sl.TotalCohortsKilled = totalCohortsKilled[prescription.Number];
-                        sl.CohortsKilledBy = species_string;
+                        sl.TotalHarvestedSites = totalDamagedSites[prescription.Number];
+                        sl.TotalCohortsPartialHarvest = totalCohortsDamaged[prescription.Number];
+                        sl.TotalCohortsCompleteHarvest = totalCohortsKilled[prescription.Number];
+                        sl.CohortsHarvested_ = species_string;
                         summaryLog.AddObject(sl);
                         summaryLog.WriteToFile();
-                        //species_string);
                     }
                 }
             }
@@ -342,24 +337,23 @@ namespace Landis.Extension.LeafBiomassHarvest
             totalCohortsKilled[standPrescriptionNumber] += cohortsKilled;
 
 
-            //csv string for log file, contains species kill count
-            //string species_count = "";
+            //string for log file, contains species harvest count
             double[] species_count = new double[modelCore.Species.Count];
+            
             //if this is the right species match, add it's count to the csv string
-            foreach (ISpecies species in modelCore.Species) {
+            foreach (ISpecies species in modelCore.Species) 
+            {
                 bool assigned = false;
 
                 //loop through dictionary of species kill count
                 foreach (KeyValuePair<string, int> kvp in stand.DamageTable) {
                     if (species.Name == kvp.Key) {
                         assigned = true;
-                        //species_count += ", " + kvp.Value;
                         species_count[species.Index] += kvp.Value;
                     }
                 }
                 if (!assigned) {
                     //put a 0 there if it's not assigned (because none were found in the dictionary)
-                    //species_count += ",0";
                     species_count[species.Index] = 0.0;
                 }
                 totalSpeciesCohorts[standPrescriptionNumber, species.Index] += (double) species_count[species.Index];
@@ -375,7 +369,6 @@ namespace Landis.Extension.LeafBiomassHarvest
             if (biomassRemoved <= 0.0)
                 return;
 
-            //log.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9:0.000},{10:0.000},{11},{12}{13}",
             eventLog.Clear();
             EventsLog el = new EventsLog();
             el.Time = modelCore.CurrentTime;
@@ -386,21 +379,16 @@ namespace Landis.Extension.LeafBiomassHarvest
             el.StandAge = stand.Age;
             el.StandRank = stand.HarvestedRank;
             el.StandSiteCount = stand.SiteCount;
-            el.DamagedSites = damagedSites;
+            el.HarvestedSites = damagedSites;
             el.MgBiomassRemoved = biomassRemoved;  // Mg
             el.MgBioRemovedPerDamagedHa = biomassRemovedPerHa; // Mg/ha
-            el.CohortsDamaged = cohortsDamaged;
-            el.CohortsKilled = cohortsKilled;
-
-            //csv string for log file, contains species kill count
-            //string species_count = "";
-            //if this is the right species match, add it's count to the csv string
-            el.CohortsKilledBy = species_count;
+            el.CohortsHarvestedPartial = cohortsDamaged;
+            el.CohortsHarvestedComplete = cohortsKilled;
+            el.CohortsHarvested_ = species_count;
 
             eventLog.AddObject(el);
             eventLog.WriteToFile();
 
-                          //species_count);
         }
     }
 }

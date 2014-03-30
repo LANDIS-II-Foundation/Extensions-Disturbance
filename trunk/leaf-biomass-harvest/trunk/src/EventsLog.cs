@@ -36,8 +36,8 @@ namespace Landis.Extension.LeafBiomassHarvest
         [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Stand Site Count")]
         public int StandSiteCount { set; get; }
 
-        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Damaged Sites")]
-        public int DamagedSites { set; get; }
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Sites Harvested")]
+        public int HarvestedSites { set; get; }
 
         [DataFieldAttribute(Unit = FieldUnits.Mg_ha, Desc = "Biomass Removed (Mg)", Format = "0.00")]
         public double MgBiomassRemoved { set; get; }
@@ -45,14 +45,14 @@ namespace Landis.Extension.LeafBiomassHarvest
         [DataFieldAttribute(Unit = FieldUnits.Mg_ha, Desc = "Biomass Removed (Mg) per damaged hectare", Format = "0.00")]
         public double MgBioRemovedPerDamagedHa { set; get; }
 
-        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Cohorts Damaged")]
-        public int CohortsDamaged { set; get; }
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Cohorts Partially Harvested")]
+        public int CohortsHarvestedPartial { set; get; }
 
-        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Cohorts Killed")]
-        public int CohortsKilled { set; get; }
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Number of Cohorts Completely Harvested")]
+        public int CohortsHarvestedComplete { set; get; }
 
-        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Species Cohorts Killed", SppList = true)]
-        public double[] CohortsKilledBy { set; get; }
+        [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Species Cohorts Harvested by Species", SppList = true)]
+        public double[] CohortsHarvested_ { set; get; }
 
         
         //[DataFieldAttribute(Unit = FiledUnits.None, Desc = "Initiation Row")]
