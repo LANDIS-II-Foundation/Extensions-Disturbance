@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Landis.Extension.Succession.Biomass;
 
 namespace Landis.Extension.DroughtDisturbance
 {
@@ -278,8 +277,8 @@ namespace Landis.Extension.DroughtDisturbance
                         }
                         siteBioRemoved += bioRemoved;
                         bioRemovedSpp += bioRemoved;
-                        ForestFloor.AddWoody(woodyRemoved, species, site);
-                        ForestFloor.AddLitter(nonWoodyRemoved, species, site);
+                        Landis.Extension.Succession.Biomass.ForestFloor.AddWoody(woodyRemoved, species, site);
+                        Landis.Extension.Succession.Biomass.ForestFloor.AddLitter(nonWoodyRemoved, species, site);
                         cohortKilledSpp += cohortsKilled;
                         extraBioRemovedSpp += extraRemoved;
                         removedSpp[species.Index] = bioRemovedSpp;
