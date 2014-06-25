@@ -18,14 +18,14 @@
 Source: {#BuildDir}\Landis.Extension.DroughtDisturbance.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 ; The user guide
-Source: docs\LANDIS-II Drought Disturbance v1.0 User Guide.pdf; DestDir: {app}\docs; DestName: LANDIS-II {#PackageName} v{#Version}{#ReleaseAbbr} User Guide.pdf
+Source: docs\LANDIS-II Drought Disturbance v1.0 User Guide.pdf; DestDir: {app}\docs; DestName: LANDIS-II {#PackageName} v{#Version}{#ReleaseAbbr} User Guide.pdf; Flags: replacesameversion
 
 ; Sample input file
-Source: examples\*; DestDir: {app}\examples\drought-disturbance
+Source: examples\*; DestDir: {app}\examples\drought-disturbance; Flags: replacesameversion
 
 ; The extension's info file
 #define ExtensionInfoFile PackageName + " " + Version + ReleaseAbbr+ ".txt"
-Source: Drought Disturbance v1.0.txt; DestDir: {#LandisPlugInDir}; DestName: {#ExtensionInfoFile}
+Source: Drought Disturbance v1.0.txt; DestDir: {#LandisPlugInDir}; DestName: {#ExtensionInfoFile}; Flags: replacesameversion
 
 [Run]
 ;; Run plug-in admin tool to add an entry for the plug-in
