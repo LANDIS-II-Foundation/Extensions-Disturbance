@@ -81,7 +81,6 @@
     <Compile Include="CompleteStandSpreading.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SummaryLog.cs" />
     <Compile Include="EventsLog.cs" />
     <Compile Include="IInputParameters.cs" />
@@ -115,6 +114,9 @@
     <Compile Include="SpecificAgesCohortSelector.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

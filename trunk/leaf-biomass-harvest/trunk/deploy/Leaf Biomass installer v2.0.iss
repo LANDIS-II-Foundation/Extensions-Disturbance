@@ -44,7 +44,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#ExtensionInfoFile}"" "; Worki
 ;; Run plug-in admin tool to remove the entry for the plug-in
 
 [Code]
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
