@@ -19,10 +19,10 @@ Source: ..\src\bin\debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags:
 [Files]
 
 Source: docs\LANDIS-II Leaf Biomass Insect Defoliation v1.1 User Guide.pdf; DestDir: {#AppDir}\doc
-Source: examples\*.txt; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
-Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
-Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
-Source: examples\*.bat; DestDir: {#AppDir}\examples\biomass-insects; Flags: recursesubdirs
+Source: examples\*.txt; DestDir: {#AppDir}\examples\leaf-biomass-insects; Flags: recursesubdirs
+Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\leaf-biomass-insects; Flags: recursesubdirs
+Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\leaf-biomass-insects; Flags: recursesubdirs
+Source: examples\*.bat; DestDir: {#AppDir}\examples\leaf-biomass-insects; Flags: recursesubdirs
 
 #define BioBugs "Leaf Biomass Insects 1.1.txt"
 Source: {#BioBugs}; DestDir: {#LandisPlugInDir}
@@ -38,7 +38,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#BioBugs}"" "; WorkingDir: {#L
 ;; Run plug-in admin tool to remove entries for each plug-in
 
 [Code]
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
