@@ -1,6 +1,6 @@
 #define PackageName      "Base Wind"
 #define PackageNameLong  "Base Wind Extension"
-#define Version          "2.1"
+#define Version          "2.1.1"
 #define ReleaseType      "official"
 
 #define CoreVersion      "6.0"
@@ -35,7 +35,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#BaseWind}"" "; WorkingDir: {#
 
 [Code]
 { Check for other prerequisites during the setup initialization }
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
