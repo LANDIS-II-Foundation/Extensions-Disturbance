@@ -1,20 +1,25 @@
 #define PackageName      "Base Fire"
 #define PackageNameLong  "Base Fire Extension"
-#define Version          "3.0.2"
+#define Version          "3.0.3"
 #define ReleaseType      "official"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
+#define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
+#define AppDir "C:\Program Files\LANDIS-II\v6"
 
 [Files]
 
-Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BaseFire.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: ..\src\bin\debug\Landis.Extension.BaseFire.dll; DestDir: {#AppDir}; Flags: replacesameversion
 
 ; Base Fire
-Source: docs\LANDIS-II Base Fire v3.0 User Guide.pdf; DestDir: {app}\docs
-Source: examples\*; DestDir: {app}\examples\base-fire
+Source: docs\LANDIS-II Base Fire v3.0 User Guide.pdf; DestDir: {#BuildDir}\docs
+Source: examples\*.txt; DestDir: {#BuildDir}\examples\base-fire
+Source: examples\*.bat; DestDir: {#BuildDir}\examples\base-fire
+Source: examples\ecoregions.gis; DestDir: {#BuildDir}\examples\base-fire
+Source: examples\initial-communities.gis; DestDir: {#BuildDir}\examples\base-fire
 
 #define BaseFire "Base Fire 3.0.2.txt"
 Source: {#BaseFire}; DestDir: {#LandisPlugInDir}
@@ -29,7 +34,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#BaseFire}"" "; WorkingDir: {#
 
 [Code]
 { Check for other prerequisites during the setup initialization }
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Code section) v3.iss"
 
 
 //-----------------------------------------------------------------------------

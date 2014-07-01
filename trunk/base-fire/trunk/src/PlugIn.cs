@@ -16,7 +16,7 @@ namespace Landis.Extension.BaseFire
     public class PlugIn
         : ExtensionMain 
     {
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:fire");
+        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:fire");
         public static readonly string ExtensionName = "Base Fire";
 
         private string mapNameTemplate;
@@ -32,7 +32,7 @@ namespace Landis.Extension.BaseFire
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, Type)
+            : base(ExtensionName, ExtType)
         {
         }
 

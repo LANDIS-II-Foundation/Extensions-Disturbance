@@ -91,7 +91,7 @@ namespace Landis.Extension.BaseFire
         ExtensionType IDisturbance.Type
         {
             get {
-                return PlugIn.Type;
+                return PlugIn.ExtType;
             }
         }
 
