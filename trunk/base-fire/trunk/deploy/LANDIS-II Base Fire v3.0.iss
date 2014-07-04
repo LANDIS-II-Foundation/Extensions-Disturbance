@@ -7,22 +7,25 @@
 #define CoreReleaseAbbr  ""
 
 #include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
-#define BuildDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
+#define ExtDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
 #define AppDir "C:\Program Files\LANDIS-II\v6"
 
 [Files]
 
-Source: ..\src\bin\debug\Landis.Extension.BaseFire.dll; DestDir: {#AppDir}; Flags: replacesameversion
+Source: ..\src\bin\debug\Landis.Extension.BaseFire.dll; DestDir: {#ExtDir}; Flags: replacesameversion
 
 ; Base Fire
-Source: docs\LANDIS-II Base Fire v3.0 User Guide.pdf; DestDir: {#BuildDir}\docs
-Source: examples\*.txt; DestDir: {#BuildDir}\examples\base-fire
-Source: examples\*.bat; DestDir: {#BuildDir}\examples\base-fire
-Source: examples\ecoregions.gis; DestDir: {#BuildDir}\examples\base-fire
-Source: examples\initial-communities.gis; DestDir: {#BuildDir}\examples\base-fire
+Source: docs\LANDIS-II Base Fire v3.0 User Guide.pdf; DestDir: {#AppDir}\docs
+Source: examples\*.txt; DestDir: {#AppDir}\examples\base-fire
+Source: examples\*.bat; DestDir: {#AppDir}\examples\base-fire
+Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\base-fire
+Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\base-fire
 
 #define BaseFire "Base Fire 3.0.2.txt"
 Source: {#BaseFire}; DestDir: {#LandisPlugInDir}
+
+[InstallDelete]
+Type: files; Name: "{#AppDir}\Landis.Extension.BaseFire.dll"
 
 [Run]
 ;; Run plug-in admin tool to add the entry for the plug-in
