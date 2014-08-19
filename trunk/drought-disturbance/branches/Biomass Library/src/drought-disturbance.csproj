@@ -56,7 +56,7 @@
       <HintPath>..\..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Parameters-v1">
-      <HintPath>..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\build\Landis.Library.Parameters-v1.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Parameters-v1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Succession">
       <HintPath>..\..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession.dll</HintPath>
@@ -83,12 +83,6 @@
     <Compile Include="SpeciesAuxParm.cs" />
     <Compile Include="SpeciesData.cs" />
     <Compile Include="UShortPixel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\parameters\trunk\src\parameter-lib.csproj">
-      <Project>{36F8E9F7-E210-4657-A23B-1A9749426488}</Project>
-      <Name>parameter-lib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
