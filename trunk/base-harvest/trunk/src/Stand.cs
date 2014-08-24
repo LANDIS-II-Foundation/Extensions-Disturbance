@@ -5,7 +5,6 @@
 
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.SpatialModeling;
-using Landis.Library.AgeOnlyCohorts;
 using System.Collections;
 using System.Collections.Generic;
 

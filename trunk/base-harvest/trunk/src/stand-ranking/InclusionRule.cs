@@ -3,7 +3,6 @@
 // files in this project's top-level directory, and at:
 //   http://landis-extensions.googlecode.com/svn/trunk/base-harvest/trunk/
 
-using Landis.Library.AgeOnlyCohorts;
 using System;
 using System.Collections.Generic;
 

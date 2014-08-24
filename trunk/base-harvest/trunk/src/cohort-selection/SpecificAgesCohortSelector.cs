@@ -4,7 +4,6 @@
 //   http://landis-extensions.googlecode.com/svn/trunk/base-harvest/trunk/
 
 using Landis.Library.AgeOnlyCohorts;
-using Landis.Core;
 
 using System.Collections.Generic;
 

@@ -4,10 +4,8 @@
 //   http://landis-extensions.googlecode.com/svn/trunk/base-harvest/trunk/
 
 using Edu.Wisc.Forest.Flel.Util;
-using Landis.SpatialModeling;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using log4net;
 
