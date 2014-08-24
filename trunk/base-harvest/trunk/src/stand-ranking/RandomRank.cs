@@ -1,3 +1,8 @@
+// This file is part of the Base Harvest extension for LANDIS-II.
+// For copyright and licensing information, see the NOTICE and LICENSE
+// files in this project's top-level directory, and at:
+//   http://landis-extensions.googlecode.com/svn/trunk/base-harvest/trunk/
+
 using System.Collections.Generic;   //added to use List data structure
 
 namespace Landis.Extension.BaseHarvest

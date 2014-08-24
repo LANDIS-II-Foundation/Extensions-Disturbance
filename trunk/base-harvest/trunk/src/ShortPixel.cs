@@ -1,5 +1,7 @@
-//  Copyright 2005-2010 Portland State University, University of Wisconsin
-//  Authors:  Robert M. Scheller, James B. Domingo
+// This file is part of the Base Harvest extension for LANDIS-II.
+// For copyright and licensing information, see the NOTICE and LICENSE
+// files in this project's top-level directory, and at:
+//   http://landis-extensions.googlecode.com/svn/trunk/base-harvest/trunk/
 
 using Landis.SpatialModeling;
 
