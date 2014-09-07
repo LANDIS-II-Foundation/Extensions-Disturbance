@@ -16,9 +16,9 @@
 ; Source: ..\src\bin\debug\Landis.Library.BiomassCohorts.dll; DestDir: {#ExtDir}; Flags: replacesameversion uninsneveruninstall
 
 ; Dynamic Fire Fuel System v1.0 plug-in and auxiliary libs (Troschuetz Random)
-Source: ..\src\bin\debug\Landis.Extension.BiomassFuels.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: ..\src\bin\debug\Landis.Extension.BiomassFuels.dll; DestDir: {#ExtDir}; Flags: replacesameversion
 
-Source: docs\LANDIS-II Dynamic Biomass Fuel System v2.0 User Guide.pdf; DestDir: {app}\docs
+Source: docs\LANDIS-II Dynamic Biomass Fuel System v2.0 User Guide.pdf; DestDir: {#AppDir}\docs
 Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\dynamic-biomass-fuels
 Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\dynamic-biomass-fuels
 Source: examples\*.txt; DestDir: {#AppDir}\examples\dynamic-biomass-fuels
