@@ -7,17 +7,22 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
+#define ExtDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
+#define AppDir "C:\Program Files\LANDIS-II\v6"
 
 [Files]
 ; Cohort and Succession Libraries
-Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Library.BiomassCohorts.dll; DestDir: {app}\bin; Flags: replacesameversion uninsneveruninstall
+; Source: ..\src\bin\debug\Landis.Library.BiomassCohorts.dll; DestDir: {#ExtDir}; Flags: replacesameversion uninsneveruninstall
 
 ; Dynamic Fire Fuel System v1.0 plug-in and auxiliary libs (Troschuetz Random)
-Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.BiomassFuels.dll; DestDir: {app}\bin; Flags: replacesameversion
+Source: ..\src\bin\debug\Landis.Extension.BiomassFuels.dll; DestDir: {app}\bin; Flags: replacesameversion
 
 Source: docs\LANDIS-II Dynamic Biomass Fuel System v2.0 User Guide.pdf; DestDir: {app}\docs
-Source: examples\*; DestDir: {app}\examples\dynamic-biomass-fuels
+Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\dynamic-biomass-fuels
+Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\dynamic-biomass-fuels
+Source: examples\*.txt; DestDir: {#AppDir}\examples\dynamic-biomass-fuels
+Source: examples\*.bat; DestDir: {#AppDir}\examples\dynamic-biomass-fuels
 
 #define DynFuelSys "Dynamic Biomass Fuels 2.0.txt"
 Source: {#DynFuelSys}; DestDir: {#LandisPlugInDir}
@@ -33,7 +38,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#DynFuelSys}"" "; WorkingDir: 
 ; Filename: {#PlugInAdminTool}; Parameters: "remove ""Dynamic Biomass Fuel System"" "; WorkingDir: {#LandisPlugInDir}
 
 [Code]
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 

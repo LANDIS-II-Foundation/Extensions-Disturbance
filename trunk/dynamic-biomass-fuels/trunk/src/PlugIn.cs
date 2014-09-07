@@ -13,7 +13,7 @@ namespace Landis.Extension.BiomassFuels
     public class PlugIn
         : ExtensionMain
     {
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:fuels");
+        public static readonly ExtensionType extType = new ExtensionType("disturbance:fuels");
         public static readonly string PlugInName = "Dynamic Biomass Fuels";
 
         private string mapNameTemplate;
@@ -31,7 +31,7 @@ namespace Landis.Extension.BiomassFuels
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(PlugInName, Type)
+            : base(PlugInName, extType)
         {
         }
 
@@ -52,7 +52,7 @@ namespace Landis.Extension.BiomassFuels
         {
             modelCore = mCore;
             InputParametersParser parser = new InputParametersParser();
-            parameters = modelCore.Load<IInputParameters>(dataFile, parser);
+            parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
 
         }
 
@@ -85,11 +85,11 @@ namespace Landis.Extension.BiomassFuels
         public override void Run()
         {
 
-            modelCore.Log.WriteLine("  Re-initializing all values to zero...");
+            modelCore.UI.WriteLine("  Re-initializing all values to zero...");
             SiteVars.FuelType.ActiveSiteValues = 0;
             SiteVars.DecidFuelType.ActiveSiteValues = 0;
 
-            modelCore.Log.WriteLine("  Calculating the Fuel Type Index for all active cells...");
+            modelCore.UI.WriteLine("  Calculating the Fuel Type Index for all active cells...");
             foreach (ActiveSite site in modelCore.Landscape)  //ActiveSites
             {
                 CalcFuelType(site, fuelTypes, disturbanceTypes);
@@ -97,7 +97,7 @@ namespace Landis.Extension.BiomassFuels
             }
 
             string path = MapNames.ReplaceTemplateVars(mapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("   Writing Fuel map to {0} ...", path);
+            modelCore.UI.WriteLine("   Writing Fuel map to {0} ...", path);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(path, modelCore.Landscape.Dimensions))
             {
                 BytePixel pixel = outputRaster.BufferPixel;
@@ -114,7 +114,7 @@ namespace Landis.Extension.BiomassFuels
             }
 
             string conpath = MapNames.ReplaceTemplateVars(pctConiferMapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("   Writing % Conifer map to {0} ...", conpath);
+            modelCore.UI.WriteLine("   Writing % Conifer map to {0} ...", conpath);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(conpath, modelCore.Landscape.Dimensions))
             {
                 BytePixel pixel = outputRaster.BufferPixel;
@@ -130,7 +130,7 @@ namespace Landis.Extension.BiomassFuels
             }
 
             string firpath = MapNames.ReplaceTemplateVars(pctDeadFirMapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("   Writing % Dead Fir map to {0} ...", firpath);
+            modelCore.UI.WriteLine("   Writing % Dead Fir map to {0} ...", firpath);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(firpath, modelCore.Landscape.Dimensions))
             {
                 BytePixel pixel = outputRaster.BufferPixel;
@@ -179,7 +179,7 @@ namespace Landis.Extension.BiomassFuels
                                 if(cohort.Age >= ftype.MinAge && cohort.Age <= ftype.MaxAge)
                                     sppValue += cohort.Biomass;
 
-                            //modelCore.Log.WriteLine("sppVaue={0}, spp={1}, cohortB={2}.", sppValue, cohort.Species.Name, cohort.Biomass);
+                            //modelCore.UI.WriteLine("sppVaue={0}, spp={1}, cohortB={2}.", sppValue, cohort.Species.Name, cohort.Biomass);
 
                             if(ftype[species.Index] == -1)
                                 forTypValue[ftype.Index] -= sppValue;

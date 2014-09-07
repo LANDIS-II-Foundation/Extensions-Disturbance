@@ -16,6 +16,14 @@ namespace Landis.Extension.BiomassFuels
     {
 
         //---------------------------------------------------------------------
+        public override string LandisDataValue
+        {
+            get
+            {
+                return PlugIn.PlugInName;
+            }
+        }
+        //---------------------------------------------------------------------
 
         public InputParametersParser()
         {
@@ -26,10 +34,7 @@ namespace Landis.Extension.BiomassFuels
 
         protected override IInputParameters Parse()
         {
-            InputVar<string> landisData = new InputVar<string>("LandisData");
-            ReadVar(landisData);
-            if (landisData.Value.Actual != PlugIn.PlugInName)
-                throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.PlugInName);
+            ReadLandisDataVar();
             
             InputParameters parameters = new InputParameters(PlugIn.ModelCore.Species.Count);
 
@@ -75,7 +80,7 @@ namespace Landis.Extension.BiomassFuels
             //------------------------------------------------------------
             //  Read definitions of Fuel maps
 
-            PlugIn.ModelCore.Log.WriteLine("   Reading in the Fuel Assignment table...");
+            PlugIn.ModelCore.UI.WriteLine("   Reading in the Fuel Assignment table...");
             ReadName(FuelTypeNames);
 
             List<string> speciesNames = new List<string>();
@@ -159,7 +164,7 @@ namespace Landis.Extension.BiomassFuels
             if (ReadOptionalName(EcoregionTable))
             {
 
-                PlugIn.ModelCore.Log.WriteLine("   Loading Ecoregion data...");
+                PlugIn.ModelCore.UI.WriteLine("   Loading Ecoregion data...");
                 InputVar<int> fi2 = new InputVar<int>("Fuel Index (Ecoregion Table)");
                 InputVar<string> ecoregionName = new InputVar<string>("Ecoregion Name");
                 lineNumbers.Clear();
@@ -204,7 +209,7 @@ namespace Landis.Extension.BiomassFuels
 
             //------------------------------------------------------------
             //  Read definitions of Disturbance Types
-            PlugIn.ModelCore.Log.WriteLine("   Reading in the Disturbance Type table...");
+            PlugIn.ModelCore.UI.WriteLine("   Reading in the Disturbance Type table...");
             ReadName(DisturbanceConversionTable);
 
             InputVar<int> fti = new InputVar<int>("Fuel Index");
@@ -250,7 +255,7 @@ namespace Landis.Extension.BiomassFuels
             //------------------------------------------------------------
             // Template for filenames of Fuel maps
 
-            PlugIn.ModelCore.Log.WriteLine("   Reading in map names...");
+            PlugIn.ModelCore.UI.WriteLine("   Reading in map names...");
 
             InputVar<string> mapFileNames = new InputVar<string>(MapFileNames);
             ReadVar(mapFileNames);
