@@ -1,11 +1,9 @@
 //  Copyright 2007-2010 USFS Portland State University, Northern Research Station, University of Wisconsin
 //  Authors:  Robert M. Scheller, Brian R. Miranda
 
-using Landis.Core;
+using System.Collections.Generic;
 using Landis.Library.AgeOnlyCohorts;
 using Landis.SpatialModeling;
-
-using System.Collections.Generic;
 
 namespace Landis.Extension.DynamicFuels
 {
@@ -47,7 +45,7 @@ namespace Landis.Extension.DynamicFuels
             
             harvestPrescriptionName = PlugIn.ModelCore.GetSiteVar<string>("Harvest.PrescriptionName");
             timeOfLastHarvest       = PlugIn.ModelCore.GetSiteVar<int>("Harvest.TimeOfLastEvent");
-            harvestCohortsKilled    = PlugIn.ModelCore.GetSiteVar<int>("Harvest.CohortsKilled");
+            harvestCohortsKilled = PlugIn.ModelCore.GetSiteVar<int>("Harvest.CohortsDamaged");
             timeOfLastFire          = PlugIn.ModelCore.GetSiteVar<int>("Fire.TimeOfLastEvent");
             fireSeverity            = PlugIn.ModelCore.GetSiteVar<byte>("Fire.Severity");
             timeOfLastWind          = PlugIn.ModelCore.GetSiteVar<int>("Wind.TimeOfLastEvent");
@@ -64,7 +62,7 @@ namespace Landis.Extension.DynamicFuels
         {
             harvestPrescriptionName = PlugIn.ModelCore.GetSiteVar<string>("Harvest.PrescriptionName");
             timeOfLastHarvest = PlugIn.ModelCore.GetSiteVar<int>("Harvest.TimeOfLastEvent");
-            harvestCohortsKilled = PlugIn.ModelCore.GetSiteVar<int>("Harvest.CohortsKilled");
+            harvestCohortsKilled = PlugIn.ModelCore.GetSiteVar<int>("Harvest.CohortsDamaged");
             timeOfLastFire = PlugIn.ModelCore.GetSiteVar<int>("Fire.TimeOfLastEvent");
             fireSeverity = PlugIn.ModelCore.GetSiteVar<byte>("Fire.Severity");
             timeOfLastWind = PlugIn.ModelCore.GetSiteVar<int>("Wind.TimeOfLastEvent");

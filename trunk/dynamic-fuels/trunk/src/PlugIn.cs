@@ -1,11 +1,10 @@
 //  Copyright 2007-2010 USFS Portland State University, Northern Research Station, University of Wisconsin
 //  Authors:  Robert M. Scheller, Brian R. Miranda
 
+using System.Collections.Generic;
 using Landis.Core;
 using Landis.Library.AgeOnlyCohorts;
 using Landis.SpatialModeling;
-using System.Collections.Generic;
-using System;
 
 namespace Landis.Extension.DynamicFuels
 {
@@ -303,8 +302,8 @@ namespace Landis.Extension.DynamicFuels
             // Next check the disturbance types.  This will override any other existing fuel type.
             foreach(DisturbanceType slash in DisturbanceTypes)
             {
-                if (SiteVars.HarvestCohortsKilled != null && SiteVars.HarvestCohortsKilled[site] > 0)
-                {
+                //if (SiteVars.HarvestCohortsKilled != null && SiteVars.HarvestCohortsKilled[site] > 0)
+                //{
                     if (SiteVars.TimeOfLastHarvest != null &&
                         (modelCore.CurrentTime - SiteVars.TimeOfLastHarvest[site] <= slash.MaxAge))
                     {
@@ -319,7 +318,7 @@ namespace Landis.Extension.DynamicFuels
                             }
                         }
                     }
-                }
+                //}
                 //Check for fire severity effects of fuel type
                 if (SiteVars.FireSeverity != null && SiteVars.FireSeverity[site] > 0)
                 {
