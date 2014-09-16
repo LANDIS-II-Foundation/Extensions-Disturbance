@@ -12,7 +12,7 @@ namespace Landis.Extension.LeafBiomassFuels
     public class PlugIn
         : ExtensionMain
     {
-        public static readonly ExtensionType Type = new ExtensionType("disturbance:fuels");
+        public static readonly ExtensionType extType = new ExtensionType("disturbance:fuels");
         public static readonly string ExtensionName = "Dynamic Leaf Biomass Fuels";
         private static IInputParameters parameters;
         private static ICore modelCore;
@@ -29,7 +29,7 @@ namespace Landis.Extension.LeafBiomassFuels
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, Type)
+            : base(ExtensionName, extType)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Landis.Extension.LeafBiomassFuels
         {
             modelCore = mCore;
             InputParametersParser parser = new InputParametersParser();
-            parameters = mCore.Load<IInputParameters>(dataFile, parser);
+            parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
         }
         //---------------------------------------------------------------------
 
@@ -79,11 +79,11 @@ namespace Landis.Extension.LeafBiomassFuels
         /// </param>
         public override void Run()
         {
-            PlugIn.ModelCore.Log.WriteLine("  Re-initializing all values to zero...");
+            PlugIn.ModelCore.UI.WriteLine("  Re-initializing all values to zero...");
             SiteVars.FuelType.ActiveSiteValues = 0;
             SiteVars.DecidFuelType.ActiveSiteValues = 0;
 
-            PlugIn.ModelCore.Log.WriteLine("  Calculating the Fuel Type Index for all active cells...");
+            PlugIn.ModelCore.UI.WriteLine("  Calculating the Fuel Type Index for all active cells...");
             foreach (ActiveSite site in PlugIn.ModelCore.Landscape)  //ActiveSites
             {
                 CalcFuelType(site, fuelTypes, disturbanceTypes);
@@ -91,7 +91,7 @@ namespace Landis.Extension.LeafBiomassFuels
             }
 
             string path = MapNames.ReplaceTemplateVars(mapNameTemplate, PlugIn.ModelCore.CurrentTime);
-            PlugIn.ModelCore.Log.WriteLine("   Writing Fuel map to {0} ...", path);
+            PlugIn.ModelCore.UI.WriteLine("   Writing Fuel map to {0} ...", path);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(path, modelCore.Landscape.Dimensions))
             {
                 BytePixel pixel = outputRaster.BufferPixel;
@@ -107,7 +107,7 @@ namespace Landis.Extension.LeafBiomassFuels
             }
 
             string conpath = MapNames.ReplaceTemplateVars(pctConiferMapNameTemplate, PlugIn.ModelCore.CurrentTime);
-            PlugIn.ModelCore.Log.WriteLine("   Writing % Conifer map to {0} ...", conpath);
+            PlugIn.ModelCore.UI.WriteLine("   Writing % Conifer map to {0} ...", conpath);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(conpath, modelCore.Landscape.Dimensions))
             {
                 BytePixel pixel = outputRaster.BufferPixel;
@@ -122,7 +122,7 @@ namespace Landis.Extension.LeafBiomassFuels
                 }
             }
             string firpath = MapNames.ReplaceTemplateVars(pctDeadFirMapNameTemplate, PlugIn.ModelCore.CurrentTime);
-            PlugIn.ModelCore.Log.WriteLine("   Writing % Dead Fir map to {0} ...", firpath);
+            PlugIn.ModelCore.UI.WriteLine("   Writing % Dead Fir map to {0} ...", firpath);
             using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(firpath, modelCore.Landscape.Dimensions))
             {
                 BytePixel pixel = outputRaster.BufferPixel;
@@ -172,7 +172,7 @@ namespace Landis.Extension.LeafBiomassFuels
                                 if(cohort.Age >= ftype.MinAge && cohort.Age <= ftype.MaxAge)
                                     sppValue += cohort.Biomass;
 
-                            //PlugIn.ModelCore.Log.WriteLine("sppVaue={0}, spp={1}, cohortB={2}.", sppValue, cohort.Species.Name, cohort.Biomass);
+                            //PlugIn.ModelCore.UI.WriteLine("sppVaue={0}, spp={1}, cohortB={2}.", sppValue, cohort.Species.Name, cohort.Biomass);
 
                             if(ftype[species.Index] == -1)
                                 forTypValue[ftype.Index] -= sppValue;
@@ -210,7 +210,7 @@ namespace Landis.Extension.LeafBiomassFuels
                 if(ftype != null)
                 {
 
-                    //PlugIn.ModelCore.Log.WriteLine("   FuelType:  Index={0}.", ftype.Index);
+                    //PlugIn.ModelCore.UI.WriteLine("   FuelType:  Index={0}.", ftype.Index);
 
                     // Sum for the Conifer and Deciduous dominance
                     if ((ftype.BaseFuel == BaseFuelType.Conifer || ftype.BaseFuel == BaseFuelType.ConiferPlantation)

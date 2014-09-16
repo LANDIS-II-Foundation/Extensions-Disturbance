@@ -7,13 +7,18 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Setup section) v6.0.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
+#define ExtDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
+#define AppDir "C:\Program Files\LANDIS-II\v6"
 
 [Files]
-Source: C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.LeafBiomassFuels.dll; DestDir: {app}\bin
+Source: ..\src\bin\debug\Landis.Extension.LeafBiomassFuels.dll; DestDir: {#ExtDir}
 
-Source: docs\LANDIS-II Dynamic Fuels - Leaf Biomass v2.0 User Guide.pdf; DestDir: {app}\docs
-Source: examples\*; DestDir: {app}\examples\leaf-biomass-fuels
+Source: docs\LANDIS-II Dynamic Fuels - Leaf Biomass v2.0 User Guide.pdf; DestDir: {#AppDir}\docs
+Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\dynamic-leaf-biomass-fuels
+Source: examples\initial-communities.gis; DestDir: {#AppDir}\examples\dynamic-leaf-biomass-fuels
+Source: examples\*.txt; DestDir: {#AppDir}\examples\dynamic-leaf-biomass-fuels
+Source: examples\*.bat; DestDir: {#AppDir}\examples\dynamic-leaf-biomass-fuels
 
 #define DynFuelSys "Dynamic Fuels Leaf Biomass 2.0.txt"
 Source: {#DynFuelSys}; DestDir: {#LandisPlugInDir}
@@ -29,7 +34,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#DynFuelSys}"" "; WorkingDir: 
 ;; Run plug-in admin tool to remove entries for each plug-in
 
 [Code]
-#include AddBackslash(GetEnv("LANDIS_DEPLOY")) + "package (Code section) v3.iss"
+#include "J:\Scheller\LANDIS-II\deploy\package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 
