@@ -1,5 +1,0 @@
-C:\BRM\LANDIS_II\code\biomass-harvest\branches\Biomass Library\src\obj\Release\ResolveAssemblyReference.cache
-C:\bin\Debug\Landis.Extension.BiomassHarvest.dll
-C:\bin\Debug\Landis.Extension.BiomassHarvest.pdb
-C:\BRM\LANDIS_II\code\biomass-harvest\branches\Biomass Library\src\obj\Release\Landis.Extension.BiomassHarvest.dll
-C:\BRM\LANDIS_II\code\biomass-harvest\branches\Biomass Library\src\obj\Release\Landis.Extension.BiomassHarvest.pdb
