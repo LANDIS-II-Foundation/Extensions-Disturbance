@@ -20,8 +20,7 @@
 
 using Landis.SpatialModeling;
 using Landis.Library.BiomassCohorts;
-using Landis.Extension.Succession.Biomass;
-using Landis.Extension.BaseHarvest;
+using Landis.Library.Biomass;
 
 namespace Landis.Extension.BiomassHarvest
 {
