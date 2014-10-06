@@ -4,9 +4,10 @@
 //   http://landis-extensions.googlecode.com/svn/trunk/base-harvest/trunk/
 
 using Edu.Wisc.Forest.Flel.Util;
-using Landis.SpatialModeling;
 using Landis.Core;
+using Landis.Library.Harvest;
 using Landis.Library.Succession;
+using Landis.SpatialModeling;
 using System.Collections.Generic;
 using System.IO;
 using System;
@@ -55,7 +56,7 @@ namespace Landis.Extension.BaseHarvest
         public override void LoadParameters(string dataFile, ICore mCore)
         {
             modelCore = mCore;
-            SiteVars.Initialize();
+            Landis.Library.Harvest.Main.InitializeLib(modelCore);
             InputParametersParser parser = new InputParametersParser(mCore.Species);
             parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
             if (parser.RoundedRepeatIntervals.Count > 0)
