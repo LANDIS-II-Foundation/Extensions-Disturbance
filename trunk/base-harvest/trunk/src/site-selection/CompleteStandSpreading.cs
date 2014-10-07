@@ -87,8 +87,7 @@ namespace Landis.Extension.BaseHarvest {
 
             // Attempt to do the harvest
             if (SpreadFromStand(initialStand)) {
-                //increment global event id number
-                PlugIn.EventId++;
+                
 
                 // loop through all harvestable stands and update
                 // appropriate items
@@ -102,6 +101,9 @@ namespace Landis.Extension.BaseHarvest {
                     if (!(standToHarvest == initialStand))
                         this.HarvestedNeighbors.Add(standToHarvest);
                 } // foreach(Stand standToHarvest in standsToHarvest)
+
+                //increment global event id number
+                PlugIn.EventId++;
 
             } else {
                 
