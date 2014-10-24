@@ -5,7 +5,7 @@
 
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.Core;
-using Landis.Library.Harvest;
+using Landis.Library.HarvestManagement;
 using Landis.Library.Succession;
 using Landis.SpatialModeling;
 using System.Collections.Generic;
@@ -15,9 +15,8 @@ using System;
 namespace Landis.Extension.BaseHarvest
 {
     public class PlugIn
-        : ExtensionMain
+        : HarvestExtensionMain
     {
-        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:harvest");
         public static readonly string ExtensionName = "Base Harvest";
 
         private IManagementAreaDataset managementAreas;
@@ -38,7 +37,7 @@ namespace Landis.Extension.BaseHarvest
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, ExtType)
+            : base(ExtensionName)
         {
         }
 
@@ -56,7 +55,7 @@ namespace Landis.Extension.BaseHarvest
         public override void LoadParameters(string dataFile, ICore mCore)
         {
             modelCore = mCore;
-            Landis.Library.Harvest.Main.InitializeLib(modelCore);
+            Landis.Library.HarvestManagement.Main.InitializeLib(modelCore);
             InputParametersParser parser = new InputParametersParser(mCore.Species);
             parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
             if (parser.RoundedRepeatIntervals.Count > 0)
@@ -256,23 +255,11 @@ namespace Landis.Extension.BaseHarvest
             //csv string for log file, contains species kill count
             string species_count = "";
 
-            //if this is the right species match, add it's count to the csv string
             foreach (ISpecies species in PlugIn.ModelCore.Species)
             {
-                bool assigned = false;
-
-                //loop through dictionary of species kill count
-                foreach (KeyValuePair<string, int> kvp in stand.DamageTable) {
-                    if (species.Name == kvp.Key) {
-                        assigned = true;
-                        species_count += kvp.Value + ",";
-                        totalSpeciesCohorts[standPrescriptionNumber, species.Index] += kvp.Value;
-                    }
-                }
-                if (!assigned) {
-                    //put a 0 there if it's not assigned (because none were found in the dictionary)
-                    species_count += "0,";
-                }
+                int cohortCount = stand.DamageTable[species];
+                species_count += string.Format("{0},", cohortCount);
+                totalSpeciesCohorts[standPrescriptionNumber, species.Index] += cohortCount;
             }
 
             //now that the damage table for this stand has been recorded, clear it!!

@@ -11,7 +11,7 @@ namespace Landis.Extension.BaseHarvest
     /// A parser that reads harvest parameters from text input.
     /// </summary>
     public class InputParametersParser
-        : Landis.Library.Harvest.InputParametersParser
+        : Landis.Library.HarvestManagement.InputParametersParser
     {
         /// <summary>
         /// Initializes a new instance.
