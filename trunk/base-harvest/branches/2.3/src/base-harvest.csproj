@@ -52,9 +52,14 @@
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Landis.Library.Harvest-v0">
+    <Reference Include="Landis.Library.HarvestManagement-v0">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\Harvest\0.4\Landis.Library.Harvest-v0.dll</HintPath>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\build\Landis.Library.HarvestManagement-v0.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Library.SiteHarvest-v0">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\build\Landis.Library.SiteHarvest-v0.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Landis.Library.Succession, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
