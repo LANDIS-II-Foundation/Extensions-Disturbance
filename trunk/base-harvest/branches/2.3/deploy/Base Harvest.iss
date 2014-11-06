@@ -10,7 +10,9 @@
 LicenseFile={#LandisSDK}\licenses\LANDIS-II_Binary_license.rtf
 
 [Files]
-Source: {#LandisExtDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
+Source: {#LandisBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
+Source: {#LandisBuildDir}\Landis.Library.HarvestManagement-v0.dll; DestDir: {app}\bin\extensions
+Source: {#LandisBuildDir}\Landis.Library.SiteHarvest-v0.dll; DestDir: {app}\bin\extensions
 
 #define UserGuideSrc ExtensionName + " vX.Y User Guide.pdf"
 #define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
