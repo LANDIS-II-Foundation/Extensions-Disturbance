@@ -18,7 +18,7 @@
 //   Robert M. Scheller, Portland State University
 
  
-using BaseHarvest = Landis.Extension.BaseHarvest;
+using Landis.Library.HarvestManagement;
 
 namespace Landis.Extension.BiomassHarvest
 {
@@ -27,7 +27,7 @@ namespace Landis.Extension.BiomassHarvest
     /// </summary>
     public class Parameters
         // : BaseHarvest.Parameters, IParameters
-        : BaseHarvest.InputParameters, IParameters
+        : InputParameters, IParameters
     {
         private string biomassMapNamesTemplate;
 
@@ -47,7 +47,7 @@ namespace Landis.Extension.BiomassHarvest
                     // just like the template for prescription map names,
                     // we can use the MapNames class for validation.
                     // TO DO: update documentation for MapNames class.
-                    BaseHarvest.MapNames.CheckTemplateVars(value);
+                    MapNames.CheckTemplateVars(value);
                 }
                 biomassMapNamesTemplate = value;
             }

@@ -18,15 +18,13 @@
 //   Robert M. Scheller, Portland State University
  
 
-using BaseHarvest = Landis.Extension.BaseHarvest;
-
 namespace Landis.Extension.BiomassHarvest
 {
     /// <summary>
     /// The parameters for biomass harvest.
     /// </summary>
     public interface IParameters
-        : BaseHarvest.IInputParameters
+        : Landis.Library.HarvestManagement.IInputParameters
     {
         /// <summary>
         /// Template for pathnames for biomass-removed maps.

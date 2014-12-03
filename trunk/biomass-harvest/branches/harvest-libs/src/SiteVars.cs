@@ -24,7 +24,7 @@ using Landis.Library.Biomass;
 
 namespace Landis.Extension.BiomassHarvest
 {
-    public class SiteVars : Landis.Extension.BaseHarvest.SiteVars
+    public class SiteVars
     {
         private static ISiteVar<double> biomassRemoved;
         private static ISiteVar<int> cohortsPartiallyDamaged;
@@ -36,7 +36,7 @@ namespace Landis.Extension.BiomassHarvest
 
         //---------------------------------------------------------------------
 
-        public static new void Initialize()
+        public static void Initialize()
         {
 
             woodyDebris = PlugIn.ModelCore.GetSiteVar<Pool>("Succession.WoodyDebris");
@@ -60,7 +60,7 @@ namespace Landis.Extension.BiomassHarvest
 
         }
         //---------------------------------------------------------------------
-        public static new ushort GetMaxAge(ActiveSite site)
+        public static ushort GetMaxAge(ActiveSite site)
         {
             int maxAge = 0;
             foreach (ISpeciesCohorts sppCo in SiteVars.Cohorts[site])
@@ -98,7 +98,7 @@ namespace Landis.Extension.BiomassHarvest
         }
 
         //---------------------------------------------------------------------
-        public static new ISiteVar<ISiteCohorts> Cohorts
+        public static ISiteVar<ISiteCohorts> Cohorts
         {
             get
             {

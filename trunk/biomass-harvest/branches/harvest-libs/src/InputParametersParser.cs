@@ -19,13 +19,14 @@
  
 
 using Edu.Wisc.Forest.Flel.Util;
-using Landis.Extension.BaseHarvest;
 using Landis.Core;
+using Landis.Library.BiomassHarvest;
+using Landis.Library.HarvestManagement;
+using Landis.Library.SiteHarvest;
 using Landis.Library.Succession;
 using System.Collections.Generic;
 using System.Text;
 
-using BaseHarvest = Landis.Extension.BaseHarvest;
 
 namespace Landis.Extension.BiomassHarvest
 {
@@ -33,22 +34,8 @@ namespace Landis.Extension.BiomassHarvest
     /// A parser that reads the extension's parameters from text input.
     /// </summary>
     public class ParametersParser
-        : BaseHarvest.InputParametersParser
+        : InputParametersParser
     {
-        private static bool ageOrRangeWasRead = false;
-        private static IList<ushort> ages;
-        private static IList<AgeRange> ranges;
-        private static IDictionary<ushort, Percentage> percentages;
-        private static ISpecies currentSpecies;
-        private static SpecificAgesCohortSelector[] ageSelectors;
-
-        private ISpeciesDataset speciesDataset;
-        private double standSpreadMinTargetSize;
-        private double standSpreadMaxTargetSize;
-        private int minTimeSinceDamage;
-
-        //---------------------------------------------------------------------
-
         public override string LandisDataValue
         {
             get
@@ -61,17 +48,6 @@ namespace Landis.Extension.BiomassHarvest
 
         static ParametersParser()
         {
-            // The base class's static ctor registers a read method for age
-            // ranges.  Replace it with this project's read method that
-            // handles percentages for partial thinning.
-            InputValues.Register<AgeRange>(PartialThinning.ReadAgeOrRange);
-
-            PartialThinning.ReadAgeOrRangeEvent += AgeOrRangeWasRead;
-
-            ages = new List<ushort>();
-            ranges = new List<AgeRange>();
-            percentages = new Dictionary<ushort, Percentage>();
-            currentSpecies = null;
         }
 
         //---------------------------------------------------------------------
@@ -80,21 +56,66 @@ namespace Landis.Extension.BiomassHarvest
         /// Initializes a new instance.
         /// </summary>
         /// <param name="speciesDataset">
-        /// The dataset of species to look up species' names in.  Important note:  the base harvest
-        /// speciesDataset must be overwritten with the HarvestSpeciesDataset.  Methods within base harvest
-        /// will set the MostRecentlyFetchedSpecies parameter when they are reading in species names 
-        /// from a list of cohorts to be removed.  The value of MostRecentlyFetchedSpecies is not set within 
-        /// biomass harvest.
+        /// The dataset of species to look up species' names in.
         /// </param>
         public ParametersParser(ISpeciesDataset speciesDataset)
-            : base(new HarvestSpeciesDataset(speciesDataset))
+            : base(PlugIn.ExtensionName, speciesDataset)
         {
-            this.speciesDataset = speciesDataset;
-            ageSelectors = new SpecificAgesCohortSelector[speciesDataset.Count]; 
         }
 
         //---------------------------------------------------------------------
 
+        protected override Landis.Library.HarvestManagement.InputParameters CreateEmptyParameters()
+        {
+            return new Parameters();
+        }
+
+        //---------------------------------------------------------------------
+
+        protected override ICohortCutter CreateCohortCutter(ICohortSelector cohortSelector)
+        {
+            return CohortCutterFactory.CreateCutter(cohortSelector, HarvestExtensionMain.ExtType);
+        }
+ 
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Creates a cohort selection method for a specific set of ages and
+        /// age ranges.
+        /// </summary>
+        /// <remarks>
+        /// This overrides the base method so it can use the PartialThinning
+        /// class to handle cohort selections with percentages.
+        /// </remarks>
+        protected override void CreateCohortSelectionMethodFor(ISpecies species,
+                                                               IList<ushort> ages,
+                                                               IList<AgeRange> ranges)
+        {
+            if (!PartialThinning.CreateCohortSelectorFor(species, ages, ranges))
+            {
+                // There were no percentages specified for this species' ages
+                // and ranges.  So just create and store a whole cohort
+                // selector using the base method.
+                base.CreateCohortSelectionMethodFor(species, ages, ranges);
+            }
+        }
+
+        //---------------------------------------------------------------------
+
+        protected override void ReadBiomassMaps()
+        {
+            // TO DO: Probably should be required in the final release but made
+            // it optional for now so that CBI doesn't have to update every
+            // scenario in the short term.
+            InputVar<string> biomassMapNames = new InputVar<string>("BiomassMaps");
+            string foo;
+            if (ReadOptionalVar(biomassMapNames))
+                foo /*parameters.BiomassMapNames*/ = biomassMapNames.Value;
+        }
+
+        //---------------------------------------------------------------------
+
+#if DISABLE
         public static void AgeOrRangeWasRead(AgeRange ageRange,
                                              Percentage percentage)
         {
@@ -583,5 +604,6 @@ namespace Landis.Extension.BiomassHarvest
             }
             return new InputValue<ISiteSelector>(selector, valueAsStr.ToString());
         }
+#endif
     }
 }

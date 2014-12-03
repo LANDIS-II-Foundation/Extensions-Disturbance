@@ -6,23 +6,23 @@
 //   Robert M. Scheller, Portland State University
 
 using Edu.Wisc.Forest.Flel.Util;
-using Landis.Extension.BaseHarvest;
 using Landis.SpatialModeling;
 using Landis.Library.BiomassCohorts;
+using Landis.Library.BiomassHarvest;
+using Landis.Library.HarvestManagement;
 using Landis.Core;
 
 using System.Collections.Generic;
 using System.IO;
 using System;
 
-using BaseHarvest = Landis.Extension.BaseHarvest;
+using HarvestMgmtLib = Landis.Library.HarvestManagement;
 
 namespace Landis.Extension.BiomassHarvest
 {
     public class PlugIn
-        : ExtensionMain 
+        : HarvestExtensionMain 
     {
-        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:harvest");
         public static readonly string ExtensionName = "Biomass Harvest";
         
         private IManagementAreaDataset managementAreas;
@@ -49,7 +49,7 @@ namespace Landis.Extension.BiomassHarvest
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, ExtType)
+            : base(ExtensionName)
         {
         }
 
@@ -68,26 +68,19 @@ namespace Landis.Extension.BiomassHarvest
         public override void LoadParameters(string dataFile,
                                             ICore mCore)
         {
-            Landis.Extension.BaseHarvest.PlugIn baseHarvest = new BaseHarvest.PlugIn();
-
-            try
-            {
-                baseHarvest.LoadParameters(null, mCore);
-            }
-            catch (System.ArgumentNullException)
-            {
-                // ignore
-            }
-
             modelCore = mCore;
 
             // Add local event handler for cohorts death due to age-only
             // disturbances.
             Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
 
+            HarvestMgmtLib.Main.InitializeLib(modelCore);
+            HarvestExtensionMain.SiteHarvestedEvent += SiteHarvested;
+            Landis.Library.BiomassHarvest.Main.InitializeLib(modelCore);
+
             ParametersParser parser = new ParametersParser(modelCore.Species);
 
-            BaseHarvest.IInputParameters baseParameters = Landis.Data.Load<BaseHarvest.IInputParameters>(dataFile, parser);
+            HarvestMgmtLib.IInputParameters baseParameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
             parameters = baseParameters as IParameters;
             if (parser.RoundedRepeatIntervals.Count > 0)
             {
@@ -109,7 +102,6 @@ namespace Landis.Extension.BiomassHarvest
         {
             //event_id = 1;
             SiteVars.Initialize();
-            PartialHarvestDisturbance.Initialize();
             Timestep = parameters.Timestep;
             managementAreas = parameters.ManagementAreas;
             ModelCore.UI.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
@@ -170,11 +162,13 @@ namespace Landis.Extension.BiomassHarvest
         {
             running = true;
 
-            BaseHarvest.SiteVars.Prescription.ActiveSiteValues = null;
-            BaseHarvest.SiteVars.ReInitialize();
+            HarvestMgmtLib.SiteVars.Prescription.ActiveSiteValues = null;
+            HarvestMgmtLib.SiteVars.ReInitialize();
             SiteVars.BiomassRemoved.ActiveSiteValues = 0;
             SiteVars.CohortsPartiallyDamaged.ActiveSiteValues = 0;
-            BaseHarvest.SiteVars.CohortsDamaged.ActiveSiteValues = 0;
+            HarvestMgmtLib.SiteVars.CohortsDamaged.ActiveSiteValues = 0;
+
+            SiteBiomass.EnableRecordingForHarvest();
 
             //harvest each management area in the list
             foreach (ManagementArea mgmtArea in managementAreas) {
@@ -205,7 +199,7 @@ namespace Landis.Extension.BiomassHarvest
 
                         foreach (ActiveSite site in stand)
                         {
-                            if (SiteVars.CohortsPartiallyDamaged[site] > 0 || BaseHarvest.SiteVars.CohortsDamaged[site] > 0)
+                            if (SiteVars.CohortsPartiallyDamaged[site] > 0 || HarvestMgmtLib.SiteVars.CohortsDamaged[site] > 0)
                             {
                                 Landis.Library.Succession.Reproduction.PreventEstablishment(site);
                                 sitesToDelete.Add(site);
@@ -246,6 +240,22 @@ namespace Landis.Extension.BiomassHarvest
                 biomassMaps.WriteMap(modelCore.CurrentTime);
 
             running = false;
+            SiteBiomass.DisableRecordingForHarvest();
+        }
+
+        //---------------------------------------------------------------------
+
+        // Event handler when a site has been harvested.
+        public static void SiteHarvested(object                  sender,
+                                         SiteHarvestedEvent.Args eventArgs)
+        {
+            ActiveSite site = eventArgs.Site;
+            foreach (ISpecies species in ModelCore.Species)
+            {
+                int speciesBiomassHarvested = SiteBiomass.Harvested[species];
+                SiteVars.BiomassRemoved[site] += speciesBiomassHarvested;
+            }
+            SiteBiomass.ResetHarvestTotals();
         }
 
         //---------------------------------------------------------------------
@@ -285,7 +295,7 @@ namespace Landis.Extension.BiomassHarvest
                 foreach (Site site in modelCore.Landscape.AllSites)
                 {
                     if (site.IsActive) {
-                        Prescription prescription = BaseHarvest.SiteVars.Prescription[site];
+                        Prescription prescription = HarvestMgmtLib.SiteVars.Prescription[site];
                         if (prescription == null)
                             pixel.MapCode.Value = 1;
                         else
@@ -314,18 +324,18 @@ namespace Landis.Extension.BiomassHarvest
 
             foreach (ActiveSite site in stand) {
                 //set the prescription name for this site
-                if (BaseHarvest.SiteVars.Prescription[site] != null)
+                if (HarvestMgmtLib.SiteVars.Prescription[site] != null)
                 {
-                    standPrescriptionNumber = BaseHarvest.SiteVars.Prescription[site].Number;
-                    BaseHarvest.SiteVars.PrescriptionName[site] = BaseHarvest.SiteVars.Prescription[site].Name;
-                    BaseHarvest.SiteVars.TimeOfLastEvent[site] = modelCore.CurrentTime;
+                    standPrescriptionNumber = HarvestMgmtLib.SiteVars.Prescription[site].Number;
+                    HarvestMgmtLib.SiteVars.PrescriptionName[site] = HarvestMgmtLib.SiteVars.Prescription[site].Name;
+                    HarvestMgmtLib.SiteVars.TimeOfLastEvent[site] = modelCore.CurrentTime;
                 }
 
                 cohortsDamaged += SiteVars.CohortsPartiallyDamaged[site];
-                cohortsKilled += BaseHarvest.SiteVars.CohortsDamaged[site];
+                cohortsKilled += HarvestMgmtLib.SiteVars.CohortsDamaged[site];
 
 
-                if (SiteVars.CohortsPartiallyDamaged[site] > 0 ||  BaseHarvest.SiteVars.CohortsDamaged[site] > 0)
+                if (SiteVars.CohortsPartiallyDamaged[site] > 0 || HarvestMgmtLib.SiteVars.CohortsDamaged[site] > 0)
                 {
                     damagedSites++;
 
@@ -342,23 +352,10 @@ namespace Landis.Extension.BiomassHarvest
 
             //csv string for log file, contains species kill count
             string species_count = "";
-            //if this is the right species match, add it's count to the csv string
             foreach (ISpecies species in modelCore.Species) {
-                bool assigned = false;
-
-                //loop through dictionary of species kill count
-                foreach (KeyValuePair<string, int> kvp in stand.DamageTable) {
-                    if (species.Name == kvp.Key) {
-                        assigned = true;
-                        species_count += "," + kvp.Value;
-                        totalSpeciesCohorts[standPrescriptionNumber, species.Index] += kvp.Value;
-                    }
-                }
-                if (!assigned) {
-                    //put a 0 there if it's not assigned (because none were found in the dictionary)
-                    species_count += ",0";
-                    totalSpeciesCohorts[standPrescriptionNumber, species.Index] += 0;
-                }
+                int cohortCount = stand.DamageTable[species];
+                species_count += string.Format("{0},", cohortCount);
+                totalSpeciesCohorts[standPrescriptionNumber, species.Index] += cohortCount;
             }
 
             //now that the damage table for this stand has been recorded, clear it!!
