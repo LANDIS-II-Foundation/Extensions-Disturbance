@@ -42,11 +42,6 @@
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Landis.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Landis.Extension.BaseHarvest, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
@@ -61,10 +56,22 @@
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.BiomassCohorts.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Landis.Library.BiomassHarvest-v0, Version=0.2.5447.38128, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Landis.Library.BiomassHarvest.0.2.0\lib\net35\Landis.Library.BiomassHarvest-v0.dll</HintPath>
+    </Reference>
     <Reference Include="Landis.Library.Cohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Library.HarvestManagement-v0, Version=0.6.5417.41703, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Landis.Library.HarvestManagement.0.6.0\lib\net35\Landis.Library.HarvestManagement-v0.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.SiteHarvest-v0, Version=0.5.5410.18051, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Landis.Library.SiteHarvest.0.5.1\lib\net35\Landis.Library.SiteHarvest-v0.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Succession">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession.dll</HintPath>
@@ -94,6 +101,9 @@
     <Compile Include="HarvestSpeciesDataset.cs" />
     <Compile Include="SpecificAgesCohortSelector.cs" />
     <Compile Include="IntPixel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
