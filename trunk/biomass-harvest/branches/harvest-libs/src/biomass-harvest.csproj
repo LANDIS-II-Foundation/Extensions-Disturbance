@@ -8,8 +8,8 @@
     <ProjectGuid>{3317F51D-41BE-4E83-80A6-4C0EFDF64EC1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>biomass_harvest</RootNamespace>
-    <AssemblyName>Landis.Extension.BiomassHarvest</AssemblyName>
+    <RootNamespace>Landis.Extension.BiomassHarvest</RootNamespace>
+    <AssemblyName>Landis.Extension.BiomassHarvest-3.0</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
