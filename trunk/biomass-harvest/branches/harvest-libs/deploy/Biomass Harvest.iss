@@ -10,11 +10,16 @@
 LicenseFile=..\Apache-License-2.0.txt
 
 [Files]
-; Base Harvest
-Source: {#LandisExtDir}\Landis.Extension.BaseHarvest.dll; DestDir: {app}\bin\extensions
+#define ConfigOutDir '..\src\bin\Debug'
 
 ; The extension's assembly
-Source: {#LandisExtDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
+Source: {#ConfigOutDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
+
+; Supporting libraries
+; Note: Since they are used by other extensions, they are not uninstalled.
+Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v0.dll;    DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#ConfigOutDir}\Landis.Library.HarvestManagement-v0.dll; DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v0.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
 
 ; The user guide
 #define UserGuideSrc ExtensionName + " vX.Y User Guide.pdf"
