@@ -66,9 +66,9 @@
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Landis.Library.HarvestManagement-v0, Version=0.6.5417.41703, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Landis.Library.HarvestManagement-v0, Version=0.7.5455.30312, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Landis.Library.HarvestManagement.0.6.0\lib\net35\Landis.Library.HarvestManagement-v0.dll</HintPath>
+      <HintPath>packages\Landis.Library.HarvestManagement.0.7.0\lib\net35\Landis.Library.HarvestManagement-v0.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.SiteHarvest-v0, Version=0.5.5410.18051, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
