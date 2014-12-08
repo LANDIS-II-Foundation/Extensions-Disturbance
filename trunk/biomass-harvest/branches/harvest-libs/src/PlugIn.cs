@@ -101,6 +101,7 @@ namespace Landis.Extension.BiomassHarvest
         public override void Initialize()
         {
             //event_id = 1;
+            HarvestMgmtLib.SiteVars.GetExternalVars();
             SiteVars.Initialize();
             Timestep = parameters.Timestep;
             managementAreas = parameters.ManagementAreas;
@@ -163,7 +164,6 @@ namespace Landis.Extension.BiomassHarvest
             running = true;
 
             HarvestMgmtLib.SiteVars.Prescription.ActiveSiteValues = null;
-            HarvestMgmtLib.SiteVars.ReInitialize();
             SiteVars.BiomassRemoved.ActiveSiteValues = 0;
             SiteVars.CohortsPartiallyDamaged.ActiveSiteValues = 0;
             HarvestMgmtLib.SiteVars.CohortsDamaged.ActiveSiteValues = 0;
