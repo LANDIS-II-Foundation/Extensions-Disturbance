@@ -37,7 +37,7 @@ Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v0.dll;       DestDir: {app}\
 Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
 
 ; Sample input files
-Source: examples\*; DestDir: {app}\examples\{#ExtensionName}; Flags: recursesubdirs
+Source: examples\*; DestDir: {app}\examples\{#ExtensionName}\{#MajorMinor}; Flags: recursesubdirs
 
 ; The extension's info file
 #define ExtensionInfo  ExtensionName + " " + MajorMinor + ".txt"
