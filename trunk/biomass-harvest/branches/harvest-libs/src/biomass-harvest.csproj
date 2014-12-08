@@ -31,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <Import Project="biomass-harvest.props" Condition="Exists('biomass-harvest.props')" />
   <ItemGroup>
     <Reference Include="Edu.Wisc.Forest.Flel.Util, Version=1.1.400.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -99,6 +100,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition=" '$(ExtraAssemblySearchDirs)' != '' ">
+    <AssemblySearchPaths>$(ExtraAssemblySearchDirs);$(AssemblySearchPaths)</AssemblySearchPaths>
+  </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>"$(LANDIS_SDK)\staging\copy-to-build-dir.cmd" "$(ProjectDir)staging-list.txt" $(OutDir)</PostBuildEvent>
   </PropertyGroup>

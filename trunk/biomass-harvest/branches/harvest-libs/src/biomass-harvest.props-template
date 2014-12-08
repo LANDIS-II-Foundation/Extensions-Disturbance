@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Make a copy of this file with the ".props" file extension.  This will
+       cause the .csproj file to load the harvest libraries from the LANDIS-II
+	   build directory instead of from the project's ..\packages\ folder.
+	   This is necessary if you're doing active development on a harvest
+	   library and need this extension to compile against that copy of the
+	   library. -->
+  <PropertyGroup>
+    <LandisBuildDir>C:\Program Files\LANDIS-II\v6\bin\build</LandisBuildDir>
+	<ExtraAssemblySearchDirs>$(LandisBuildDir)</ExtraAssemblySearchDirs>
+  </PropertyGroup>
+</Project>
