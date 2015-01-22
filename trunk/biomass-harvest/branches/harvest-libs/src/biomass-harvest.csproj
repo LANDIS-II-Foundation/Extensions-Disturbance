@@ -50,29 +50,26 @@
     </Reference>
     <Reference Include="Landis.Library.Biomass">
       <!-- The hint path below will need to be updated once the library officially ships with succession extensions -->
-      <HintPath>C:\Program Files\LANDIS-II\v6\bin\build\Landis.Library.Biomass.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Biomass.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.BiomassCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.BiomassCohorts.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Landis.Library.BiomassHarvest-v0, Version=0.2.5447.38128, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Landis.Library.BiomassHarvest.0.2.0\lib\net35\Landis.Library.BiomassHarvest-v0.dll</HintPath>
+    <Reference Include="Landis.Library.BiomassHarvest-v1">
+      <HintPath>packages\Landis.Library.BiomassHarvest.1.0.0-rc1\lib\net35\Landis.Library.BiomassHarvest-v1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Cohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Landis.Library.HarvestManagement-v0, Version=0.7.5455.30312, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Landis.Library.HarvestManagement.0.7.0\lib\net35\Landis.Library.HarvestManagement-v0.dll</HintPath>
+    <Reference Include="Landis.Library.HarvestManagement-v1">
+      <HintPath>packages\Landis.Library.HarvestManagement.1.0.0-rc1\lib\net35\Landis.Library.HarvestManagement-v1.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.SiteHarvest-v0, Version=0.5.5410.18051, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Landis.Library.SiteHarvest.0.5.1\lib\net35\Landis.Library.SiteHarvest-v0.dll</HintPath>
+    <Reference Include="Landis.Library.SiteHarvest-v1">
+      <HintPath>packages\Landis.Library.SiteHarvest.1.0.0-rc1\lib\net35\Landis.Library.SiteHarvest-v1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Succession">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession.dll</HintPath>
