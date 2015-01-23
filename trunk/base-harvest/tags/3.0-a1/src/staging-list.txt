@@ -1,0 +1,5 @@
+{OutDir}\Landis.Extension.BaseHarvest.dll
+{OutDir}\Landis.Extension.BaseHarvest.pdb
+--no-overwrite
+{OutDir}\Landis.Library.HarvestManagement-v1.dll
+{OutDir}\Landis.Library.SiteHarvest-v1.dll
