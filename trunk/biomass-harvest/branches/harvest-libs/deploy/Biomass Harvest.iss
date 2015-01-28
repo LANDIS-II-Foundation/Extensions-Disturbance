@@ -27,9 +27,9 @@ Source: {#ConfigOutDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
 
 ; Harvest libraries
 ; Note: Since they are used by other extensions, they are not uninstalled.
-Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v0.dll;    DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
-Source: {#ConfigOutDir}\Landis.Library.HarvestManagement-v0.dll; DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
-Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v0.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v1.dll;    DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#ConfigOutDir}\Landis.Library.HarvestManagement-v1.dll; DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v1.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
 
 ; The user guide
 #define UserGuideSrc ExtensionName + " vX.Y User Guide.pdf"
