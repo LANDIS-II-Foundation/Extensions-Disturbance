@@ -69,6 +69,16 @@ namespace Landis.Extension.BaseHarvest
                                  interval.Original,
                                  interval.Adjusted);
             }
+            if (parser.ParserNotes.Count > 0)
+            {
+                foreach (List<string> nList in parser.ParserNotes)
+                {
+                    foreach (string nLine in nList)
+                    {
+                        PlugIn.ModelCore.UI.WriteLine(nLine);
+                    }
+                }
+            }
         }
         //---------------------------------------------------------------------
 
