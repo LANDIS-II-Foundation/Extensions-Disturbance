@@ -259,27 +259,32 @@ namespace Landis.Extension.LeafBiomassFuels
             PlugIn.ModelCore.UI.WriteLine("   Reading in map names...");
 
             InputVar<string> mapFileNames = new InputVar<string>(MapFileNames);
-            ReadVar(mapFileNames);
-            parameters.MapFileNames = mapFileNames.Value;
-
+            if (ReadOptionalVar(mapFileNames))
+            {
+                parameters.MapFileNames = mapFileNames.Value;
+            }
             //
             //GetNextLine();
             //------------------------------------------------------------
             // Template for filenames of percent conifer maps
 
             InputVar<string> pctConiferFileName = new InputVar<string>(PctConiferFileName);
-            ReadVar(pctConiferFileName);
-            parameters.PctConiferFileName = pctConiferFileName.Value;
+            if (ReadOptionalVar(pctConiferFileName)) 
+            {             
+                parameters.PctConiferFileName = pctConiferFileName.Value;
+            }
 
             //GetNextLine();
             //------------------------------------------------------------
             // Template for filenames of percent dead fir maps
 
             InputVar<string> pctDeadFirFileName = new InputVar<string>(PctDeadFirFileName);
-            ReadVar(pctDeadFirFileName);
-            parameters.PctDeadFirFileName = pctDeadFirFileName.Value;
+            if(ReadOptionalVar(pctDeadFirFileName))
+            {
+                parameters.PctDeadFirFileName = pctDeadFirFileName.Value;
+            }
 
-            CheckNoDataAfter(string.Format("the {0} parameter", PctDeadFirFileName));
+            //CheckNoDataAfter(string.Format("the {0} parameter", PctDeadFirFileName));
 
             return parameters; 
         }

@@ -1,6 +1,6 @@
 #define PackageName      "Dynamic Fuels Leaf Biomass"
 #define PackageNameLong  "Dynamic Fuels Leaf Biomass"
-#define Version          "2.0"
+#define Version          "2.1"
 #define ReleaseType      "official"
 #define ReleaseNumber    "2"
 
@@ -12,7 +12,7 @@
 #define AppDir "C:\Program Files\LANDIS-II\v6"
 
 [Files]
-Source: ..\src\bin\debug\Landis.Extension.LeafBiomassFuels.dll; DestDir: {#ExtDir}
+Source: ..\src\bin\debug\Landis.Extension.LeafBiomassFuels.dll; DestDir: {#ExtDir}; Flags: replacesameversion
 
 Source: docs\LANDIS-II Dynamic Fuels - Leaf Biomass v2.0 User Guide.pdf; DestDir: {#AppDir}\docs
 Source: examples\ecoregions.gis; DestDir: {#AppDir}\examples\dynamic-leaf-biomass-fuels

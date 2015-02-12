@@ -56,9 +56,12 @@ namespace Landis.Extension.LeafBiomassFuels
         public override void Initialize()
         {
             Timestep                    = parameters.Timestep;
-            mapNameTemplate             = parameters.MapFileNames;
-            pctConiferMapNameTemplate   = parameters.PctConiferFileName;
-            pctDeadFirMapNameTemplate   = parameters.PctDeadFirFileName;
+            if(parameters.MapFileNames != null)
+                mapNameTemplate             = parameters.MapFileNames;
+            if(parameters.PctConiferFileName != null)
+                pctConiferMapNameTemplate   = parameters.PctConiferFileName;
+            if(parameters.PctDeadFirFileName != null)
+                pctDeadFirMapNameTemplate   = parameters.PctDeadFirFileName;
             fuelTypes                   = parameters.FuelTypes;
             disturbanceTypes            = parameters.DisturbanceTypes;
             fuelCoefs                   = parameters.FuelCoefficients;
@@ -90,50 +93,60 @@ namespace Landis.Extension.LeafBiomassFuels
                 SiteVars.PercentDeadFir[site] = CalcPercentDeadFir(site);
             }
 
-            string path = MapNames.ReplaceTemplateVars(mapNameTemplate, PlugIn.ModelCore.CurrentTime);
-            PlugIn.ModelCore.UI.WriteLine("   Writing Fuel map to {0} ...", path);
-            using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(path, modelCore.Landscape.Dimensions))
+            if (parameters.MapFileNames != null)
             {
-                BytePixel pixel = outputRaster.BufferPixel;
-                foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                string path = MapNames.ReplaceTemplateVars(mapNameTemplate, PlugIn.ModelCore.CurrentTime);
+                PlugIn.ModelCore.UI.WriteLine("   Writing Fuel map to {0} ...", path);
+                using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(path, modelCore.Landscape.Dimensions))
                 {
-                    if (site.IsActive)
-                        pixel.MapCode.Value = (byte) ((int) SiteVars.FuelType[site] + 1);
-                    else
-                        pixel.MapCode.Value = 0;
+                    BytePixel pixel = outputRaster.BufferPixel;
+                    foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                    {
+                        if (site.IsActive)
+                            pixel.MapCode.Value = (byte)((int)SiteVars.FuelType[site] + 1);
+                        else
+                            pixel.MapCode.Value = 0;
 
-                    outputRaster.WriteBufferPixel();
+                        outputRaster.WriteBufferPixel();
+                    }
                 }
             }
 
-            string conpath = MapNames.ReplaceTemplateVars(pctConiferMapNameTemplate, PlugIn.ModelCore.CurrentTime);
-            PlugIn.ModelCore.UI.WriteLine("   Writing % Conifer map to {0} ...", conpath);
-            using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(conpath, modelCore.Landscape.Dimensions))
+            if (parameters.PctConiferFileName != null)
             {
-                BytePixel pixel = outputRaster.BufferPixel;
-                foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                string conpath = MapNames.ReplaceTemplateVars(pctConiferMapNameTemplate, PlugIn.ModelCore.CurrentTime);
+                PlugIn.ModelCore.UI.WriteLine("   Writing % Conifer map to {0} ...", conpath);
+                using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(conpath, modelCore.Landscape.Dimensions))
                 {
-                    if (site.IsActive)
-                        pixel.MapCode.Value = (byte)((int)SiteVars.PercentConifer[site]);
-                    else
-                        pixel.MapCode.Value = 0;
+                    BytePixel pixel = outputRaster.BufferPixel;
+                    foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                    {
+                        if (site.IsActive)
+                            pixel.MapCode.Value = (byte)((int)SiteVars.PercentConifer[site]);
+                        else
+                            pixel.MapCode.Value = 0;
 
-                    outputRaster.WriteBufferPixel();
+                        outputRaster.WriteBufferPixel();
+                    }
                 }
             }
-            string firpath = MapNames.ReplaceTemplateVars(pctDeadFirMapNameTemplate, PlugIn.ModelCore.CurrentTime);
-            PlugIn.ModelCore.UI.WriteLine("   Writing % Dead Fir map to {0} ...", firpath);
-            using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(firpath, modelCore.Landscape.Dimensions))
-            {
-                BytePixel pixel = outputRaster.BufferPixel;
-                foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
-                {
-                    if (site.IsActive)
-                        pixel.MapCode.Value = (byte)((int)SiteVars.PercentDeadFir[site]);
-                    else
-                        pixel.MapCode.Value = 0;
 
-                    outputRaster.WriteBufferPixel();
+            if (parameters.PctDeadFirFileName != null)
+            {
+                string firpath = MapNames.ReplaceTemplateVars(pctDeadFirMapNameTemplate, PlugIn.ModelCore.CurrentTime);
+                PlugIn.ModelCore.UI.WriteLine("   Writing % Dead Fir map to {0} ...", firpath);
+                using (IOutputRaster<BytePixel> outputRaster = modelCore.CreateRaster<BytePixel>(firpath, modelCore.Landscape.Dimensions))
+                {
+                    BytePixel pixel = outputRaster.BufferPixel;
+                    foreach (Site site in PlugIn.ModelCore.Landscape.AllSites)
+                    {
+                        if (site.IsActive)
+                            pixel.MapCode.Value = (byte)((int)SiteVars.PercentDeadFir[site]);
+                        else
+                            pixel.MapCode.Value = 0;
+
+                        outputRaster.WriteBufferPixel();
+                    }
                 }
             }
         }
