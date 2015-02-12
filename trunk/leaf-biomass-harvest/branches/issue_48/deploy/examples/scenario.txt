@@ -16,7 +16,8 @@ CellLength  100 << meters, 100 x 100 m = 1 ha
 
 >> Succession Extension     Initialization File
 >> --------------------     -------------------
-   "Century Succession"     century-succession.txt
+>>   "Century Succession"     century-succession.txt
+   "Century Succession"     century-succession-v4.txt
 
 
 >> Disturbance Extensions   Initialization File
