@@ -1,7 +1,7 @@
 ﻿
 using System.Diagnostics;
-using Edu.Wisc.Forest.Flel.Util;
 using Landis.Core;
+using Edu.Wisc.Forest.Flel.Util;
 using Landis.Library.Parameters;
 
 
@@ -221,7 +221,7 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_Y[species] = newValue.CheckInRange( -100.0, 100.0, "drought_Y");
+            drought_Y[species] = newValue.CheckInRange(-100.0, 100.0);
         }
 
         //---------------------------------------------------------------------
@@ -229,7 +229,7 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_YSE[species] = newValue.CheckInRange(-100.0, 100.0, "drought_YSE");
+            drought_YSE[species] = newValue.CheckInRange(-100.0, 100.0);
         }
 
         //---------------------------------------------------------------------
@@ -237,7 +237,7 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_B[species] = newValue.CheckInRange(-100.0, 100.0, "drought_B");
+            drought_B[species] = newValue.CheckInRange(-100.0, 100.0);
         }
 
         //---------------------------------------------------------------------
@@ -245,7 +245,7 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_BSE[species] = newValue.CheckInRange(-100.0, 100.0, "drought_BSE");
+            drought_BSE[species] = newValue.CheckInRange(-100.0, 100.0);
         }
 
         //---------------------------------------------------------------------
@@ -253,7 +253,7 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_Sens[species] = (int)newValue.CheckInRange( 1, 3, "drought_Sens");
+            drought_Sens[species] = (int)newValue.CheckInRange(1, 3);
         }
         //---------------------------------------------------------------------
         public InputParameters()

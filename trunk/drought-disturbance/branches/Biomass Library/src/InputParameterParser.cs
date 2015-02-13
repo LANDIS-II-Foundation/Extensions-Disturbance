@@ -15,10 +15,6 @@ namespace Landis.Extension.DroughtDisturbance
         }
 
         //---------------------------------------------------------------------
-        private Dictionary<string, int> speciesLineNums;
-        private InputVar<string> speciesName;
-        
-        //---------------------------------------------------------------------
         public override string LandisDataValue
         {
             get
@@ -26,7 +22,10 @@ namespace Landis.Extension.DroughtDisturbance
                 return PlugIn.ExtensionName;
             }
         }
-
+        //---------------------------------------------------------------------
+        private Dictionary<string, int> speciesLineNums;
+        private InputVar<string> speciesName;
+        
         //---------------------------------------------------------------------
         public InputParametersParser()
         {

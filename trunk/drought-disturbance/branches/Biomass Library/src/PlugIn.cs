@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -345,7 +346,7 @@ namespace Landis.Extension.DroughtDisturbance
                     {
                         foreach (IEcoregion ecoregion in PlugIn.ModelCore.Ecoregions)
                         {
-                                Landis.Extension.Succession.Biomass.SpeciesData.EstablishModifier[species,ecoregion] *= drought_Mod;
+                                Landis.Extension.Succession.Biomass.SpeciesData.EstablishModifier[species, ecoregion] *= drought_Mod;
                         }
                     }
                 }
