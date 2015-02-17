@@ -83,15 +83,15 @@ namespace Landis.Extension.BiomassHarvest
 
             ParametersParser parser = new ParametersParser(modelCore.Species);
 
-            BaseHarvest.IInputParameters baseParameters = modelCore.Load<BaseHarvest.IInputParameters>(dataFile, parser);
+            BaseHarvest.IInputParameters baseParameters = Landis.Data.Load<BaseHarvest.IInputParameters>(dataFile, parser);
             parameters = baseParameters as IParameters;
             if (parser.RoundedRepeatIntervals.Count > 0)
             {
-                modelCore.Log.WriteLine("NOTE: The following repeat intervals were rounded up to");
-                modelCore.Log.WriteLine("      ensure they were multiples of the harvest timestep:");
-                modelCore.Log.WriteLine("      File: {0}", dataFile);
+                modelCore.UI.WriteLine("NOTE: The following repeat intervals were rounded up to");
+                modelCore.UI.WriteLine("      ensure they were multiples of the harvest timestep:");
+                modelCore.UI.WriteLine("      File: {0}", dataFile);
                 foreach (RoundedInterval interval in parser.RoundedRepeatIntervals)
-                    modelCore.Log.WriteLine("      At line {0}, the interval {1} rounded up to {2}",
+                    modelCore.UI.WriteLine("      At line {0}, the interval {1} rounded up to {2}",
                                  interval.LineNumber,
                                  interval.Original,
                                  interval.Adjusted);
@@ -108,10 +108,10 @@ namespace Landis.Extension.BiomassHarvest
             PartialHarvestDisturbance.Initialize();
             Timestep = parameters.Timestep;
             managementAreas = parameters.ManagementAreas;
-            modelCore.Log.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
+            modelCore.UI.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
             ManagementAreas.ReadMap(parameters.ManagementAreaMap, managementAreas);
 
-            modelCore.Log.WriteLine("   Reading stand map {0} ...", parameters.StandMap);
+            modelCore.UI.WriteLine("   Reading stand map {0} ...", parameters.StandMap);
             Stands.ReadMap(parameters.StandMap);
             foreach (ManagementArea mgmtArea in managementAreas)
                 mgmtArea.FinishInitialization();
@@ -123,10 +123,10 @@ namespace Landis.Extension.BiomassHarvest
                 biomassMaps = new BiomassMaps(parameters.BiomassMapNames);
 
             //open log file and write header
-            modelCore.Log.WriteLine("   Opening harvest log file \"{0}\" ...", parameters.EventLog);
+            modelCore.UI.WriteLine("   Opening harvest log file \"{0}\" ...", parameters.EventLog);
             try
             {
-                log = PlugIn.ModelCore.CreateTextFile(parameters.EventLog);
+                log = Landis.Data.CreateTextFile(parameters.EventLog);
             }
             catch (Exception err)
             {
@@ -144,11 +144,11 @@ namespace Landis.Extension.BiomassHarvest
 
             log.WriteLine("Time,ManagementArea,Prescription,StandMapCode,EventId,StandAge,StandRank,StandSiteCount,DamagedSites,MgBiomassRemoved,MgBioRemovedPerDamagedHa,CohortsDamaged,CohortsKilled{0}", species_header_names);
 
-            modelCore.Log.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
+            modelCore.UI.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
 
             try
             {
-                summaryLog = ModelCore.CreateTextFile(parameters.SummaryLog);
+                summaryLog = Landis.Data.CreateTextFile(parameters.SummaryLog);
             }
             catch (Exception err)
             {
@@ -274,7 +274,7 @@ namespace Landis.Extension.BiomassHarvest
         private void WritePrescriptionMap(int timestep)
         {
             string path = MapNames.ReplaceTemplateVars(nameTemplate, timestep);
-            modelCore.Log.WriteLine("   Writing prescription map to {0} ...", path);
+            modelCore.UI.WriteLine("   Writing prescription map to {0} ...", path);
             using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path, modelCore.Landscape.Dimensions))
             {
                 ShortPixel pixel = outputRaster.BufferPixel;
