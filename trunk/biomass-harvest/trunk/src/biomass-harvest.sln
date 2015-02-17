@@ -3,6 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biomass-harvest", "biomass-harvest.csproj", "{3317F51D-41BE-4E83-80A6-4C0EFDF64EC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biomass-cohort", "..\..\..\biomass-cohort-library\trunk\src\biomass-cohort.csproj", "{33808160-94BB-488A-B323-67F091EF4840}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "age cohort", "..\..\..\age-cohort-library\trunk\src\age cohort.csproj", "{7E7A3557-9BDF-4979-8352-CDE334A1E9DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "base-cohort", "..\..\..\cohort-library\src\base-cohort.csproj", "{9DA18F3F-3CFC-4FCF-BE51-1B413107D690}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "base-harvest", "..\..\..\base-harvest\branches\harvest-bda\src\base-harvest.csproj", "{744C34C9-C233-4EAA-96A7-AA4E12149086}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LANDIS-II Debug Console", "..\..\..\Debug_Console_rc3\LANDIS-II Debug Console.csproj", "{742214C0-CBC9-4E06-8205-297A3EAE61B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +23,26 @@ Global
 		{3317F51D-41BE-4E83-80A6-4C0EFDF64EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3317F51D-41BE-4E83-80A6-4C0EFDF64EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3317F51D-41BE-4E83-80A6-4C0EFDF64EC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33808160-94BB-488A-B323-67F091EF4840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33808160-94BB-488A-B323-67F091EF4840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33808160-94BB-488A-B323-67F091EF4840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33808160-94BB-488A-B323-67F091EF4840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E7A3557-9BDF-4979-8352-CDE334A1E9DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E7A3557-9BDF-4979-8352-CDE334A1E9DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E7A3557-9BDF-4979-8352-CDE334A1E9DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E7A3557-9BDF-4979-8352-CDE334A1E9DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DA18F3F-3CFC-4FCF-BE51-1B413107D690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA18F3F-3CFC-4FCF-BE51-1B413107D690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DA18F3F-3CFC-4FCF-BE51-1B413107D690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA18F3F-3CFC-4FCF-BE51-1B413107D690}.Release|Any CPU.Build.0 = Release|Any CPU
+		{744C34C9-C233-4EAA-96A7-AA4E12149086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{744C34C9-C233-4EAA-96A7-AA4E12149086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{744C34C9-C233-4EAA-96A7-AA4E12149086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{744C34C9-C233-4EAA-96A7-AA4E12149086}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742214C0-CBC9-4E06-8205-297A3EAE61B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742214C0-CBC9-4E06-8205-297A3EAE61B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742214C0-CBC9-4E06-8205-297A3EAE61B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742214C0-CBC9-4E06-8205-297A3EAE61B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

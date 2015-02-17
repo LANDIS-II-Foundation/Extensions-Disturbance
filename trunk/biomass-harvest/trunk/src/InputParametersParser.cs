@@ -1,21 +1,5 @@
-// Copyright 2008 Green Code LLC
-// Copyright 2010 Portland State University
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-// Contributors:
-//   James Domingo, Green Code LLC
-//   Robert M. Scheller, Portland State University
+// Copyright 2008-2010 Green Code LLC, Portland State University
+// Authors:  James B. Domingo, Robert M. Scheller,  
  
 
 using Edu.Wisc.Forest.Flel.Util;
@@ -46,16 +30,6 @@ namespace Landis.Extension.BiomassHarvest
         private double standSpreadMinTargetSize;
         private double standSpreadMaxTargetSize;
         private int minTimeSinceDamage;
-
-        //---------------------------------------------------------------------
-
-        public override string LandisDataValue
-        {
-            get
-            {
-                return PlugIn.ExtensionName;
-            }
-        }
 
         //---------------------------------------------------------------------
 
@@ -148,7 +122,7 @@ namespace Landis.Extension.BiomassHarvest
             ageOrRangeWasRead = false;
             MultiSpeciesCohortSelector multiSpeciesCohortSelector = (MultiSpeciesCohortSelector) selector;
             foreach (ISpecies species in speciesDataset) {
-                //PlugIn.ModelCore.UI.WriteLine("ReplaceSpecificAgeSelectors:  spp={0}", species.Name);
+                //PlugIn.ModelCore.Log.WriteLine("ReplaceSpecificAgeSelectors:  spp={0}", species.Name);
                 SpecificAgesCohortSelector ageSelector = ageSelectors[species.Index];
                 if (ageSelector != null) {
                     multiSpeciesCohortSelector[species] = ageSelector.SelectCohorts; 
@@ -195,8 +169,11 @@ namespace Landis.Extension.BiomassHarvest
         protected override BaseHarvest.IInputParameters Parse()
         {
             RoundedRepeatIntervals.Clear();
-
-            ReadLandisDataVar();
+            
+            InputVar<string> landisData = new InputVar<string>("LandisData");
+            ReadVar(landisData);
+            if (landisData.Value.Actual != PlugIn.ExtensionName)
+                throw new InputValueException(landisData.Value.String, "The value is not \"{0}\"", PlugIn.ExtensionName);
 
             Parameters parameters = new Parameters();
 
@@ -297,7 +274,7 @@ namespace Landis.Extension.BiomassHarvest
 
                 if (ageOrRangeWasRead)
                 {
-                    //PlugIn.ModelCore.UI.WriteLine("age or range was read");
+                    //PlugIn.ModelCore.Log.WriteLine("age or range was read");
                     siteSelector = WrapSiteSelector(siteSelector);
                     isSiteSelectorWrapped = true;
                     newCohortSelector = ReplaceSpecificAgeSelectors(cohortSelector);
@@ -428,7 +405,7 @@ namespace Landis.Extension.BiomassHarvest
                     //percentage column
                     TextReader.SkipWhitespace(currentLine);
                     ReadValue(percentOfCells, currentLine);
-                    //PlugIn.ModelCore.UI.WriteLine("percentOfCells = {0}", percentOfCells.Value.String);
+                    //PlugIn.ModelCore.Log.WriteLine("percentOfCells = {0}", percentOfCells.Value.String);
                     //cannot validate until parsing is done.  will do this in the inclusionRule constructor
 
                     //a list in case there are multiple species on this line

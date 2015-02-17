@@ -1,9 +1,5 @@
-// Copyright 2008 Green Code LLC
-// Copyright 2010 Portland State University
-//
-// Contributors:
-//   James Domingo, Green Code LLC
-//   Robert M. Scheller, Portland State University
+// Copyright 2008-2010 Green Code LLC, Portland State University
+// Authors:  James B. Domingo, Robert M. Scheller,  
 
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.Extension.BaseHarvest;
@@ -22,7 +18,7 @@ namespace Landis.Extension.BiomassHarvest
     public class PlugIn
         : ExtensionMain 
     {
-        public static readonly ExtensionType ExtType = new ExtensionType("disturbance:harvest");
+        public static readonly ExtensionType Type = new ExtensionType("disturbance:harvest");
         public static readonly string ExtensionName = "Biomass Harvest";
         
         private IManagementAreaDataset managementAreas;
@@ -49,7 +45,7 @@ namespace Landis.Extension.BiomassHarvest
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, ExtType)
+            : base(ExtensionName, Type)
         {
         }
 
@@ -87,15 +83,15 @@ namespace Landis.Extension.BiomassHarvest
 
             ParametersParser parser = new ParametersParser(modelCore.Species);
 
-            BaseHarvest.IInputParameters baseParameters = Landis.Data.Load<BaseHarvest.IInputParameters>(dataFile, parser);
+            BaseHarvest.IInputParameters baseParameters = modelCore.Load<BaseHarvest.IInputParameters>(dataFile, parser);
             parameters = baseParameters as IParameters;
             if (parser.RoundedRepeatIntervals.Count > 0)
             {
-                ModelCore.UI.WriteLine("NOTE: The following repeat intervals were rounded up to");
-                ModelCore.UI.WriteLine("      ensure they were multiples of the harvest timestep:");
-                ModelCore.UI.WriteLine("      File: {0}", dataFile);
+                modelCore.Log.WriteLine("NOTE: The following repeat intervals were rounded up to");
+                modelCore.Log.WriteLine("      ensure they were multiples of the harvest timestep:");
+                modelCore.Log.WriteLine("      File: {0}", dataFile);
                 foreach (RoundedInterval interval in parser.RoundedRepeatIntervals)
-                    ModelCore.UI.WriteLine("      At line {0}, the interval {1} rounded up to {2}",
+                    modelCore.Log.WriteLine("      At line {0}, the interval {1} rounded up to {2}",
                                  interval.LineNumber,
                                  interval.Original,
                                  interval.Adjusted);
@@ -112,10 +108,10 @@ namespace Landis.Extension.BiomassHarvest
             PartialHarvestDisturbance.Initialize();
             Timestep = parameters.Timestep;
             managementAreas = parameters.ManagementAreas;
-            ModelCore.UI.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
+            modelCore.Log.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
             ManagementAreas.ReadMap(parameters.ManagementAreaMap, managementAreas);
 
-            ModelCore.UI.WriteLine("   Reading stand map {0} ...", parameters.StandMap);
+            modelCore.Log.WriteLine("   Reading stand map {0} ...", parameters.StandMap);
             Stands.ReadMap(parameters.StandMap);
             foreach (ManagementArea mgmtArea in managementAreas)
                 mgmtArea.FinishInitialization();
@@ -127,10 +123,10 @@ namespace Landis.Extension.BiomassHarvest
                 biomassMaps = new BiomassMaps(parameters.BiomassMapNames);
 
             //open log file and write header
-            ModelCore.UI.WriteLine("   Opening harvest log file \"{0}\" ...", parameters.EventLog);
+            modelCore.Log.WriteLine("   Opening harvest log file \"{0}\" ...", parameters.EventLog);
             try
             {
-                log = Landis.Data.CreateTextFile(parameters.EventLog);
+                log = PlugIn.ModelCore.CreateTextFile(parameters.EventLog);
             }
             catch (Exception err)
             {
@@ -148,11 +144,11 @@ namespace Landis.Extension.BiomassHarvest
 
             log.WriteLine("Time,ManagementArea,Prescription,StandMapCode,EventId,StandAge,StandRank,StandSiteCount,DamagedSites,MgBiomassRemoved,MgBioRemovedPerDamagedHa,CohortsDamaged,CohortsKilled{0}", species_header_names);
 
-            ModelCore.UI.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
+            modelCore.Log.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
 
             try
             {
-                summaryLog = Landis.Data.CreateTextFile(parameters.SummaryLog);
+                summaryLog = ModelCore.CreateTextFile(parameters.SummaryLog);
             }
             catch (Exception err)
             {
@@ -190,7 +186,7 @@ namespace Landis.Extension.BiomassHarvest
                 //and record each stand that's been harvested
 
                 foreach (Stand stand in mgmtArea) {
-                    //ModelCore.UI.WriteLine("   List of stands {0} ...", stand.MapCode);
+                    //modelCore.Log.WriteLine("   List of stands {0} ...", stand.MapCode);
                     if (stand.Harvested)
                         WriteLogEntry(mgmtArea, stand);
 
@@ -266,7 +262,7 @@ namespace Landis.Extension.BiomassHarvest
             int reduction = eventArgs.Cohort.Biomass;  // Is this double-counting??
             SiteVars.BiomassRemoved[eventArgs.Site] += reduction;
 
-            //ModelCore.UI.WriteLine("Cohort Biomass removed={0:0.0}; Total Killed={1:0.0}.", reduction, SiteVars.BiomassRemoved[eventArgs.Site]);
+            //modelCore.Log.WriteLine("Cohort Biomass removed={0:0.0}; Total Killed={1:0.0}.", reduction, SiteVars.BiomassRemoved[eventArgs.Site]);
         //    //SiteVars.CohortsPartiallyDamaged[eventArgs.Site]++;
         }
 
@@ -278,7 +274,7 @@ namespace Landis.Extension.BiomassHarvest
         private void WritePrescriptionMap(int timestep)
         {
             string path = MapNames.ReplaceTemplateVars(nameTemplate, timestep);
-            ModelCore.UI.WriteLine("   Writing prescription map to {0} ...", path);
+            modelCore.Log.WriteLine("   Writing prescription map to {0} ...", path);
             using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path, modelCore.Landscape.Dimensions))
             {
                 ShortPixel pixel = outputRaster.BufferPixel;
@@ -310,7 +306,7 @@ namespace Landis.Extension.BiomassHarvest
             int standPrescriptionNumber = 0;
             double biomassRemoved = 0.0;
             double biomassRemovedPerHa = 0.0;
-            //ModelCore.UI.WriteLine("BiomassHarvest:  PlugIn.cs: WriteLogEntry: mgmtArea {0}, Stand {1} ", mgmtArea.Prescriptions.Count, stand.MapCode);
+            //modelCore.Log.WriteLine("BiomassHarvest:  PlugIn.cs: WriteLogEntry: mgmtArea {0}, Stand {1} ", mgmtArea.Prescriptions.Count, stand.MapCode);
 
             foreach (ActiveSite site in stand) {
                 //set the prescription name for this site

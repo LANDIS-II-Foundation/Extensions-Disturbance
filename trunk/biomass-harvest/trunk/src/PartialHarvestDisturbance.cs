@@ -1,21 +1,5 @@
-// Copyright 2008 Green Code LLC
-// Copyright 2010 Portland State University
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-// Contributors:
-//   James Domingo, Green Code LLC
-//   Robert M. Scheller, Portland State University
+// Copyright 2008-2010 Green Code LLC, Portland State University
+// Authors:  James B. Domingo, Robert M. Scheller,  
  
 
 using Landis.Core;
@@ -59,7 +43,7 @@ namespace Landis.Extension.BiomassHarvest
         ExtensionType IDisturbance.Type
         {
             get {
-                return PlugIn.ExtType;
+                return PlugIn.Type;
             }
         }
 
@@ -125,7 +109,7 @@ namespace Landis.Extension.BiomassHarvest
         public static void RecordBiomassReduction(ICohort cohort,
                                                   int     reduction)
         {
-            //PlugIn.ModelCore.UI.WriteLine("Recording reduction:  {0:0.0}/{1:0.0}/{2}.", cohort.Species.Name, cohort.Age, reduction);
+            //PlugIn.ModelCore.Log.WriteLine("Recording reduction:  {0:0.0}/{1:0.0}/{2}.", cohort.Species.Name, cohort.Age, reduction);
             reductions[cohort.Species.Index][cohort.Age] = reduction;
         }
 
@@ -157,9 +141,9 @@ namespace Landis.Extension.BiomassHarvest
             capacityReduction = 0.0;
 
 
-            //PlugIn.ModelCore.UI.WriteLine("ReducingCohortBiomass.  Stand/site not equal to null.");
-            //PlugIn.ModelCore.UI.WriteLine("Stand is not NULL.  Site = {0}/{1}", site.Location.Row, site.Location.Column);
-            //PlugIn.ModelCore.UI.WriteLine("Site is not NULL.  Stand = {0}", stand.MapCode);
+            //PlugIn.ModelCore.Log.WriteLine("ReducingCohortBiomass.  Stand/site not equal to null.");
+            //PlugIn.ModelCore.Log.WriteLine("Stand is not NULL.  Site = {0}/{1}", site.Location.Row, site.Location.Column);
+            //PlugIn.ModelCore.Log.WriteLine("Site is not NULL.  Stand = {0}", stand.MapCode);
             
             SiteVars.Cohorts[site].ReduceOrKillBiomassCohorts(singleton);
 
