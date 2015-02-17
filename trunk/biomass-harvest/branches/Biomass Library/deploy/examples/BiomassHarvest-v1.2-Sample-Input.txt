@@ -80,5 +80,5 @@ Prescription    OakPatchCutting
 
 PrescriptionMaps    harvest/prescripts-{timestep}.img
 BiomassMaps         harvest/biomass-removed-{timestep}.img
-EventLog            biomass-harvest-event-test-log.csv
+EventLog            harvest/biomass-harvest-event-test-log.csv
 SummaryLog	    harvest/summary-log.csv
