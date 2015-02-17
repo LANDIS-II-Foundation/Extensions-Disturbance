@@ -1,11 +1,11 @@
-﻿using Landis.Core;
-using Landis.SpatialModeling;
-using Landis.Library.BiomassCohorts;
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Landis.Extension.Succession.Biomass;
+using Landis.Core;
+using Landis.Library.BiomassCohorts;
+using Landis.SpatialModeling;
 
 namespace Landis.Extension.DroughtDisturbance
 {
@@ -44,7 +44,7 @@ namespace Landis.Extension.DroughtDisturbance
         {
             modelCore = mCore;
             InputParametersParser parser = new InputParametersParser();
-            parameters = modelCore.Load<IInputParameters>(dataFile, parser);
+            parameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
         }
 
         //---------------------------------------------------------------------
@@ -60,10 +60,10 @@ namespace Landis.Extension.DroughtDisturbance
             SiteVars.Initialize(varName);
             PartialDisturbance.Initialize();
 
-            modelCore.Log.WriteLine("   Opening and Initializing Drought Disturbance log file \"{0}\"...", parameters.LogFileName);
+            modelCore.UI.WriteLine("   Opening and Initializing Drought Disturbance log file \"{0}\"...", parameters.LogFileName);
             try
             {
-                log = modelCore.CreateTextFile(parameters.LogFileName);
+                log = Landis.Data.CreateTextFile(parameters.LogFileName);
             }
             catch (Exception err)
             {
@@ -95,7 +95,7 @@ namespace Landis.Extension.DroughtDisturbance
         ///</summary>
         public override void Run()
         {
-            modelCore.Log.WriteLine("   Processing Drought Disturbance ...");
+            modelCore.UI.WriteLine("   Processing Drought Disturbance ...");
 
             double totalRemoved = 0;
             int totalKilled = 0;
@@ -278,8 +278,8 @@ namespace Landis.Extension.DroughtDisturbance
                         }
                         siteBioRemoved += bioRemoved;
                         bioRemovedSpp += bioRemoved;
-                        ForestFloor.AddWoody(woodyRemoved, species, site);
-                        ForestFloor.AddLitter(nonWoodyRemoved, species, site);
+                        Landis.Extension.Succession.Biomass.ForestFloor.AddWoody(woodyRemoved, species, site);
+                        Landis.Extension.Succession.Biomass.ForestFloor.AddLitter(nonWoodyRemoved, species, site);
                         cohortKilledSpp += cohortsKilled;
                         extraBioRemovedSpp += extraRemoved;
                         removedSpp[species.Index] = bioRemovedSpp;
@@ -313,7 +313,7 @@ namespace Landis.Extension.DroughtDisturbance
 
             //  Write Biomass Removed map
             string path = MapNames.ReplaceTemplateVars(mapNameTemplate, modelCore.CurrentTime);
-            modelCore.Log.WriteLine("   Writing Drought Biomass Removed map to {0} ...", path);
+            modelCore.UI.WriteLine("   Writing Drought Biomass Removed map to {0} ...", path);
             using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path, modelCore.Landscape.Dimensions))
             {
                 ShortPixel pixel = outputRaster.BufferPixel;
@@ -346,14 +346,14 @@ namespace Landis.Extension.DroughtDisturbance
                     {
                         foreach (IEcoregion ecoregion in PlugIn.ModelCore.Ecoregions)
                         {
-                                Landis.Extension.Succession.Biomass.SpeciesData.EstablishModifier[species][ecoregion] *= drought_Mod;
+                                Landis.Extension.Succession.Biomass.SpeciesData.EstablishModifier[species, ecoregion] *= drought_Mod;
                         }
                     }
                 }
             }
             else
             {
-                modelCore.Log.WriteLine("   Drought does not exceed threshold this timestep ...");
+                modelCore.UI.WriteLine("   Drought does not exceed threshold this timestep ...");
             }
 
         }

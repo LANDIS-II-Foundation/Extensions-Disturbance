@@ -4,17 +4,16 @@ using Landis.Core;
 using System.Collections.Generic;
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.Library.Succession;
-using Landis.Extension.Succession.Biomass;
 
 namespace Landis.Extension.DroughtDisturbance
 {
     public class SpeciesData
     {
-        public static Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_Y;
-        public static Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_YSE;
-        public static Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_B;
-        public static Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_BSE;
-        public static Landis.Extension.Succession.Biomass.Species.AuxParm<int> Drought_Sens;
+        public static Landis.Library.Parameters.Species.AuxParm<double> Drought_Y;
+        public static Landis.Library.Parameters.Species.AuxParm<double> Drought_YSE;
+        public static Landis.Library.Parameters.Species.AuxParm<double> Drought_B;
+        public static Landis.Library.Parameters.Species.AuxParm<double> Drought_BSE;
+        public static Landis.Library.Parameters.Species.AuxParm<int> Drought_Sens;
 
         //---------------------------------------------------------------------
         public static void Initialize(IInputParameters parameters)

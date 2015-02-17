@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
-using Landis.Core;
 using Edu.Wisc.Forest.Flel.Util;
+using Landis.Core;
 
 namespace Landis.Extension.DroughtDisturbance
 {
@@ -14,6 +14,14 @@ namespace Landis.Extension.DroughtDisturbance
             public const string MapName = "MapName";
         }
 
+        //---------------------------------------------------------------------
+        public override string LandisDataValue
+        {
+            get
+            {
+                return PlugIn.ExtensionName;
+            }
+        }
         //---------------------------------------------------------------------
         private Dictionary<string, int> speciesLineNums;
         private InputVar<string> speciesName;

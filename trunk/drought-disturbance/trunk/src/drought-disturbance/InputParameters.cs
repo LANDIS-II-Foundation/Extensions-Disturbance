@@ -1,8 +1,8 @@
 ﻿
-using System.Collections.Generic;
 using System.Diagnostics;
 using Landis.Core;
 using Edu.Wisc.Forest.Flel.Util;
+using Landis.Library.Parameters;
 
 
 namespace Landis.Extension.DroughtDisturbance
@@ -20,11 +20,11 @@ namespace Landis.Extension.DroughtDisturbance
         string IntCorrect { get; set; }
         string MapNamesTemplate { get; set; }
         string LogFileName { get; set; }
-        Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_Y { get; }
-        Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_YSE { get; }
-        Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_B { get; }
-        Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_BSE { get; }
-        Landis.Extension.Succession.Biomass.Species.AuxParm<int> Drought_Sens { get; }
+        Landis.Library.Parameters.Species.AuxParm<double> Drought_Y { get; }
+        Landis.Library.Parameters.Species.AuxParm<double> Drought_YSE { get; }
+        Landis.Library.Parameters.Species.AuxParm<double> Drought_B { get; }
+        Landis.Library.Parameters.Species.AuxParm<double> Drought_BSE { get; }
+        Landis.Library.Parameters.Species.AuxParm<int> Drought_Sens { get; }
         
     }
 
@@ -39,11 +39,11 @@ namespace Landis.Extension.DroughtDisturbance
         private string intCorrect; 
         private string mapNamesTemplate;
         private string logFileName;
-        private Landis.Extension.Succession.Biomass.Species.AuxParm<double> drought_Y;
-        private Landis.Extension.Succession.Biomass.Species.AuxParm<double> drought_YSE;
-        private Landis.Extension.Succession.Biomass.Species.AuxParm<double> drought_B;
-        private Landis.Extension.Succession.Biomass.Species.AuxParm<double> drought_BSE;
-        private Landis.Extension.Succession.Biomass.Species.AuxParm<int> drought_Sens;
+        private Landis.Library.Parameters.Species.AuxParm<double> drought_Y;
+        private Landis.Library.Parameters.Species.AuxParm<double> drought_YSE;
+        private Landis.Library.Parameters.Species.AuxParm<double> drought_B;
+        private Landis.Library.Parameters.Species.AuxParm<double> drought_BSE;
+        private Landis.Library.Parameters.Species.AuxParm<int> drought_Sens;
         //---------------------------------------------------------------------
         /// <summary>
         /// Timestep (years)
@@ -172,7 +172,7 @@ namespace Landis.Extension.DroughtDisturbance
         }
 
         //---------------------------------------------------------------------
-        public Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_Y
+        public Landis.Library.Parameters.Species.AuxParm<double> Drought_Y
         {
             get
             {
@@ -181,7 +181,7 @@ namespace Landis.Extension.DroughtDisturbance
         }
 
         //---------------------------------------------------------------------
-        public Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_YSE
+        public Landis.Library.Parameters.Species.AuxParm<double> Drought_YSE
         {
             get
             {
@@ -190,7 +190,7 @@ namespace Landis.Extension.DroughtDisturbance
         }
 
         //---------------------------------------------------------------------
-        public Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_B
+        public Landis.Library.Parameters.Species.AuxParm<double> Drought_B
         {
             get
             {
@@ -199,7 +199,7 @@ namespace Landis.Extension.DroughtDisturbance
         }
 
         //---------------------------------------------------------------------
-        public Landis.Extension.Succession.Biomass.Species.AuxParm<double> Drought_BSE
+        public Landis.Library.Parameters.Species.AuxParm<double> Drought_BSE
         {
             get
             {
@@ -208,7 +208,7 @@ namespace Landis.Extension.DroughtDisturbance
         }
 
         //---------------------------------------------------------------------
-        public Landis.Extension.Succession.Biomass.Species.AuxParm<int> Drought_Sens
+        public Landis.Library.Parameters.Species.AuxParm<int> Drought_Sens
         {
             get
             {
@@ -221,7 +221,7 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_Y[species] = Util.CheckBiomassParm(newValue, -100.0, 100.0);
+            drought_Y[species] = newValue.CheckInRange(-100.0, 100.0);
         }
 
         //---------------------------------------------------------------------
@@ -229,7 +229,7 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_YSE[species] = Util.CheckBiomassParm(newValue, -100.0, 100.0);
+            drought_YSE[species] = newValue.CheckInRange(-100.0, 100.0);
         }
 
         //---------------------------------------------------------------------
@@ -237,7 +237,7 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_B[species] = Util.CheckBiomassParm(newValue, -100.0, 100.0);
+            drought_B[species] = newValue.CheckInRange(-100.0, 100.0);
         }
 
         //---------------------------------------------------------------------
@@ -245,7 +245,7 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_BSE[species] = Util.CheckBiomassParm(newValue, -100.0, 100.0);
+            drought_BSE[species] = newValue.CheckInRange(-100.0, 100.0);
         }
 
         //---------------------------------------------------------------------
@@ -253,16 +253,16 @@ namespace Landis.Extension.DroughtDisturbance
                                      InputValue<double> newValue)
         {
             Debug.Assert(species != null);
-            drought_Sens[species] = (int)Util.CheckBiomassParm(newValue, 1, 3);
+            drought_Sens[species] = (int)newValue.CheckInRange(1, 3);
         }
         //---------------------------------------------------------------------
         public InputParameters()
         {
-            drought_Y = new Landis.Extension.Succession.Biomass.Species.AuxParm<double>(PlugIn.ModelCore.Species);
-            drought_YSE = new Landis.Extension.Succession.Biomass.Species.AuxParm<double>(PlugIn.ModelCore.Species);
-            drought_B = new Landis.Extension.Succession.Biomass.Species.AuxParm<double>(PlugIn.ModelCore.Species);
-            drought_BSE = new Landis.Extension.Succession.Biomass.Species.AuxParm<double>(PlugIn.ModelCore.Species);
-            drought_Sens = new Landis.Extension.Succession.Biomass.Species.AuxParm<int>(PlugIn.ModelCore.Species);
+            drought_Y = new Landis.Library.Parameters.Species.AuxParm<double>(PlugIn.ModelCore.Species);
+            drought_YSE = new Landis.Library.Parameters.Species.AuxParm<double>(PlugIn.ModelCore.Species);
+            drought_B = new Landis.Library.Parameters.Species.AuxParm<double>(PlugIn.ModelCore.Species);
+            drought_BSE = new Landis.Library.Parameters.Species.AuxParm<double>(PlugIn.ModelCore.Species);
+            drought_Sens = new Landis.Library.Parameters.Species.AuxParm<int>(PlugIn.ModelCore.Species);
         }
     }
 }
