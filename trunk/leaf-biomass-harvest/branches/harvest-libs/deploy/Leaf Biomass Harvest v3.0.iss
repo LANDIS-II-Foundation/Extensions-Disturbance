@@ -19,6 +19,7 @@ Source: {#LandisBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extension
 Source: {#LandisBuildDir}\Landis.Library.BiomassHarvest-v1.dll;    DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
 Source: {#LandisBuildDir}\Landis.Library.HarvestManagement-v1.dll; DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
 Source: {#LandisBuildDir}\Landis.Library.SiteHarvest-v1.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#LandisBuildDir}\Landis.Library.Metadata.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
 
 #define UserGuideSrc "LANDIS-II " + ExtensionName + " vX.Y User Guide.pdf"
 #define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)

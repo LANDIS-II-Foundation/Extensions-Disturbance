@@ -5,3 +5,4 @@
 {OutDir}\Landis.Library.BiomassHarvest-v1.dll
 {OutDir}\Landis.Library.HarvestManagement-v1.dll
 {OutDir}\Landis.Library.SiteHarvest-v1.dll
+{OutDir}\Landis.Library.Metadata.dll
