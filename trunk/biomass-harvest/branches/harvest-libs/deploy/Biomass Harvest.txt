@@ -1,6 +1,6 @@
 LandisData   Extension
 
-Name         "Biomass Harvest 3.0"
+Name         "Biomass Harvest"
 Version      "3.0 (alpha 2 release)"
 Type         disturbance:harvest
 Assembly     Landis.Extension.BiomassHarvest-3.0
