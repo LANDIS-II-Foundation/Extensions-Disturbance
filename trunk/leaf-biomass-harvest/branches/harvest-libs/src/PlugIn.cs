@@ -2,22 +2,23 @@
 // Authors:  James B. Domingo, Robert M. Scheller, Srinivas S.
 
 using Edu.Wisc.Forest.Flel.Util;
-using Landis.Extension.BaseHarvest;
 using Landis.Core;
 using Landis.SpatialModeling;
 using Landis.Library.Metadata;
+using Landis.Library.BiomassHarvest;
+using Landis.Library.HarvestManagement;
 using System.Collections.Generic;
 using System.IO;
 using System;
 
-using BaseHarvest = Landis.Extension.BaseHarvest;
+using HarvestMgmtLib = Landis.Library.HarvestManagement;
+
 
 namespace Landis.Extension.LeafBiomassHarvest
 {
     public class PlugIn
-        : ExtensionMain
+        : HarvestExtensionMain
     {
-        public static readonly ExtensionType type = new ExtensionType("disturbance:harvest");
         public static readonly string ExtensionName = "Leaf Biomass Harvest";
         public static MetadataTable<EventsLog> eventLog;// = new MetadataTable<EventsLog>("harvest-events-log.csv");
         public static MetadataTable<SummaryLog> summaryLog;// = new MetadataTable<SummaryLog>("harvest-summary-log.csv");
@@ -31,17 +32,17 @@ namespace Landis.Extension.LeafBiomassHarvest
         private bool running;
         int[] totalSites;
         int[] totalDamagedSites;
-        double[,] totalSpeciesCohorts;
+        int[,] totalSpeciesCohorts;
         int[] totalCohortsKilled;
         int[] totalCohortsDamaged;
 
-        private static IInputParameters parameters;
+        private static IParameters parameters;
         private static ICore modelCore;
 
         //---------------------------------------------------------------------
 
         public PlugIn()
-            : base(ExtensionName, type)
+            : base(ExtensionName)
         {
         }
 
@@ -60,26 +61,20 @@ namespace Landis.Extension.LeafBiomassHarvest
         public override void LoadParameters(string dataFile,
                                             ICore mCore)
         {
-            ExtensionMain baseHarvest = new BaseHarvest.PlugIn();
-            try
-            {
-                baseHarvest.LoadParameters(null, mCore);
-            }
-            catch (System.ArgumentNullException)
-            {
-                //modelCore.UI.WriteLine("NOTE: exception thrown");
-            }
-
             modelCore = mCore;
 
             // Add local event handler for cohorts death due to age-only
             // disturbances.
             Landis.Library.LeafBiomassCohorts.Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
 
-            InputParametersParser parser = new InputParametersParser(modelCore.Species);
+            HarvestMgmtLib.Main.InitializeLib(modelCore);
+            HarvestExtensionMain.SiteHarvestedEvent += SiteHarvested;
+            Landis.Library.BiomassHarvest.Main.InitializeLib(modelCore);
 
-            BaseHarvest.IInputParameters baseParameters = Landis.Data.Load<BaseHarvest.IInputParameters>(dataFile, parser);
-            parameters = baseParameters as IInputParameters;
+            ParametersParser parser = new ParametersParser(modelCore.Species);
+
+            HarvestMgmtLib.IInputParameters baseParameters = Landis.Data.Load<IInputParameters>(dataFile, parser);
+            parameters = baseParameters as IParameters;
             if (parser.RoundedRepeatIntervals.Count > 0)
             {
                 modelCore.UI.WriteLine("NOTE: The following repeat intervals were rounded up to");
@@ -100,8 +95,6 @@ namespace Landis.Extension.LeafBiomassHarvest
             modelCore.UI.WriteLine("   Creating metadata ...");
             MetadataHandler.InitializeMetadata(parameters.Timestep, parameters.PrescriptionMapNames, parameters.BiomassMapNames, modelCore);
             SiteVars.Initialize();
-            PartialHarvestDisturbance.Initialize();
-
             Timestep = parameters.Timestep;
             managementAreas = parameters.ManagementAreas;
             
@@ -109,7 +102,6 @@ namespace Landis.Extension.LeafBiomassHarvest
             modelCore.UI.WriteLine("   Reading management-area map {0} ...", parameters.ManagementAreaMap);
             ManagementAreas.ReadMap(parameters.ManagementAreaMap, managementAreas);
 
-            
             //  readMap reads the stand map and adds all the stands to a management area
             modelCore.UI.WriteLine("   Reading stand map {0} ...", parameters.StandMap);
             Stands.ReadMap(parameters.StandMap);
@@ -165,10 +157,13 @@ namespace Landis.Extension.LeafBiomassHarvest
         public override void Run()
         {
             running = true;
-            BaseHarvest.SiteVars.Prescription.ActiveSiteValues = null;
+
+            HarvestMgmtLib.SiteVars.Prescription.ActiveSiteValues = null;
             SiteVars.BiomassRemoved.ActiveSiteValues = 0;
             SiteVars.CohortsPartiallyDamaged.ActiveSiteValues = 0;
-            BaseHarvest.SiteVars.CohortsDamaged.ActiveSiteValues = 0;
+            HarvestMgmtLib.SiteVars.CohortsDamaged.ActiveSiteValues = 0;
+
+            SiteBiomass.EnableRecordingForHarvest();
 
             //harvest each management area in the list
             foreach (ManagementArea mgmtArea in managementAreas)
@@ -176,10 +171,9 @@ namespace Landis.Extension.LeafBiomassHarvest
 
                 totalSites = new int[Prescription.Count];
                 totalDamagedSites = new int[Prescription.Count];
-                totalSpeciesCohorts = new double[Prescription.Count, modelCore.Species.Count];
+                totalSpeciesCohorts = new int[Prescription.Count, modelCore.Species.Count];
                 totalCohortsDamaged = new int[Prescription.Count];
                 totalCohortsKilled = new int[Prescription.Count];
-
 
                 mgmtArea.HarvestStands();
                 //and record each stand that's been harvested
@@ -189,7 +183,6 @@ namespace Landis.Extension.LeafBiomassHarvest
                     //modelCore.UI.WriteLine("   List of stands {0} ...", stand.MapCode);
                     if (stand.Harvested)
                         WriteLogEntry(mgmtArea, stand);
-
                 }
 
                 // Prevent establishment:
@@ -203,7 +196,7 @@ namespace Landis.Extension.LeafBiomassHarvest
 
                         foreach (ActiveSite site in stand)
                         {
-                            if (SiteVars.CohortsPartiallyDamaged[site] > 0 || BaseHarvest.SiteVars.CohortsDamaged[site] > 0)
+                            if (SiteVars.CohortsPartiallyDamaged[site] > 0 || HarvestMgmtLib.SiteVars.CohortsDamaged[site] > 0)
                             {
                                 Landis.Library.Succession.Reproduction.PreventEstablishment(site);
                                 sitesToDelete.Add(site);
@@ -249,6 +242,7 @@ namespace Landis.Extension.LeafBiomassHarvest
                 biomassMaps.WriteMap(modelCore.CurrentTime);
 
             running = false;
+            SiteBiomass.DisableRecordingForHarvest();
         }
 
         //---------------------------------------------------------------------
@@ -264,7 +258,8 @@ namespace Landis.Extension.LeafBiomassHarvest
 
             // If this plug-in is running, then the age-only disturbance must
             // be a cohort-selector from Base Harvest.
-            SiteVars.BiomassRemoved[eventArgs.Site] += (int) (eventArgs.Cohort.LeafBiomass + eventArgs.Cohort.WoodBiomass);
+            int reduction = eventArgs.Cohort.Biomass;  // Is this double-counting??
+            SiteVars.BiomassRemoved[eventArgs.Site] += reduction;
         }
 
         //---------------------------------------------------------------------
@@ -283,7 +278,7 @@ namespace Landis.Extension.LeafBiomassHarvest
                 {
                     if (site.IsActive)
                     {
-                        Prescription prescription = BaseHarvest.SiteVars.Prescription[site];
+                        Prescription prescription = HarvestMgmtLib.SiteVars.Prescription[site];
                         if (prescription == null)
                             pixel.MapCode.Value = 1;
                         else
@@ -312,18 +307,18 @@ namespace Landis.Extension.LeafBiomassHarvest
             foreach (ActiveSite site in stand)
             {
                 //set the prescription name for this site
-                if (BaseHarvest.SiteVars.Prescription[site] != null)
+                if (HarvestMgmtLib.SiteVars.Prescription[site] != null)
                 {
-                    standPrescriptionNumber = BaseHarvest.SiteVars.Prescription[site].Number;
-                    BaseHarvest.SiteVars.PrescriptionName[site] = BaseHarvest.SiteVars.Prescription[site].Name;
-                    BaseHarvest.SiteVars.TimeOfLastEvent[site] = modelCore.CurrentTime;
+                    standPrescriptionNumber = HarvestMgmtLib.SiteVars.Prescription[site].Number;
+                    HarvestMgmtLib.SiteVars.PrescriptionName[site] = HarvestMgmtLib.SiteVars.Prescription[site].Name;
+                    HarvestMgmtLib.SiteVars.TimeOfLastEvent[site] = modelCore.CurrentTime;
                 }
 
                 cohortsDamaged += SiteVars.CohortsPartiallyDamaged[site];
-                cohortsKilled += BaseHarvest.SiteVars.CohortsDamaged[site];
+                cohortsKilled += HarvestMgmtLib.SiteVars.CohortsDamaged[site];
 
 
-                if (SiteVars.CohortsPartiallyDamaged[site] > 0 || BaseHarvest.SiteVars.CohortsDamaged[site] > 0)
+                if (SiteVars.CohortsPartiallyDamaged[site] > 0 || HarvestMgmtLib.SiteVars.CohortsDamaged[site] > 0)
                 {
                     damagedSites++;
 
@@ -336,29 +331,33 @@ namespace Landis.Extension.LeafBiomassHarvest
             totalCohortsDamaged[standPrescriptionNumber] += cohortsDamaged;
             totalCohortsKilled[standPrescriptionNumber] += cohortsKilled;
 
+            //int array for metadata, contains species harvest count
+            int[] species_count = new int[modelCore.Species.Count];
 
-            //string for log file, contains species harvest count
-            double[] species_count = new double[modelCore.Species.Count];
-            
             //if this is the right species match, add it's count to the csv string
-            foreach (ISpecies species in modelCore.Species) 
+            foreach (ISpecies species in modelCore.Species)
             {
-                bool assigned = false;
-
+                //bool assigned = false;
                 //loop through dictionary of species kill count
-                foreach (KeyValuePair<string, int> kvp in stand.DamageTable) {
-                    if (species.Name == kvp.Key) {
-                        assigned = true;
-                        species_count[species.Index] += kvp.Value;
-                    }
-                }
-                if (!assigned) {
-                    //put a 0 there if it's not assigned (because none were found in the dictionary)
-                    species_count[species.Index] = 0.0;
-                }
-                totalSpeciesCohorts[standPrescriptionNumber, species.Index] += (double) species_count[species.Index];
-            }
+                //foreach (KeyValuePair<string, int> kvp in stand.DamageTable)
+                //{
+                //    if (species.Name == kvp.Key)
+                //    {
+                //        assigned = true;
+                //        species_count[species.Index] += kvp.Value;
+                //    }
+                //}
+                //if (!assigned)
+                //{
+                //    //put a 0 there if it's not assigned (because none were found in the dictionary)
+                //    species_count[species.Index] = 0;
+                //}
+                //totalSpeciesCohorts[standPrescriptionNumber, species.Index] += species_count[species.Index];
 
+                int cohortCount = stand.DamageTable[species];
+                species_count[species.Index] = cohortCount;
+                totalSpeciesCohorts[standPrescriptionNumber, species.Index] += cohortCount;
+            }
 
             //now that the damage table for this stand has been recorded, clear it!!
             stand.ClearDamageTable();
@@ -390,5 +389,19 @@ namespace Landis.Extension.LeafBiomassHarvest
             eventLog.WriteToFile();
 
         }
+
+        // Event handler when a site has been harvested.
+        public static void SiteHarvested(object sender,
+                                         SiteHarvestedEvent.Args eventArgs)
+        {
+            ActiveSite site = eventArgs.Site;
+            foreach (ISpecies species in ModelCore.Species)
+            {
+                int speciesBiomassHarvested = SiteBiomass.Harvested[species];
+                SiteVars.BiomassRemoved[site] += speciesBiomassHarvested;
+            }
+            SiteBiomass.ResetHarvestTotals();
+        }
+
     }
 }

@@ -2,8 +2,7 @@
 // Authors:  James B. Domingo, Robert M. Scheller, Srinivas S.
 
 using Landis.SpatialModeling;
-
-using BaseHarvest = Landis.Extension.BaseHarvest;
+using Landis.Library.HarvestManagement;
 
 namespace Landis.Extension.LeafBiomassHarvest
 {
@@ -37,7 +36,7 @@ namespace Landis.Extension.LeafBiomassHarvest
         /// </param>
         public void WriteMap(int timestep)
         {
-            string path = BaseHarvest.MapNames.ReplaceTemplateVars(nameTemplate, timestep);
+            string path = MapNames.ReplaceTemplateVars(nameTemplate, timestep);
             PlugIn.ModelCore.UI.WriteLine("   Writing biomass-removed map to {0} ...", path);
             using (IOutputRaster<IntPixel> outputRaster = PlugIn.ModelCore.CreateRaster<IntPixel>(path, PlugIn.ModelCore.Landscape.Dimensions))
             {

@@ -52,7 +52,7 @@ namespace Landis.Extension.LeafBiomassHarvest
         public int CohortsHarvestedComplete { set; get; }
 
         [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Species Cohorts Harvested by Species", SppList = true)]
-        public double[] CohortsHarvested_ { set; get; }
+        public int[] CohortsHarvested_ { set; get; }
 
         
         //[DataFieldAttribute(Unit = FiledUnits.None, Desc = "Initiation Row")]

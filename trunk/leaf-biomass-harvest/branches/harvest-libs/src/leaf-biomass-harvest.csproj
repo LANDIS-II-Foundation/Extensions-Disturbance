@@ -40,17 +40,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Landis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Extension.BaseHarvest, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll</HintPath>
-    </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
     </Reference>
+    <Reference Include="Landis.Library.BiomassHarvest-v1">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.BiomassHarvest-v1.dll</HintPath>
+    </Reference>
     <Reference Include="Landis.Library.Cohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.HarvestManagement-v1">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.HarvestManagement-v1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.LeafBiomassCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -58,6 +60,9 @@
     </Reference>
     <Reference Include="Landis.Library.Metadata">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.SiteHarvest-v1">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.SiteHarvest-v1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Succession, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -77,10 +82,6 @@
     <Compile Include="BiomassMaps.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Clearcut.cs" />
-    <Compile Include="CompleteStandSpreading.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="SummaryLog.cs" />
     <Compile Include="EventsLog.cs" />
     <Compile Include="IInputParameters.cs" />
@@ -88,30 +89,10 @@
     <Compile Include="InputParametersParser.cs" />
     <Compile Include="IntPixel.cs" />
     <Compile Include="MetadataHandler.cs" />
-    <Compile Include="PartialHarvestDisturbance.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PartialStandSpreading.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PartialThinning.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PlugIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SelectCohorts.cs" />
-    <Compile Include="ShortPixel.cs" />
-    <Compile Include="SiteSelectorWrapper.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="SiteVars.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="HarvestSpeciesDataset.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SpecificAgesCohortSelector.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -120,8 +101,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>"$(LANDIS_SDK)\staging\copy-to-build-dir.cmd" "$(ProjectDir)staging-list.txt" $(OutDir)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
