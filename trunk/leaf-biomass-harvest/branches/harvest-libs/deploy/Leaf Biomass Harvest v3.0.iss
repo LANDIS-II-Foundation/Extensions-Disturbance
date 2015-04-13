@@ -5,34 +5,22 @@
 #include LandisSDK + '\packaging\read-ext-info.iss'
 #include LandisSDK + '\packaging\Landis-vars.iss'
 
-; The ExtensionName in the info file includes the major and minor version
-; numbers (X.Y) to allow for multiple versions of the extension to be
-; installed simultaneously.  That enables users to run tests comparing two
-; versions (for example, was a bug fixed in the latest version?).
-;
-; The Setup directives expect the ExtensionName variable to NOT have any
-; version numbers.  Therefore, we strip it out.
-#define ExtensionName_X_Y ExtensionName
-#define ExtensionName     Trim(StringChange(ExtensionName_X_Y, MajorMinor, ""))
-
 [Setup]
 #include LandisSDK + '\packaging\Setup-directives.iss'
 LicenseFile={#LandisSDK}\licenses\LANDIS-II_Binary_license.rtf
 
 [Files]
-#define ConfigOutDir '..\src\bin\Debug'
 
 ; The extension's assembly
-Source: {#ConfigOutDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
+Source: {#LandisBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
 
 ; Harvest libraries
 ; Note: Since they are used by other extensions, they are not uninstalled.
-Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v1.dll;    DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
-Source: {#ConfigOutDir}\Landis.Library.HarvestManagement-v1.dll; DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
-Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v1.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#LandisBuildDir}\Landis.Library.BiomassHarvest-v1.dll;    DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#LandisBuildDir}\Landis.Library.HarvestManagement-v1.dll; DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#LandisBuildDir}\Landis.Library.SiteHarvest-v1.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
 
-; The user guide
-#define UserGuideSrc ExtensionName + " vX.Y User Guide.pdf"
+#define UserGuideSrc "LANDIS-II " + ExtensionName + " vX.Y User Guide.pdf"
 #define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
 Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
 
@@ -45,11 +33,11 @@ Source: {#ExtInfoFile}; DestDir: {#LandisExtInfoDir}; DestName: {#ExtensionInfo}
 
 
 [Run]
-Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName_X_Y}"" "; WorkingDir: {#LandisExtInfoDir}
+Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName}"" "; WorkingDir: {#LandisExtInfoDir}
 Filename: {#ExtAdminTool}; Parameters: "add ""{#ExtensionInfo}"" "; WorkingDir: {#LandisExtInfoDir}
 
 [UninstallRun]
-Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName_X_Y}"" "; WorkingDir: {#LandisExtInfoDir}
+Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName}"" "; WorkingDir: {#LandisExtInfoDir}
 
 [Code]
 #include LandisSDK + '\packaging\Pascal-code.iss'
