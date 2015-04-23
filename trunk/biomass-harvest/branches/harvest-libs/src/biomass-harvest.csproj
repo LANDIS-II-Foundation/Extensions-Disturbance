@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -43,10 +43,8 @@
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Landis.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Landis.Library.AgeOnlyCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Landis.Library.AgeOnlyCohorts">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Landis.Library.Biomass-v1">
       <HintPath>packages\Landis.Library.Biomass.1.0.0-rc2\lib\net35\Landis.Library.Biomass-v1.dll</HintPath>
@@ -62,8 +60,9 @@
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Landis.Library.HarvestManagement-v1">
-      <HintPath>packages\Landis.Library.HarvestManagement.1.0.0-rc1\lib\net35\Landis.Library.HarvestManagement-v1.dll</HintPath>
+    <Reference Include="Landis.Library.HarvestManagement-v1, Version=1.1.5514.19704, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Landis.Library.HarvestManagement.1.1.0-a1\lib\net35\Landis.Library.HarvestManagement-v1.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.SiteHarvest-v1">
       <HintPath>packages\Landis.Library.SiteHarvest.1.0.0-rc1\lib\net35\Landis.Library.SiteHarvest-v1.dll</HintPath>
