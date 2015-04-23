@@ -15,6 +15,8 @@ Source: {#LandisBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extension
 
 ; Harvest libraries
 ; Note: Since they are used by other extensions, they are not uninstalled.
+Source: {#LandisBuildDir}\Landis.Library.BiomassCohorts.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
+Source: {#LandisBuildDir}\Landis.Library.Biomass-v1.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
 Source: {#LandisBuildDir}\Landis.Library.BiomassHarvest-v1.dll;    DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
 Source: {#LandisBuildDir}\Landis.Library.HarvestManagement-v1.dll; DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
 Source: {#LandisBuildDir}\Landis.Library.SiteHarvest-v1.dll;       DestDir: {app}\bin\extensions; Flags: uninsneveruninstall
