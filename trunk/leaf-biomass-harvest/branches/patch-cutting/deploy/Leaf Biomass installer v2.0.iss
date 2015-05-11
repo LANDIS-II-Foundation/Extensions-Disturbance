@@ -1,14 +1,15 @@
 #define PackageName      "Leaf Biomass Harvest"
 #define PackageNameLong  "Leaf Biomass Harvest Extension"
-#define Version          "2.1"
+#define Version          "2.2.2"
 
-#define ReleaseType      "official"
+#define ReleaseType      "alpha"
 #define ReleaseNumber    "2"
 
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
+#include "C:\Docs\Lesley\Landis\deploy\package (Setup section) v6.0.iss"
+
 #define ExtDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
 #define AppDir "C:\Program Files\LANDIS-II\v6\"
 
@@ -44,7 +45,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#ExtensionInfoFile}"" "; Worki
 ;; Run plug-in admin tool to remove the entry for the plug-in
 
 [Code]
-#include "J:\Scheller\LANDIS-II\deploy\package (Code section) v3.iss"
+#include "C:\Docs\Lesley\Landis\deploy\package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 

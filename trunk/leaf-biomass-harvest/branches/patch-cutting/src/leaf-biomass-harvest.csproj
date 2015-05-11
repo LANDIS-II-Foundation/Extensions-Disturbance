@@ -40,9 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Landis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Extension.BaseHarvest, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Landis.Extension.BaseHarvest, Version=2.2.5295.14614, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BaseHarvest.dll</HintPath>
+      <HintPath>..\lib\Landis.Extension.BaseHarvest.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
