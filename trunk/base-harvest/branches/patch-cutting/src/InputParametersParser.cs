@@ -741,9 +741,15 @@ namespace Landis.Extension.BaseHarvest
                 ReadValue(size, reader);
                 PatchCutting.ValidateSize(size.Value);
 
-                selector = new PatchCutting(percentage.Value.Actual, size.Value.Actual);
-                valueAsStr.AppendFormat(" {0} {1}", percentage.Value.String,
-                                                    size.Value.String);
+                // priority is an optional value so we can't use ReadValue
+                TextReader.SkipWhitespace(reader);
+                index = reader.Index;
+                string priority = TextReader.ReadWord(reader);
+
+                selector = new PatchCutting(percentage.Value.Actual, size.Value.Actual, priority);
+                valueAsStr.AppendFormat(" {0} {1} {2}", percentage.Value.String,
+                                                    size.Value.String,
+                                                    priority);
             }
 
             else {
