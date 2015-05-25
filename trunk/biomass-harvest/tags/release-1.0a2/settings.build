@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<project name="settings">
-    <property name="version"      value="1.0" />
-    <property name="Landis-core"  value="5.1" />
-    <property name="release"      value="alpha 2" />
-</project>
