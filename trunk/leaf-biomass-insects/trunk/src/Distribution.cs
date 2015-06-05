@@ -6,7 +6,7 @@ using Edu.Wisc.Forest.Flel.Util;
 
 namespace Landis.Extension.Insects
 {
-    public enum DistributionType {Gamma, Beta, Weibull};
+    public enum DistributionType { Gamma, Beta, Weibull, Normal, Exponential };
 
     public interface IDistribution
     {

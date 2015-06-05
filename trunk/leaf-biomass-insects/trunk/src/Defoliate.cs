@@ -57,6 +57,7 @@ namespace Landis.Extension.Insects
 
 
                 double defoliation = 0.0;
+                double weightedDefoliation = 0.0;
                 int suscIndex = insect.SppTable[sppIndex].Susceptibility - 1;
 
 
@@ -169,7 +170,8 @@ namespace Landis.Extension.Insects
 
                 //PlugIn.ModelCore.Log.WriteLine("Cohort age={0}, species={1}, suscIndex={2}, defoliation={3}.", cohort.Age, cohort.Species.Name, (suscIndex -1), defoliation);
 
-                double weightedDefoliation = (defoliation * ((double) (cohort.LeafBiomass + cohort.WoodBiomass) / (double) siteBiomass));
+                //double weightedDefoliation = (defoliation * ((double) (cohort.LeafBiomass + cohort.WoodBiomass) / (double) siteBiomass)); //AMK Old LBI eqn
+                weightedDefoliation = (Math.Min((1 - totalDefoliation), defoliation) * ((double)cohort.LeafBiomass / (double)siteBiomass)); //AMK 6/4 update from Jane's BiomassInsects
                 
                 //if (PlugIn.ModelCore.CurrentTime > 8)
                 //PlugIn.ModelCore.Log.WriteLine("Cohort age={0}, species={1}, suscIndex={2}, cohortDefoliation={3}, weightedDefolation={4}.", cohort.Age, cohort.Species.Name, (suscIndex+1), defoliation, weightedDefoliation);

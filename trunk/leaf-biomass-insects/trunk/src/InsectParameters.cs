@@ -14,13 +14,14 @@ namespace Landis.Extension.Insects
     public interface IInsect
     {
         string Name {get;set;}
-        double MeanDuration {get;set;}
-        int StdDevDuration {get;set;}
+        DistributionType DurationDistribution { get; set; }
+        double DurationParameter1 { get; set; }
+        double DurationParameter2 { get; set; }
         int MeanTimeBetweenOutbreaks {get;set;}
         int StdDevTimeBetweenOutbreaks {get;set;}
         int NeighborhoodDistance {get;set;}
 
-        double InitialPatchShapeCalibrator {get;set;}
+        //double InitialPatchShapeCalibrator {get;set;} //AMK change made due to Jane's BiomassInsects
         double InitialPatchOutbreakSensitivity { get; set; }
         DistributionType InitialPatchDistr { get; set; }
         double InitialPatchValue1 {get;set;}
@@ -29,6 +30,7 @@ namespace Landis.Extension.Insects
         int OutbreakStartYear {get;set;}
         int OutbreakStopYear {get;set;}
         int MortalityYear {get; set;}
+        bool SingleOutbreakYear { get; set; }     
 
         //List<ISppParameters> SppTable{get;set;}
         ISppParameters[] SppTable { get; set; }
@@ -63,13 +65,14 @@ namespace Landis.Extension.Insects
         : IInsect
     {
         private string name;
-        private double meanDuration;
-        private int stdDevDuration;
+        private DistributionType durationDistribution; //AMK Change due to Jane's BiomassInsect update
+        private double durationParameter1; //AMK Change due to Jane's BiomassInsect update
+        private double durationParameter2; //AMK Change due to Jane's BiomassInsect update
         private int meanTimeBetweenOutbreaks;
         private int stdDevTimeBetweenOutbreaks;
         private int neighborhoodDistance;
 
-        private double initialPatchShapeCalibrator;
+        //private double initialPatchShapeCalibrator;
         private double initialPatchOutbreakSensitivity;
         private DistributionType initialPatchDistr;
         private double initialPatchValue1;
@@ -78,6 +81,7 @@ namespace Landis.Extension.Insects
         private int outbreakStartYear;
         private int outbreakStopYear;
         private int mortalityYear;
+        private bool singleOutbreakYear;
 
         // BRM
         private int initialSites;
@@ -112,28 +116,44 @@ namespace Landis.Extension.Insects
         }
 
         //---------------------------------------------------------------------
-        public double MeanDuration
+        public DistributionType DurationDistribution   //AMK Change due to Jane's BiomassInsect update
         {
-            get {
-                return meanDuration;
+            get
+            {
+                return durationDistribution;
             }
-            set {
-                if (value <= 0)
-                    throw new InputValueException(value.ToString(), "Value must be  > 0.");
-                meanDuration = value;
+            set
+            {
+                durationDistribution = value;
             }
         }
         //---------------------------------------------------------------------
-        public int StdDevDuration
+        public double DurationParameter1  //AMK Change due to Jane's BiomassInsect update
         {
-            get {
-                return stdDevDuration;
+            get
+            {
+                return durationParameter1;
             }
-            set {
+            set
+            {
+                if (value <= 0)
+                    throw new InputValueException(value.ToString(), "Value must be  > 0.");
+                durationParameter1 = value;
+            }
+        }
+        //---------------------------------------------------------------------
+        public double DurationParameter2   //AMK Change due to Jane's BiomassInsect update
+        {
+            get
+            {
+                return durationParameter2;
+            }
+            set
+            {
                 if (value < 0)
-                        throw new InputValueException(value.ToString(),
-                                                      "Value must be  > 0.");
-                 stdDevDuration = value;
+                    throw new InputValueException(value.ToString(),
+                                                  "Value must be  > 0.");
+                durationParameter2 = value;
             }
         }
         //---------------------------------------------------------------------
@@ -174,17 +194,17 @@ namespace Landis.Extension.Insects
             }
         }
         //---------------------------------------------------------------------
-        public double InitialPatchShapeCalibrator
-        {
-            get {
-                return initialPatchShapeCalibrator;
-            }
-            set {
-                 if (value > 1.0 || value < 0.0)
-                        throw new InputValueException(value.ToString(), "Value must be  < 1.0 and > 0.0.");
-                 initialPatchShapeCalibrator = value;
-            }
-        }
+        //public double InitialPatchShapeCalibrator    //AMK Change due to Jane's BiomassInsect update
+        //{
+        //    get {
+        //        return initialPatchShapeCalibrator;
+        //    }
+        //    set {
+        //         if (value > 1.0 || value < 0.0)
+        //                throw new InputValueException(value.ToString(), "Value must be  < 1.0 and > 0.0.");
+        //         initialPatchShapeCalibrator = value;
+        //    }
+        //}
         //---------------------------------------------------------------------
         public double InitialPatchOutbreakSensitivity
         {
@@ -266,6 +286,18 @@ namespace Landis.Extension.Insects
             }
         }
         //---------------------------------------------------------------------
+        public bool SingleOutbreakYear
+        {
+            get
+            {
+                return singleOutbreakYear;
+            }
+            set
+            {
+                singleOutbreakYear = value;
+            }
+        }
+        //---------------------------------------------------------------------    
         public bool ActiveOutbreak
         {
             get {

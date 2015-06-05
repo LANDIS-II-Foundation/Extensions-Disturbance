@@ -61,6 +61,7 @@ namespace Landis.Extension.Insects
             float woodBiomassMortality = 0F;
             double percentMortality = 0.0;
             int sppIndex = cohort.Species.Index;
+            double cumulativeDefoliationManyInsects = 0.0;
             float[] leafWoodReduction = new float[2] { 0F, 0F };
 
             foreach (IInsect insect in PlugIn.ManyInsect)
@@ -79,8 +80,16 @@ namespace Landis.Extension.Insects
                     annualDefoliation = insect.HostDefoliationByYear[currentSite][PlugIn.ModelCore.CurrentTime - yearBack][suscIndex];
                     //PlugIn.ModelCore.Log.WriteLine("Host Defoliation By Year:  Time={0}, suscIndex={1}, spp={2}, annualDefoliation={3}.", (PlugIn.ModelCore.CurrentTime - yearBack), suscIndex + 1, cohort.Species.Name, annualDefoliation);
                 }
-                double cumulativeDefoliation = annualDefoliation;
-                double lastYearsCumulativeDefoliation = 0; // annualDefoliation;
+
+                double cumulativeDefoliation = cumulativeDefoliationManyInsects;  //AMK included because of Jane
+                double lastYearsCumulativeDefoliation = cumulativeDefoliationManyInsects;
+
+                if (cumulativeDefoliation == 0.0)
+                {
+                    cumulativeDefoliation = annualDefoliation;
+                    //lastYearsCumulativeDefoliation = annualDefoliation;  //AMK commented out from Jane
+                }
+
 
                 while (annualDefoliation > 0.0)
                 {
