@@ -355,7 +355,7 @@ namespace Landis.Extension.Insects
                 }
 
                 //----- Write Initial Patch maps --------
-                string path2 = MapNames.ReplaceTemplateVars(mapNameTemplate, ("InitialPatchMap" + insect.Name), PlugIn.ModelCore.CurrentTime);
+                string path2 = MapNames.ReplaceTemplateVars(mapNameTemplate, ("InitialPatchMap-" + insect.Name), PlugIn.ModelCore.CurrentTime);
                 using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path2, modelCore.Landscape.Dimensions))
                 {
                     ShortPixel pixel = outputRaster.BufferPixel;
@@ -380,7 +380,7 @@ namespace Landis.Extension.Insects
                 }
 
                 //----- Write Biomass Reduction maps --------
-                string path3 = MapNames.ReplaceTemplateVars(mapNameTemplate, ("BiomassRemoved" + insect.Name), PlugIn.ModelCore.CurrentTime);
+                string path3 = MapNames.ReplaceTemplateVars(mapNameTemplate, ("BiomassRemoved-" + insect.Name), PlugIn.ModelCore.CurrentTime);
                 using (IOutputRaster<ShortPixel> outputRaster = modelCore.CreateRaster<ShortPixel>(path3, modelCore.Landscape.Dimensions))
                 {
                     ShortPixel pixel = outputRaster.BufferPixel;
