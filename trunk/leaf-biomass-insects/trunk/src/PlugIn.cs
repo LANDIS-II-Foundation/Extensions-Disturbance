@@ -278,14 +278,14 @@ namespace Landis.Extension.Insects
                         if (insect.Disturbed[site] && SiteVars.InitialOutbreakProb[site] > 0.0)
                             numSitesActive++;
                         
-                        PlugIn.ModelCore.UI.WriteLine(" Inner Loop.  InsectDisturbed={0}, InitialOutbreakProb={1}, NumInitalSites={2}, NumSitesActive={3}.", insect.Disturbed[site], SiteVars.InitialOutbreakProb[site], numInitialSites, numSitesActive);
+                        //PlugIn.ModelCore.UI.WriteLine(" Inner Loop.  InsectDisturbed={0}, InitialOutbreakProb={1}, NumInitalSites={2}, NumSitesActive={3}.", insect.Disturbed[site], SiteVars.InitialOutbreakProb[site], numInitialSites, numSitesActive);
                     }
                     if (insect.OutbreakStartYear == PlugIn.ModelCore.CurrentTime)
                         insect.InitialSites = numInitialSites;
 
                     if (numSites0_33 + numSites33_66 + numSites66_100 > 0)
                         meanDefoliation = sumDefoliation / (double)numSitesActive;
-                    PlugIn.ModelCore.UI.WriteLine("Outer Loop.   sumDefoliation={0}, numSites={1}, numInitialSites={2}, numSitesActive={3}.", sumDefoliation, numSites0_33 + numSites33_66 + numSites66_100, numInitialSites, numSitesActive);
+                    //PlugIn.ModelCore.UI.WriteLine("Outer Loop.   sumDefoliation={0}, numSites={1}, numInitialSites={2}, numSitesActive={3}.", sumDefoliation, numSites0_33 + numSites33_66 + numSites66_100, numInitialSites, numSitesActive);
                 //}
 
                 int totalBioRemoved = 0;
@@ -294,7 +294,7 @@ namespace Landis.Extension.Insects
                     totalBioRemoved += SiteVars.BiomassRemoved[site]; // kg across all defoliated sites
                 }
                 insect.LastBioRemoved = totalBioRemoved; //Assign variables for the logfile.   ML: moved code here.
-                 PlugIn.ModelCore.UI.WriteLine("   totalBioRemoved={0}.", totalBioRemoved);
+                 //PlugIn.ModelCore.UI.WriteLine("   totalBioRemoved={0}.", totalBioRemoved);
 
 
                 // ONly add to log & output maps during outbreak <- Modified, JRF, add to log file each year.
