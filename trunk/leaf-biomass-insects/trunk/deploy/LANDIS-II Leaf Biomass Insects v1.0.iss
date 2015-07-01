@@ -7,7 +7,7 @@
 #define CoreVersion      "6.0"
 #define CoreReleaseAbbr  ""
 
-#include "J:\Scheller\LANDIS-II\deploy\package (Setup section) v6.0.iss"
+#include "C:\BRM\LANDIS_II\Code\SDK\Deploy\package (Setup section) v6.0.iss"
 #define ExtDir "C:\Program Files\LANDIS-II\v6\bin\extensions"
 #define AppDir "C:\Program Files\LANDIS-II\v6\"
 
@@ -16,7 +16,6 @@
 Source: ..\src\bin\debug\Landis.Extension.LeafBiomassInsects.dll; DestDir: {#ExtDir}; Flags: replacesameversion
 Source: ..\src\bin\debug\Landis.Library.Metadata.dll; DestDir: {#ExtDir}; Flags: replacesameversion uninsneveruninstall
 
-[Files]
 
 Source: docs\LANDIS-II Leaf Biomass Insect Defoliation v1.1 User Guide.pdf; DestDir: {#AppDir}\doc
 Source: examples\*.txt; DestDir: {#AppDir}\examples\leaf-biomass-insects; Flags: recursesubdirs
@@ -38,7 +37,7 @@ Filename: {#PlugInAdminTool}; Parameters: "add ""{#BioBugs}"" "; WorkingDir: {#L
 ;; Run plug-in admin tool to remove entries for each plug-in
 
 [Code]
-#include "J:\Scheller\LANDIS-II\deploy\package (Code section) v3.iss"
+#include "C:\BRM\LANDIS_II\Code\SDK\Deploy\package (Code section) v3.iss"
 
 //-----------------------------------------------------------------------------
 

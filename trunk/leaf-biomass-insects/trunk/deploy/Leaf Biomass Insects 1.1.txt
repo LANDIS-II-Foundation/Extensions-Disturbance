@@ -1,7 +1,7 @@
 LandisData   Extension
 
 Name         "Leaf Biomass Insects"
-Version      "1.1"
+Version      "1.1 (beta release 2)"
 Type         disturbance:insects
 Assembly     Landis.Extension.LeafBiomassInsects
 Class        Landis.Extension.Insects.PlugIn
