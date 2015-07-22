@@ -190,19 +190,24 @@ namespace Landis.Extension.BaseHarvest
 
                 foreach (AppliedPrescription aprescription in mgmtArea.Prescriptions)
                 {
-                    Prescription prescription = aprescription.Prescription;
-                    string species_string = "";
-                    foreach (ISpecies species in PlugIn.ModelCore.Species)
-                         species_string += ", " + totalSpeciesCohorts[prescription.Number, species.Index];
+                    /*
+                     * 2015-07-09 LCB
+                     * Check to see if prescription was actually applied before writing it to summary log
+                     */
+                    if(aprescription.ApplyPrescription) {
+                        Prescription prescription = aprescription.Prescription;
+                        string species_string = "";
+                        foreach (ISpecies species in PlugIn.ModelCore.Species)
+                            species_string += ", " + totalSpeciesCohorts[prescription.Number, species.Index];
 
-                    if(totalSites[prescription.Number] > 0)
-                        summaryLog.WriteLine("{0},{1},{2},{3}{4}",
-                            PlugIn.ModelCore.CurrentTime,
-                            mgmtArea.MapCode,
-                            prescription.Name,
-                            totalDamagedSites[prescription.Number],
-                            species_string);
-
+                        if(totalSites[prescription.Number] > 0)
+                            summaryLog.WriteLine("{0},{1},{2},{3}{4}",
+                                PlugIn.ModelCore.CurrentTime,
+                                mgmtArea.MapCode,
+                                prescription.Name,
+                                totalDamagedSites[prescription.Number],
+                                species_string);
+                    }
 
                 }
 
