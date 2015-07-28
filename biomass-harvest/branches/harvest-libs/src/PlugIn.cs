@@ -226,21 +226,29 @@ namespace Landis.Extension.BiomassHarvest
                 // Write Summary Log File:
                 foreach (AppliedPrescription aprescription in mgmtArea.Prescriptions)
                 {
-                    Prescription prescription = aprescription.Prescription;
-                    string species_string = "";
-                    foreach (ISpecies species in modelCore.Species)
-                         species_string += ", " + totalSpeciesCohorts[prescription.Number, species.Index];
+                    /*
+                     * 2015-07-28 LCB
+                     * Check to see if prescription was actually applied before writing it to summary log
+                     */
+                    if (aprescription.ApplyPrescription)
+                    {
 
-                    //summaryLog.WriteLine("Time,ManagementArea,Prescription,TotalDamagedSites,TotalCohortsDamaged,TotalCohortsKilled,{0}", species_header_names);
-                    if(totalSites[prescription.Number] > 0)
-                        summaryLog.WriteLine("{0},{1},{2},{3},{4},{5}{6}",
-                            modelCore.CurrentTime,
-                            mgmtArea.MapCode,
-                            prescription.Name,
-                            totalDamagedSites[prescription.Number],
-                            totalCohortsDamaged[prescription.Number],
-                            totalCohortsKilled[prescription.Number],
-                            species_string);
+                        Prescription prescription = aprescription.Prescription;
+                        string species_string = "";
+                        foreach (ISpecies species in modelCore.Species)
+                            species_string += ", " + totalSpeciesCohorts[prescription.Number, species.Index];
+
+                        //summaryLog.WriteLine("Time,ManagementArea,Prescription,TotalDamagedSites,TotalCohortsDamaged,TotalCohortsKilled,{0}", species_header_names);
+                        if (totalSites[prescription.Number] > 0)
+                            summaryLog.WriteLine("{0},{1},{2},{3},{4},{5}{6}",
+                                modelCore.CurrentTime,
+                                mgmtArea.MapCode,
+                                prescription.Name,
+                                totalDamagedSites[prescription.Number],
+                                totalCohortsDamaged[prescription.Number],
+                                totalCohortsKilled[prescription.Number],
+                                species_string);
+                    }
                 }
             }
 
@@ -376,7 +384,7 @@ namespace Landis.Extension.BiomassHarvest
             if(biomassRemoved <= 0.0)
                 return;
 
-            log.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9:0.000},{10:0.000},{11},{12}{13}",
+            log.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9:0.000},{10:0.000},{11},{12},{13}",
                           modelCore.CurrentTime,
                           mgmtArea.MapCode,
                           stand.PrescriptionName,
