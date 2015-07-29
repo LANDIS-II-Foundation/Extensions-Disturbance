@@ -143,12 +143,14 @@ namespace Landis.Extension.BiomassHarvest
             
             //include a column for each species in the species dictionary
             string species_header_names = "";
+            string species_header_names_biomass = "";
             int i = 0;
             for (i = 0; i < modelCore.Species.Count; i++) {
                 species_header_names += "," + modelCore.Species[i].Name;
+                species_header_names_biomass += "," + modelCore.Species[i].Name + " Mg";
             }
 
-            log.WriteLine("Time,ManagementArea,Prescription,StandMapCode,EventId,StandAge,StandRank,StandSiteCount,DamagedSites,MgBiomassRemoved,MgBioRemovedPerDamagedHa,CohortsDamaged,CohortsKilled{0}", species_header_names);
+            log.WriteLine("Time,ManagementArea,Prescription,StandMapCode,EventId,StandAge,StandRank,StandSiteCount,DamagedSites,MgBiomassRemoved,MgBioRemovedPerDamagedHa,CohortsDamaged,CohortsKilled{0}{1}", species_header_names, species_header_names_biomass);
 
             ModelCore.UI.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
 
@@ -176,6 +178,7 @@ namespace Landis.Extension.BiomassHarvest
             SiteVars.BiomassRemoved.ActiveSiteValues = 0;
             SiteVars.CohortsPartiallyDamaged.ActiveSiteValues = 0;
             HarvestMgmtLib.SiteVars.CohortsDamaged.ActiveSiteValues = 0;
+            SiteVars.BiomassBySpecies.ActiveSiteValues = null; 
 
             SiteBiomass.EnableRecordingForHarvest();
 
@@ -267,11 +270,14 @@ namespace Landis.Extension.BiomassHarvest
                                          SiteHarvestedEvent.Args eventArgs)
         {
             ActiveSite site = eventArgs.Site;
+            IDictionary<ISpecies, int> biomassBySpecies = new Dictionary<ISpecies, int>();
             foreach (ISpecies species in ModelCore.Species)
             {
                 int speciesBiomassHarvested = SiteBiomass.Harvested[species];
                 SiteVars.BiomassRemoved[site] += speciesBiomassHarvested;
+                biomassBySpecies.Add(species, speciesBiomassHarvested);
             }
+            SiteVars.BiomassBySpecies[site] = biomassBySpecies;
             SiteBiomass.ResetHarvestTotals();
         }
 
@@ -337,6 +343,8 @@ namespace Landis.Extension.BiomassHarvest
             int standPrescriptionNumber = 0;
             double biomassRemoved = 0.0;
             double biomassRemovedPerHa = 0.0;
+            IDictionary<ISpecies, double> totalBiomassBySpecies = new Dictionary<ISpecies, double>();
+
             //ModelCore.UI.WriteLine("BiomassHarvest:  PlugIn.cs: WriteLogEntry: mgmtArea {0}, Stand {1} ", mgmtArea.Prescriptions.Count, stand.MapCode);
 
             foreach (ActiveSite site in stand) {
@@ -358,6 +366,21 @@ namespace Landis.Extension.BiomassHarvest
 
                     //Conversion from [g m-2] to [Mg ha-1] to [Mg]
                     biomassRemoved += SiteVars.BiomassRemoved[site] / 100.0 * modelCore.CellArea;
+                    IDictionary<ISpecies, int> siteBiomassBySpecies = SiteVars.BiomassBySpecies[site];
+                    // Sum up total biomass for each species
+                    foreach (ISpecies species in modelCore.Species)
+                    {
+                        int addValue = 0;
+                        siteBiomassBySpecies.TryGetValue(species, out addValue);
+                        double oldValue;
+                        if (totalBiomassBySpecies.TryGetValue(species, out oldValue))
+                        {
+                            totalBiomassBySpecies[species] += addValue / 100.0 * modelCore.CellArea;
+                        }
+                        else {
+                            totalBiomassBySpecies.Add(species, addValue / 100.0 * modelCore.CellArea);
+                        }
+                    }
                 }
             }
 
@@ -369,10 +392,15 @@ namespace Landis.Extension.BiomassHarvest
 
             //csv string for log file, contains species kill count
             string species_count = "";
+            //csv string for log file, contains biomass by species
+            string species_biomass = "";
+            double biomass_value;
             foreach (ISpecies species in modelCore.Species) {
                 int cohortCount = stand.DamageTable[species];
                 species_count += string.Format("{0},", cohortCount);
                 totalSpeciesCohorts[standPrescriptionNumber, species.Index] += cohortCount;
+                totalBiomassBySpecies.TryGetValue(species, out biomass_value);
+                species_biomass += string.Format("{0},", biomass_value);
             }
 
             //now that the damage table for this stand has been recorded, clear it!!
@@ -384,7 +412,7 @@ namespace Landis.Extension.BiomassHarvest
             if(biomassRemoved <= 0.0)
                 return;
 
-            log.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9:0.000},{10:0.000},{11},{12},{13}",
+            log.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9:0.000},{10:0.000},{11},{12},{13}{14}",
                           modelCore.CurrentTime,
                           mgmtArea.MapCode,
                           stand.PrescriptionName,
@@ -398,7 +426,8 @@ namespace Landis.Extension.BiomassHarvest
                           biomassRemovedPerHa, // Mg/ha
                           cohortsDamaged,
                           cohortsKilled,
-                          species_count);
+                          species_count,
+                          species_biomass);
         }
     }
 }

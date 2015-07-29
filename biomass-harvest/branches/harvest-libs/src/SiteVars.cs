@@ -21,6 +21,8 @@
 using Landis.SpatialModeling;
 using Landis.Library.BiomassCohorts;
 using Landis.Library.Biomass;
+using Landis.Core;
+using System.Collections.Generic;
 
 namespace Landis.Extension.BiomassHarvest
 {
@@ -33,6 +35,7 @@ namespace Landis.Extension.BiomassHarvest
         private static ISiteVar<Pool> litter;
 
         private static ISiteVar<ISiteCohorts> cohorts;
+        private static ISiteVar<IDictionary<ISpecies, int>> biomassBySpecies;
 
         //---------------------------------------------------------------------
 
@@ -46,6 +49,7 @@ namespace Landis.Extension.BiomassHarvest
             biomassRemoved = PlugIn.ModelCore.Landscape.NewSiteVar<double>();
             cohortsPartiallyDamaged = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
             capacityReduction = PlugIn.ModelCore.Landscape.NewSiteVar<double>();
+            biomassBySpecies = PlugIn.ModelCore.Landscape.NewSiteVar<IDictionary<ISpecies, int>>();
 
             SiteVars.CapacityReduction.ActiveSiteValues = 0.0;
 
@@ -128,6 +132,17 @@ namespace Landis.Extension.BiomassHarvest
             get
             {
                 return litter;
+            }
+        }
+
+        /// <summary>
+        /// The amount of biomass harvested by a site for each species
+        /// </summary>
+        public static ISiteVar<IDictionary<ISpecies, int>> BiomassBySpecies
+        {
+            get
+            {
+                return biomassBySpecies;
             }
         }
 
