@@ -259,34 +259,41 @@ namespace Landis.Extension.Insects
                 int numSites66_100 = 0;
                 int numInitialSites = 0;
                 int numSitesActive = 0; // Just get a sum of all active sites to calculate mean defoliation accurately for log file.
+                
+                foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
+                {
+                    //sumDefoliation += insect.LastYearDefoliation[site];
+                    //if (insect.LastYearDefoliation[site] > 0.0 && insect.LastYearDefoliation[site] <= 0.33)
+                    //    numSites0_33++;
+                    //if (insect.LastYearDefoliation[site] > 0.33 && insect.LastYearDefoliation[site] <= 0.66)
+                    //    numSites33_66++;
+                    //if (insect.LastYearDefoliation[site] > 0.66 && insect.LastYearDefoliation[site] <= 1.0)
+                    //    numSites66_100++;
+                    ////if (insect.Disturbed[site] && SiteVars.InitialOutbreakProb[site] > 0.0)
+                    //if (insect.LastYearDefoliation[site] > 0.66 && insect.LastYearDefoliation[site] <= 1.0)
+                    //    numInitialSites++;
+                    //if (insect.Disturbed[site] && SiteVars.InitialOutbreakProb[site] > 0.0)
+                    //    numSitesActive++;
+                    
+                    sumDefoliation += insect.LastYearDefoliation[site];
+                    if (insect.LastYearDefoliation[site] > 0.0 && insect.LastYearDefoliation[site] <= 0.33)
+                        numSites0_33++;
+                    if (insect.LastYearDefoliation[site] > 0.33 && insect.LastYearDefoliation[site] <= 0.66)
+                        numSites33_66++;
+                    if (insect.LastYearDefoliation[site] > 0.66 && insect.LastYearDefoliation[site] <= 1.0)
+                        numSites66_100++;
+                    if (insect.Disturbed[site] && SiteVars.InitialOutbreakProb[site] > 0)
+                        numInitialSites++;
+                    
+                    numSitesActive++;
+                    //PlugIn.ModelCore.UI.WriteLine(" Inner Loop.  InsectDisturbed={0}, InitialOutbreakProb={1}, NumInitalSites={2}, NumSitesActive={3}.", insect.Disturbed[site], SiteVars.InitialOutbreakProb[site], numInitialSites, numSitesActive);
+                }
+                if (insect.OutbreakStartYear == PlugIn.ModelCore.CurrentTime)
+                    insect.InitialSites = numInitialSites;
 
-                // ONly calculate for log file when outbreak or mortality is active <- Modified, JRF, add to log file each year.
-                //if (insect.ActiveOutbreak || insect.SingleOutbreakYear || (insect.LastStopYear + 1 >= PlugIn.ModelCore.CurrentTime) || (insect.LastBioRemoved > 0))
-                //{
-                    foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
-                    {
-                        sumDefoliation += insect.LastYearDefoliation[site];
-                        if (insect.LastYearDefoliation[site] > 0.0 && insect.LastYearDefoliation[site] <= 0.33)
-                            numSites0_33++;
-                        if (insect.LastYearDefoliation[site] > 0.33 && insect.LastYearDefoliation[site] <= 0.66)
-                            numSites33_66++;
-                        if (insect.LastYearDefoliation[site] > 0.66 && insect.LastYearDefoliation[site] <= 1.0)
-                            numSites66_100++;
-                        //if (insect.Disturbed[site] && SiteVars.InitialOutbreakProb[site] > 0.0)
-                        if (insect.LastYearDefoliation[site] > 0.66 && insect.LastYearDefoliation[site] <= 1.0)
-                            numInitialSites++;
-                        if (insect.Disturbed[site] && SiteVars.InitialOutbreakProb[site] > 0.0)
-                            numSitesActive++;
-                        
-                        //PlugIn.ModelCore.UI.WriteLine(" Inner Loop.  InsectDisturbed={0}, InitialOutbreakProb={1}, NumInitalSites={2}, NumSitesActive={3}.", insect.Disturbed[site], SiteVars.InitialOutbreakProb[site], numInitialSites, numSitesActive);
-                    }
-                    if (insect.OutbreakStartYear == PlugIn.ModelCore.CurrentTime)
-                        insect.InitialSites = numInitialSites;
+                if (numSites0_33 + numSites33_66 + numSites66_100 > 0)
+                    meanDefoliation = sumDefoliation / (double)numSitesActive;
 
-                    if (numSites0_33 + numSites33_66 + numSites66_100 > 0)
-                        meanDefoliation = sumDefoliation / (double)numSitesActive;
-                    //PlugIn.ModelCore.UI.WriteLine("Outer Loop.   sumDefoliation={0}, numSites={1}, numInitialSites={2}, numSitesActive={3}.", sumDefoliation, numSites0_33 + numSites33_66 + numSites66_100, numInitialSites, numSitesActive);
-                //}
 
                 int totalBioRemoved = 0;
                 foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
@@ -344,46 +351,6 @@ namespace Landis.Extension.Insects
                      PlugIn.ModelCore.UI.WriteLine("   NEXT Insect Start Year = {0}, Stop Year = {1}.", insect.OutbreakStartYear, insect.OutbreakStopYear);
 
                  }
-                
-                //if (meanDefoliation > 0)
-                //{
-
-                //    log.Write("{0},{1},{2},{3},{4:0.0000},{5},{6},{7},{8},{9}",
-                //            PlugIn.ModelCore.CurrentTime - 1,  //0
-                //            insect.Name,  //1
-                //            insect.LastStartYear,  //2
-                //            insect.LastStopYear,  //3
-                //            meanDefoliation, //4
-                //            numSites0_33, //5
-                //            numSites33_66,  //6
-                //            numSites66_100, //7
-                //            insect.InitialSites, //8
-                //            insect.LastBioRemoved //9
-                //            );
-                //}
-
-                //else
-                //{
-                //    log.Write("{0},{1},{2},{3},{4:0.0000},{5},{6},{7},{8},{9}",
-                //            PlugIn.ModelCore.CurrentTime - 1,  //0
-                //            insect.Name,  //1
-                //            0,  //2
-                //            0,  //3
-                //            meanDefoliation, //4
-                //            numSites0_33, //5
-                //            numSites33_66,  //6
-                //            numSites66_100, //7
-                //            0, //8
-                //            insect.LastBioRemoved //9
-                //            );
-                //}
-
-                 
-                ////foreach (IEcoregion ecoregion in Ecoregions.Dataset)
-                ////    log.Write(",{0}", 1);
-
-                //log.WriteLine("");
-
 
                 //----- Write Insect Defoliation/GrowthReduction maps --------
                 string path = MapNames.ReplaceTemplateVars(mapNameTemplate, insect.Name, PlugIn.ModelCore.CurrentTime - 1);
