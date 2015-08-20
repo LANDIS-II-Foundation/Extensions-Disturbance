@@ -1,3 +1,3 @@
-# Land Use Change Extension
+# Generic Disturbance Extension
 
-This directory contains code for older versions. Effective August 2015 the source code has been moved to its own repository. All new development should use the new repository. 
+This directory contains code for an older version of the disturbance extension indicated by the directory name. Effective August 2015 the source code has been moved to its own repository. All new development should use the new repository. 
