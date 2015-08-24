@@ -1,9 +1,0 @@
-LandisData   Extension
-
-Name         "Biomass Development"
-Version      "0.1 (release candidate 4)"
-Type         disturbance:development
-Assembly     Landis.Extension.BiomassDevelopment
-Class        Landis.Extension.BiomassHarvest.PlugIn
-Description  "Development for biomass cohorts"
-CoreVersion  6.0

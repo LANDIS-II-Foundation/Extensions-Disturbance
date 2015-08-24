@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{744C34C9-C233-4EAA-96A7-AA4E12149086}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>base_harvest</RootNamespace>
+    <AssemblyName>Landis.Extension.BaseHarvest</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>C:\Program Files\LANDIS-II\v6\bin\extensions\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Edu.Wisc.Forest.Flel.Util, Version=1.1.400.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Edu.Wisc.Forest.Flel.Util.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Landis.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Library.AgeOnlyCohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Library.Cohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Cohorts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Library.LandUses.dll">
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.LandUses.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.Library.Succession, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Landis.SpatialModeling, Version=1.0.4023.30148, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\Landis.SpatialModeling.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.0\log4net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppliedPrescription.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShortPixel.cs" />
+    <Compile Include="stand-ranking\EconomicRank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\FireRiskRank.cs" />
+    <Compile Include="stand-ranking\FireRiskParameters.cs" />
+    <Compile Include="stand-ranking\FireRiskTable.cs" />
+    <Compile Include="UIntPixel.cs" />
+    <Compile Include="cohort-selection\AgeRange.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cohort-selection\Clearcut.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cohort-selection\EveryNthCohort.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cohort-selection\ICohortSelector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cohort-selection\MultiSpeciesCohortSelector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cohort-selection\SelectCohorts.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="cohort-selection\SpecificAgesCohortSelector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IInputParameters.cs" />
+    <Compile Include="IManagementAreaDataset.cs" />
+    <Compile Include="InputParameters.cs" />
+    <Compile Include="InputParametersParser.cs" />
+    <Compile Include="ManagementArea.cs" />
+    <Compile Include="ManagementAreaDataset.cs" />
+    <Compile Include="ManagementAreas.cs" />
+    <Compile Include="MapNames.cs" />
+    <Compile Include="PlugIn.cs" />
+    <Compile Include="Prescription.cs" />
+    <Compile Include="PrescriptionMaps.cs" />
+    <Compile Include="repeat-harvest\AppliedRepeatHarvest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repeat-harvest\RepeatHarvest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repeat-harvest\ReservedStand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repeat-harvest\RoundedInterval.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repeat-harvest\SingleRepeatHarvest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="site-selection\CompleteStand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="site-selection\CompleteStandSpreading.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="site-selection\ISiteSelector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="site-selection\PartialStandSpreading.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="site-selection\PatchCutting.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="site-selection\StandSpreading.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SiteVars.cs" />
+    <Compile Include="stand-ranking\EconomicRankParameters.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\EconomicRankTable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\InclusionRequirement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\InclusionRule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\IRankingRequirement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\IRequirement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\IStandRankingMethod.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\MaxCohortAge.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\MaximumAge.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\MinimumAge.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\MinTimeSinceLastHarvest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\RandomRank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\RegulateAgesRank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\SpatialArrangement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\StandAdjacency.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\StandRanking.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="stand-ranking\StandRankingMethod.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Stand.cs" />
+    <Compile Include="Stands.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

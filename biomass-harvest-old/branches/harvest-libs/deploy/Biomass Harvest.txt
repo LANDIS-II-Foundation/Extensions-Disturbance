@@ -1,0 +1,9 @@
+LandisData   Extension
+
+Name         "Biomass Harvest"
+Version      "3.0 (alpha 2 release)"
+Type         disturbance:harvest
+Assembly     Landis.Extension.BiomassHarvest-3.0
+Class        Landis.Extension.BiomassHarvest.PlugIn
+Description  "Harvesting for biomass cohorts"
+CoreVersion  6.0

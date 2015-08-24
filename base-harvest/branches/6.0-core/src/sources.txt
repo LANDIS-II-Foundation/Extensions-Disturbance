@@ -1,5 +1,0 @@
-*.cs
-cohort-selection/*.cs
-repeat-harvest/*.cs
-site-selection/*.cs
-stand-ranking/*.cs

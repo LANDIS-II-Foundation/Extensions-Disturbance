@@ -1,0 +1,7 @@
+>> Example of a bad input file for Harvesting
+
+LandisData       Harvesting
+
+Timestep         10
+
+ManagementAreas  " 	"  << ERROR HERE: Whitespace is not valid path

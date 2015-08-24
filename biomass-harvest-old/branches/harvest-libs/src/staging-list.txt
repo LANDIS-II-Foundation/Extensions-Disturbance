@@ -1,0 +1,8 @@
+{OutDir}\Landis.Extension.BiomassHarvest-3.0.dll
+{OutDir}\Landis.Extension.BiomassHarvest-3.0.pdb
+--no-overwrite
+{OutDir}\Landis.Library.Biomass-v1.dll
+{OutDir}\Landis.Library.BiomassCohorts.dll
+{OutDir}\Landis.Library.BiomassHarvest-v1.dll
+{OutDir}\Landis.Library.HarvestManagement-v1.dll
+{OutDir}\Landis.Library.SiteHarvest-v1.dll

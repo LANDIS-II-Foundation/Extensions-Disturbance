@@ -1,0 +1,9 @@
+LandisData   Extension
+
+Name         "Base Harvest"
+Version      "3.0"
+Type         disturbance:harvest
+Assembly     Landis.Extension.BaseHarvest
+Class        Landis.Extension.BaseHarvest.PlugIn
+Description  "Harvesting for age cohorts"
+CoreVersion  6.0

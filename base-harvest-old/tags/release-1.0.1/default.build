@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright 2005, University of Wisconsin-Madison
+  Author: Jimm Domingo
+-->
+
+<project name="Harvest">
+<!--	<property name="edu.wisc.forest.flel.build" value="C:\Documents and Settings\mjtrent\Desktop\mikah_test_directory\build"/>
+    <property name="Landis-core"
+              value="5.1"
+              if="${environment::get-user-name() == 'mjtrent'}" />
+              
+    <property name="debug-config__install-dir"
+              value="C:\Program Files\Landis-II\5.1\bin" />
+-->
+    <property name="Landis-core"
+              value="5.1"
+              if="${not property::exists('Landis-core')}" />
+    <include buildfile="${edu.wisc.forest.flel.build}/project.build" />
+</project>
