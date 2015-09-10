@@ -61,7 +61,7 @@ namespace Landis.Extension.Insects
                 if (SiteVars.BiomassRemoved[site] > 0) 
                 {
                     //PlugIn.ModelCore.Log.WriteLine("  Biomass removed at {0}/{1}: {2}.", site.Location.Row, site.Location.Column, SiteVars.BiomassRemoved[site]);
-                    SiteVars.TimeOfLastEvent[site] = PlugIn.ModelCore.CurrentTime;
+                    SiteVars.TimeOfLastEvent[site] = PlugIn.ModelCore.CurrentTime - 1;
                     SiteVars.InsectName[site] = insect.Name;
                 } 
             }

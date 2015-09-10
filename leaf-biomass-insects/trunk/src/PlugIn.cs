@@ -406,7 +406,7 @@ namespace Landis.Extension.Insects
                         if (site.IsActive)
                         {
                             if (SiteVars.BiomassRemoved[site] > 0)
-                                pixel.MapCode.Value = (short)(SiteVars.BiomassRemoved[site] / 100);  // convert to Mg/ha
+                                pixel.MapCode.Value = Math.Max((short)1,(short)(SiteVars.BiomassRemoved[site] / 100));  // convert to Mg/ha
                             else
                                 pixel.MapCode.Value = 0;
                         }
