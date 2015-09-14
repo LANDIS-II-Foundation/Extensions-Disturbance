@@ -136,6 +136,7 @@ namespace Landis.Extension.Insects
             running = true;
             PlugIn.ModelCore.UI.WriteLine("   Processing landscape for Biomass Insect events ...");
 
+            SiteVars.SiteDefoliation.ActiveSiteValues = 0;
             foreach (IInsect insect in manyInsect)
             {
                 //SiteVars.BiomassRemoved.ActiveSiteValues = 0;
@@ -149,7 +150,16 @@ namespace Landis.Extension.Insects
 
                 // Copy the data from current to last
                 foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
-                    insect.LastYearDefoliation[site] = insect.ThisYearDefoliation[site];
+                {
+                    double thisYearDefol = insect.ThisYearDefoliation[site];
+                    insect.LastYearDefoliation[site] = thisYearDefol;
+                    SiteVars.SiteDefoliation[site] += (int) Math.Round(thisYearDefol * 100);
+                    if (thisYearDefol > 0)
+                    {
+                        SiteVars.TimeOfLastEvent[site] = PlugIn.ModelCore.CurrentTime - 1;
+                        SiteVars.InsectName[site] = insect.Name;
+                    }
+                }
 
                 insect.ThisYearDefoliation.ActiveSiteValues = 0.0;
 
@@ -159,6 +169,7 @@ namespace Landis.Extension.Insects
                 PlugIn.ModelCore.NormalDistribution.Mu = 0.0;
                 PlugIn.ModelCore.NormalDistribution.Sigma = 1.0;
                 double randomNum = PlugIn.ModelCore.NormalDistribution.NextDouble();
+                randomNum = PlugIn.ModelCore.NormalDistribution.NextDouble();
 
                 DistributionType distDuration = insect.DurationDistribution;
 
