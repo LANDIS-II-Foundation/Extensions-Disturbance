@@ -116,44 +116,42 @@ namespace Landis.Extension.Insects
                 double intercept = insect.SppTable[sppIndex].MortalityIntercept;
                 double yearDefoliationDiff = cumulativeDefoliation - lastYearsCumulativeDefoliation;
 
-                //if (insect.AnnMort == "7Year")
-                //{
+                if (insect.AnnMort == "7Year")
+                {
+                    // **** Old Section ****
+                    // Defoliation mortality doesn't start until at least 50% cumulative defoliation is reached.
+                    // The first year of mortality follows normal background relationships...
+                    if (cumulativeDefoliation >= 0.50 && lastYearsCumulativeDefoliation < 0.50)
+                    {
+                        //Most mortality studies restrospectively measure mortality for a number of years post disturbance. We need to subtract background mortality to get the yearly estimate. Subtract 7, assuming 1% mortality/year for 7 years, a typical time since disturbance in mortality papers. 
+                        percentMortality = ((intercept) * (double)Math.Exp((slope * cumulativeDefoliation * 100)) - 7) / 100;
+                    }
 
-                //    // Defoliation mortality doesn't start until at least 50% cumulative defoliation is reached.
-                //// The first year of mortality follows normal background relationships...
-                //if (cumulativeDefoliation >= 0.50 && lastYearsCumulativeDefoliation < 0.50)
-                //{
-                //    //Most mortality studies restrospectively measure mortality for a number of years post disturbance. We need to subtract background mortality to get the yearly estimate. Subtract 7, assuming 1% mortality/year for 7 years, a typical time since disturbance in mortality papers. 
-                //    percentMortality = ((intercept) * (double)Math.Exp((slope * cumulativeDefoliation * 100)) - 7) / 100;
-                //}
+                    // Second year or more of defoliation mortality discounts the first year's mortality amount.
+                    if (cumulativeDefoliation >= 0.50 && lastYearsCumulativeDefoliation >= 0.50 && cumulativeDefoliation != lastYearsCumulativeDefoliation)
+                    {
+                        double lastYearPercentMortality = ((intercept) * (double)Math.Exp((slope * lastYearsCumulativeDefoliation * 100)) - 7) / 100;
+                        percentMortality = ((intercept) * (double)Math.Exp((slope * cumulativeDefoliation * 100)) - 7) / 100;
+                        percentMortality -= lastYearPercentMortality;
+                    }
 
-                //// Second year or more of defoliation mortality discounts the first year's mortality amount.
-                //if (cumulativeDefoliation >= 0.50 && lastYearsCumulativeDefoliation >= 0.50 && cumulativeDefoliation != lastYearsCumulativeDefoliation)
-                //{
-                //    double lastYearPercentMortality = ((intercept) * (double)Math.Exp((slope * lastYearsCumulativeDefoliation * 100)) - 7) / 100;
-                //    percentMortality = ((intercept) * (double)Math.Exp((slope * cumulativeDefoliation * 100)) - 7) / 100;
-                //    percentMortality -= lastYearPercentMortality;
-                //}
+                    // Special case for when you have only one year of defoliation that is >50%, so no discounting necessary. There is probably a better way to write this.
+                    if (cumulativeDefoliation >= 0.50 && lastYearsCumulativeDefoliation >= 0.50 && yearDefoliationDiff < 0.00000000000000000001)
+                    {
+                        percentMortality = ((intercept) * (double)Math.Exp((slope * cumulativeDefoliation * 100)) - 7) / 100;
+                    }
 
-                //// Special case for when you have only one year of defoliation that is >50%, so no discounting necessary. There is probably a better way to write this.
-                //if (cumulativeDefoliation >= 0.50 && lastYearsCumulativeDefoliation >= 0.50 && yearDefoliationDiff < 0.00000000000000000001)
-                //{
-                //    percentMortality = ((intercept) * (double)Math.Exp((slope * cumulativeDefoliation * 100)) - 7) / 100;
-                //}
-                
-                //if (percentMortality > 0.0)
-                //{
-                //    leafBiomassMortality += (int) ((double) cohort.LeafBiomass * percentMortality);
-                //    woodBiomassMortality += (int)((double)cohort.WoodBiomass * percentMortality);
-                //    //PlugIn.ModelCore.Log.WriteLine("biomassMortality={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", biomassMortality, cohort.Biomass, percentMortality);
-                //}
+                    if (percentMortality > 0.0)
+                    {
+                        leafBiomassMortality += (int)((double)cohort.LeafBiomass * percentMortality);
+                        woodBiomassMortality += (int)((double)cohort.WoodBiomass * percentMortality);
+                        //PlugIn.ModelCore.Log.WriteLine("biomassMortality={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", biomassMortality, cohort.Biomass, percentMortality);
+                    }
 
-                //    // **** End Old Section ****
-                //}
-                
-                // We assume that Leaf-Biomass-Insects always operates at an annual time step, therefore only using the "Annual" code.
-                //else if (insect.AnnMort == "Annual")
-                //{
+                    // **** End Old Section ****
+                }
+                else if (insect.AnnMort == "Annual")
+                {
                     // **** New section from JRF ****
                     // Defoliation mortality doesn't start until at least 50% cumulative defoliation is reached.
                     // The first year of mortality follows normal background relationships...
@@ -166,7 +164,12 @@ namespace Landis.Extension.Insects
                         // PlugIn.ModelCore.UI.WriteLine("cumulativeDefoliation={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", cumulativeDefoliation, cohort.Biomass, percentMortality);
                     }
                     // **** End new section from JRF ****
-                
+                }
+                else
+                {
+                    throw new System.ApplicationException("Error: Mortality parameter is not Annual or 7Year");
+                }
+
                 if (percentMortality > 0.0)
                     leafBiomassMortality += (int) ((double) cohort.LeafBiomass * percentMortality);
                     // PlugIn.ModelCore.UI.WriteLine("biomassMortality={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", biomassMortality, cohort.Biomass, percentMortality);

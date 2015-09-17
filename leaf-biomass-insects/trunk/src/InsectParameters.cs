@@ -50,6 +50,7 @@ namespace Landis.Extension.Insects
         int LastStartYear { get; set; }
         int LastStopYear { get; set; }
         int LastBioRemoved { get; set; }
+        string AnnMort { get; set; }
 
 
 
@@ -102,7 +103,7 @@ namespace Landis.Extension.Insects
         private ISiteVar<double> thisYearDefoliation;
         private ISiteVar<double> neighborhoodDefoliation;
 
-
+        private string annMort;
         //---------------------------------------------------------------------
 
         public string Name
@@ -440,6 +441,21 @@ namespace Landis.Extension.Insects
             }
         }
         //---------------------------------------------------------------------
+        public string AnnMort
+        {
+            get
+            {
+                return annMort;
+            }
+            set
+            {
+                if (value != "Annual" && value != "7Year")
+                    throw new InputValueException(value.ToString(),
+                                                  "Value must be  either Annual or 7Year.");
+                annMort = value;
+            }
+        }
+        //---------------------------------------------------------------------
         public InsectParameters(int sppCount)
         {
             //sppTable = new List<ISppParameters>(sppCount);
@@ -461,7 +477,7 @@ namespace Landis.Extension.Insects
             lastStartYear = 0;
             lastStopYear = 0;
             lastBioRemoved = 0;
-
+            annMort = "";
             
             //Initialize outbreaks:
             foreach (ActiveSite site in PlugIn.ModelCore.Landscape)
