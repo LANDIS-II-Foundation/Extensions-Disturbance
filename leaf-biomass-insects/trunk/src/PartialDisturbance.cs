@@ -140,14 +140,6 @@ namespace Landis.Extension.Insects
                     {
                         percentMortality = ((intercept) * (double)Math.Exp((slope * cumulativeDefoliation * 100)) - 7) / 100;
                     }
-
-                    if (percentMortality > 0.0)
-                    {
-                        leafBiomassMortality += (int)((double)cohort.LeafBiomass * percentMortality);
-                        woodBiomassMortality += (int)((double)cohort.WoodBiomass * percentMortality);
-                        //PlugIn.ModelCore.Log.WriteLine("biomassMortality={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", biomassMortality, cohort.Biomass, percentMortality);
-                    }
-
                     // **** End Old Section ****
                 }
                 else if (insect.AnnMort == "Annual")
@@ -171,13 +163,17 @@ namespace Landis.Extension.Insects
                 }
 
                 if (percentMortality > 0.0)
-                    leafBiomassMortality += (int) ((double) cohort.LeafBiomass * percentMortality);
-                    // PlugIn.ModelCore.UI.WriteLine("biomassMortality={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", biomassMortality, cohort.Biomass, percentMortality);
-
+                {
+                    leafBiomassMortality += (int)((double)cohort.LeafBiomass * percentMortality);
+                    woodBiomassMortality += (int)((double)cohort.WoodBiomass * percentMortality);
+                    //PlugIn.ModelCore.Log.WriteLine("biomassMortality={0}, cohort.Biomass={1}, percentMortality={2:0.00}.", biomassMortality, cohort.Biomass, percentMortality);
+                }
             }  // end insect loop
 
             if (leafBiomassMortality > cohort.LeafBiomass)
                 leafBiomassMortality = cohort.LeafBiomass;
+            if (woodBiomassMortality > cohort.WoodBiomass)
+                woodBiomassMortality = cohort.WoodBiomass;
 
             SiteVars.BiomassRemoved[currentSite] += (int) (leafBiomassMortality + woodBiomassMortality);
             //PlugIn.ModelCore.Log.WriteLine("biomassMortality={0}, BiomassRemoved={1}.", biomassMortality, SiteVars.BiomassRemoved[currentSite]);
