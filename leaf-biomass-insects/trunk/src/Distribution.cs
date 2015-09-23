@@ -116,8 +116,15 @@ namespace Landis.Extension.Insects
             {
                 PlugIn.ModelCore.BetaDistribution.Alpha = parameter1;// mean
                 PlugIn.ModelCore.BetaDistribution.Beta = parameter2;// std dev
-                randomNum = PlugIn.ModelCore.BetaDistribution.NextDouble();
-                randomNum = PlugIn.ModelCore.BetaDistribution.NextDouble();
+                if (parameter1 == 0)
+                    randomNum = 0;
+                else if (parameter2 == 0)
+                    randomNum = 1;
+                else
+                {
+                    randomNum = PlugIn.ModelCore.BetaDistribution.NextDouble();
+                    randomNum = PlugIn.ModelCore.BetaDistribution.NextDouble();
+                }
             }
             return randomNum;
         }
