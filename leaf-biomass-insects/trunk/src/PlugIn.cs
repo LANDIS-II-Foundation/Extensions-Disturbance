@@ -66,7 +66,7 @@ namespace Landis.Extension.Insects
 
             // Add local event handler for cohorts death due to age-only
             // disturbances.
-            Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
+            //Cohort.AgeOnlyDeathEvent += CohortKilledByAgeOnlyDisturbance;
 
         }
 
