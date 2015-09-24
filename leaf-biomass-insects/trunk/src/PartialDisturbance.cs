@@ -62,7 +62,7 @@ namespace Landis.Extension.Insects
             double percentMortality = 0.0;
             int sppIndex = cohort.Species.Index;
             double cumulativeDefoliationManyInsects = 0.0;
-            float[] leafWoodReduction = new float[2] { 0F, 0F };
+            float[] woodLeafReduction = new float[2] { 0F, 0F };
 
             foreach (IInsect insect in PlugIn.ManyInsect)
             {
@@ -186,8 +186,10 @@ namespace Landis.Extension.Insects
                 PlugIn.ModelCore.UI.WriteLine("Cohort Total Mortality={0:0.0}. Cohort Biomass={1}. Site R/C={2}/{3}.", (leafBiomassMortality + woodBiomassMortality), cohort.Biomass, currentSite.Location.Row, currentSite.Location.Column);
                 throw new System.ApplicationException("Error: Total Mortality is not between 0 and cohort biomass");
             }
-
-            return leafWoodReduction;
+            woodLeafReduction[0] = woodBiomassMortality;
+            woodLeafReduction[1] = leafBiomassMortality;
+           
+            return woodLeafReduction;
 
         }
 
