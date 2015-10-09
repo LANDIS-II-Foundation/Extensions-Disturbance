@@ -37,7 +37,6 @@ namespace Landis.Extension.Insects
 
         public static double DefoliateCohort(ICohort cohort, ActiveSite site, int siteBiomass)
         {
-
             //PlugIn.ModelCore.Log.WriteLine("   Calculating insect defoliation...");
 
             int sppIndex = cohort.Species.Index;
@@ -172,19 +171,24 @@ namespace Landis.Extension.Insects
 
                 //weightedDefoliation = (defoliation * ((double) (cohort.LeafBiomass + cohort.WoodBiomass) / (double) siteBiomass)); //AMK Old LBI eqn
                 //weightedDefoliation = (Math.Min((1 - totalDefoliation), defoliation) * ((double)cohort.LeafBiomass / (double)siteBiomass)); //AMK 6/4 update from Jane's BiomassInsects
-                weightedDefoliation = (Math.Min((1 - totalDefoliation), defoliation) * ((double)cohort.WoodBiomass / (double)siteBiomass)); //RMS 8/7 Jane says should be WoodBiomass
+                double capDefol = Math.Min((1 - totalDefoliation), defoliation);
+                double weight = (double)(int)(cohort.WoodBiomass + cohort.LeafBiomass) / (double)siteBiomass;  //RMS 8/7 Jane says should be WoodBiomass
+                weightedDefoliation = capDefol * weight; 
                 
                 //if (PlugIn.ModelCore.CurrentTime > 8)
                 //PlugIn.ModelCore.Log.WriteLine("Cohort age={0}, species={1}, suscIndex={2}, cohortDefoliation={3}, weightedDefolation={4}.", cohort.Age, cohort.Species.Name, (suscIndex+1), defoliation, weightedDefoliation);
 
                 insect.ThisYearDefoliation[site] += weightedDefoliation;
+
+                if(insect.ThisYearDefoliation[site] > 1.0) // FIXME - siteBiomass should be calculated before cohort growth and passed to DefoliateCohort with the same value for all cohorts, as it is the weights do not necessarily sum to 1.0.
+                {
+                    insect.ThisYearDefoliation[site] = 1.0;
+                }
                 totalDefoliation += defoliation;
 
                 //if (weightedDefoliation > 0.0 && PlugIn.ModelCore.CurrentTime > 8)
                 //    PlugIn.ModelCore.Log.WriteLine("   Weighted defoliation due to insect defoliation = {0:0.00}", weightedDefoliation);
-
-            
-
+                
             }  //end insect loop
 
             if(totalDefoliation > 1.0)  // Cannot exceed 100% defoliation
