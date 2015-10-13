@@ -1,43 +1,68 @@
 LandisData InsectDefoliator
 
-InsectName	GypsyMoth
+InsectName	FTC
+ 
+DurationDistribution	Weibull << Weibull, Normal or Exponential.
+DurationParameter1	2.0 << Exponential rate, Weibull shape, or Normal mean.
+DurationParameter2	1.25   << Weibull scale or Normal standard deviation. If using Exponential, set to 1 and ignore.
 
-MeanDuration	15
+MeanTimeBetweenOutbreaks	14
+StdDevTimeBetweenOutbreaks	3
 
-StdDevDuration	3
+NeighborhoodSize	150	<< meters 
 
-MeanTimeBetweenOutbreaks	3
-
-StdDevTimeBetweenOutbreaks	0
-
-NeighborhoodSize	20	<< meters
-
-InitialPatchShapeCalibrator	1.0 	<< must be <= 1.0  Higher = Rounder; Lower = tracks host quality closer.
-InitialPatchOutbreakSensitivity .0005 	<< must be >= 0.0  Higher = MORE patches
+>> Lower this number to lower probabilities of patch generation, i.e. start fewer patches. 
+InitialPatchOutbreakSensitivity	0.00012 	<< must be > 0.0 
 
 InitialPatchDistribution	Weibull	<<Weibull, Beta, or Gamma
-InitialPatchValue1	0.5	<<depends on the distribution, must be > 0.0
-InitialPatchValue2	1.2	<<depends on the distribution, must be > 0.0
+InitialPatchValue1	0.7017	<<depends on the distribution, must be > 0.0 
+InitialPatchValue2	11930	<<depends on the distribution, must be > 0.0 
 
 SpeciesParameters
->> Susceptibility class by species (from Liebhold et al... reference here)
+MortalityEstimate  Annual << 'Annual' or '7Year'
+>> Susceptibility class by species
 >> Species	Susceptibility	 Growth Reduction Parameters  Mortality Parameters
 >>		Class		 Slope	Intercept	      Slope	Intercept
 >>--------------------------------------------------------------------------------
-acerrubr       1	-0.8	1	0.009	7
-acersacc       1	-0.8	1	0.009	7
-pinuresi       1	-1	1	0.016	4
-pinustro       1	-1	1	0.016	4
-poputrem       1	-.5	1	0.009	7
-querrubr       1	-0.16	1	0.006	5.5
-tiliamer       1	-0.16	1	0.009	7
-tsugcana       1	-1	1	0.016	4
+abiebals	3	-0.8	1	0.009	7	
+acernegu	2	-0.8	1	0.006	2.202	
+acerrubr	3	-0.8	1	0.006	2.202	
+acersacc	2	-0.8	1	0.006	2.202	
+acerspic	2	-0.8	1	0.006	2.202		
+betualle	1	-0.8	1	0.008	2.135		
+betupapy	1	-0.8	1	0.008	2.135	
+celtis		2	-0.8	1	0.008	1.704	
+fraxamer	3	-0.8	1	0.008	1.704	
+fraxnigr	3	-0.8	1	0.008	1.704	
+fraxpenn	3	-0.8	1	0.008	1.704	
+larilari	3	-0.8	1	0.009	7	
+ostrvirg	2	-0.8	1	0.008	2.135		
+piceglau	3	-0.8	1	0.006	5	
+picemari	3	-0.8	1	0.006	5	
+pinubank	3	-0.8	1	0.009	7	
+pinuresi	3	-1	1	0.016	4	
+pinustro	3	-1	1	0.016	4	
+popubals	1	-0.8	1	0.008	2.135	
+popudelt	1	-0.8	1	0.008	2.135	
+popugran	1	-0.8	1	0.008	2.135	
+poputrem	1	-0.8	1	0.008	2.135	
+prunpens	2	-0.8	1	0.008	2.135	
+prunsero	2	-0.8	1	0.008	2.135	
+prunvirg	2	-0.8	1	0.008	2.135	
+queralba	1	-0.165	1	0.008	1.704	
+querelli	1	-0.165	1	0.008	1.704	
+quermacr	1	-0.165	1	0.008	1.704	
+querrubr	1	-0.165	1	0.008	1.704	
+salix		2	-0.8	1	0.008	2.135		
+thujocci	3	-0.5	1	0.009	7	
+tiliamer	1	-0.17	1	0.008	2.135	
+ulmuamer	2	-0.8	1	0.008	2.135	
+ulmurubr	2	-0.8	1	0.008	2.135	
 
 Susceptibilities
 >> Host	Dist80	S1_80	S2_80	Dist60	S1_60	S2_60	Dist40	S1_40	S2_40	Dist20	S1_20	S2_20	Dist0	S1_0	S2_0
-1	Beta	0.84	0.20	Beta	0.84	0.33	Beta	1.14	1.18	Beta	0.50	2.00	Beta	0.5	6.0
-2	Beta	1.27	0.68	Beta	1.14	1.18	Beta	0.7	2.00	Beta	0.5	3.00	Beta	0.5	6.0
-3	Beta	1	1	Beta	0.8	1.68	Beta	0.7	2.00	Beta	0.5	6.00	Beta	0.2	6.0
+1	Beta	1.06	0.81	Beta	1.06	0.81	Beta	1.06	0.81	Beta	1.17	2.64	Beta	0.29	4.12
+2	Beta	0.73	0.75	Beta	0.73	0.75	Beta	0.73	0.75	Beta	0.76	2.13	Beta	0.26	4.92
+3	Beta	0	10	Beta	0	10	Beta	0	10	Beta	0	10	Beta	0	10
 
-MapNames  insects/severity-{timestep}.gis
-LogFile   insects/log.csv
+

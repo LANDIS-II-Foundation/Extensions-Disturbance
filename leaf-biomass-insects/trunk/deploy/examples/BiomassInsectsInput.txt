@@ -1,8 +1,8 @@
 LandisData "Leaf Biomass Insects"
 
-Timestep	10
+Timestep	1
 
-MapNames	Insects/{insectName}-{timestep}.gis
+MapNames	Insects/{insectName}-{timestep}.img
 
 LogFile		Insect-log.csv
 
