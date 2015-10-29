@@ -9,7 +9,7 @@ namespace Landis.Extension.DynamicFire
 {
 // This class calculates fire weather variables. These calculations are based on the Canadian Fire and Fuels System.
 // Refer to Lawson and Armitage 2008 "Weather Guide for the Canadian Forest Fire Danger Rating System" for further explanation
-//This comment is to test the new GitHub repository system on my machine AMK
+//This comment is to further test the GitHub commit process
 
     public class AnnualFireWeather
     {
