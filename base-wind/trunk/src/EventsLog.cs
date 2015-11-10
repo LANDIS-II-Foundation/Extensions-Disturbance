@@ -19,6 +19,15 @@ namespace Landis.Extension.BaseWind
         [DataFieldAttribute(Desc = "Initiation Column")]
         public int InitColumn { set; get; }
 
+        [DataFieldAttribute(Desc = "Event Intensity")]
+        public double Intensity { set; get; }
+
+        [DataFieldAttribute(Desc = "Event Direction")]
+        public double Direction { set; get; }
+
+        [DataFieldAttribute(Desc = "Event Length to Width Ratio")]
+        public double LWRatio { set; get; }
+
         [DataFieldAttribute(Unit = FieldUnits.Count, Desc = "Total Number of Sites in Event")]
         public int TotalSites { set; get; }
 

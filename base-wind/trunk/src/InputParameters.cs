@@ -13,13 +13,17 @@ namespace Landis.Extension.BaseWind
 		: IInputParameters
 	{
 		private int timestep;
+        // ## Change ##
+        private double lwRatioMean;
+        private double lwRatioStDev;
+        // ## Change ##
+        private List<double> windDirPct;
 		private IEventParameters[] eventParameters;
 		private List<ISeverity> severities;
 		private string mapNamesTemplate;
 		private string logFileName;
 
 		//---------------------------------------------------------------------
-
 		/// <summary>
 		/// Timestep (years)
 		/// </summary>
@@ -35,9 +39,59 @@ namespace Landis.Extension.BaseWind
                 timestep = value;
             }
 		}
+        //---------------------------------------------------------------------
+        // ## Change ##
+        /// <summary>
+        /// Length to Width Ratio Mean
+        /// </summary>
+        public double LWRatioMean
+        {
+            get
+            {
+                return lwRatioMean;
+            }
+            set
+            {
+                if (value <= 0)
+                    throw new InputValueException(value.ToString(),
+                                                  "Value must be > 0.");
+                lwRatioMean = value;
+            }
+        }
+        //---------------------------------------------------------------------
+        // ## Change ##
+        /// <summary>
+        /// Lenght to Width Ratio StDev
+        /// </summary>
+        public double LWRatioStDev
+        {
+            get
+            {
+                return lwRatioStDev;
+            }
+            set
+            {
+                lwRatioStDev = value;
+            }
+        }
+        //---------------------------------------------------------------------
+        // ## Change ##
+        /// <summary>
+        /// Wind direction Pct
+        /// </summary>
+        public List<double> WindDirPct
+        {
+            get
+            {
+                return windDirPct;
+            }
+            set
+            {
+                windDirPct = value;
+            }
 
+        }
 		//---------------------------------------------------------------------
-
 		/// <summary>
 		/// Wind event parameters for each ecoregion.
 		/// </summary>
@@ -50,9 +104,7 @@ namespace Landis.Extension.BaseWind
 				return eventParameters;
 			}
 		}
-
 		//---------------------------------------------------------------------
-
 		/// <summary>
 		/// Definitions of wind severities.
 		/// </summary>
@@ -62,9 +114,7 @@ namespace Landis.Extension.BaseWind
 				return severities;
 			}
 		}
-
 		//---------------------------------------------------------------------
-
 		/// <summary>
 		/// Template for the filenames for output maps.
 		/// </summary>
@@ -78,9 +128,7 @@ namespace Landis.Extension.BaseWind
                 mapNamesTemplate = value;
             }
 		}
-
 		//---------------------------------------------------------------------
-
 		/// <summary>
 		/// Name of log file.
 		/// </summary>
@@ -95,27 +143,14 @@ namespace Landis.Extension.BaseWind
                 logFileName = value;
             }
 		}
-
         //---------------------------------------------------------------------
 
         public InputParameters(int ecoregionCount)
         {
             eventParameters = new IEventParameters[ecoregionCount];
             severities = new List<ISeverity>();
+            windDirPct = new List<double>(4);
         }
-/*		//---------------------------------------------------------------------
-
-		public Parameters(int                timestep,
-		                  IEventParameters[] eventParameters,
-		                  ISeverity[]        severities,
-		                  string             mapNameTemplate,
-		                  string             logFileName)
-		{
-			this.timestep = timestep;
-			this.eventParameters = eventParameters;
-			this.severities = severities;
-			this.mapNamesTemplate = mapNameTemplate;
-			this.logFileName = logFileName;
-		}*/
+		//---------------------------------------------------------------------
 	}
 }

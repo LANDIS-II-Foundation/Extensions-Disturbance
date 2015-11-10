@@ -73,7 +73,8 @@ namespace Landis.Extension.BaseWind
             mapNameTemplate = parameters.MapNamesTemplate;
 
             SiteVars.Initialize();
-            Event.Initialize(parameters.EventParameters, parameters.WindSeverities);
+
+            Event.Initialize(parameters.EventParameters, parameters.WindSeverities, parameters.LWRatioMean, parameters.LWRatioStDev, parameters.WindDirPct);
 
             //ModelCore.UI.WriteLine("   Opening wind log file \"{0}\" ...", parameters.LogFileName);
             //log = Landis.Data.CreateTextFile(parameters.LogFileName);
@@ -147,6 +148,9 @@ namespace Landis.Extension.BaseWind
             el.DamagedSites = windEvent.SitesDamaged;
             el.CohortsKilled = windEvent.CohortsKilled;
             el.MeanSeverity = windEvent.Severity;
+            el.Intensity = windEvent.Intensity;
+            el.Direction = windEvent.WindDirection;
+            el.LWRatio = windEvent.LWRatio;
 
 
             eventLog.AddObject(el);

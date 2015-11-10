@@ -2,6 +2,18 @@ LandisData  "Base Wind"
 
 Timestep  5
 
+LWRatioMean  3.0
+LWRatioStDev 1.0
+
+WindDirectionTable
+>> Percent  Dir 
+>> -------  -----
+     0	   << N-S    
+     25	   << NE-SW   
+     50	   << E-W   
+     25    << SE-NW 
+
+EcoregionTable
 >>             ___ Event Size ___   Rotation
 >> Ecoregion    Max   Mean    Min   Period
 >> ---------   ----   ----   ----   --------

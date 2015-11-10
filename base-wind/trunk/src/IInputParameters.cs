@@ -60,5 +60,36 @@ namespace Landis.Extension.BaseWind
 		{
 			get;set;
 		}
+        //---------------------------------------------------------------------
+        // ## Change ##
+        /// <summary>
+        /// LWRatio Mean
+        /// </summary>
+        double LWRatioMean
+        {
+            get;
+            set;
+        }
+        //---------------------------------------------------------------------
+        // ## Change ##
+        /// <summary>
+        /// LWRatio StDev
+        /// </summary>
+        double LWRatioStDev
+        {
+            get;
+            set;
+        }
+
+        //---------------------------------------------------------------------
+        // ## Change ##
+        /// <summary>
+        /// Wind direction percentages
+        /// </summary>
+        List<double> WindDirPct
+        {
+            get;
+        }
+        //---------------------------------------------------------------------
 	}
 }

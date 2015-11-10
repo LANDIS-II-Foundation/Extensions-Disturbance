@@ -152,20 +152,9 @@ namespace Landis.Extension.BaseWind
 
         public Severity()
         {
-            //this.minAge = (Percentage) 0.0;
-            //this.maxAge = (Percentage) 0.0;
         }
 
 		//---------------------------------------------------------------------
-/*
-		public Severity(byte   number,
-		                double minAge,
-		                double maxAge,
-		                float  mortalityProbability)
-		{
-			this.number = number;
-			this.ageRange = minAge < new Range<double>() <= maxAge;
-			this.mortalityProbability = mortalityProbability;
-		}*/
+
 	}
 }

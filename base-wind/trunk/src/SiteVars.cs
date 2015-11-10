@@ -23,7 +23,7 @@ namespace Landis.Extension.BaseWind
             eventVar        = PlugIn.ModelCore.Landscape.NewSiteVar<Event>(InactiveSiteMode.DistinctValues);
             timeOfLastEvent = PlugIn.ModelCore.Landscape.NewSiteVar<int>();
             severity        = PlugIn.ModelCore.Landscape.NewSiteVar<byte>();
-            disturbed      = PlugIn.ModelCore.Landscape.NewSiteVar<bool>();
+            disturbed = PlugIn.ModelCore.Landscape.NewSiteVar<bool>();
 
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.TimeOfLastEvent, "Wind.TimeOfLastEvent");
             PlugIn.ModelCore.RegisterSiteVar(SiteVars.Severity, "Wind.Severity");
@@ -73,6 +73,7 @@ namespace Landis.Extension.BaseWind
             get {
                 return disturbed;
             }
-        }
+        }        
+
     }
 }

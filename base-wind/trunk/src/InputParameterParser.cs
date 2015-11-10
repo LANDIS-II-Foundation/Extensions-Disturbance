@@ -43,7 +43,45 @@ namespace Landis.Extension.BaseWind
             ReadVar(timestep);
             parameters.Timestep = timestep.Value;
 
+            // ## Change ##
+            //Read in the Length:Width Ratio Mean
+            InputVar<double> lwRatioMean = new InputVar<double>("LWRatioMean");
+            ReadVar(lwRatioMean);
+            parameters.LWRatioMean = lwRatioMean.Value;
+
+            //Read in the Length:Width Ratio StDev
+            InputVar<double> lwRatioStDev = new InputVar<double>("LWRatioStDev");
+            ReadVar(lwRatioStDev);
+            parameters.LWRatioStDev = lwRatioStDev.Value;
+
+            // ## Change ##
+            const string EcoregionTable = "EcoregionTable";
+
+            //  Read table of wind direction percentages
+            InputVar<double> windDirPct = new InputVar<double>("Direction Percent");
+            //List<double> windDirPctList = new List<double>(4);
+
+            ReadName("WindDirectionTable");
+            int windDirIndex = 0;
+            double cumulativePct = 0;
+            while (!AtEndOfInput && CurrentName != EcoregionTable)
+            {
+                StringReader currentLine = new StringReader(CurrentLine);
+                ReadValue(windDirPct, currentLine);
+                cumulativePct += windDirPct.Value;
+                parameters.WindDirPct.Add(cumulativePct);
+                windDirIndex++;
+                GetNextLine();
+            }
+            if(!(cumulativePct == 100))
+            {
+                throw new InputValueException(windDirPct.Value.String,
+                                                  "WindDirectionTable percentages do not sum to 100");
+            }
+            //parameters.WindDirPct = windDirPctList;
+
             //  Read table of wind event parameters for ecoregions
+            ReadName(EcoregionTable);
             InputVar<string> ecoregionName = new InputVar<string>("Ecoregion");
             InputVar<double> maxSize = new InputVar<double>("Max Size");
             InputVar<double> meanSize = new InputVar<double>("Mean Size");
@@ -97,7 +135,7 @@ namespace Landis.Extension.BaseWind
             InputVar<byte> number = new InputVar<byte>("Severity Number");
             InputVar<Percentage> minAge = new InputVar<Percentage>("Min Age");
             InputVar<Percentage> maxAge = new InputVar<Percentage>("Max Age");
-            InputVar<float> mortProbability = new InputVar<float>("Mortality Probability");
+            InputVar<float> mortalityProbability = new InputVar<float>("Mortality Probability");
 
             const string MapNames = "MapNames";
             byte previousNumber = 6;
@@ -162,10 +200,10 @@ namespace Landis.Extension.BaseWind
                 }
                 previousMaxAge = maxAge.Value.Actual;
 
-                ReadValue(mortProbability, currentLine);
-                severity.MortalityProbability = mortProbability.Value;
+                ReadValue(mortalityProbability, currentLine);
+                severity.MortalityProbability = mortalityProbability.Value;
 
-                CheckNoDataAfter("the " + mortProbability.Name + " column",
+                CheckNoDataAfter("the " + mortalityProbability.Name + " column",
                                  currentLine);
                 GetNextLine();
             }
