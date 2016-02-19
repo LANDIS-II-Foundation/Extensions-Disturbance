@@ -98,6 +98,7 @@
     <Compile Include="Outbreak.cs" />
     <Compile Include="PartialDisturbance.cs" />
     <Compile Include="PlugIn.cs" />
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="SiteVars.cs" />
     <Compile Include="SppParameters.cs" />
     <Compile Include="Susceptible.cs" />
