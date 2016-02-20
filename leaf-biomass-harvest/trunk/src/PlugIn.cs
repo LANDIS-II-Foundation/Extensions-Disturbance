@@ -19,15 +19,14 @@ namespace Landis.Extension.LeafBiomassHarvest
     {
         public static readonly ExtensionType type = new ExtensionType("disturbance:harvest");
         public static readonly string ExtensionName = "Leaf Biomass Harvest";
-        public static MetadataTable<EventsLog> eventLog;// = new MetadataTable<EventsLog>("harvest-events-log.csv");
-        public static MetadataTable<SummaryLog> summaryLog;// = new MetadataTable<SummaryLog>("harvest-summary-log.csv");
+        public static MetadataTable<EventsLog> eventLog;
+        public static MetadataTable<SummaryLog> summaryLog;
+        public static MetadataTable<SummaryLogShort> summaryLogShort;
 
         private IManagementAreaDataset managementAreas;
         private PrescriptionMaps prescriptionMaps;
         private string nameTemplate;
         private BiomassMaps biomassMaps;
-        //private StreamWriter log;
-        //private StreamWriter summaryLog;
         private bool running;
         int[] totalSites;
         int[] totalDamagedSites;
@@ -123,40 +122,6 @@ namespace Landis.Extension.LeafBiomassHarvest
             if (parameters.BiomassMapNames != null)
                 biomassMaps = new BiomassMaps(parameters.BiomassMapNames);
 
-            //open log file and write header
-            //modelCore.UI.WriteLine("   Opening harvest log file \"{0}\" ...", parameters.EventLog);
-            //try
-            //{
-            //    log = Landis.Data.CreateTextFile(parameters.EventLog);
-            //}
-            //catch (Exception err)
-            //{
-            //    string mesg = string.Format("{0}", err.Message);
-            //    throw new System.ApplicationException(mesg);
-            //}
-            //log.AutoFlush = true;
-            
-            //include a column for each species in the species dictionary
-            //string species_header_names = "";
-            //int i = 0;
-            //for (i = 0; i < modelCore.Species.Count; i++) {
-            //    species_header_names += "," + modelCore.Species[i].Name;
-            //}
-
-            //modelCore.UI.WriteLine("   Opening summary harvest log file \"{0}\" ...", parameters.SummaryLog);
-            //log.WriteLine("Time,ManagementArea,Prescription,StandMapCode,EventId,StandAge,StandRank,StandSiteCount,DamagedSites,MgBiomassRemoved,MgBioRemovedPerDamagedHa,CohortsDamaged,CohortsKilled{0}", species_header_names);
-
-            //try
-            //{
-            //    summaryLog = Landis.Data.CreateTextFile(parameters.SummaryLog);
-            //}
-            //catch (Exception err)
-            //{
-            //    string mesg = string.Format("{0}", err.Message);
-            //    throw new System.ApplicationException(mesg);
-            //}
-            //summaryLog.AutoFlush = true;
-            //summaryLog.WriteLine("Time,ManagementArea,Prescription,TotalDamagedSites,TotalCohortsDamaged,TotalCohortsKilled{0}", species_header_names);
 
         }
 
@@ -169,6 +134,11 @@ namespace Landis.Extension.LeafBiomassHarvest
             SiteVars.BiomassRemoved.ActiveSiteValues = 0;
             SiteVars.CohortsPartiallyDamaged.ActiveSiteValues = 0;
             BaseHarvest.SiteVars.CohortsDamaged.ActiveSiteValues = 0;
+
+            // for the short summary log:
+            int combinedHarvestSites = 0;
+            int combinedCohortsCompleteHarvest = 0;
+            int combinedCohortsPartialHarvest = 0;
 
             //harvest each management area in the list
             foreach (ManagementArea mgmtArea in managementAreas)
@@ -240,9 +210,22 @@ namespace Landis.Extension.LeafBiomassHarvest
                         sl.CohortsHarvested_ = species_string;
                         summaryLog.AddObject(sl);
                         summaryLog.WriteToFile();
+
+                        combinedCohortsCompleteHarvest += totalDamagedSites[prescription.Number];
+                        combinedHarvestSites += totalDamagedSites[prescription.Number];
+                        combinedCohortsPartialHarvest += totalCohortsDamaged[prescription.Number];
                     }
                 }
             }
+
+            summaryLogShort.Clear();
+            SummaryLogShort sls = new SummaryLogShort();
+            sls.Time = modelCore.CurrentTime;
+            sls.TotalHarvestedSites = combinedHarvestSites;
+            sls.TotalCohortsPartialHarvest = combinedCohortsPartialHarvest;
+            sls.TotalCohortsCompleteHarvest = combinedCohortsCompleteHarvest;
+            summaryLogShort.AddObject(sls);
+            summaryLogShort.WriteToFile();
 
             WritePrescriptionMap(modelCore.CurrentTime);
             if (biomassMaps != null)

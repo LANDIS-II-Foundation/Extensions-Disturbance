@@ -81,6 +81,7 @@
     <Compile Include="CompleteStandSpreading.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SummaryLogShort.cs" />
     <Compile Include="SummaryLog.cs" />
     <Compile Include="EventsLog.cs" />
     <Compile Include="IInputParameters.cs" />

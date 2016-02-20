@@ -37,6 +37,7 @@ namespace Landis.Extension.LeafBiomassHarvest
 
             PlugIn.eventLog = new MetadataTable<EventsLog>("harvest-events-log.csv");
             PlugIn.summaryLog = new MetadataTable<SummaryLog>("harvest-summary-log.csv");
+            PlugIn.summaryLogShort = new MetadataTable<SummaryLogShort>("harvest-summary-short-log.csv");
 
             PlugIn.ModelCore.UI.WriteLine("   Generating event table...");
             OutputMetadata tblOut_events = new OutputMetadata()
@@ -55,10 +56,21 @@ namespace Landis.Extension.LeafBiomassHarvest
                 Type = OutputType.Table,
                 Name = "SummaryLog",
                 FilePath = PlugIn.summaryLog.FilePath,
-                Visualize = true,
+                Visualize = false,
             };
             tblOut_summary.RetriveFields(typeof(SummaryLog));
             Extension.OutputMetadatas.Add(tblOut_summary);
+
+            //PlugIn.ModelCore.UI.WriteLine("   Generating summary table...");
+            OutputMetadata tblOut_summaryShort = new OutputMetadata()
+            {
+                Type = OutputType.Table,
+                Name = "SummaryLog_Short",
+                FilePath = PlugIn.summaryLogShort.FilePath,
+                Visualize = true,
+            };
+            tblOut_summaryShort.RetriveFields(typeof(SummaryLogShort));
+            Extension.OutputMetadatas.Add(tblOut_summaryShort);
 
             //---------------------------------------            
             //          map outputs:         
