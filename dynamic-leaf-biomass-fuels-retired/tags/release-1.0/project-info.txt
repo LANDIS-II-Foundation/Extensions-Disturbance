@@ -1,0 +1,6 @@
+#  project information
+
+project-name	Landis.Extension.Fuels.LeafBiomass
+project-type	library
+version		1.0
+release		official
